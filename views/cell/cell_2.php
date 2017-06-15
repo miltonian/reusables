@@ -1,24 +1,41 @@
 <?php 
+
+	/*
+		[
+			"id"=>"",
+			"title"=>"",
+			"featured_imagepath"=>"",
+			"html_text"=>"",
+			"isfeatured"=>""
+		]
+	*/
+
 	if(!isset($cell2mediatype)){ $cell2mediatype=""; }
 	if( !isset($isfeatured) ){ $isfeatured=false; }
+
+	// $celldict
+
+
 ?>
 
 <style>
 
 </style>
 
-<div class="cell2 <?php if($isfeatured){ echo "featured"; } ?> <?php if($cell2mediatype=="youtube" || $cell2mediatype=="podcast"){ echo $cell2mediatype; } ?>" id="<?php echo $cell2id ?>">
+
+
+<div class="cell2 <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['id'] ?>">
 	<div class="container">
 		<div style="display: inline-block; width: 100%;">
 			<div>
-				<div class="picture" style="<?php if($cell2image){ echo 'background-image: url('.$cell2image.');'; } ?>"></div>
+				<div class="picture" style="<?php if($celldict['featured_imagepath']){ echo 'background-image: url('.$celldict['featured_imagepath'].');'; } ?>"></div>
 				<div class="words">
 					<div class="text-container">
 						<!-- <label class="grey-label">Today</label> -->
 						<br>
-						<label class="title" style=""><?php if(isset($cell2title)){echo $cell2title;} ?></label>
+						<label class="title" style=""><?php if(isset($celldict['title'])){ echo $celldict['title']; } ?></label>
 						<br>
-						<label class="grey-label"><?php echo $cell2desc ?>...</label>
+						<label class="grey-label"><?php echo implode(' ', array_slice( explode(' ', strip_tags($celldict['html_text'])), 0, 10) ); ?>...</label>
 					</div>
 				</div>
 			</div>

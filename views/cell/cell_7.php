@@ -89,12 +89,12 @@
 
 </style>
 
-<div class="cell7 <?php if($isfeatured){ echo "featured"; } ?> <?php if($cell7mediatype=="youtube" || $cell7mediatype=="podcast"){ echo $cell7mediatype; } ?>" id="<?php echo $cell7id ?>" style="background-image: url(<?php echo $cell7image ?>)">
+<div class="cell7 <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['id'] ?>" style="background-image: url(<?php echo $celldict['imagepath'] ?>)">
 		<div class="gradient"></div>
-		<label class="title mobile" style="font-size: <?php echo $fontsizemobile ?>"><?php echo $cell7title ?></label>
-		<label class="title desktop" style="font-size: <?php echo $fontsize ?>"><?php echo $cell7title ?></label>
-		<?php if($showdate){ ?>
-			<label class="date"><?php echo $cell7date ?></label>
+		<label class="title mobile" style="font-size: <?php echo $fontsizemobile ?>"><?php echo $celldict['title'] ?></label>
+		<label class="title desktop" style="font-size: <?php echo $fontsize ?>"><?php echo $celldict['title'] ?></label>
+		<?php if($celldict['date']!=""){ ?>
+			<label class="date"><?php echo $celldict['date'] ?></label>
 		<?php } ?>
 	</div>
 

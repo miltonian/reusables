@@ -1,24 +1,25 @@
 <?php 
-	if(!isset($cell3mediatype)){ $cell3mediatype=""; }
+	if(!isset($cell4mediatype)){ $cell4mediatype=""; }
 	if( !isset($isfeatured) ){ $isfeatured=false; }
 ?>
 <style>
 
-.cell3 {
+.cell4 {
 	display: inline-block;
 	position: relative;
 	margin: 0;
 	padding: 0;
 	width: 100%;
+
 }
 
-.cell3 .container{
+.cell4 .container{
 	position: relative;
 	display: inline-block;
 	margin: 0;
 	padding: 0;
 	/*width: 100%;*/
-	margin: 0px 5px;
+	/*margin: 0px 5px;*/
 	text-align: center;
 	/*top: 50%;
 	transform: translateY(-50%);*/
@@ -28,64 +29,61 @@
 	width: 100%;
 }
 
-.cell3 h1 { cursor: pointer; }
-	.cell3 h1:hover {text-decoration: underline;}
-
-.cell3 .picture{
+.cell4 label { cursor: pointer; }
+	.cell4 label:hover {text-decoration: underline;}
+	
+.cell4 .picture{
 	position: relative;
 	display: block;
 	margin: 0;
 	padding: 0;
-	width: 450px;
-	width: 100%;
-	height: 300px;
-	height: 335px;
+	width: 220px;
+	height: 160px;
 	background-image: url("https://c.tadst.com/gfx/750w/sunrise-sunset-sun-calculator.jpg?1"); /* the root is entrenash */
 	background-size: cover;
 	background-position: center;
 	cursor: pointer;
+	width: 100%;
 }
 
-.cell3 .words{
+.cell4 .words{
 	position: relative;
 	display: block;
 	margin: 0;
 	padding: 0;
-	width: 450px;
-	width: 100%;
-	height: 70px;
+	width: 220px;
+	height: 17px;
+	margin-top: 10px;
+	overflow: hidden;
 	background-color: white;
+	width: 100%;
 }
 
-.cell3 .text-container{
+.cell4 .text-container{
 	position: relative;
 	display: inline-block;
-	top: 50%;
-	transform: translateY(-50%);
 	padding-left: 10px; 
 	padding-right: 10px;
-	max-width: calc(100% - 20px);
 }
 
-.cell3 .grey-label{
+.cell4 .grey-label{
 	font-style: italic;
 	color: grey;
 	font-size: 0.8em;
 	font-weight: 300;
 	top: 0;
 }
-.cell3 a { text-decoration: none; color: #333333;} 
 
 </style>
 
-<div class="cell3 <?php if($isfeatured){ echo "featured"; } ?> <?php if($cell3mediatype=="youtube" || $cell3mediatype=="podcast"){ echo $cell3mediatype; } ?>" id="<?php echo $cell3id ?>">
+<div class="cell4 <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['id'] ?>">
 	<div class="container">
-		<div style="display:inline-block; width: 100%;">
+		<div style="display:inline-block; width: 100%">
 			<div>
-				<a href="<?php if($isadmin){ echo '#'; }else{ echo $baseurlminimal.'post/'.$cell3id . '/' . preg_replace('/\PL/u', '-', preg_replace("/[^ \w]+/", "", $cell3title) ); } ?>"><div class="picture" style="<?php if($cell3image){ echo 'background-image: url('.$cell3image.');'; } ?>"></div></a>
+				<div class="picture" style="<?php if($celldict['imagepath']){ echo 'background-image: url('.$celldict['imagepath'].');'; } ?>"></div>
 				<div class="words">
 					<div class="text-container">
-						<a href="<?php if($isadmin){ echo '#'; }else{ echo $baseurlminimal.'post/'.$cell3id . '/' . preg_replace('/\PL/u', '', preg_replace("/[^ \w]+/", "", $cell3title) ); } ?>"><h1 class="title" style="font-size: 1.2em; position: relative; display: inline-block; margin: 0; padding: 0;"><?php if(isset($cell3title)){echo $cell3title;} ?></h1></a>
+						<label class="title" style="font-size: 0.9em; position: relative; display: inline-block; margin: 0; padding: 0;"><?php if(isset($celldict['title'])){echo $celldict['title'];} ?></label>
 					</div>
 				</div>
 			</div>
@@ -97,21 +95,21 @@
 	var editingon = false;
 
 	
-	if(typeof Cell3Class == 'undefined'){
-		class Cell3 {
+	if(typeof Cell4Class == 'undefined'){
+		class Cell4 {
 
 		setupactions(){
-			// var editingon=false;
-			$('.cell3').off('click');
-			$('.cell3').click(function(){
-				
+			var editingon=false;
+			$('.cell4').off('click');
+			$('.cell4').click(function(){
+
 				// if(typeof window.selectedfeatured == 'undefined'){var window.selectedfeatured=null;}
 				if($(this).hasClass('featured')){
 					window.selectedfeatured = $(this).parent().attr('class');
 				}else{
 					window.selectedfeatured=null;
 				}
-
+				
 				var gotothis;
 				var whichfeatured;
 				var posturl = '<?php echo $baseurlminimal ?>post/';
@@ -119,13 +117,15 @@
 				var thedict;
 				
 				if(editingon==true){
+					// $('.articlesbackground').css('display', 'inline-block');
+					// $('.articlespopview').css('display', 'inline-block');
+					//updateifvideo(type, path, div);
 					if(window.selectedfeatured==null || window.selectedfeatured==""){
 						window.location.href = "<?php echo $baseurlminimal ?>editing/post?p="+this.id;
 					}else{
 						$('.articlesbackground').css('display', 'inline-block');
 						$('.articlespopview').css('display', 'inline-block');
 					}
-					//updateifvideo(type, path, div);
 				}else{
 					// var mediatype = thedict['type'];
 					// var prehref = '';
@@ -144,17 +144,15 @@
 					// 	var urltitle = thedict['title'].replace(/\s/g, '');
 					// 	window.location.href = thehref+'&'+urltitle;
 					// }
-					// window.location.href = "http://theanywherecard.com/unlimitedautomart_dev/post?p="+this.id;
-					
+					// window.location.href = "http://theanywherecard.com/experiencenash_dev/post?p="+this.id;
 					window.location.href = "<?php echo $baseurlminimal ?>post/"+this.id+"/"+$(this).find('.title').text().replace(/\W/g, '-');
 				}
-				//}
 			});
 		}
 
 	}
-		var Cell3Class = new Cell3();
+		var Cell4Class = new Cell4();
 	}
 	
-	Cell3Class.setupactions();
+	Cell4Class.setupactions();
 </script>

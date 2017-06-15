@@ -1,5 +1,7 @@
 <?php
 
+namespace Reusables\Classes;
+
 class Shortcuts {
 	
 	public function changeURLForTesting($url){

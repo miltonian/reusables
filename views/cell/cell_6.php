@@ -10,44 +10,44 @@
 
 </style>
 
-<div class="cell6 <?php if($isfeatured){ echo "featured"; } ?> <?php if($cell6mediatype=="youtube" || $cell6mediatype=="podcast"){ echo $cell6mediatype; } ?>" id="<?php echo $cell6id ?>">
+<div class="cell6 <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['id'] ?>">
 	<div class="container">
 		<div style="display: inline-block; width: 100%">
 			<div>
-				<?php if($cell6mediatype=="youtube"){ ?>
+				<?php if($celldict['mediatype']=="youtube"){ ?>
 				<?php 
 					//get youtubelink from imagepath
-					$n = strpos($cell6image, "?v=");
-					$startpoint = strrpos($cell6image, "?v=")+3;
-					$endpoint = strrpos($cell6image, "&", $startpoint);
+					$n = strpos($celldict['imagepath'], "?v=");
+					$startpoint = strrpos($celldict['imagepath'], "?v=")+3;
+					$endpoint = strrpos($celldict['imagepath'], "&", $startpoint);
 					$result = "";
 					if($endpoint==false){
-						$startpoint = strrpos($cell6image, ".be/")+4;
-						$endpoint = strrpos($cell6image, "?list=", $startpoint);
+						$startpoint = strrpos($celldict['imagepath'], ".be/")+4;
+						$endpoint = strrpos($celldict['imagepath'], "?list=", $startpoint);
 					}
 					if($endpoint!=false){
-						$result = substr($cell6image, $startpoint, ($endpoint-$startpoint));
+						$result = substr($celldict['imagepath'], $startpoint, ($endpoint-$startpoint));
 					}else{
-						$result = substr($cell6image, $n);
+						$result = substr($celldict['imagepath'], $n);
 					}
 					$cell6image = "https://www.youtube.com/embed/".$result."?controls=0";
 					// $cell6image = $result;
 				?>
 					
 					<div class="youtubediv" style="position: relative; display: inline-block; width: 100%; height: 44% margin: 0; padding: 0;">
-						<iframe width="100%" height="44%" src="<?php echo $cell6image ?>"></iframe>
+						<iframe width="100%" height="44%" src="<?php echo $celldict['imagepath'] ?>"></iframe>
 					</div>
 				<?php }else{ ?>
-				<div class="picture" style="<?php if($cell6image){ echo 'background-image: url('.$cell6image.');'; } ?>"></div>
+				<div class="picture" style="<?php if($celldict['imagepath']){ echo 'background-image: url('.$celldict['imagepath'].');'; } ?>"></div>
 				<div class="words">
 					<!-- <div class="text-container"> -->
-						<label class="category"><?php echo $cell6category ?></label>
+						<label class="category"><?php echo $celldict['category'] ?></label>
 						<br>
-						<label class="title"><?php if(isset($cell6title)){echo $cell6title;} ?></label>
+						<label class="title"><?php if(isset($celldict['title'])){echo $celldict['title'];} ?></label>
 						<br>
 						<br>
-						<?php if($showdate){ ?>
-							<label class="date"><?php echo $cell6date ?></label>
+						<?php if($celldict['date']!=""){ ?>
+							<label class="date"><?php echo $celldict['date'] ?></label>
 						<?php } ?>
 					<!-- </div> -->
 				</div>
