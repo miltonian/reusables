@@ -15,25 +15,16 @@
 	*/
 ?>
 <style>
-.cell3 { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; }
-	.cell3 .container{ position: relative; display: inline-block; margin: 0; padding: 0; margin: 0px 5px; text-align: center; float: left; background-color: white; padding-bottom: 10px; width: 100%; }
-	.cell3 h1 { cursor: pointer; }
-		.cell3 h1:hover {text-decoration: underline;}
-	.cell3 .picture{ position: relative; display: block; margin: 0; padding: 0; width: 450px; width: 100%; height: 300px; height: 335px; background-image: url("https://c.tadst.com/gfx/750w/sunrise-sunset-sun-calculator.jpg?1"); /* the root is entrenash */ background-size: cover; background-position: center; cursor: pointer; }
-	.cell3 .words{ position: relative; display: block; margin: 0; padding: 0; width: 450px; width: 100%; height: 70px; background-color: white; }
-	.cell3 .text-container{ position: relative; display: inline-block; top: 50%; transform: translateY(-50%); padding-left: 10px;  padding-right: 10px; max-width: calc(100% - 20px); }
-	.cell3 .grey-label{ font-style: italic; color: grey; font-size: 0.8em; font-weight: 300; top: 0;}
-	.cell3 a { text-decoration: none; color: #333333;} 
 </style>
 
-<div class="cell3 <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['id'] ?>">
+<div class="cell3 <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['post_id'] ?>">
 	<div class="container">
 		<div style="display:inline-block; width: 100%;">
 			<div>
-				<a href="<?php if($isadmin){ echo '#'; }else{ echo '/post/'.$celldict['id'] . '/' . preg_replace('/\PL/u', '-', preg_replace("/[^ \w]+/", "", $celldict['title']) ); } ?>"><div class="picture" style="<?php if($celldict['imagepath']){ echo 'background-image: url('.$celldict['imagepath'].');'; } ?>"></div></a>
+				<a href="<?php if($isadmin){ echo '#'; }else{ echo '/post/'.$celldict['post_id'] . '/' . preg_replace('/\PL/u', '-', preg_replace("/[^ \w]+/", "", $celldict['title']) ); } ?>"><div class="picture" style="<?php if($celldict['imagepath']){ echo 'background-image: url('.$celldict['imagepath'].');'; } ?>"></div></a>
 				<div class="words">
 					<div class="text-container">
-						<a href="<?php if($isadmin){ echo '#'; }else{ echo '/post/'.$celldict['id'] . '/' . preg_replace('/\PL/u', '', preg_replace("/[^ \w]+/", "", $celldict['title']) ); } ?>"><h1 class="title" style="font-size: 1.2em; position: relative; display: inline-block; margin: 0; padding: 0;"><?php if(isset($celldict['title'])){echo $celldict['title'];} ?></h1></a>
+						<a href="<?php if($isadmin){ echo '#'; }else{ echo '/post/'.$celldict['post_id'] . '/' . preg_replace('/\PL/u', '', preg_replace("/[^ \w]+/", "", $celldict['title']) ); } ?>"><h1 class="title" style="font-size: 1.2em; position: relative; display: inline-block; margin: 0; padding: 0;"><?php if(isset($celldict['title'])){echo $celldict['title'];} ?></h1></a>
 					</div>
 				</div>
 			</div>

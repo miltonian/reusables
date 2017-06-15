@@ -53,6 +53,12 @@ class ReusableClasses {
 		$View->set( 'sectiondict', $data );
 		echo $View->render();
 	}
+	public function table( $file, $data )
+	{
+		$View = View::factory( '../reusables/views/table/' . $file );
+		$View->set( 'tabledict', $data );
+		echo $View->render();
+	}
 
 
 

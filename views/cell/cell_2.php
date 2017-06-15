@@ -2,7 +2,7 @@
 
 	/*
 		[
-			"id"=>"",
+			"post_id"=>"",
 			"title"=>"",
 			"featured_imagepath"=>"",
 			"html_text"=>"",
@@ -24,7 +24,7 @@
 
 
 
-<div class="cell2 <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['id'] ?>">
+<div class="cell2 <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['post_id'] ?>">
 	<div class="container">
 		<div style="display: inline-block; width: 100%;">
 			<div>
