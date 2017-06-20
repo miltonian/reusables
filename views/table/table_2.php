@@ -29,15 +29,13 @@
 
 <div class="table_1">
 	<div class="table">
-			<?php $i=0;
+		<?php 
+			$i=0;
 			foreach ($tabledict['postarray'] as $post) { 
-				if($i==0 || sizeof($tabledict['postarray']) < 4 ){
-					$ReusableClasses->cell( "cell_8", $post );
-				}else{
-					$ReusableClasses->cell( "cell_2", $post );
-				}
-				$i++;
-			} ?>
+				$ReusableClasses->cell( "cell_9", $post );
+			}
+			$i++;
+		?>
 	</div>
 </div>
 

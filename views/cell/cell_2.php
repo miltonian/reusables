@@ -12,6 +12,7 @@
 
 	if(!isset($cell2mediatype)){ $cell2mediatype=""; }
 	if( !isset($isfeatured) ){ $isfeatured=false; }
+	if( !isset($isadmin) ){ $isadmin=false; }
 
 	// $celldict
 
@@ -28,12 +29,16 @@
 	<div class="container">
 		<div style="display: inline-block; width: 100%;">
 			<div>
-				<div class="picture" style="<?php if($celldict['featured_imagepath']){ echo 'background-image: url('.$celldict['featured_imagepath'].');'; } ?>"></div>
+				<a href="<?php if($isadmin){ echo '#'; }else{ echo '/post/'.$celldict['post_id'] . '/' . preg_replace('/\PL/u', '-', preg_replace("/[^ \w]+/", "", $celldict['title']) ); } ?>">
+					<div class="picture" style="<?php if($celldict['featured_imagepath']){ echo 'background-image: url('.$celldict['featured_imagepath'].');'; } ?>"></div>
+				</a>
 				<div class="words">
 					<div class="text-container">
 						<!-- <label class="grey-label">Today</label> -->
 						<br>
-						<label class="title" style=""><?php if(isset($celldict['title'])){ echo $celldict['title']; } ?></label>
+						<a href="<?php if($isadmin){ echo '#'; }else{ echo '/post/'.$celldict['post_id'] . '/' . preg_replace('/\PL/u', '', preg_replace("/[^ \w]+/", "", $celldict['title']) ); } ?>">
+							<label class="title" style=""><?php if(isset($celldict['title'])){ echo $celldict['title']; } ?></label>
+						</a>
 						<br>
 						<label class="grey-label"><?php echo implode(' ', array_slice( explode(' ', strip_tags($celldict['html_text'])), 0, 10) ); ?>...</label>
 					</div>

@@ -1,8 +1,12 @@
 <?php
 	/*
-		$sectiondict
-
-
+		$sectiondict = [
+			"featured_imagepath"=>"",
+			"logo_imagepath"=>"",
+			"title"=>"",
+			"adposition"=>0,
+			"desc"=>""
+		]
 	*/
 ?>
 

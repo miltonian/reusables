@@ -4,6 +4,20 @@
 	if(!isset($showdate)){$showdate=false;}
 	if(!isset($cell7mediatype)){ $cell7mediatype=""; }
 	if(!isset($isfeatured)){ $isfeatured=false; }
+
+	if(!isset($isadmin)){ $isadmin=false; }
+
+	/*
+		$postdict = [
+				"isfeatured"=>false,
+				"mediatype"=>"",
+				"post_id"=>"",
+				"title"=>"",
+				"featured_imagepath"=>"",
+				"date"=>"",
+			]
+	*/
+
 ?>
 
 
@@ -89,7 +103,7 @@
 
 </style>
 
-<div class="cell7 <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['id'] ?>" style="background-image: url(<?php echo $celldict['imagepath'] ?>)">
+<div class="cell7 <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['post_id'] ?>" style="background-image: url(<?php echo $celldict['featured_imagepath'] ?>)">
 		<div class="gradient"></div>
 		<label class="title mobile" style="font-size: <?php echo $fontsizemobile ?>"><?php echo $celldict['title'] ?></label>
 		<label class="title desktop" style="font-size: <?php echo $fontsize ?>"><?php echo $celldict['title'] ?></label>

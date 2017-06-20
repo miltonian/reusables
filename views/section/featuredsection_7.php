@@ -1,15 +1,11 @@
 <?php
 	/*
-		$sectiondict
-		
-		[
-			"adposition"=>0,
-			"header"=>"",
+		$sectiondict = [
 			"featured_imagepath"=>"",
 			"logo_imagepath"=>"",
 			"title"=>"",
-			"desc"=>"",
-			"postsarray"=>[]
+			"adposition"=>0,
+			"desc"=>""
 		]
 	*/
 ?>

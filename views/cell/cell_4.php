@@ -1,6 +1,8 @@
 <?php 
 	if(!isset($cell4mediatype)){ $cell4mediatype=""; }
 	if( !isset($isfeatured) ){ $isfeatured=false; }
+
+	if(!isset($isadmin)){ $isadmin=false; }
 ?>
 <style>
 
@@ -80,10 +82,14 @@
 	<div class="container">
 		<div style="display:inline-block; width: 100%">
 			<div>
-				<div class="picture" style="<?php if($celldict['imagepath']){ echo 'background-image: url('.$celldict['imagepath'].');'; } ?>"></div>
+				<a href="<?php if($isadmin){ echo '#'; }else{ echo '/post/'.$celldict['post_id'] . '/' . preg_replace('/\PL/u', '-', preg_replace("/[^ \w]+/", "", $celldict['title']) ); } ?>">
+					<div class="picture" style="<?php if($celldict['imagepath']){ echo 'background-image: url('.$celldict['imagepath'].');'; } ?>"></div>
+				</a>
 				<div class="words">
 					<div class="text-container">
-						<label class="title" style="font-size: 0.9em; position: relative; display: inline-block; margin: 0; padding: 0;"><?php if(isset($celldict['title'])){echo $celldict['title'];} ?></label>
+						<a href="<?php if($isadmin){ echo '#'; }else{ echo '/post/'.$celldict['post_id'] . '/' . preg_replace('/\PL/u', '', preg_replace("/[^ \w]+/", "", $celldict['title']) ); } ?>">
+							<label class="title" style="font-size: 0.9em; position: relative; display: inline-block; margin: 0; padding: 0;"><?php if(isset($celldict['title'])){echo $celldict['title'];} ?></label>
+						</a>
 					</div>
 				</div>
 			</div>

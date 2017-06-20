@@ -59,7 +59,111 @@ class ReusableClasses {
 		$View->set( 'tabledict', $data );
 		echo $View->render();
 	}
+	public function header( $file, $data )
+	{
+		$View = View::factory( '../reusables/views/header/' . $file );
+		$View->set( 'headerdict', $data );
+		echo $View->render();
+	}
+	public function wrapper( $file, $data )
+	{
+		$View = View::factory( '../reusables/views/wrapper/' . $file );
+		$View->set( 'children', $data['children'] );
+		$View->set( 'wrapperdict', $data );
+		echo $View->render();
+	}
+	public function postinternal( $file, $data )
+	{
+		$View = View::factory( '../reusables/views/postinternal/' . $file );
+		$View->set( 'sharingdict', $data['sharingdict'] );
+		$View->set( 'postdict', $data );
+		echo $View->render();
+	}
+	public function structure( $file, $data )
+	{
+		$View = View::factory( '../reusables/views/structure/' . $file );
+		$View->set( 'structuredict', $data );
+		echo $View->render();
+	}
+	public function sharing( $file, $data )
+	{
+		$View = View::factory( '../reusables/views/sharing/' . $file );
+		$View->set( 'sharingdict', $data );
+		echo $View->render();
+	}
 
+
+
+	public function getTestArrays(){
+		$sectiondict = [
+			"post_id"=>"0",
+			"title"=>"the title",
+			"html_text"=>"lorem ipsum stuff you know you know?",
+			"featured_imagepath"=>"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Blue_Bird_Vision_Montevideo_54.jpg/250px-Blue_Bird_Vision_Montevideo_54.jpg",
+			"isfeatured"=>false,
+			"mediatype"=>"image",
+		];
+		$postarray = array(
+			$sectiondict,
+			$sectiondict,
+			$sectiondict,
+			$sectiondict,
+			$sectiondict,
+			$sectiondict
+		);
+		$testarray = array(
+			"adposition"=>0,
+			"header"=>"this is header",
+			"featured_imagepath"=>"http://rocketjar.com/uploads/network-image/34.network-image.1496928583.IHS-(146).jpg",
+			"logo_imagepath"=>"http://rocketjar.com/uploads/network-logo/34.network-logo.1496928761.mocklogo.png",
+			"title"=>"Hamilton High School",
+			"desc"=>"Hamilton High School, Hamilton is a public four-year high school located at 123 Newton Ave in Bicentennial Park, Tennessee, in the United States. It is part of Consolidated High School District 230, which also includes Victor J. Andrew High School and Amos Alonzo Stagg High School. The school is named for first treasurer of the United States of America, Alexander Hamilton.",
+			"html_text"=>"Hamilton High School, Hamilton is a public four-year high school located at 123 Newton Ave in Bicentennial Park, Tennessee, in the United States. It is part of Consolidated High School District 230, which also includes Victor J. Andrew High School and Amos Alonzo Stagg High School. The school is named for first treasurer of the United States of America, Alexander Hamilton.",
+			"postarray"=>$postarray,
+			"goal"=>"4000000",
+			"funded"=>"2319900",
+			"funders"=>"6",
+			"sharingdict"=>["facebook"=>"", "twitter"=>""],
+			// "children"=>array(["filename"=>"header_3", "viewtype"=>"header", "data"=>[] ])
+		);
+		$rewardsdict = [
+			"price"=>"$150",
+			"title"=>"Sponsor a Seat",
+			"desc"=>"What a huge help you are! We thank you so much and would like to put your name on one of our seats.",
+		];
+		$rewardsarray = array(
+			$rewardsdict, $rewardsdict, $rewardsdict
+		);
+		$testarray2 = array(
+			"adposition"=>0,
+			"featured_imagepath"=>"http://rocketjar.com/uploads/network-image/34.network-image.1496928583.IHS-(146).jpg",
+			"logo_imagepath"=>"http://rocketjar.com/uploads/network-logo/34.network-logo.1496928761.mocklogo.png",
+			"title"=>"Rewards",
+			"desc"=>"Hamilton High School, Hamilton is a public four-year high school located at 123 Newton Ave in Bicentennial Park, Tennessee, in the United States. It is part of Consolidated High School District 230, which also includes Victor J. Andrew High School and Amos Alonzo Stagg High School. The school is named for first treasurer of the United States of America, Alexander Hamilton.",
+			"html_text"=>"Hamilton High School, Hamilton is a public four-year high school located at 123 Newton Ave in Bicentennial Park, Tennessee, in the United States. It is part of Consolidated High School District 230, which also includes Victor J. Andrew High School and Amos Alonzo Stagg High School. The school is named for first treasurer of the United States of America, Alexander Hamilton.",
+			"postarray"=>$rewardsarray,
+			"sharingdict"=>["facebook"=>"", "twitter"=>""],
+			"children"=>array(["filename"=>"header_4", "viewtype"=>"header", "data"=>[] ], ["filename"=>"table_2", "viewtype"=>"table", "data"=>$rewardsarray ])
+		);
+		for ($i=0; $i < sizeof($testarray2['children']); $i++) { 
+			$testarray2['children'][$i]['data'] = $testarray2;
+		}
+		$postinternalarray = $testarray;
+		for ($i=0; $i < 1; $i++) { 
+			$postinternalarray['children'][$i]['filename'] = "postinternal_3";
+			$postinternalarray['children'][$i]['viewtype'] = "postinternal";
+			$postinternalarray['children'][$i]['data'] = $testarray;
+		}
+
+		$sendback = [
+			"postarray"=>$postarray,
+			"testarray"=>$testarray,
+			"testarray2"=>$testarray2,
+			"postinternalarray"=>$postinternalarray
+		];
+		
+		return $sendback;
+	}
 
 
 
