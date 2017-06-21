@@ -6,8 +6,8 @@
 			]
 	*/
 
-	require_once('../reusables/classes/classes.php');
-	include_once '../reusables/classes/shortcuts.php';
+	require_once('../reusables/classes/MainClasses.php');
+	include_once '../reusables/classes/Shortcuts.php';
 	$ReusableClasses = new Reusables\Classes\ReusableClasses();
 	$shortcuts = new Reusables\Classes\Shortcuts();
 ?>
