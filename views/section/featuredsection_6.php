@@ -12,7 +12,7 @@
 
 <style>
 	.section_6 { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; }
-		.section_6 .backgroundimage { display: inline-block; position: absolute; margin: 0; padding: 0; width: 100%; height: 100%; background-size: cover; background-position: center; background-repeat: no-repeat; z-index: -1;}
+		.section_6 .backgroundimage { display: inline-block; position: absolute; margin: 0; padding: 0; width: 100%; height: 100%; background-size: cover; background-position: center; background-repeat: no-repeat; z-index: -1; left: 0;}
 			.section_6 .backgroundimage .gradient {display: inline-block; position: absolute; margin: 0; padding: 0; width: 100%; height: 40%; bottom: 0; left: 0; background: -webkit-linear-gradient(top,rgba(0,0,0,0),rgba(0,0,0,0.7)); background: -o-linear-gradient(bottom,rgba(0,0,0,0),rgba(0,0,0,0.7)); background: -moz-linear-gradient(bottom,rgba(0,0,0,0),rgba(0,0,0,0.7)); background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.7));}
 		.section_6 .header { display: inline-block; position: absolute; margin: 0; padding: 0; width: 100%; left: 0; }
 			.section_6 .header #logo { display: block; position: relative; margin: 0px 25px; padding: 0; top: 50%; transform: translateY(-50%); width: auto; height: auto; max-width: 20%; max-height: 80%; float: left; }

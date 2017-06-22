@@ -2,6 +2,7 @@
 	if(!isset($cell6mediatype)){ $cell6mediatype=""; }
 	if(!isset($showdate)){$showdate=false;}
 	if( !isset($isfeatured) ){ $isfeatured=false; }
+	if(!isset($celldict['post_id'])){ $celldict['post_id'] = $celldict['id']; }
 ?>
 
 <style>

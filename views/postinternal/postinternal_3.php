@@ -10,7 +10,7 @@
 <style>
 	.postinternal3 { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; }
 		.postinternal3 #featuredimage { display: inline-block; position: relative; margin: 0; padding: 0; background-size: cover; background-position: center; background-repeat: no-repeat; width: 100%; height: 0; padding-bottom: 50%; }
-		.postinternal3 .text-container { display: inline-block; position: relative; margin: 50px 0px; padding: 0;  }
+		.postinternal3 .text-container { display: inline-block; position: relative; margin: 50px 0px; padding: 0; text-align: left; }
 </style>
 
 <div class="postinternal3">

@@ -13,6 +13,7 @@
 	if(!isset($cell2mediatype)){ $cell2mediatype=""; }
 	if( !isset($isfeatured) ){ $isfeatured=false; }
 	if( !isset($isadmin) ){ $isadmin=false; }
+	if(!isset($celldict['post_id'])){ $celldict['post_id'] = $celldict['id']; }
 
 	// $celldict
 

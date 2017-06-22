@@ -3,7 +3,7 @@
 	// text right
 	
 	if(!isset($isadmin)){ $isadmin=false; }
-
+if(!isset($celldict['post_id'])){ $celldict['post_id'] = $celldict['id']; }
 ?>
 
 <style>

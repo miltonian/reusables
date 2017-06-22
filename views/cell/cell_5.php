@@ -1,6 +1,7 @@
 <?php 
 	if(!isset($cell5mediatype)){ $cell5mediatype=""; }
 	if( !isset($isfeatured) ){ $isfeatured=false; }
+	if(!isset($celldict['post_id'])){ $celldict['post_id'] = $celldict['id']; }
 ?>
 <style>
 

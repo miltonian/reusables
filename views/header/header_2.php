@@ -3,9 +3,9 @@
 ?>
 
 <style>
-	.header2 { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; height: 200px; background-size: cover; background-position: center; background-repeat: no-repeat; }
+	.header2 { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; height: 200px; background-size: cover; background-position: center; background-repeat: no-repeat; text-align: left;}
 		.header2 #logo { display: inline-block; position: relative; margin: 0; padding: 0; width: auto; height: auto; top: 50%; transform: translateY(-50%); }
-		.header2 .overlay { display: inline-block; position: absolute; margin: 0; padding: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.3); }
+		.header2 .overlay { display: inline-block; position: absolute; margin: 0; padding: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.3); }
 
 	@media (min-width: 0px) {
 		.header2 { height: 100px; }

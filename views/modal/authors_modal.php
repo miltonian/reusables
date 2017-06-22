@@ -431,24 +431,24 @@ function arraysEqual(arr1, arr2) {
 
 function attachauthortobutton(){
 	$('.authorcellbutton').click( function() {
-		var inputdict = <?php echo json_encode($authorsarray) ?>[this.id];
+		// var inputdict = <?php /*echo json_encode($authorsarray)*/ ?>[this.id];
 		
-		var name = inputdict['name'];
-		var imagepath = inputdict['imagepath'];
-		var authorid = inputdict['id'];
+		// var name = inputdict['name'];
+		// var imagepath = inputdict['imagepath'];
+		// var authorid = inputdict['id'];
 						
-		$('.authorname').text(inputdict['name']);
+		// $('.authorname').text(inputdict['name']);
 		
-		$('#authorbutton').css('display', 'none');
-		$('.authorimg-label').css('display', 'inline-block');
-		$('.authorname').css('display', 'inline-block');
+		// $('#authorbutton').css('display', 'none');
+		// $('.authorimg-label').css('display', 'inline-block');
+		// $('.authorname').css('display', 'inline-block');
 		
-		$('.authorimg-label').attr('src', imagepath);
-		$('#authorid').val(authorid);
+		// $('.authorimg-label').attr('src', imagepath);
+		// $('#authorid').val(authorid);
 
-		$(this).off("click");
+		// $(this).off("click");
 		
-		closethings();
+		// closethings();
 	});
 }
 	

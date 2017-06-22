@@ -5,6 +5,9 @@
 
 // namespace Reusables\Classes;
 
+require_once 'classes/classes.php';
+$MainClasses = new MainClasses();
+
 class ReusableClasses {
 	
 	public $PDO; // PHP Data Object
@@ -221,6 +224,44 @@ class ReusableClasses {
 		];
 
 		return $sendback;
+	}
+
+	public static function getPosts( $type )
+	{
+		$MainClasses = new MainClasses();
+		$query = 'SELECT posts.* FROM posts WHERE posts.id > ? AND posts.scheduled<? ORDER BY posts.date_made DESC, posts.id DESC LIMIT 20';
+		$values = [ 0, time() ];
+		$type = "select";
+		return $MainClasses->querySQL( $query, $values, $type )[1];
+	}
+
+	public static function getNetworkInfo( $networkid )
+	{
+		$MainClasses = new MainClasses();
+		$query = 'SELECT networks.* FROM networks WHERE networks.id=?';
+		$values = [ $networkid ];
+		$type = "select";
+		$networkname = $MainClasses->querySQL( $query, $values, $type )[1][0]['name'];
+
+		$query = 'SELECT network_info.* FROM network_info WHERE network_info.network_id=?';
+		$values = [ $networkid ];
+		$type = "select";
+		$result = $MainClasses->querySQL( $query, $values, $type )[1];
+		$networkdict = [];
+		foreach ($result as $pair) {
+			$networkdict[$pair['maininfo_key']] = $pair['maininfo_value'];
+		}
+		$networkdict['name'] = $networkname;
+
+		return $networkdict;
+	}
+	public static function getPostInfo( $postid )
+	{
+		$MainClasses = new MainClasses();
+		$query = 'SELECT posts.* FROM posts WHERE posts.id = ?';
+		$values = [ $postid ];
+		$type = "select";
+		return $MainClasses->querySQL( $query, $values, $type )[1][0];
 	}
 
 
