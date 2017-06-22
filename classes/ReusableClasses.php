@@ -3,10 +3,7 @@
 -------- Date:    3/20/2015
 -------- Purpose: Class to process database requests. Contains functionality for Loop server-side operations. */
 
-namespace Reusables\Classes;
-
-require_once 'View.php';
-
+// namespace Reusables\Classes;
 
 class ReusableClasses {
 	
@@ -15,7 +12,7 @@ class ReusableClasses {
 	private $cryptKey = "Rxp45dn142etvQk9e17Oo3nx2xJKfkZs"; // Encryption Key
 
 	//protected static
-	public function capture( $view_filename, array $view_data )
+	public static function capture( $view_filename, array $view_data )
 	{
 		// Import the view variables to local namespace
 		extract( $view_data, EXTR_SKIP );
@@ -26,7 +23,7 @@ class ReusableClasses {
 		try
 		{
 			// Load the view within the current scope
-			include '../reusables/views/'.$view_filename;
+			include 'reusables/views/'.$view_filename;
 		}
 		catch( \Exception $e )
 		{
@@ -41,60 +38,70 @@ class ReusableClasses {
 		return ob_get_clean();
 	}
 
-	public function cell( $file, $data )
+	public static function cell( $file, $data )
 	{
-		$View = View::factory( '../reusables/views/cell/' . $file );
+		$View = View::factory( 'reusables/views/cell/' . $file );
 		$View->set( 'celldict', $data );
 		echo $View->render();
 	}
-	public function section( $file, $data )
+	public static function section( $file, $data )
 	{
-		$View = View::factory( '../reusables/views/section/' . $file );
+		$View = View::factory( 'reusables/views/section/' . $file );
 		$View->set( 'sectiondict', $data );
 		echo $View->render();
 	}
-	public function table( $file, $data )
+	public static function table( $file, $data )
 	{
-		$View = View::factory( '../reusables/views/table/' . $file );
+		$View = View::factory( 'reusables/views/table/' . $file );
 		$View->set( 'tabledict', $data );
 		echo $View->render();
 	}
-	public function header( $file, $data )
+	public static function header( $file, $data )
 	{
-		$View = View::factory( '../reusables/views/header/' . $file );
+		$View = View::factory( 'reusables/views/header/' . $file );
 		$View->set( 'headerdict', $data );
 		echo $View->render();
 	}
-	public function wrapper( $file, $data )
+	public static function wrapper( $file, $data )
 	{
-		$View = View::factory( '../reusables/views/wrapper/' . $file );
+		$View = View::factory( 'reusables/views/wrapper/' . $file );
 		$View->set( 'children', $data['children'] );
 		$View->set( 'wrapperdict', $data );
 		echo $View->render();
 	}
-	public function postinternal( $file, $data )
+	public static function postinternal( $file, $data )
 	{
-		$View = View::factory( '../reusables/views/postinternal/' . $file );
+		$View = View::factory( 'reusables/views/postinternal/' . $file );
 		$View->set( 'sharingdict', $data['sharingdict'] );
 		$View->set( 'postdict', $data );
 		echo $View->render();
 	}
-	public function structure( $file, $data )
+	public static function structure( $file, $data )
 	{
-		$View = View::factory( '../reusables/views/structure/' . $file );
+		$View = View::factory( 'reusables/views/structure/' . $file );
 		$View->set( 'structuredict', $data );
 		echo $View->render();
 	}
-	public function sharing( $file, $data )
+	public static function sharing( $file, $data )
 	{
-		$View = View::factory( '../reusables/views/sharing/' . $file );
+		$View = View::factory( 'reusables/views/sharing/' . $file );
 		$View->set( 'sharingdict', $data );
 		echo $View->render();
 	}
 
 
 
-	public function getTestArrays(){
+	public static function getTestArrays( $whichone ){
+		$sendback = [];
+		if( $whichone==1 ){
+			$sendback=self::getTestForHome();
+		}else if( $whichone==2 ){
+			$sendback=self::getTestForPost();
+		}
+		return $sendback;
+	}
+
+	public static function getTestForHome(){
 		$sectiondict = [
 			"post_id"=>"0",
 			"title"=>"the title",
@@ -113,7 +120,68 @@ class ReusableClasses {
 		);
 		$testarray = array(
 			"adposition"=>0,
-			"header"=>"this is header",
+			"featured_imagepath"=>"http://rocketjar.com/uploads/network-image/34.network-image.1496928583.IHS-(146).jpg",
+			"logo_imagepath"=>"http://rocketjar.com/uploads/network-logo/34.network-logo.1496928761.mocklogo.png",
+			"title"=>"Hamilton High School",
+			"desc"=>"Hamilton High School, Hamilton is a public four-year high school located at 123 Newton Ave in Bicentennial Park, Tennessee, in the United States. It is part of Consolidated High School District 230, which also includes Victor J. Andrew High School and Amos Alonzo Stagg High School. The school is named for first treasurer of the United States of America, Alexander Hamilton.",
+			"html_text"=>"Hamilton High School, Hamilton is a public four-year high school located at 123 Newton Ave in Bicentennial Park, Tennessee, in the United States. It is part of Consolidated High School District 230, which also includes Victor J. Andrew High School and Amos Alonzo Stagg High School. The school is named for first treasurer of the United States of America, Alexander Hamilton.",
+			"postarray"=>$postarray,
+			"children"=>array(["filename"=>"header_3", "viewtype"=>"header", "data"=>[] ], ["filename"=>"table_1", "viewtype"=>"table", "data"=>[] ])
+		);
+		for ($i=0; $i < sizeof($testarray['children']); $i++) { 
+			$testarray['children'][$i]['data'] = $testarray;
+		}
+		$sectiondict1 = [
+			"featured_imagepath"=>"http://rocketjar.com/uploads/network-image/34.network-image.1496928583.IHS-(146).jpg",
+			"logo_imagepath"=>"http://rocketjar.com/uploads/network-logo/34.network-logo.1496928761.mocklogo.png",
+			"title"=>"Hamilton High School",
+			"adposition"=>0,
+			"desc"=>"Hamilton High School, Hamilton is a public four-year high school located at 123 Newton Ave in Bicentennial Park, Tennessee, in the United States. It is part of Consolidated High School District 230, which also includes Victor J. Andrew High School and Amos Alonzo Stagg High School. The school is named for first treasurer of the United States of America, Alexander Hamilton."
+		];
+		$postdict = [
+			"isfeatured"=>false,
+			"mediatype"=>"image",
+			"post_id"=>"0",
+			"title"=>"The Title",
+			"html_text"=>"lorem ipsum stuff you know you know?",
+			"featured_imagepath"=>"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Blue_Bird_Vision_Montevideo_54.jpg/250px-Blue_Bird_Vision_Montevideo_54.jpg",
+			"date"=>"",
+		];
+		$tabledict = [
+			"postarray"=>array($postdict, $postdict, $postdict, $postdict, $postdict, $postdict, $postdict, $postdict)
+		];
+
+		$sendback = [
+			"postarray"=>$postarray,
+			"testarray"=>$testarray,
+			"sectiondict1"=>$sectiondict1,
+			"tabledict"=>$tabledict
+		];
+
+		return $sendback;
+	}
+
+	public static function getTestForPost(){
+		$sectiondict = [
+			"post_id"=>"0",
+			"title"=>"the title",
+			"html_text"=>"lorem ipsum stuff you know you know?",
+			"featured_imagepath"=>"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Blue_Bird_Vision_Montevideo_54.jpg/250px-Blue_Bird_Vision_Montevideo_54.jpg",
+			"isfeatured"=>false,
+			"mediatype"=>"image",
+		];
+		$postarray = array(
+			$sectiondict,
+			$sectiondict,
+			$sectiondict,
+			$sectiondict,
+			$sectiondict,
+			$sectiondict
+		);
+		// only one featured_imagepath per post
+		// only one logo_imagpeath per post
+		$testarray = array(
+			"adposition"=>0,
 			"featured_imagepath"=>"http://rocketjar.com/uploads/network-image/34.network-image.1496928583.IHS-(146).jpg",
 			"logo_imagepath"=>"http://rocketjar.com/uploads/network-logo/34.network-logo.1496928761.mocklogo.png",
 			"title"=>"Hamilton High School",
@@ -123,8 +191,7 @@ class ReusableClasses {
 			"goal"=>"4000000",
 			"funded"=>"2319900",
 			"funders"=>"6",
-			"sharingdict"=>["facebook"=>"", "twitter"=>""],
-			// "children"=>array(["filename"=>"header_3", "viewtype"=>"header", "data"=>[] ])
+			"sharingdict"=>["facebook"=>"", "twitter"=>""]
 		);
 		$rewardsdict = [
 			"price"=>"$150",
@@ -142,18 +209,9 @@ class ReusableClasses {
 			"desc"=>"Hamilton High School, Hamilton is a public four-year high school located at 123 Newton Ave in Bicentennial Park, Tennessee, in the United States. It is part of Consolidated High School District 230, which also includes Victor J. Andrew High School and Amos Alonzo Stagg High School. The school is named for first treasurer of the United States of America, Alexander Hamilton.",
 			"html_text"=>"Hamilton High School, Hamilton is a public four-year high school located at 123 Newton Ave in Bicentennial Park, Tennessee, in the United States. It is part of Consolidated High School District 230, which also includes Victor J. Andrew High School and Amos Alonzo Stagg High School. The school is named for first treasurer of the United States of America, Alexander Hamilton.",
 			"postarray"=>$rewardsarray,
-			"sharingdict"=>["facebook"=>"", "twitter"=>""],
-			"children"=>array(["filename"=>"header_4", "viewtype"=>"header", "data"=>[] ], ["filename"=>"table_2", "viewtype"=>"table", "data"=>$rewardsarray ])
+			"sharingdict"=>["facebook"=>"", "twitter"=>""]
 		);
-		for ($i=0; $i < sizeof($testarray2['children']); $i++) { 
-			$testarray2['children'][$i]['data'] = $testarray2;
-		}
 		$postinternalarray = $testarray;
-		for ($i=0; $i < 1; $i++) { 
-			$postinternalarray['children'][$i]['filename'] = "postinternal_3";
-			$postinternalarray['children'][$i]['viewtype'] = "postinternal";
-			$postinternalarray['children'][$i]['data'] = $testarray;
-		}
 
 		$sendback = [
 			"postarray"=>$postarray,
@@ -161,7 +219,7 @@ class ReusableClasses {
 			"testarray2"=>$testarray2,
 			"postinternalarray"=>$postinternalarray
 		];
-		
+
 		return $sendback;
 	}
 

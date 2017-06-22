@@ -3,28 +3,14 @@
 -------- Date:    3/20/2015
 -------- Purpose: Class to process database requests. Contains functionality for Loop server-side operations. */
 
-namespace Reusables\Classes;
-
-require_once 'View.php';
-require_once 'MainClasses.php';
-
-$ReusableClasses = new ReusableClasses();
-
+// namespace Reusables\Classes;
 
 class Wrapper {
 
-	public static function add( $file, $data, $children=null )
+	public static function wrapper1( $data, $children )
 	{
-		$View = View::factory( '../reusables/views/wrapper/' . $file );
-		$View->set( 'children', $children );
+		$View = View::factory( 'reusables/views/wrapper/wrapper_1' );
 		$View->set( 'wrapperdict', $data );
-		return $View->render();
-	}
-
-	public static function wrapper1( $children )
-	{
-		// exit(json_encode($children));
-		$View = View::factory( '../reusables/views/wrapper/wrapper_1' );
 		$View->set( 'children', $children );
 		return $View->render();
 	}

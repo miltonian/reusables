@@ -118,7 +118,7 @@
 				
 				var gotothis;
 				var whichfeatured;
-				var posturl = '<?php echo $baseurlminimal ?>post/';
+				var posturl = '/post/';
 				// window.selectedfeatured = this.id;
 				var thedict;
 				
@@ -127,7 +127,7 @@
 					// $('.articlespopview').css('display', 'inline-block');
 					//updateifvideo(type, path, div);
 					if(window.selectedfeatured==null || window.selectedfeatured==""){
-						window.location.href = "<?php echo $baseurlminimal ?>editing/post?p="+this.id;
+						window.location.href = "/editing/post?p="+this.id;
 					}else{
 						$('.articlesbackground').css('display', 'inline-block');
 						$('.articlespopview').css('display', 'inline-block');
@@ -151,7 +151,7 @@
 					// 	window.location.href = thehref+'&'+urltitle;
 					// }
 					// window.location.href = "http://theanywherecard.com/experiencenash_dev/post?p="+this.id;
-					window.location.href = "<?php echo $baseurlminimal ?>post/"+this.id+"/"+$(this).find('.title').text().replace(/\W/g, '-');
+					window.location.href = "/post/"+this.id+"/"+$(this).find('.title').text().replace(/\W/g, '-');
 				}
 			});
 		}

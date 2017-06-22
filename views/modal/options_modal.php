@@ -68,12 +68,12 @@
 
 
 
-<div class='addnewoptionsbackground backgroundoverlay' style='z-index: 5;'>
+<div class='addnewoptionsbackground backgroundoverlay' style='z-index: 5; display: none;'>
 	<div class='addnewoptionsdiv'>
 		<button class='closebutton'></button>
 		<p class='viewtitle' style='font-size: 1.2em; margin-top: 20px; margin-bottom: 20px;'>Select type</p>
 		<div style='position: relative; display: inline-block; text-align: center; margin: 0; padding: 0; margin-top: 10px; '>
-			<?php if($optionsmodalarray['article']){ ?><a href='<?php echo $baseurlminimal ?>editing/post'><button class='optionbuttons' id='articlebutton' style='margin-right: 10px; margin-top: 10px;'>Article</button></a><?php } ?>
+			<?php if($optionsmodalarray['article']){ ?><a href='/editing/post'><button class='optionbuttons' id='articlebutton' style='margin-right: 10px; margin-top: 10px;'>Article</button></a><?php } ?>
 			<?php if($optionsmodalarray['podcast']){ ?><button class='optionbuttons' id='podcastbutton' style='margin-left: 10px;'>Podcast</button><br><?php } ?>
 			<?php if($optionsmodalarray['youtube']){ ?><button class='optionbuttons' id='youtubebutton' style='margin-top: 10px;'>Youtube</button><?php } ?>
 		</div>

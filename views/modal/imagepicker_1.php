@@ -1,6 +1,7 @@
 <?php
 
-	if(!isset($imagepickerarray)){ $imagepickerarray=array(); }
+	if(!isset($sectiondict['imagepickerarray'])){ $sectiondict['imagepickerarray']=array(); }
+	$imagepickerarray = $sectiondict['imagepickerarray'];
 // exit(json_encode($imagepickerarray));
 ?>
 
@@ -102,7 +103,7 @@
 			<div class='table main'>
 			<?php for($i=0;$i<sizeof($imagepickerarray);$i++){ ?>
 				<div class="cell" id="<?php echo $imagepickerarray[$i]['id'] ?>">
-					<img class="image" src="<?php if(substr($imagepickerarray[$i]['imagepath'], 0,1) != '/'){ echo $imagepickerarray[$i]['imagepath']; }else{ echo substr_replace($imagepickerarray[$i]['imagepath'], $baseurlminimal, 0, 1); } ?>" >
+					<img class="image" src="<?php if(substr($imagepickerarray[$i]['imagepath'], 0,1) != '/'){ echo $imagepickerarray[$i]['imagepath']; }else{ echo substr_replace($imagepickerarray[$i]['imagepath'], '/', 0, 1); } ?>" >
 				</div>
 			<?php } ?>
 			</div>
@@ -110,7 +111,10 @@
 	</div>
 </div>
 
-<?php include $docroot.'/reusables/views/getimageview_1.php'; ?>
+<?php 
+	// include $docroot.'/reusables/views/getimageview_1.php'; 
+	echo Modal::make( "getimageview_1", [] );
+?>
 
 
 <script>
@@ -144,7 +148,7 @@ class ImagePicker1 {
 		var fd = new FormData();
 		fd.append('image_id', imageid);
 		jQuery.ajax({
-		    url: '<?php echo $baseurlminimal ?>reusables/functions/getimagefromid.php',
+		    url: 'reusables/functions/getimagefromid.php',
 		    data: fd,
 		    cache: false,
 		    contentType: false,
@@ -169,7 +173,7 @@ class ImagePicker1 {
 				// var imagepath = imagepickerarray[0]['imagepath'];
 				var imagepath = imagedict['imagepath'];
 				if(imagepath.substring(0,1) == "/"){
-					imagepath = '<?php echo $baseurlminimal ?>' + imagepath.replace('/', '');
+					imagepath = '' + imagepath.replace('/', '');
 				}
 				// alert(imagepath);
 				$(image).attr('src', imagepath);
@@ -184,7 +188,7 @@ class ImagePicker1 {
 				if(attachedgallery){
 					let backgroundimage = imagepickerarray[0]['imagepath']
 					if(backgroundimage.charAt[0]=="/"){
-						backgroundimage = '<?php echo $baseurlminimal ?>' + backgroundimage.replace('/', '');
+						backgroundimage = '' + backgroundimage.replace('/', '');
 					}
 					$(attachedgallery).find('.backgroundimage').css('background-image', 'url('+backgroundimage+')');
 					$(attachedgallery).find('.image').css('background-image', 'url('+backgroundimage+')');

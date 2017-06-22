@@ -211,7 +211,7 @@
 
 <script>
 
-var authorsarray = <?php echo json_encode($authorsarray) ?>;
+var authorsarray = [];
 
 var addingnewauthor = false;
 $('.newauthorbutton').click( function() {
@@ -341,7 +341,7 @@ function setupAuthorsTableCell(celltype, inputdict, theindex, thisdiv) {
 		var deletebutton = document.createElement('a');
 		deletebutton.className = 'deleteauthorbutton';
 		deletebutton.id = 'deleteauthorbutton';
-		deletebutton.href = '/reusables/functions/deleteauthor_1.php?id='+inputdict['id']+'&fromurl='+'<?php echo $thisurl ?>';
+		// deletebutton.href = '/reusables/functions/deleteauthor_1.php?id='+inputdict['id']+'&fromurl='+'<?php /*echo $thisurl */ ?>//';
 		var deletetext = document.createTextNode("Delete");
 		deletebutton.appendChild(deletetext);
 		cellbutton.appendChild(deletebutton);
@@ -365,8 +365,8 @@ function addauthoraction(authorimg,authorname){
 	var loading = false;
 	//var newinputarray = inputarray;
 	var newinputarray = new Array();
-	var inputarray = <?php echo json_encode($authorsarray) ?>;
-	var docroot = '<?php echo $docroot ?>';
+	var inputarray = [];
+	var docroot = "";
 	for(i=0;i<inputarray.length;i++){
 		newinputarray.push(inputarray[i]);
 	}

@@ -5,12 +5,6 @@
 				"html_text"=>""
 			]
 	*/
-
-	require_once('../reusables/classes/MainClasses.php');
-	include_once '../reusables/classes/Shortcuts.php';
-	$ReusableClasses = new Reusables\Classes\ReusableClasses();
-	$shortcuts = new Reusables\Classes\Shortcuts();
-	
 ?>
 
 <style>
@@ -23,7 +17,7 @@
 	<div id="featuredimage" style="background-image: url('<?php echo $postdict['featured_imagepath'] ?>');" ></div>
 	<?php
 		if($sharingdict){
-			$ReusableClasses->sharing( "sharingbtns_1", $sharingdict );
+			ReusableClasses::sharing( "sharingbtns_1", $sharingdict );
 		}
 	?>
 	<div class="text-container">

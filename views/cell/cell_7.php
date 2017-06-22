@@ -134,11 +134,11 @@
 
 				var gotothis;
 				var whichfeatured;
-				var posturl = '<?php echo $baseurlminimal ?>post/';
+				var posturl = '/post/';
 				if($(this).hasClass("podcast")){
-					posturl = '<?php echo $baseurlminimal ?>brand-forward?p=';
+					posturl = '/brand-forward?p=';
 				}else if($(this).hasClass("youtube")){
-					posturl = '<?php echo $baseurlminimal ?>createorchestrate?p=';
+					posturl = '/createorchestrate?p=';
 				}
 				// window.selectedfeatured = this.id;
 				var thedict;

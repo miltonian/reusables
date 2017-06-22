@@ -1,14 +1,23 @@
 <?php
 
-if(!isset($isadmin)){ $isadmin=false; }
+if(!isset($GLOBALS['isadmin'])){ $GLOBALS['isadmin']=false; }
 
 ?>
 <style>
 	.backgroundoverlay { position: fixed; display: none; width: 100%; height: 100%; margin: 0; padding: 0; background-color: rgba( 0, 0, 0, 0.7); z-index: 4; text-align: center; left: 0; }
 	.closebutton { display: inline-block; position: absolute; border: 0; border-style: solid; border-width: 0.5px; border-color: #b4b4b4; border-radius: 50%; -webkit-appearance: none; width: 20px; height: 20px; background-color: white; cursor: pointer; background-image: url('http://www.alexanderhamiltondev.com/images/xmark-gray@2x.png'); background-size: 50% 50%; background-position: center; background-repeat: no-repeat; margin: 0;  padding: 0; left: 10px; top: 10px; }
+	.reusabletopbarbuttons {
+		float: right;
+		-webkit-appearance: none;
+		background: transparent;
+		border: 0;
+		height: 100%;
+		cursor: pointer;
+	}
+		.reusabletopbarbuttons:hover { background-color: rgba(0,0,0,0.1); }
 </style>
 
-<div class='reusabletopbar desktopadminbar' style='background-color: #F0EBF5; z-index: 3; display: none; left: 0;<?php if($isadmin){ echo "display: inline-block;"; } ?> height: 60px; width: 100%; top: 0;'>
+<div class='reusabletopbar desktopadminbar' style='background-color: #F0EBF5; z-index: 3; display: none; left: 0;<?php if($GLOBALS['isadmin']){ echo "display: inline-block;"; } ?> height: 60px; width: 100%; top: 0;'>
 	<label id=adminemail style='position: relative; display: inline-block; float: left; color: #333; height: 1em; top: 50%; margin-top: -0.5em; margin-left: 40px; font-weight: 300;'></label>
 	<label class='edit-status' style='position: relative; display: inline-block; float: left; color: #333; height: 1em; top: 50%; margin-top: -0.5em; margin-left: 5px; font-weight: 600;'> - Normal Mode</label>
 	<button id='editbutton' class='reusabletopbarbuttons' style='color: #333;'>Edit: On/<strong>Off</strong></button>
@@ -20,12 +29,12 @@ if(!isset($isadmin)){ $isadmin=false; }
 	
 		<script>
 			
-			var thisurl = <?php echo json_encode($thisurl) ?>;
+			var thisurl = "";
 			
 			window.selectedfeatured = '';
 
-			<?php if($isadmin){ ?>
-				$('#adminemail').text('<?php echo $email ?>');
+			<?php if($GLOBALS['isadmin']){ ?>
+				$('#adminemail').text('<?php echo $navdict['email'] ?>');
 				$('#editbutton').off("click");
 				$('#editbutton').click(function(){
 					<?php 
@@ -54,13 +63,10 @@ if(!isset($isadmin)){ $isadmin=false; }
 			<?php } ?>
 			
 			var editingon = false;
-			function showadminbar(device,email){
-				if(device == 'mobile'){
-					$('.mobileadminbar').css({'display': 'block'});
-				}else{
+			function showadminbar(email){
+				
 					$('.desktopadminbar').css({'display': 'inline-block'});
 					$('.desktopnav').css({'margin-top': '60px'});
-				}
 				$('#adminemail').text(email);
 				$('#editbutton').off("click");
 				$('#editbutton').click(function(){ edittoggle(); });

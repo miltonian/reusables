@@ -121,7 +121,7 @@ var maincategories = '<?php echo json_encode($maincategoriesmodalarray) ?>';
 var categories = '<?php echo json_encode($categoriesmodalarray) ?>';
 
 
-var thisurl = <?php echo json_encode($thisurl) ?>;
+var thisurl = "";
 
 $(document).ready(function(){
 
@@ -197,7 +197,7 @@ $(document).ready(function(){
 				if( featuredsectionid!="" && featuredsectionid!="-1" && sortorder!="" && sortorder!="-1" ){
 					var thevalue = this.id;
 					var type = "category";
-					window.location.href = '<?php echo $baseurlminimal ?>reusables/functions/changefeaturedcontent_1.php?thevalue='+thevalue+'&featuredsectionid='+featuredsectionid+'&sortorder='+sortorder+'&type='+type+'&fromurl=<?php echo $baseurlminimal ?>';
+					window.location.href = '/reusables/functions/changefeaturedcontent_1.php?thevalue='+thevalue+'&featuredsectionid='+featuredsectionid+'&sortorder='+sortorder+'&type='+type+'&fromurl=/';
 				}
 
 				if(selectedfeatured != ''){

@@ -5,11 +5,6 @@
 				"sidecolumn_right" => array(["viewtype"=>"","filename"=>"", "data"=>""])
 			]
 	*/
-
-	require_once('../reusables/classes/MainClasses.php');
-	include_once '../reusables/classes/Shortcuts.php';
-	$ReusableClasses = new Reusables\Classes\ReusableClasses();
-	$shortcuts = new Reusables\Classes\Shortcuts();
 ?>
 
 <style>

@@ -5,13 +5,6 @@
 		$wrapperdict = [ "children"=>$children ]
 	*/
 
-	require_once('../reusables/classes/MainClasses.php');
-	include_once '../reusables/classes/Shortcuts.php';
-	$ReusableClasses = new Reusables\Classes\ReusableClasses();
-	$shortcuts = new Reusables\Classes\Shortcuts();
-
-	// exit(json_encode($children));
-
 ?>
 
 <style>
@@ -24,7 +17,7 @@
 			$filename = $child['filename'];
 			$viewtype = $child['viewtype'];
 			$data = $child['data'];
-			$ReusableClasses->$viewtype( $filename, $data );
+			ReusableClasses::$viewtype( $filename, $data );
 		}
 	?>
 </div>

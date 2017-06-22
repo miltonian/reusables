@@ -146,7 +146,7 @@ var unpublishedarray = <?php echo json_encode($unpublishedarray) ?>;
 
 var currentarray;
 
-var thisurl = <?php echo json_encode($thisurl) ?>;
+var thisurl = "";
 
 	class ArticlesModal1 {
 		articleclicked(obj){
@@ -168,7 +168,7 @@ var thisurl = <?php echo json_encode($thisurl) ?>;
 			if( featuredsectionid!="" && featuredsectionid!="-1" && sortorder!="" && sortorder!="-1" ){
 				var thevalue = theid;
 				var type = "post";
-				window.location.href = '<?php echo $baseurlminimal ?>reusables/functions/changefeaturedcontent_1.php?thevalue='+thevalue+'&featuredsectionid='+featuredsectionid+'&sortorder='+sortorder+'&type='+type+'&fromurl=<?php echo $baseurlminimal ?>';
+				window.location.href = '/reusables/functions/changefeaturedcontent_1.php?thevalue='+thevalue+'&featuredsectionid='+featuredsectionid+'&sortorder='+sortorder+'&type='+type+'&fromurl=/';
 			}
 			if(window.selectedfeatured != ''){
 				var featuredid = '0';
@@ -184,7 +184,7 @@ var thisurl = <?php echo json_encode($thisurl) ?>;
 				}
 				
 			}else{
-				window.location.href = '<?php echo $baseurlminimal ?>editing/post/'+theid+'/edit';
+				window.location.href = '/editing/post/'+theid+'/edit';
 			}
 		}
 		dynamicsetup(){
@@ -351,7 +351,7 @@ function setupArticlesTableCell(celltype, inputdict, theindex, thisdiv) {
 		var deletebutton = document.createElement('a');
 		deletebutton.className = 'deletepostbutton';
 		deletebutton.id = 'deletepostbutton';
-		deletebutton.href = '<?php echo $baseurlminimal ?>reusables/functions/deletepost_1.php?id='+inputdict['id']+'&fromurl='+thisurl;
+		deletebutton.href = '/reusables/functions/deletepost_1.php?id='+inputdict['id']+'&fromurl='+thisurl;
 		var deletetext = document.createTextNode("Delete");
 		deletebutton.appendChild(deletetext);
 		cellbutton.appendChild(deletebutton);

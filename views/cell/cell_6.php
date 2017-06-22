@@ -80,7 +80,7 @@
 
 				var gotothis;
 				var whichfeatured;
-				var posturl = '<?php echo $baseurlminimal ?>post/';
+				var posturl = '/post/';
 				if($(this).hasClass("youtube") || $(this).hasClass("podcast")){
 					posturl = '?p=';
 				}
@@ -89,7 +89,7 @@
 				
 				if(editingon==true){
 					if(window.selectedfeatured==null || window.selectedfeatured==""){
-						window.location.href = "<?php echo $baseurlminimal ?>editing/post?p="+this.id;
+						window.location.href = "/editing/post?p="+this.id;
 					}else{
 						$('.articlesbackground').css('display', 'inline-block');
 						$('.articlespopview').css('display', 'inline-block');

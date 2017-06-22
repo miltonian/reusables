@@ -1,10 +1,10 @@
 <?php
 
-namespace Reusables\Classes;
+// namespace Reusables\Classes;
 
 class Shortcuts {
 	
-	public function changeURLForTesting($url){
+	public static function changeURLForTesting($url){
 
 			$docroot;
 			$baseurlminimal;

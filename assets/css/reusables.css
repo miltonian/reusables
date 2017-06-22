@@ -1,6 +1,6 @@
 button:focus {outline:0;}
 
-.backgroundcolor { background-color: white; }
+.backgroundcolor { background-color: #f0f0f5; }
 
 /*productcell2*/
 .productcell2 {
@@ -12,7 +12,7 @@ button:focus {outline:0;}
 }
 
 .productcell2 label { cursor: pointer; }
-	.productcell2 label:not(.grey-label):hover {text-decoration: underline;}
+	.productcell2 label:not(.grey-label):hover { text-decoration: underline; }
 
 .productcell2 .container{
 	position: relative;
@@ -117,7 +117,7 @@ button:focus {outline:0;}
 	padding: 0;
 }
 
-.cell2 label { cursor: pointer; }
+.cell2 label { cursor: pointer; text-decoration: none; color: #333333; }
 	.cell2 label:not(.grey-label):hover {text-decoration: underline;}
 
 .cell2 .container{
@@ -133,7 +133,7 @@ button:focus {outline:0;}
 	float: left;
 	background-color: white;
 	padding-bottom: 10px;
-	width: calc(100% - 20px);
+	width: calc(100% - 10px);
 }
 
 .cell2 .picture{
@@ -206,17 +206,29 @@ button:focus {outline:0;}
 	.cell2 {width: 90%; margin: 0px; margin-top: 10px; margin-bottom: 10px;}
 }
 @media (min-width: 768px) {
-	.cell2 {/*width: 350px;*/ width: 33%; float: left; margin: 10px 0px;}
+	.cell2 {/*width: 350px;*/ width: calc( 33.33% - 0px); float: left; margin: 10px 0px;}
 }
 @media (min-width: 992px) {
-	.cell2 {/*width: 350px;*/ width: 33%; float: left; margin: 10px 0px;}
+	.cell2 {/*width: 350px;*/ width: calc( 33.33% - 0px); float: left; margin: 10px 0px;}
 }
 
 .cell3 .title {
 	font-family: 'Slabo 27px', serif;
 	text-transform: uppercase;
 	font-weight: 500;
+	text-decoration: none;
+	color: #333333;
 }
+
+.cell3 { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; }
+	.cell3 .container{ position: relative; display: inline-block; margin: 0; padding: 0; margin: 0px 5px; text-align: center; float: left; background-color: white; padding-bottom: 10px; width: 100%; }
+	.cell3 h1 { cursor: pointer; }
+		.cell3 h1:hover {text-decoration: underline;}
+	.cell3 .picture{ position: relative; display: block; margin: 0; padding: 0; width: 450px; width: 100%; height: 300px; height: 335px; background-image: url("https://c.tadst.com/gfx/750w/sunrise-sunset-sun-calculator.jpg?1"); /* the root is entrenash */ background-size: cover; background-position: center; cursor: pointer; }
+	.cell3 .words{ position: relative; display: block; margin: 0; padding: 0; width: 450px; width: 100%; height: 70px; background-color: white; }
+	.cell3 .text-container{ position: relative; display: inline-block; top: 50%; transform: translateY(-50%); padding-left: 10px;  padding-right: 10px; max-width: calc(100% - 20px); }
+	.cell3 .grey-label{ font-style: italic; color: grey; font-size: 0.8em; font-weight: 300; top: 0;}
+	.cell3 a { text-decoration: none; color: #333333;} 
 
 
 /*cell 6 css*/
@@ -345,10 +357,10 @@ button:focus {outline:0;}
 	.youtubediv { pointer-events: none; }
 }
 @media (min-width: 768px) {
-	.cell6 {/*width: 350px;*/ width: calc(33% - 40px); margin: 10px 20px;}
+	.cell6 {/*width: 350px;*/ width: calc(33.33% - 40px); margin: 10px 20px;}
 }
 @media (min-width: 992px) {
-	.cell6 {width: calc(33% - 40px);}
+	.cell6 {width: calc(33.33% - 40px);}
 }
 
 

@@ -115,7 +115,7 @@ class GetImageView1Class {
 		fd.append('image_id', imageid);
 		fd.append('image', imagefile);
 		jQuery.ajax({
-		    url: '<?php echo $baseurlminimal ?>reusables/functions/addimagetopost1.php',
+		    url: 'reusables/functions/addimagetopost1.php',
 		    data: fd,
 		    cache: false,
 		    contentType: false,
@@ -127,7 +127,7 @@ class GetImageView1Class {
 		        attachedfunction(imageid);
 		    }
 		});
-		//    $.post( '<?php echo $baseurlminimal ?>reusables/functions/addimagetopost1.php', {'data': fd}, function(data){
+		//    $.post( '/reusables/functions/addimagetopost1.php', {'data': fd}, function(data){
 		    
 		//   }).fail(function(xhr, ajaxOptions, thrownError) { 
 		//       alert(thrownError); 
