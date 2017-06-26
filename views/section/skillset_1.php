@@ -82,11 +82,14 @@ if(!isset($sectiondict['preview'])){ $sectiondict['preview'] = 0; }
 var skillindex = <?php echo $skillindex ?>;
 var skillcount = <?php echo intval( sizeof($sectiondict['skillsarray']) ) ?>;
 
+<?php if( ((!$GLOBALS['isadmin'] && !$GLOBALS['isuser']) || ($GLOBALS['isadmin'] != $sectiondict['userprofile_userid'] && $GLOBALS['userid'] != $sectiondict['userprofile_userid'])) || $sectiondict['preview']==1 ){}else{ ?>
 if(skillcount<3){
 	for(var i=0;i<3;i++){
 		addskill();
 	}
 }
+
+<?php } ?>
 
 $('.skillset1 #add-skill').click(function(e){
 	e.preventDefault();

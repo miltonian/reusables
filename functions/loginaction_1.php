@@ -19,17 +19,16 @@ $password = $_POST[ 'password' ];
 require_once($docroot . '/classes/Secure.php');
 $SecureClasses = new SecureClasses();
 
-$result = $SecureClasses->checkAdminLogin( $email, $password );
-
-
+$result = $SecureClasses->checkUserLogin( $email, $password );
 
 if($result[0] == 1){
-	session_start();
+	// session_start();
 	$_SESSION["token"] = $result[1]['login_token'];
 	if( isset( $_GET['goto'] ) ){
 		header( 'Location: /' . $_GET['goto'] );
 	}else{
-		header( 'Location: /' );
+		// exit("hey");
+		header( 'Location: /admin/campaigns' );
 	}
 }else{
 	exit("Incorrect Login Information");

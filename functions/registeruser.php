@@ -18,11 +18,16 @@ if(isset($_POST[ 'first_name' ])){ $firstname = $_POST[ 'first_name' ]; }else{ $
 if(isset($_POST[ 'last_name' ])){ $lastname = $_POST[ 'last_name' ]; }else{ $lastname = null; }
 if(isset($_POST[ 'email' ])){ $email = $_POST[ 'email' ]; }else{ $email = null; }
 
-$query = "INSERT INTO users (time_created, first_name, last_name, email) VALUES ( ?, ?, ?, ? )";
-$values = [time(), $firstname, $lastname, $email];
+$fullname = $firstname . $lastname;
+$userslug = preg_replace('/\s+-\s*|\s*-\s+/','-',$fullname);
+
+$query = "INSERT INTO users (time_created, slug, first_name, last_name, email) VALUES ( ?, ?, ?, ?, ? )";
+$values = [time(), $userslug, $firstname, $lastname, $email];
 $type = "insert";
 $result = $MainClasses->querySQL( $query, $values, $type );
 
 $userid = $result[1];
+
+$MainClasses->generateNewUserSlug( $userid, $userslug, 0 );
 
 header( 'Location: /signup?email='.$_POST['email'].'&goto=userprofile' );

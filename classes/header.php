@@ -7,10 +7,11 @@
 
 class Header {
 
-	public static function make( $file, $data )
+	public static function make( $file, $data, $identifier )
 	{
 		$View = View::factory( 'reusables/views/header/' . $file );
 		$View->set( 'headerdict', $data );
+		$View->set( 'identifier', $identifier );
 		return $View->render();
 	}
 

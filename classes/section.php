@@ -7,10 +7,11 @@
 
 class Section {
 
-	public static function make( $file, $data )
+	public static function make( $file, $data, $identifier )
 	{
 		$View = View::factory( 'reusables/views/section/' . $file );
 		$View->set( 'sectiondict', $data );
+		$View->set( 'identifier', $identifier );
 		return $View->render();
 	}
 

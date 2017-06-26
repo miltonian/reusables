@@ -21,140 +21,8 @@ $imagepickerarray = $sliderarray;
 ?>
 
 <style>
-.slider2 {
-	display: inline-block;
-	position: relative;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
-	background-color: black;
-	/*background-color: white;*/
-	width: calc(100% - 40px);
-	/* margin-right: 30px; */
-	padding: 0 20px;
-	margin: 0;
-	overflow: hidden;
-}
-.slider2 .backgroundimage {
-	position: absolute;
-	display: inline-block;
-	margin: 0;
-	padding: 0;
-	top: -10%;
-	left: -10%;
-	width: 120%;
-	height: 120%;
-	background-position: center;
-	background-size: cover;
-	filter:blur(15px);
-}
-.slider2 .image {
-	display: inline-block;
-	position: absolute;
-	margin: 0;
-	padding: 0;
-	height: 100%;
-	width: 100%;
-	background-position: center;
-	background-size: contain;
-	background-size: cover;
-	background-repeat: no-repeat;
-}
-.slider2 .image.left {left: -100%;}
-.slider2 .image.mid {left: 0;}
-.slider2 .image.right {left: 100%;}
 
-.slider2 .buttons {
-	display: inline-block;
-	position: absolute;
-	margin: 0;
-	padding: 0;
-	height: 100%;
-	width: 20%;
-	top: 0;
-	z-index: 1;
-	-webkit-appearance: none;
-	border: 0;
-	cursor: pointer;
-	background: transparent;
-	background-position: center;
-	background-size: 30% auto;
-	background-repeat: no-repeat;
-	opacity: 0.8;
-	display: none;
-}
-.slider2 .buttons:hover {background-color: rgba(0,0,0,0.5);}
-.slider2 .buttons.left {
-	left: 0;
-	float: left;
-	background-image: url('/reusables/uploads/icons/leftarrow-white.png');
-}
-.slider2 .buttons.right {
-	right: 0;
-	float: right;
-	background-image: url('/reusables/uploads/icons/rightarrow-white.png');
-}
-.slider2.editing {
-	cursor: pointer;
-}
 
-.slider2 .image#two {
-	left: 0;
-   animation: cycle 15s ease infinite;
-}
-
-.slider2 .image#three {
-	left: 0;
-	transform: translateX(100%);
-   animation: cycletwo 15s ease infinite;
-}
-
-.slider2 .image#one {
-	left: 0;
-	transform: translateX(100%);
-   animation: cyclethree 15s ease infinite;
-}
-
-@keyframes cycle {
-   0% { transform: translateX(0%); z-index: 0;}
-   40% { transform: translateX(0%); z-index: 0;}
-   41% { transform: translateX(100%); z-index: 0;}
-   66% { transform: translateX(100%); z-index: -1;}
-   71% { transform: translateX(100%); z-index: -1;}
-   95% { transform: translateX(100%); z-index: 1;}
-   100% { transform: translateX(0%); z-index: 1;}
-}
-@keyframes cycletwo {
-   0% { transform: translateX(100%); }
-   33% { transform: translateX(100%); z-index: 1;}
-   38% { transform: translateX(0%); z-index: 0;}
-   66% { transform: translateX(0%); z-index: 0;}
-   71% { transform: translateX(0); z-index: -1;}
-   100% { transform: translateX(0%); z-index: -1;}
-}
-@keyframes cyclethree {
-   0% { transform: translateX(100%); }
-   66% { transform: translateX(100%); z-index: 99;}
-   71% { transform: translateX(0%); z-index: 0;}
-   100% { transform: translateX(0%); z-index: 0;}
-}
-
-/*.slider2 .image.right {
-	transition: 1s;
-    z-index: 2;
-    -webkit-animation: slide 0.5s forwards;
-    -webkit-animation-delay: 2s;
-    animation: slide 0.5s forwards;
-    animation-delay: 2s;
-}*/
-/*@-webkit-keyframes slide {
-    100% { left: 0; }
-}
-@keyframes slide {
-    100% { left: 0; }
-}*/
 </style>
 
 <?php 
@@ -162,7 +30,7 @@ $imagepickerarray = $sliderarray;
 	echo Modal::make( "imagepicker_1", [] );
 ?>
 
-<div class="slider2 <?php if($isediting){ echo 'editing'; } ?>">
+<div class="<?php echo $identifier ?> <?php if($isediting){ echo 'editing'; } ?>">
 	<div class="backgroundimage" style="background-image: url('<?php echo Shortcuts::changeURLForTesting($sliderarray[0]['imagepath']) ?>');"></div>
 	<div class="image left" id="one" style="background-image: url('<?php echo Shortcuts::changeURLForTesting($sliderarray[sizeof($sliderarray)-1]['imagepath']) ?>');"></div>
 	<div class="image mid" id="two" style="background-image: url('<?php echo Shortcuts::changeURLForTesting($sliderarray[0]['imagepath']) ?>');"></div>
@@ -180,11 +48,11 @@ var isediting = false;
 	isediting = true;
 <?php } ?>
 var currentindex = 0;
-$('.slider2.editing').click(function(e){
+$('.<?php echo $identifier ?>.editing').click(function(e){
 	e.preventDefault();
 	$('.imagepicker1').toggleClass('hide show');
 });
-$('.slider2 .buttons').click(function(e){
+$('.<?php echo $identifier ?> .buttons').click(function(e){
 	e.preventDefault();
 	if( $(this).hasClass('left') ){
 		// alert('left');
@@ -205,7 +73,7 @@ $('.slider2 .buttons').click(function(e){
 		moveright($('#two'));
 		moveright($('#three'));
 	}
-	$('.backgroundimage').css({'background-image': $('.slider2 .image.mid').css('background-image')});
+	$('.backgroundimage').css({'background-image': $('.<?php echo $identifier ?> .image.mid').css('background-image')});
 });
 function moveleft(img){
 	if(img.hasClass('mid')){
@@ -218,7 +86,6 @@ function moveleft(img){
 		if(currentindex<0){currentindex=slider2array.length-1;}
 		var previndex = currentindex-1;
 		if(previndex<0){ previndex=slider2array.length-1; }
-		// alert('prev:'+previndex)
 		
 		var backgroundimage = slider2array[previndex]['imagepath']
 		if(backgroundimage.substr(0,1)=="/"){

@@ -16,8 +16,8 @@
 <div class="postinternal3">
 	<div id="featuredimage" style="background-image: url('<?php echo $postdict['featured_imagepath'] ?>');" ></div>
 	<?php
-		if($sharingdict){
-			ReusableClasses::sharing( "sharingbtns_1", $sharingdict );
+		if($postdict['sharingdict']){
+			ReusableClasses::sharing( "sharingbtns_1", $postdict['sharingdict'] );
 		}
 	?>
 	<div class="text-container">
