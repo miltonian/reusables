@@ -7,7 +7,9 @@
 	if(!isset($templatedict['custompageid'])){ $templatedict['custompageid']="0"; }
 
 	$width="auto"; $height="auto";
-	if($templatedict['profile-pic']==""){ $width="250px"; $height="300px"; }
+	// exit(json_encode($templatedict));
+	if($templatedict['profile-pic']==""){ $width="250px"; $templatedict['profile-pic']="/reusables/uploads/icons/placeholder.png"; /*$height="300px";*/ }
+	if(!isset($templatedict['preview'])){ $templatedict['preview'] = 0; }
 ?>
 
 <style>
@@ -64,7 +66,7 @@
 </style>
 
 <div class="userprofile1">
-	<?php if(!$GLOBALS['isadmin'] || ($GLOBALS['isadmin'] && $GLOBALS['userid'] != $templatedict['userprofile_userid'])){ ?>
+	<?php if(((!$GLOBALS['isadmin'] && !$GLOBALS['isuser']) || ($GLOBALS['isadmin'] != $templatedict['userprofile_userid'] && $GLOBALS['userid'] != $templatedict['userprofile_userid'])) || $templatedict['preview']==1 ){ ?>
 	<h1 id="my-name"><?php echo $templatedict['my-name'] ?></h1>
 	<h2 id="i-do"><?php echo $templatedict['i-do'] ?></h2>
 	<div style="display: inline-block;">
@@ -73,7 +75,7 @@
 			<div style="width: 100%; margin-top: 20px; text-align: center;">
 				<?php 
 					// include $docroot . '/reusables/views/socialpagesbtns_1.php'; 
-					Button::make( 'socialpagesbtns_1', [] );
+					echo Sharing::make( 'socialpagesbtns_1', [] );
 				?>
 			</div>
 		</div>
@@ -82,16 +84,16 @@
 	<?php }else{ ?>
 		
 			<input type="hidden" id="custompage_id" name="custompage_id" value="<?php echo $templatedict['custompageid'] ?>">
-			<input type="text" id="my-name" name="name_my-name" placeholder="My Name Is..." value="<?php echo $templatedict['my-name'] ?>" >
-			<input type="text" id="i-do" name="name_i-do" placeholder="Short intro" value="<?php echo $templatedict['i-do'] ?>" >
+			<input type="text" id="my-name" name="name_my-name" placeholder="My Name Is..." value="<?php echo $templatedict['my-name'] ?>" style="padding: 10px; border-radius: 5px; border: 1px solid #e0e0e0; font-size: 3em; text-transform: uppercase; margin-bottom: 10px;">
+			<input type="text" id="i-do" name="name_i-do" placeholder="Short intro" value="<?php echo $templatedict['i-do'] ?>" style="padding: 10px; border-radius: 5px; border: 1px solid #e0e0e0; margin-bottom: 40px;">
 			<div style="display: inline-block;">
 				<div class="profilepic-container">
-					<label id="profilepic-label" for="profilepic-input" style="display: inline-block; position: relative; margin: 0; padding: 0; cursor: pointer;"><img id="profile-pic" src="<?php echo $templatedict['profile-pic'] ?>" width="<?php echo $width ?>" height="<?php echo $height ?>"></label>
+					<label id="profilepic-label" for="profilepic-input" style="display: inline-block; position: relative; margin: 0; padding: 0; cursor: pointer; float: left;"><img id="profile-pic" src="<?php echo $templatedict['profile-pic'] ?>" width="<?php echo $width ?>" height="<?php echo $height ?>"></label>
 					<input type="file" name="name_profile-pic" id="profilepic-input" style="display: inline-block; visibility: hidden; z-index: -1;">
-					<div style="width: 100%; margin-top: 20px; text-align: center;">
+					<div style="width: 100%; max-width: 250px; float: left; margin-top: 20px; text-align: center;">
 						<?php 
 							// include $docroot . '/reusables/views/socialpagesbtns_1.php'; 
-							Button::make( 'socialpagesbtns_1', [] );
+							echo Sharing::make( 'socialpagesbtns_1', [] );
 						?>
 					</div>
 				</div>

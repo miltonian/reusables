@@ -7,6 +7,14 @@
 
 class Wrapper {
 
+	public static function make( $data, $children )
+	{
+		$View = View::factory( 'reusables/views/wrapper/' . $file );
+		$View->set( 'wrapperdict', $data );
+		$View->set( 'children', $children );
+		return $View->render();
+	}
+
 	public static function wrapper1( $data, $children )
 	{
 		$View = View::factory( 'reusables/views/wrapper/wrapper_1' );

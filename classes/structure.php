@@ -7,11 +7,12 @@
 
 class Structure {
 
-	public static function make( $file, $data )
+	public static function make( $file, $data, $identifier )
 	{
-		echo Style::structure1();
+		echo Style::$file( $identifier );
 		$View = View::factory( 'reusables/views/structure/' . $file );
 		$View->set( 'structuredict', $data );
+		$View->set( 'identifier', $identifier );
 		return $View->render();
 	}
 

@@ -1,5 +1,5 @@
 <?php 
-$device = $GLOBALS['device'];
+
 ?>
 
 <style>

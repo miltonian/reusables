@@ -13,9 +13,8 @@ if($_SERVER['HTTP_HOST'] == "theanywherecard.com"){
 }
 
 require_once($docroot.'/classes/classes.php');
-require_once($docroot.'/reusables/classes/shortcuts.php');
+require_once($docroot.'/reusables/classes/Shortcuts.php');
 $MainClasses = new MainClasses();
-$shortcuts = new Shortcuts();
 
 if(isset($_POST[ 'form_name' ])){ $formname = $_POST[ 'form_name' ]; }else{ $formname = null; }
 if(isset($_POST[ 'old_imagepath' ])){ $oldimagepath = $_POST[ 'old_imagepath' ]; }else{ $oldimagepath = null; }
@@ -32,7 +31,7 @@ $result = $MainClasses->querySQL( $query, $values, $type );
 
 if($_FILES[ 'formimg' ]['name'] != null && $_FILES[ 'formimg' ]['name'] != ""){
 	$file = $_FILES[ 'formimg' ];
-	$imagepath = $shortcuts->uploadImage($file);
+	$imagepath = Shortcuts::uploadImage($file);
 }
 
 if( $result[0] == 1 ){

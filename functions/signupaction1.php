@@ -19,15 +19,13 @@ $password = $_POST[ 'password' ];
 require_once($docroot . '/classes/Secure.php');
 $SecureClasses = new SecureClasses();
 
-$result = $SecureClasses->checkAdminLogin( $email, $password );
-
-
+$result = $SecureClasses->signupNewUser( $email, $password );
 
 if($result[0] == 1){
 	session_start();
 	$_SESSION["token"] = $result[1]['login_token'];
-	if( isset( $_GET['goto'] ) ){
-		header( 'Location: /' . $_GET['goto'] );
+	if( isset( $_POST['goto'] ) ){
+		header( 'Location: /' . $_POST['goto'] );
 	}else{
 		header( 'Location: /' );
 	}

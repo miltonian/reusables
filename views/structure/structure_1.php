@@ -10,7 +10,7 @@
 <style>
 </style>
 
-<div class="structure_1">
+<div class="<?php echo $identifier ?>">
 	<div class="maincolumn">
 		<?php 
 			foreach ($structuredict['maincolumn'] as $view) {

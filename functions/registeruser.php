@@ -11,9 +11,8 @@ if($_SERVER['HTTP_HOST'] == "theanywherecard.com"){
 }
 
 require_once($docroot.'/classes/classes.php');
-require_once($docroot.'/reusables/classes/shortcuts.php');
+require_once($docroot.'/reusables/classes/Shortcuts.php');
 $MainClasses = new MainClasses();
-$shortcuts = new Shortcuts();
 
 if(isset($_POST[ 'first_name' ])){ $firstname = $_POST[ 'first_name' ]; }else{ $firstname = null; }
 if(isset($_POST[ 'last_name' ])){ $lastname = $_POST[ 'last_name' ]; }else{ $lastname = null; }
@@ -23,6 +22,7 @@ $query = "INSERT INTO users (time_created, first_name, last_name, email) VALUES 
 $values = [time(), $firstname, $lastname, $email];
 $type = "insert";
 $result = $MainClasses->querySQL( $query, $values, $type );
-// exit(json_encode($result));
 
-header( 'Location: ' . $baseurlminimal );
+$userid = $result[1];
+
+header( 'Location: /signup?email='.$_POST['email'].'&goto=userprofile' );

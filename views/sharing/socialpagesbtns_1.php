@@ -36,9 +36,9 @@ $linkedin_white = "https://theanywherecard.com/social_images/linkedin-image.png"
 .socialpagesbtns1 .social-icon:hover { -webkit-filter: grayscale(0%); filter: grayscale(0%); }
 
 .socialpagesbtns1 a {display: inline-block;}
-.socialpagesbtns1 .social-icon.facebook {background-image: url('<?php echo $baseurlminimal ?>reusables/uploads/icons/facebook-icon.png');}
-.socialpagesbtns1 .social-icon.twitter {background-image: url('<?php echo $baseurlminimal ?>reusables/uploads/icons/twitter-icon.png');}
-.socialpagesbtns1 .social-icon.instagram {background-image: url('<?php echo $baseurlminimal ?>reusables/uploads/icons/insta-icon.png');}
+.socialpagesbtns1 .social-icon.facebook {background-image: url('/reusables/uploads/icons/facebook-icon.png');}
+.socialpagesbtns1 .social-icon.twitter {background-image: url('/reusables/uploads/icons/twitter-icon.png');}
+.socialpagesbtns1 .social-icon.instagram {background-image: url('/reusables/uploads/icons/insta-icon.png');}
 	.socialpagesbtns1 .social-icon.facebook:hover {border: 2px solid #3b5998}
 	.socialpagesbtns1 .social-icon.twitter:hover {border: 2px solid #4099FF}
 	.socialpagesbtns1 .social-icon.instagram:hover {border: 2px solid #8a3ab9}

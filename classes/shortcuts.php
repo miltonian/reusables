@@ -43,6 +43,93 @@ class Shortcuts {
 		return $url;
 	}
 
+	public static function uploadImage($file){
+
+		$docroot;
+		$baseurlminimal;
+		if($_SERVER['HTTP_HOST'] == "theanywherecard.com"){
+			$docroot = $_SERVER['DOCUMENT_ROOT']."/experiencenash_dev";
+			$baseurlminimal = "/experiencenash_dev/";
+		}else{
+			$docroot = $_SERVER['DOCUMENT_ROOT'];
+			$baseurlminimal = "/";
+		}
+
+		$allowedImageExts = array("jpg", "jpeg", "gif", "png");
+		$allowedVideoExts = array("mp3", "mp4", "wma", "m4v", "mov", "wmv", "avi", "mpg", "ogv", "3gp", "3g2");
+		$allowedExts = array("jpg", "jpeg", "gif", "png", "mp3", "mp4", "wma", "m4v", "mov", "wmv", "avi", "mpg", "ogv", "3gp", "3g2");
+		$extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+
+		$extension = strtolower($extension);
+
+
+		$uploadOk = 0;
+
+		if( $file['name'] != null && $file['name'] != "" ){
+
+			if (($file["size"] < 20000000) && in_array($extension, $allowedExts)){
+		  
+				$newname = time()."_".$file["name"];
+				$newname = str_replace(" ", "_", $newname);
+
+				if ($file["error"] > 0)
+				{
+					//echo "Return Code: " . $_FILES["mediapath"]["error"] . "<br />";
+				}else{
+					if (file_exists($docroot."/reusables/uploads/" . $newname)){
+						$uploadOk = 0;
+					}else{
+						move_uploaded_file($file["tmp_name"], $docroot."/reusables/uploads/" . $newname);
+						if(filesize($docroot.'/reusables/uploads/' . $newname) > 3000000){
+							$scalefactor = round(100*(3000000 / filesize($docroot."/reusables/uploads/" . $newname)));
+							$result = self::convertImage($docroot.'/reusables/uploads/' . $newname, $docroot.'/reusables/uploads/thumbs_small/' . $newname, $scalefactor);
+						}else{
+							$result = self::convertImage($docroot.'/reusables/uploads/' . $newname, $docroot.'/reusables/uploads/thumbs_small/' . $newname, 100);
+						}
+						$uploadOk = 1;
+					}
+				}
+			}else{
+				$uploadOk = 0;
+			}
+
+			if($uploadOk != 0){
+				$mediapathname = $newname;
+				$imagepath = $baseurlminimal . "reusables/uploads/".$mediapathname;
+				return $imagepath;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
+
+	public static function convertImage($originalImage, $outputImage, $quality)
+	{
+	    // jpg, png, gif or bmp?
+	    //exit("hello");
+	    $exploded = explode('.',$originalImage);
+	    $ext = $exploded[count($exploded) - 1]; 
+
+	    if (preg_match('/jpg|jpeg/i',$ext))
+	        $imageTmp=imagecreatefromjpeg($originalImage);
+	    else if (preg_match('/png/i',$ext))
+	        $imageTmp=imagecreatefrompng($originalImage);
+	    else if (preg_match('/gif/i',$ext))
+	        $imageTmp=imagecreatefromgif($originalImage);
+	    else if (preg_match('/bmp/i',$ext))
+	        $imageTmp=imagecreatefrombmp($originalImage);
+	    else
+	        return 0;
+
+	    // quality is a value from 0 (worst) to 100 (best)
+	    imagejpeg($imageTmp, $outputImage, $quality);
+	    imagedestroy($imageTmp);
+
+	    return 1;
+	}
+
 
 }
 

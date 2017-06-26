@@ -132,12 +132,12 @@ if( !isset($brandname) ){ $brandname = "Brand Name"; }
 <div class="navbar2" style="<?php if($isadmin){ echo "margin-top: 60px"; } ?>">
 	<div class="container">
 		<div class="main-content">
-			<a href="<?php echo $baseurlminimal ?>">
+			<a href="/">
 				<div class="logo-div">
 					<?php if($brandlogo){ ?>
 						<img src=<?php echo $logoimgthumb ?> width="auto" height="auto">
 					<?php }else{ ?>
-						<h3><?php echo $brandname ?></h3>
+						<h3><?php echo $navdict['brandname'] ?></h3>
 					<?php } ?>
 					
 				</div>

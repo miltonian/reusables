@@ -28,16 +28,15 @@ $examplepostimg = 'https://theanywherecard.com/entrenash/post/media/images/examp
 	
 	position: relative;
 	display: inline-block;
-	background-color: red;
+	background: transparent;
 	margin: 0;
 	padding: 0;
-	width: 90%; 
+	width: 60%; 
 	min-height: 100px;
 	border-radius: 6px;
-	border-style: solid; 
-	border-width: 1px; 
-	border-color: #d0d0d3;
-	background-color: rgba(245,245,250,1);
+	border: 0;
+	/*background-color: rgba(245,245,250,1);*/
+	background-color: rgba(0,0,0,0.5);
 	text-align: center;
 	margin-bottom: 50px;
 	
@@ -80,7 +79,7 @@ $examplepostimg = 'https://theanywherecard.com/entrenash/post/media/images/examp
 	
 	display: inline-block; 
 	position: relative; 
-	background-color: white;
+	/*background-color: white;*/
 	margin: 0;
 	padding: 0;
 	border-radius: 6px;
@@ -93,6 +92,7 @@ $examplepostimg = 'https://theanywherecard.com/entrenash/post/media/images/examp
 	min-width: 200px;
 	color: #333333;
 	font-size: 1.2em;
+	background-color: rgba(255,255,255,0.2);
 	
 }
 
@@ -263,7 +263,8 @@ $examplepostimg = 'https://theanywherecard.com/entrenash/post/media/images/examp
 
 .registerform1 .field-wrapper {display: inline-block; position: relative; margin: 20px; padding: 0; width: calc(50% - 40px); float: left; text-align: left; margin-bottom: 5px;}
 			.registerform1 .field-wrapper label {margin-bottom: 5px;}
-			.registerform1 .field-wrapper input { display: inline-block; position: relative; margin: 0px; padding: 10px; width: 100%; border: 0; border: 1px solid #e0e0e0; border-radius: 5px; background-color: white; float: left; height: 50px; font-weight: 300; font-size: 1.1em; }
+			.registerform1 .field-wrapper input { display: inline-block; position: relative; margin: 0px; padding: 10px; width: 100%; border: 0; border: 1px solid #e0e0e0; border-radius: 5px; background-color: white; float: left; height: 50px; font-weight: 300; font-size: 1.1em; background-color: rgba(255,255,255,0.2); border: 0; background-color: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.2); font-weight: 500; color: white;}
+				.registerform1 .field-wrapper input::placeholder { color: white; font-weight: 300; }
 				.registerform1 input:focus {outline: none;}
 
 
@@ -278,11 +279,11 @@ $examplepostimg = 'https://theanywherecard.com/entrenash/post/media/images/examp
 			</div>
 		</div> -->
 		
-		<div class=firstdiv style='font-family: Muli, sans-serif; position: relative; display: inline-block; margin: 0; margin-top: 60px; padding: 0; width: 100%; max-width: 1200px;  text-align: center;'>
+		<div class=firstdiv style='font-family: Muli, sans-serif; position: relative; display: inline-block; margin: 0; margin-top: 0px; padding: 0; width: 100%; max-width: 1200px;  text-align: center; top: 50%; transform: translateY(-50%);'>
 			
 			<div class=firstmaincontent style='position: relative; display: inline-block; max-width: 1200px; width: 100%; text-align: center;'>
 				
-				<?php if( $GLOBALS['isadmin']==false ){ ?>
+				<!-- <?php if( $GLOBALS['isadmin']==false ){ ?>
 				<div class=bigad style='position: relative; display: inline-block; width: 100%; text-align: center;'>
 					<img src="<?php if(isset($sectiondict['formimg'])){ echo $sectiondict['formimg']; } ?>" style='position: relative; display: inline-block; width: 90%;'>
 				</div>
@@ -322,13 +323,13 @@ $examplepostimg = 'https://theanywherecard.com/entrenash/post/media/images/examp
 					</div>
 				</div>
 				</form>
-				<?php } ?>
+				<?php } ?> -->
 				
 				
 				
 				<form class='registerform1' method='post' action='registeruser.php'>
 					<div class='container' style='text-align: left; margin-top: 10px; margin-bottom: 30px; text-align: center;'>
-					<h2 style="width: calc(100% - 20px); padding: 0px 20px; text-align: center;">Register</h2>
+					<h2 style="width: calc(100% - 0px); padding: 0px 0px; text-align: center; color: white; font-weight: 400;">Register</h2>
 						<div class="field-wrapper">
 							<!-- <label>First name:</label><br> -->
 							<input type="text" name="first_name" placeholder="First Name" id="first_name">

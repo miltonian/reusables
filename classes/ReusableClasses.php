@@ -264,6 +264,29 @@ class ReusableClasses {
 		return $MainClasses->querySQL( $query, $values, $type )[1][0];
 	}
 
+	public static function getRewards( $postid )
+	{
+		$MainClasses = new MainClasses();
+		$query = 'SELECT customtable_rewards.* FROM customtable_rewards WHERE customtable_rewards.post_id=? ORDER BY customtable_rewards.amount DESC';
+		$values = [ $postid ];
+		$type = "select";
+		$rewardsarray = $MainClasses->querySQL( $query, $values, $type )[1];
+		for ($i=0; $i < sizeof($rewardsarray); $i++) { 
+			$rewardsarray[$i]['price'] = $rewardsarray[$i]['amount'];
+		}
+		return $rewardsarray;
+	}
+
+	public static function getPostFundsDict( $postid )
+	{
+		$MainClasses = new MainClasses();
+		$query = 'SELECT customtable_funds.*, SUM( customtable_funds.full_amount ) as funded, COUNT(DISTINCT customtable_funds.email) as funders FROM customtable_funds WHERE customtable_funds.post_id=? ';
+		$values = [ $postid ];
+		$type = "select";
+		$fundsarray = $MainClasses->querySQL( $query, $values, $type )[1][0];
+		return $fundsarray;
+	}
+
 
 
 	// Function to echo chosen error message:

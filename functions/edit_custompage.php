@@ -11,9 +11,8 @@ if($_SERVER['HTTP_HOST'] == "theanywherecard.com"){
 }
 
 require_once($docroot.'/classes/classes.php');
-require_once($docroot.'/reusables/classes/shortcuts.php');
+require_once($docroot.'/reusables/classes/Shortcuts.php');
 $MainClasses = new MainClasses();
-$shortcuts = new Shortcuts();
 
 // var_dump($_POST);
 $keyarray = array();
@@ -33,7 +32,7 @@ foreach ($_FILES as $key => $value) {
 		$keystrings = explode( "_", $key);
 		if($keystrings[0] == "name"){
 			array_push($keyarray, $keystrings[1]);
-		    array_push($valuearray, $shortcuts->uploadImage($value) );
+		    array_push($valuearray, Shortcuts::uploadImage($value) );
 		}
 	}
 }

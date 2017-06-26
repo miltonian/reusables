@@ -33,7 +33,7 @@
 			<label class="name">FUNDERS</label>
 		</div>
 	</div>
-	<button class="fund">Fund</button>
+	<a href="/post/fund/<?php echo $sectiondict['post_id'] ?>/<?php echo $sectiondict['post_title'] ?>"><button class="fund">Fund</button></a>
 </div>
 
 <script>
