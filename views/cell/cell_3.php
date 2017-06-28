@@ -15,11 +15,12 @@ if(!isset($celldict['post_id'])){ $celldict['post_id'] = $celldict['id']; }
 			"mediatype"=>""
 		]
 	*/
+
 ?>
 <style>
 </style>
 
-<div class="cell3 <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['post_id'] ?>">
+<div class="<?php echo $identifier ?> <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['post_id'] ?>">
 	<div class="container">
 		<div style="display:inline-block; width: 100%;">
 			<div>
@@ -46,8 +47,8 @@ if(!isset($celldict['post_id'])){ $celldict['post_id'] = $celldict['id']; }
 
 		setupactions(){
 			// var editingon=false;
-			$('.cell3').off('click');
-			$('.cell3').click(function(){
+			$('.<?php echo $identifier ?>').off('click');
+			$('.<?php echo $identifier ?>').click(function(){
 				
 				// if(typeof window.selectedfeatured == 'undefined'){var window.selectedfeatured=null;}
 				if($(this).hasClass('featured')){

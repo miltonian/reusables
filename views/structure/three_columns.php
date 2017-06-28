@@ -1,10 +1,12 @@
 <?php
-	/*
-	$structuredict = [ 
-		"maincolumn" => array(["viewtype"=>"","filename"=>"", "data"=>""]),
-	]
-	*/
-	if(!isset($structuredict['hasoverlay'])){ $structuredict['hasoverlay']=false; }
+	$required = array(
+		"sidecolumn_left"=>"",  
+		"maincolumn"=>"",
+		"sidecolumn_right"=>""
+	);
+
+	ReusableClasses::checkRequired( "three_columns", $structuredict, $required );
+
 ?>
 
 <style>

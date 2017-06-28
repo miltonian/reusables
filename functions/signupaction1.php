@@ -21,6 +21,7 @@ $SecureClasses = new SecureClasses();
 
 $result = $SecureClasses->signupNewUser( $email, $password );
 
+
 if($result[0] == 1){
 	session_start();
 	$_SESSION["token"] = $result[1]['login_token'];

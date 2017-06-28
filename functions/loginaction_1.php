@@ -21,14 +21,15 @@ $SecureClasses = new SecureClasses();
 
 $result = $SecureClasses->checkUserLogin( $email, $password );
 
+
 if($result[0] == 1){
-	// session_start();
-	$_SESSION["token"] = $result[1]['login_token'];
-	if( isset( $_GET['goto'] ) ){
-		header( 'Location: /' . $_GET['goto'] );
+	session_start();
+	$GLOBALS['userid'] = $result[1]['id'];
+	if( isset( $_POST['goto'] ) ){
+		header( 'Location: /' . $_POST['goto'] );
 	}else{
 		// exit("hey");
-		header( 'Location: /admin/campaigns' );
+		header( 'Location: /' );
 	}
 }else{
 	exit("Incorrect Login Information");

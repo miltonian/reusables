@@ -287,6 +287,31 @@ class ReusableClasses {
 		return $fundsarray;
 	}
 
+	public static function checkRequired( $filename, $viewdict, $required )
+	{
+		$requiredkeys = array_keys($required);
+
+		$missing = false;
+		foreach ($requiredkeys as $r) {
+			$keys = explode("|", $r);
+			// $condition = str_replace("|", " || ", $r);
+			$condition = "";
+			$i=0;
+			$found=false;
+			foreach ($keys as $k) {
+				if( isset( $viewdict[$k] ) ){ $found=true; }
+			}
+			
+			if( !$found ){ 
+				$missing=true; echo $filename . " is missing " . $r . "<br>"; 
+			}
+		}
+
+		if ($missing) {
+			exit();
+		}
+	}
+
 
 
 	// Function to echo chosen error message:

@@ -13,14 +13,14 @@ class Style {
 				<style>
 					.".$identifier." { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%;  }
 						.".$identifier." .maincolumn { display: inline-block; position: relative; margin: 10px; margin-right: 5px; padding: 0px; float: left; }
-						.".$identifier." .sidecolumn_right { position: relative; margin: 10px; margin-left: 5px; padding: 0px; width: calc( 30% - 20px ); float: left; }
+						.".$identifier." .sidecolumn_right { display: inline-block; position: relative; margin: 10px; margin-left: 5px; padding: 0px; float: left; }
 					@media (min-width: 0px) {
 						.".$identifier." .maincolumn { width: calc(100% - 20px); }
-						.".$identifier." .sidecolumn_right { display: none; }
+						.".$identifier." .sidecolumn_right { width: calc( 100% - 20px ); }
 					}
 					@media (min-width: 768px) {
 						.".$identifier." .maincolumn { width: calc(70% - 20px); }
-						.".$identifier." .sidecolumn_right { display: inline-block; }
+						.".$identifier." .sidecolumn_right { width: calc( 30% - 20px ); }
 					}
 				</style>
 			";
@@ -55,17 +55,58 @@ class Style {
 					.".$identifier." { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%;  }
 						.".$identifier." .maincolumn { display: inline-block; position: relative; margin: 10px; margin-right: 5px; padding: 0px; float: left; }
 						.".$identifier." .sidecolumn_right { position: relative; margin: 10px; margin-left: 5px; padding: 0px; width: calc( 20% - 20px ); float: left; }
-						.".$identifier." .sidecolumn_left { position: relative; margin: 10px; margin-left: 5px; padding: 0px; width: calc( 20% - 20px ); float: left; }
+						.".$identifier." .sidecolumn_left { display: inline-block; position: relative; margin: 10px; margin-left: 5px; padding: 0px;  float: left; }
 					@media (min-width: 0px) {
 						.".$identifier." .maincolumn { width: calc(100% - 20px); }
-						.".$identifier." .sidecolumn_right { display: none; }
-						.".$identifier." .sidecolumn_left { display: none; }
+						.".$identifier." .sidecolumn_right { width: calc(100% - 20px); }
+						.".$identifier." .sidecolumn_left { width: calc(100% - 20px); }
 					}
 					@media (min-width: 768px) {
 						.".$identifier." .maincolumn { width: calc(60% - 20px); }
-						.".$identifier." .sidecolumn_right { display: inline-block; }
-						.".$identifier." .sidecolumn_left { display: inline-block; }
+						.".$identifier." .sidecolumn_right { width: calc(20% - 20px); }
+						.".$identifier." .sidecolumn_left { width: calc(20% - 20px); }
 					}
+				</style>
+			";
+			return self::$allcss[ $identifier ];
+		}
+	}
+
+	public static function modal_background( $identifier )
+	{
+		if(!isset(self::$allcss[ $identifier ])){
+			self::$allcss[ $identifier ] = "
+				<style>
+					." . $identifier . "{ position: fixed; display: inline-block; margin: 0; padding: 0; width: 100%; height: 100%; left: 0; top: 0; text-align: center; z-index: 99;}
+						." . $identifier . " .overlay { position: absolute; display: inline-block; margin: 0; padding: 0; width: 100%; height: 100%; left: 0; top: 0; background-color: rgba(0,0,0,0.6); }
+						." . $identifier . " .maincolumn { position: relative; display: inline-block; margin: 0; padding: 0; z-index: 2; text-align: left; }
+				</style>
+			";
+			return self::$allcss[ $identifier ];
+		}
+	}
+
+	public static function main_with_hidden( $identifier )
+	{
+		if(!isset(self::$allcss[ $identifier ])){
+			self::$allcss[ $identifier ] = "
+				<style>
+					." . $identifier . " { position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; overflow: hidden; }
+						." . $identifier . " .column { position: absolute; display: inline-block; margin: 0; padding: 0; width: 100%; left: 0; top: 0; }
+							." . $identifier . " .column.second { left: 100%; }
+							." . $identifier . " .column.third { left: 200%; }
+				</style>
+			";
+			return self::$allcss[ $identifier ];
+		}
+	}
+
+	public static function fieldwrapper( $identifier )
+	{
+		if(!isset(self::$allcss[ $identifier ])){
+			self::$allcss[ $identifier ] = "
+				<style>
+					
 				</style>
 			";
 			return self::$allcss[ $identifier ];

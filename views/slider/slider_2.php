@@ -27,7 +27,7 @@ $imagepickerarray = $sliderarray;
 
 <?php 
 	/*include $docroot.'/reusables/views/imagepicker_1.php';*/ 
-	echo Modal::make( "imagepicker_1", [] );
+	echo Modal::make( "imagepicker_1", [], $identifier . "-imagepicker" );
 ?>
 
 <div class="<?php echo $identifier ?> <?php if($isediting){ echo 'editing'; } ?>">

@@ -10,4 +10,11 @@ class Footer {
 		return $View->render();
 	}
 
+	public static function addbadge ( $imagepath ) {
+
+		return "
+			<div style='display: inline-block; position: absolute; margin: 0; padding: 0; margin-top: -65px; z-index: 99; right: 65px; width: 100px; height: 100px; background: transparent; background-size: contain; background-position: center; background-repeat: no-repeat; background-image: url(" . $imagepath . ");'></div>
+		";
+	}
+
 }

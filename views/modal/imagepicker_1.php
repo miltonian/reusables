@@ -113,7 +113,7 @@
 
 <?php 
 	// include $docroot.'/reusables/views/getimageview_1.php'; 
-	echo Modal::make( "getimageview_1", [] );
+	echo Modal::make( "getimageview_1", [], $identifier . "-getimageview" );
 ?>
 
 

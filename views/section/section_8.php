@@ -11,8 +11,8 @@
 <style>
 	.<?php echo $identifier ?> { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; height: 55%; text-align: center; }
 		.<?php echo $identifier ?> .wrapper { display: inline-block; position: relative; padding: 0; margin: 0; top: 50%; transform: translateY(-50%); height: 400px; }
-			.<?php echo $identifier ?> .wrapper .left { display: inline-block; position: relative; margin: 0 80px; padding: 0; width: auto; height: auto; max-width: 1000px; max-height: 200px; float: left; top: 50%; transform: translateY(-50%); }
-			.<?php echo $identifier ?> .wrapper .right { display: inline-block; position: relative; margin: 0 80px; padding: 0; width: auto; height: auto; max-width: 1000px; max-height: 200px; float: left; top: 50%; transform: translateY(-50%); }
+			.<?php echo $identifier ?> .wrapper .left { display: inline-block; position: relative; margin: 0 80px; padding: 0; width: 250px; height: 250px; background-size: contain; background-repeat: no-repeat; background-position: center; float: left; top: 50%; transform: translateY(-50%); background-color: white; }
+			.<?php echo $identifier ?> .wrapper .right { display: inline-block; position: relative; margin: 0 80px; padding: 0; width: 250px; height: 250px; background-size: contain; background-repeat: no-repeat; background-position: center; float: left; top: 50%; transform: translateY(-50%); background-color: white; }
 
 		@media (min-width: 0px) {
 
@@ -27,8 +27,8 @@
 
 <div class="<?php echo $identifier ?>">
 	<div class="wrapper">
-		<img class="left" src="<?php echo $sectiondict['left_imagepath'] ?>">
-		<img class="right" src="<?php echo $sectiondict['right_imagepath'] ?>">
+		<div class="left" style="background-image: url('<?php echo $sectiondict['left_imagepath'] ?>');"></div>
+		<div class="right" style="background-image: url('<?php echo $sectiondict['right_imagepath'] ?>');"></div>
 	</div>
 </div>
 

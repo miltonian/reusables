@@ -27,10 +27,10 @@
 ?>
 
 <style>
-.featuredsection_2 { position: relative; display: inline-block; margin: 0; padding: 0; max-width: 1200px; width: 100%; }
-.featuredsection_2 .headercontainer { position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; }
-.featuredsection_2 .headercontainer .line { position: absolute; display: inline-block;width: inherit;height: 1px; background-color: #333333;margin: 0;padding: 0; top: 50%; margin-top: -0.5px; left: 0; }
-.featuredsection_2 .headercontainer label {z-index: 1;position: relative;display: inline-block;margin: 0;float: left;margin-left: 70px;padding: 10px;text-transform: uppercase;}
+.<?php echo $identifier ?> { position: relative; display: inline-block; margin: 0; padding: 0; max-width: 1200px; width: 100%; }
+.<?php echo $identifier ?> .headercontainer { position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; }
+.<?php echo $identifier ?> .headercontainer .line { position: absolute; display: inline-block;width: inherit;height: 1px; background-color: #333333;margin: 0;padding: 0; top: 50%; margin-top: -0.5px; left: 0; }
+.<?php echo $identifier ?> .headercontainer label {z-index: 1;position: relative;display: inline-block;margin: 0;float: left;margin-left: 70px;padding: 10px;text-transform: uppercase;}
 
 .cell2 .container {margin-left: 10px;margin-right: 10px;}
 
@@ -47,7 +47,7 @@
 
 
 
-<div class="featuredsection_2" >
+<div class="<?php echo $identifier ?>" >
 	<div class="headercontainer">
 		<div class="line"></div>
 		<label class="backgroundcolor"><?php echo $sectiondict['title'] ?></label>

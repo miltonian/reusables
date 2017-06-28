@@ -17,7 +17,7 @@ if( !isset($brandname) ){ $brandname = "Brand Name"; }
 ?>
 
 <style>
-.navbar2 .container {
+.<?php echo $identifier ?> .container {
 	position: relative; 
 	display: inline-block;
 	margin: 0;
@@ -25,7 +25,7 @@ if( !isset($brandname) ){ $brandname = "Brand Name"; }
 	width: 100%;
 	
 }
-.navbar2 .main-content {
+.<?php echo $identifier ?> .main-content {
 	position: relative; 
 	display: inline-block;
 	margin: 0;
@@ -36,7 +36,7 @@ if( !isset($brandname) ){ $brandname = "Brand Name"; }
 	border-bottom: 1px solid #cecece;
 }
 
-.navbar2 .logo-div {
+.<?php echo $identifier ?> .logo-div {
 	position: absolute;
 	display: block;
 	margin: 0;
@@ -48,8 +48,8 @@ if( !isset($brandname) ){ $brandname = "Brand Name"; }
 	/*left: 50%;*/
 	/*margin-left: -100px;*/
 }
-/*.navbar2 .logo-div img {max-width: 90%; max-height: 90%;}*/
-.navbar2 .subnav {
+/*.<?php echo $identifier ?> .logo-div img {max-width: 90%; max-height: 90%;}*/
+.<?php echo $identifier ?> .subnav {
 	position: relative; 
 	display: inline-block;
 	margin: 0;
@@ -60,7 +60,7 @@ if( !isset($brandname) ){ $brandname = "Brand Name"; }
 	border-bottom: 1px solid #cecece;
 	text-align: center;
 }
-.navbar2 .categories-wrapper {
+.<?php echo $identifier ?> .categories-wrapper {
 	position: relative;
 	margin: 0;
 	padding: 0;
@@ -68,7 +68,7 @@ if( !isset($brandname) ){ $brandname = "Brand Name"; }
 	transform: translateY(-50%);
 	text-transform: uppercase;
 }
-.navbar2 .category-btn {
+.<?php echo $identifier ?> .category-btn {
 	position: relative; 
 	display: inline-block;
 	margin: 0px 30px;
@@ -80,7 +80,7 @@ if( !isset($brandname) ){ $brandname = "Brand Name"; }
 	font-size: 0.9em;
 	font-weight: 500;
 }
-.navbar2 .subscribe-btn {
+.<?php echo $identifier ?> .subscribe-btn {
 	position: relative;
 	display: inline-block;
 	margin: 0;
@@ -93,7 +93,7 @@ if( !isset($brandname) ){ $brandname = "Brand Name"; }
 	border: 0;
 	cursor: pointer;
 }
-.navbar2 .tagline {
+.<?php echo $identifier ?> .tagline {
 	position: absolute;
 	margin: 0;
 	padding: 0;
@@ -106,30 +106,30 @@ if( !isset($brandname) ){ $brandname = "Brand Name"; }
 	transform: translateX(-50%);
 }
 
-.navbar2 .logo-div h3 {
+.<?php echo $identifier ?> .logo-div h3 {
 	text-decoration: none;
 	color: #333333;
 	text-transform: uppercase;
 }
 
 @media (min-width: 0px) {
-	.navbar2 .categories-wrapper {display: none;}
-	.navbar2 .logo-div {left: 30px; text-align: left; padding-right: 20px;}
-	.navbar2 .logo-div img {max-width: 70%; max-height: 70%;}
-	.navbar2 .search-container {display: none;}
-	.navbar2 .tagline {display: none;}
+	.<?php echo $identifier ?> .categories-wrapper {display: none;}
+	.<?php echo $identifier ?> .logo-div {left: 30px; text-align: left; padding-right: 20px;}
+	.<?php echo $identifier ?> .logo-div img {max-width: 70%; max-height: 70%;}
+	.<?php echo $identifier ?> .search-container {display: none;}
+	.<?php echo $identifier ?> .tagline {display: none;}
 }
 @media (min-width: 768px) {
-	.navbar2 .categories-wrapper {display: inline-block;}
-	/*.navbar2 .logo-div {left: 50%; transform: translate(-50%, -50%); right: auto; text-align: center; padding-right: 0;}*/
-	.navbar2 .logo-div img {max-width: 90%; max-height: 90%;}
-	.navbar2 .search-container {display: inline-block;}
-	.navbar2 .tagline {display: inline-block;}
+	.<?php echo $identifier ?> .categories-wrapper {display: inline-block;}
+	/*.<?php echo $identifier ?> .logo-div {left: 50%; transform: translate(-50%, -50%); right: auto; text-align: center; padding-right: 0;}*/
+	.<?php echo $identifier ?> .logo-div img {max-width: 90%; max-height: 90%;}
+	.<?php echo $identifier ?> .search-container {display: inline-block;}
+	.<?php echo $identifier ?> .tagline {display: inline-block;}
 }
 </style>
 
 
-<div class="navbar2" style="<?php if($isadmin){ echo "margin-top: 60px"; } ?>">
+<div class="<?php echo $identifier ?>" style="<?php if($isadmin){ echo "margin-top: 60px"; } ?>">
 	<div class="container">
 		<div class="main-content">
 			<a href="/">
@@ -144,7 +144,7 @@ if( !isset($brandname) ){ $brandname = "Brand Name"; }
 			</a>
 			<div class="search-container" style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%);">
 				<?php
-					Button::make( "searchbar_1", [] );
+					Button::make( "searchbar_1", [], "search-btn" );
 				?>
 			</div>
 		</div>

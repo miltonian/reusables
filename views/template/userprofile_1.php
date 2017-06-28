@@ -75,7 +75,7 @@
 			<div style="width: 100%; margin-top: 20px; text-align: center;">
 				<?php 
 					// include $docroot . '/reusables/views/socialpagesbtns_1.php'; 
-					echo Sharing::make( 'socialpagesbtns_1', [] );
+					echo Sharing::make( 'socialpagesbtns_1', [], "social-btns" );
 				?>
 			</div>
 		</div>
@@ -93,7 +93,7 @@
 					<div style="width: 100%; max-width: 250px; float: left; margin-top: 20px; text-align: center;">
 						<?php 
 							// include $docroot . '/reusables/views/socialpagesbtns_1.php'; 
-							echo Sharing::make( 'socialpagesbtns_1', [] );
+							echo Sharing::make( 'socialpagesbtns_1', [], "sharing-btns" );
 						?>
 					</div>
 				</div>
