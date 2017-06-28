@@ -48,10 +48,12 @@
 
 
 <div class="<?php echo $identifier ?>" >
-	<div class="headercontainer">
-		<div class="line"></div>
-		<label class="backgroundcolor"><?php echo $sectiondict['title'] ?></label>
-	</div>
+	<?php if($sectiondict['title'] != ""){ ?>
+		<div class="headercontainer">
+			<div class="line"></div>
+			<label class="backgroundcolor"><?php echo $sectiondict['title'] ?></label>
+		</div>
+	<?php } ?>
 	<?php if($sectiondict['adposition'] == 0){ ?>
 		<div style="display: inline-block; position: relative; width: 100%;">
 			<?php 

@@ -39,7 +39,7 @@ if(!isset($sectiondict['preview'])){ $sectiondict['preview'] = 0; }
 
 <div class="skillset1">
 	<?php if( ((!$GLOBALS['isadmin'] && !$GLOBALS['isuser']) || ($GLOBALS['isadmin'] != $sectiondict['userprofile_userid'] && $GLOBALS['userid'] != $sectiondict['userprofile_userid'])) || $sectiondict['preview']==1 ){ ?>
-	<h1 class="title">Skills</h1>
+	<h1 class="title">My Month</h1>
 		<?php $i=1; foreach ($sectiondict['skillsarray'] as $skill) { ?>
 			<?php 
 				$name=$skill['fieldname']; $score=$skill['fieldvalue']; 
@@ -52,9 +52,9 @@ if(!isset($sectiondict['preview'])){ $sectiondict['preview'] = 0; }
 							<label style="float: right;"><?php echo $score ?></label>
 						<?php } ?>
 					</div>
-					<div class="leftover" style="width: calc(100% - <?php echo $score ?>)">
+					<div class="leftover" style="display: inline-block; position: relative; margin: 0; padding: 0; top: 50%; transform: translateY(-50%); width: calc(100% - <?php echo $score ?>);">
 					<?php if( floatval( str_replace('%', '', $score) ) < 80 ){ ?>
-						<label><?php echo $score ?></label>
+						<label style="top: 0; transform: none; text-align: right; width: calc(100% - 20px); padding-right: 20px;"><?php echo $score ?></label>
 					<?php } ?>
 					</div>
 				</div>

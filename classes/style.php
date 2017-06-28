@@ -113,6 +113,18 @@ class Style {
 		}
 	}
 
+	public static function floating_frame( $identifier )
+	{
+		if(!isset(self::$allcss[ $identifier ])){
+			self::$allcss[ $identifier ] = "
+				<style>
+					
+				</style>
+			";
+			return self::$allcss[ $identifier ];
+		}
+	}
+
 	public static function slider_2( $identifier )
 	{
 		if(!isset(self::$allcss[ $identifier ])){

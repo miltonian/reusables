@@ -21,14 +21,11 @@ $SecureClasses = new SecureClasses();
 
 $result = $SecureClasses->checkUserLogin( $email, $password );
 
-
 if($result[0] == 1){
-	session_start();
 	$GLOBALS['userid'] = $result[1]['id'];
 	if( isset( $_POST['goto'] ) ){
 		header( 'Location: /' . $_POST['goto'] );
 	}else{
-		// exit("hey");
 		header( 'Location: /' );
 	}
 }else{
