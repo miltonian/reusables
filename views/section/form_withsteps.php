@@ -1,18 +1,17 @@
 <?php
 
 if(!isset($GLOBALS['isadmin'])){ $GLOBALS['isadmin']=false; }
-if(!isset($sectiondict['formdesc'])){ $sectiondict['formdesc']=""; }
+if(!isset($sectiondict[0]['formdesc'])){ $sectiondict[0]['formdesc']=""; }
 
 $optionsarray = array( "Brand Engagement", "Core Partner", "Concert Promotion", "Business Promotion" );
 
 
-if( !isset($sectiondict['formimg']) ){ $sectiondict['formimg'] = 'reusables/uploads/icons/adgoeshere970250.png'; }
+if( !isset($sectiondict[0]['featured_imagepath']) ){ $sectiondict[0]['featured_imagepath'] = 'reusables/uploads/icons/adgoeshere970250.png'; }
 
 ?>
 
 
 <style>
-
 
 .<?php echo $identifier ?> { display: inline-block; position: relative; margin: 0; padding: 0; }
 .<?php echo $identifier ?> .field-wrapper { display: inline-block; position: relative; margin: 20px; padding: 0; width: calc(50% - 40px); float: left; text-align: left; margin-bottom: 5px; }
@@ -30,7 +29,7 @@ if( !isset($sectiondict['formimg']) ){ $sectiondict['formimg'] = 'reusables/uplo
 </style>
 
 <div class="<?php echo $identifier ?>">
-	<form class='theform' method='post' action='#' enctype="multipart/form-data">
+	<form class='theform' method='post' action='/edit_view.php' enctype="multipart/form-data">
 		<div class='container' style='text-align: left; margin-top: 10px; margin-bottom: 30px; text-align: center;'>
 			<?php 
 			echo Structure::make( 
@@ -38,7 +37,7 @@ if( !isset($sectiondict['formimg']) ){ $sectiondict['formimg'] = 'reusables/uplo
 				[
 					"maincolumn" => array(
 						"
-							<label id='imglabel' for='formimg' style='background-image: url(".$sectiondict['formimg'].");'></label>
+							<label id='imglabel' for='formimg' style='background-image: url(" . $sectiondict[0]['featured_imagepath'] . ");'></label>
 							<input type='file' id='formimg' style='visibility: hidden; z-index: -1; '>
 						"
 					),
@@ -52,8 +51,11 @@ if( !isset($sectiondict['formimg']) ){ $sectiondict['formimg'] = 'reusables/uplo
 										"textfield", 
 										[
 											"placeholder"=>"Campaign Name",
-											"fieldvalue"=>"New bus/coach for away games",
-											"fieldname"=>"campaign_name"
+											"field_value"=>$sectiondict[0]['title'],
+											"field_index"=>0,
+											"field_table"=>"posts",
+											"field_colname"=>"title",
+											"field_rowid"=>$sectiondict[0]['id']
 										], 
 										"campaign_name"
 									),
@@ -61,8 +63,11 @@ if( !isset($sectiondict['formimg']) ){ $sectiondict['formimg'] = 'reusables/uplo
 										"textfield",
 										[
 											"placeholder"=>"Your Funding Goal",
-											"fieldvalue"=>"40000",
-											"fieldname"=>"funding_goal"
+											"field_value"=>$sectiondict[0]['needed'],
+											"field_index"=>1,
+											"field_table"=>"posts",
+											"field_colname"=>"needed",
+											"field_rowid"=>$sectiondict[0]['id']
 										], 
 										"funding_goal"
 									)
@@ -83,7 +88,24 @@ if( !isset($sectiondict['formimg']) ){ $sectiondict['formimg'] = 'reusables/uplo
 <script>
 	$('#formimg').change(function(){
 		ReusableGlobalFunctionsClass.readthisURL(this, $('#imglabel'), null, null);
-
 	});
+	var sectiondict = <?php echo json_encode($sectiondict) ?>;
+	var tablenames = <?php echo json_encode($tablenames) ?>;
+	var identifier = "<?php echo $identifier ?>";
+	class <?php echo $identifier ?>Classes {
+		populateview(index){
+			$('.<?php echo $identifier ?> #imglabel').css({'background-image': 'url("'+sectiondict[index]['featured_imagepath']+'")'});
+			$('.<?php echo $identifier ?> .campaign_name input.field_value').val(sectiondict[index]['title']);
+				$('.<?php echo $identifier ?> .campaign_name input.tablename').val(tablenames['title']);
+				$('.<?php echo $identifier ?> .campaign_name input.col_name').val("title");
+				$('.<?php echo $identifier ?> .campaign_name input.row_id').val(sectiondict[index]['id']);
+			$('.<?php echo $identifier ?> .funding_goal input.field_value').val(sectiondict[index]['needed']);
+				$('.<?php echo $identifier ?> .funding_goal input.tablename').val(tablenames['needed']);
+				$('.<?php echo $identifier ?> .funding_goal input.col_name').val("needed");
+				$('.<?php echo $identifier ?> .funding_goal input.row_id').val(sectiondict[index]['id']);
+		}
+	}
+	let <?php echo $identifier ?> = new <?php echo $identifier ?>Classes();
+	<?php echo $identifier ?>.populateview();
 </script>
 	

@@ -2,8 +2,11 @@
 	
 	$required = array(
 		"placeholder"=>"",
-		"fieldvalue"=>"",
-		"fieldname"=>""
+		"field_value"=>"",
+		"field_index"=>"",
+		"field_table"=>"",
+		"field_colname"=>"",
+		"field_rowid"=>""
 	);
 
 	ReusableClasses::checkRequired( "textfield", $inputdict, $required );
@@ -18,7 +21,10 @@
 
 <div class="<?php echo $identifier ?>">
 	<label>Test input label</label>
-	<input type="text" placeholder="<?php echo $inputdict['placeholder'] ?>" value="<?php echo $inputdict['fieldvalue'] ?>" name="<?php echo $inputdict['fieldname'] ?>">
+	<input type="text" class="field_value" placeholder="<?php echo $inputdict['placeholder'] ?>" value="<?php echo $inputdict['field_value'] ?>" name="fieldarray[<?php echo $inputdict['field_index'] ?>][field_value]">
+	<input type="hidden" class="tablename" value="<?php echo $inputdict['field_table'] ?>" name="fieldarray[<?php echo $inputdict['field_index'] ?>][tablename]">
+	<input type="hidden" class="col_name" value="<?php echo $inputdict['field_colname'] ?>" name="fieldarray[<?php echo $inputdict['field_index'] ?>][col_name]">
+	<input type="hidden" class="row_id" value="<?php echo $inputdict['field_rowid'] ?>" name="fieldarray[<?php echo $inputdict['field_index'] ?>][row_id]">
 </div>
 
 <script>

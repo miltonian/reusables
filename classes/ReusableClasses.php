@@ -229,11 +229,21 @@ class ReusableClasses {
 	public static function getPosts( $type )
 	{
 		$MainClasses = new MainClasses();
-		$query = 'SELECT posts.* FROM posts WHERE posts.id > ? AND posts.scheduled<? ORDER BY posts.date_made DESC, posts.id DESC LIMIT 20';
+		$query = 'SELECT posts.*, posts.id AS row_id FROM posts WHERE posts.id > ? AND posts.scheduled<? ORDER BY posts.date_made DESC, posts.id DESC LIMIT 20';
 		$values = [ 0, time() ];
 		$type = "select";
-		return $MainClasses->querySQL( $query, $values, $type )[1];
+		$postarray = $MainClasses->querySQL( $query, $values, $type )[1];
+		return $postarray;
 	}
+		public static function getPosts_tablenames($postarray){
+			// make dict for tablenames
+			$tablenames = [];
+			$allkeys = array_keys($postarray[0]);
+			foreach ($allkeys as $k) {
+				$tablenames[$k] = "posts";
+			}
+			return $tablenames;
+		}
 
 	public static function getNetworkInfo( $networkid )
 	{

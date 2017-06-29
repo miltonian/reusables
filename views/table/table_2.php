@@ -32,9 +32,11 @@
 			$i=0;
 			foreach ($tabledict['postarray'] as $post) { 
 				if(isset($tabledict['cellactions'])){ $post['actions'] = $tabledict['cellactions']; }else{ $post['actions'] = array(); }
+				$post['index'] = $i;
 				echo Cell::make( $tabledict['cellname'], $post, $identifier . "-cell" );
+				$i++;
 			}
-			$i++;
+			
 		?>
 	</div>
 </div>

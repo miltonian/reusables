@@ -6,7 +6,8 @@
 $required = array(
 	"actions"=>array("backgroundimage", ""), 
 	"featured_imagepath"=>"",  
-	"title"=>""
+	"title"=>"",
+	"index"=>""
 );
 
 ReusableClasses::checkRequired( "cell_10", $celldict, $required );
@@ -16,7 +17,7 @@ ReusableClasses::checkRequired( "cell_10", $celldict, $required );
 		$cellactionshtml .= "<div class='actions-div'>";
 		$i=0;
 		foreach ($celldict['actions'] as $action) {
-			$cellactionshtml .= "<button class='action index_".$i."' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
+			$cellactionshtml .= "<button id='" . $celldict['index'] . "' class='action index_".$i."' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
 			$i++;
 		}
 		$cellactionshtml .= "</div>";
@@ -33,7 +34,7 @@ ReusableClasses::checkRequired( "cell_10", $celldict, $required );
 </style>
 
 <?php 
-	echo "<div class='" . $identifier . "'>";
+	echo "<div class='" . $identifier . "' id=" . $celldict['index'] . " >";
 		echo Wrapper::wrapper1( 
 			[],
 			array(
@@ -83,8 +84,11 @@ $('.<?php echo $identifier ?> button.action').click(function(e){
 		if( type == "link" ){
 			window.open(cellactions[theindex][type]);
 		}else if( type == "modal" ){
+			// let modalclass = new cellactions[theindex][type]['modalclass']+Classes();
+			// modalclass.populateview( $(this).id );
+			campaignedit_form.populateview(this.id);
 			$('.modal_background').css({'display': 'inline-block'});
-			$(cellactions[theindex][type]).css({'display': 'inline-block'});
+			$('.' + cellactions[theindex][type]['parentclass']).css({'display': 'inline-block'});
 		}else if( type == "popview" ){
 
 		}
