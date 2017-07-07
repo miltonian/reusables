@@ -2,7 +2,7 @@
 
 	/*
 		[
-			"post_id"=>"",
+			"id"=>"",
 			"title"=>"",
 			"featured_imagepath"=>"",
 			"html_text"=>"",
@@ -10,10 +10,13 @@
 		]
 	*/
 
-	if(!isset($cell2mediatype)){ $cell2mediatype=""; }
-	if( !isset($isfeatured) ){ $isfeatured=false; }
+	if(!isset($cell2)){ $cell2mediatype=""; }
+	if( !isset($celldict['isfeatured']) ){ $celldict['isfeatured']=false; }
+	if( !isset($celldict['mediatype']) ){ $celldict['mediatype']="post"; }
 	if( !isset($isadmin) ){ $isadmin=false; }
-	if(!isset($celldict['post_id'])){ $celldict['post_id'] = $celldict['id']; }
+	// if(!isset($celldict['id'])){ $celldict['id'] = $celldict['id']; }
+
+	// exit( json_encode( $celldict['featured_imagepath'] ) );
 
 	// $celldict
 
@@ -21,27 +24,26 @@
 ?>
 
 <style>
-
 </style>
 
 
 
-<div class="cell2 <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['post_id'] ?>">
+<div class="cell_2 <?php echo $identifier ?> <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo Data::getValue( $celldict['id'] ) ?>">
 	<div class="container">
 		<div style="display: inline-block; width: 100%;">
 			<div>
-				<a href="<?php if($isadmin){ echo '#'; }else{ echo '/post/'.$celldict['post_id'] . '/' . preg_replace('/\PL/u', '-', preg_replace("/[^ \w]+/", "", $celldict['title']) ); } ?>">
-					<div class="picture" style="<?php if($celldict['featured_imagepath']){ echo 'background-image: url('.$celldict['featured_imagepath'].');'; } ?>"></div>
+				<a href="<?php if($isadmin){ echo '#'; }else{ echo '/post/'.Data::getValue( $celldict['id'] ) . '/' . preg_replace('/\PL/u', '-', preg_replace("/[^ \w]+/", "", Data::getValue( $celldict['title'] )) ); } ?>">
+					<div class="picture" style="<?php if(isset( $celldict['featured_imagepath'] )){ echo 'background-image: url('.Data::getValue( Data::getValue( $celldict['featured_imagepath'] ) ).');'; } ?>"></div>
 				</a>
 				<div class="words">
 					<div class="text-container">
 						<!-- <label class="grey-label">Today</label> -->
 						<br>
-						<a href="<?php if($isadmin){ echo '#'; }else{ echo '/post/'.$celldict['post_id'] . '/' . preg_replace('/\PL/u', '', preg_replace("/[^ \w]+/", "", $celldict['title']) ); } ?>">
-							<label class="title" style=""><?php if(isset($celldict['title'])){ echo $celldict['title']; } ?></label>
+						<a href="<?php if($isadmin){ echo '#'; }else{ echo '/post/'. Data::getValue( $celldict['id'] ) . '/' . preg_replace('/\PL/u', '', preg_replace("/[^ \w]+/", "", Data::getValue( $celldict['title'] )) ); } ?>">
+							<label class="title" style=""><?php if(isset($celldict['title'])){ echo Data::getValue( $celldict['title'] ); } ?></label>
 						</a>
 						<br>
-						<label class="grey-label"><?php echo implode(' ', array_slice( explode(' ', strip_tags($celldict['html_text'])), 0, 10) ); ?>...</label>
+						<label class="grey-label"><?php echo implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $celldict['html_text'] ))), 0, 10) ); ?>...</label>
 					</div>
 				</div>
 			</div>
@@ -53,15 +55,14 @@
 
 	var editingon = false;
 	
-	if(typeof Cell2Class == 'undefined'){
-		class Cell2 {
+	if(typeof <?php echo $identifier ?> == 'undefined'){
+		class <?php echo $identifier ?>Classes {
 
 		setupactions(){
 			var editingon=false;
-			$('.cell2').off('click');
-			$('.cell2').click(function(){
+			$('.<?php echo $identifier ?>').off('click');
+			$('.<?php echo $identifier ?>').click(function(){
 
-				// if(typeof window.selectedfeatured == 'undefined'){var window.selectedfeatured=null;}
 				if($(this).hasClass('featured')){
 					window.selectedfeatured = $(this).parent().attr('class');
 				}else{
@@ -109,10 +110,10 @@
 		}
 
 	}
-		var Cell2Class = new Cell2();
+		var <?php echo $identifier ?> = new <?php echo $identifier ?>Classes();
 	}
 	
-	Cell2Class.setupactions();
+	<?php echo $identifier ?>.setupactions();
 
 
 </script>

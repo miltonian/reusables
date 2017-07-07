@@ -6,25 +6,31 @@
 		"field_index"=>"",
 		"field_table"=>"",
 		"field_colname"=>"",
-		"field_rowid"=>""
+		// "field_rowid"=>""
+		"field_conditions"=>[]
 	);
 
 	ReusableClasses::checkRequired( "textfield", $inputdict, $required );
-
+/*
+<input type="hidden" class="row_id" value="<?php echo $inputdict['field_rowid'] ?>" name="fieldarray[<?php echo $inputdict['field_index'] ?>][row_id]">
+*/
 ?>
 
 <style>
-	.<?php echo $identifier ?> { display: inline-block; position: relative; margin: 0; padding: 0; float: left; width: 100%; }
-		.<?php echo $identifier ?> label { display: inline-block; position: relative; margin: 0; padding: 10px 0; width: calc(100% - 0px); font-size: 13px; font-weight: 500; }
-		.<?php echo $identifier ?> input { display: inline-block; position: relative; margin: 0; padding: 10px; width: calc(100% - 20px); font-size: 14px; font-weight: 400; color: #333333; background-color: white; border: 1px solid #e0e0e0; border-radius: 5px; }
 </style>
 
-<div class="<?php echo $identifier ?>">
+<div class="<?php echo $identifier ?> textfield">
 	<label>Test input label</label>
 	<input type="text" class="field_value" placeholder="<?php echo $inputdict['placeholder'] ?>" value="<?php echo $inputdict['field_value'] ?>" name="fieldarray[<?php echo $inputdict['field_index'] ?>][field_value]">
+	<input type="hidden" class="field_type" name="fieldarray[<?php echo $inputdict['field_index'] ?>][field_type]" value="text" style="visibility: hidden; z-index: -1;">
 	<input type="hidden" class="tablename" value="<?php echo $inputdict['field_table'] ?>" name="fieldarray[<?php echo $inputdict['field_index'] ?>][tablename]">
 	<input type="hidden" class="col_name" value="<?php echo $inputdict['field_colname'] ?>" name="fieldarray[<?php echo $inputdict['field_index'] ?>][col_name]">
-	<input type="hidden" class="row_id" value="<?php echo $inputdict['field_rowid'] ?>" name="fieldarray[<?php echo $inputdict['field_index'] ?>][row_id]">
+	<?php $i=0; ?>
+	<?php foreach ($inputdict['field_conditions'] as $c) { ?>
+		<input type="hidden" class="conditionkey_<?php echo $i ?>" value="<?php echo $c['key'] ?>" name="fieldarray[<?php echo $inputdict['field_index'] ?>][field_conditions][<?php echo $i ?>][key]">
+		<input type="hidden" class="conditionvalue_<?php echo $i ?>" value="<?php echo $c['value'] ?>" name="fieldarray[<?php echo $inputdict['field_index'] ?>][field_conditions][<?php echo $i ?>][value]">
+		<?php $i++; ?>
+	<?php } ?>
 </div>
 
 <script>

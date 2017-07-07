@@ -18,6 +18,7 @@ class Wrapper {
 
 	public static function wrapper1( $data, $children, $identifier )
 	{
+		ReusableClasses::addfile( "wrapper", "wrapper_1" );
 		$View = View::factory( 'reusables/views/wrapper/wrapper_1' );
 		$View->set( 'wrapperdict', $data );
 		$View->set( 'children', $children );

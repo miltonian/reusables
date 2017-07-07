@@ -8,24 +8,9 @@ if(!isset($sideadarray)){ $sideadarray=array(); $hasads=false; }
 ?>
 
 <style>
-.sidecolumn4 {
-	display: inline-block;
-	position: relative;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-}
-.sidecolumn4 .container {
-	position: relative;
-	display: inline-block;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-}
-
 </style>
 
-<div class="sidecolumn4">
+<div class="sidecolumn_4 <?php echo $identifier ?>">
 	<div class="container">
 	<!-- adgoeshere300600.png -->
 	<!-- <script>console.log(<?php echo sizeof($sidecolumnarray) ?>)</script> -->

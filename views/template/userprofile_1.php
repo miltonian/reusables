@@ -13,59 +13,9 @@
 ?>
 
 <style>
-.userprofile1 {
-	display: inline-block;
-	position: relative;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	color: #333333;
-}
-.userprofile1 h1, .userprofile1 h2 {width: 100%; }
-.userprofile1 #my-name {
-	display: inline-block; 
-	position: relative; 
-	margin: 0;
-	padding: 0;
-	font-size: 3em;
-	text-transform: uppercase;
-}
-.userprofile1 #i-do {
-	display: inline-block; 
-	position: relative; 
-	margin: 0;
-	padding: 0;
-	font-size: 2em;
-	font-weight: 400;
-	text-transform: uppercase;
-	margin-bottom: 30px;
-}
-.userprofile1 #profile-pic { max-width: 100%; max-height: 100%; }
-.userprofile1 #desc {
-	display: inline-block;
-	position: relative;
-	/*float: left;*/
-	margin: 0;
-	padding: 30px;
-}
-.userprofile1 .socialbuttons-container { display: inline-block; position: relative; margin: 0; padding: 0;  }
-.userprofile1 .htmltext-container {display: inline-block;padding-left: 20px;padding-right: 20px;}
-
-@media (min-width: 0px) {
-	.userprofile1 .profilepic-container { float: none; max-width: 100%; max-height: auto; text-align: center;}
-	.userprofile1 #desc {float: none; max-width: auto; text-align: center; padding-top: 30px;}
-	.userprofile1 h1, .userprofile1 h2 { text-align: center; }
-	.userprofile1 .htmltext-container {max-width: calc(100% - 40px);}
-}
-@media (min-width: 768px) {
-	.userprofile1 .profilepic-container { float: left; max-width: 35%; /*max-height: 360px;*/ }
-	.userprofile1 #desc { float: left; text-align: left; float: left; max-width: calc(65% - 60px); padding-top: 0;}
-	.userprofile1 h1, .userprofile1 h2 { text-align: left; }
-	.userprofile1 .htmltext-container {max-width: calc(65% - 40px);}
-}
 </style>
 
-<div class="userprofile1">
+<div class="userprofile_1 <?php echo $identifier ?>">
 	<?php if(((!$GLOBALS['isadmin'] && !$GLOBALS['isuser']) || ($GLOBALS['isadmin'] != $templatedict['userprofile_userid'] && $GLOBALS['userid'] != $templatedict['userprofile_userid'])) || $templatedict['preview']==1 ){ ?>
 	<h1 id="my-name"><?php echo $templatedict['my-name'] ?></h1>
 	<h2 id="i-do"><?php echo $templatedict['i-do'] ?></h2>

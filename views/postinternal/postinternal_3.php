@@ -14,14 +14,14 @@
 </style>
 
 <div class="postinternal3">
-	<div id="featuredimage" style="background-image: url('<?php echo $postdict['featured_imagepath'] ?>');" ></div>
+	<div id="featuredimage" style="background-image: url('<?php echo Data::getValue( $postdict['featured_imagepath'] ); ?>');" ></div>
 	<?php
 		if($postdict['sharingdict']){
-			ReusableClasses::sharing( "sharingbtns_1", $postdict['sharingdict'] );
+			echo Sharing::make( "sharingbtns_1", $postdict['sharingdict'], $identifier . "_sharingbtns_1" );
 		}
 	?>
 	<div class="text-container">
-		<?php echo $postdict['html_text'] ?>
+		<?php echo Data::getValue( $postdict['html_text'] ) ?>
 	</div>
 </div>
 

@@ -6,37 +6,38 @@
 		]
 	*/
 
-	$ReusableClasses = new ReusableClasses();
-	$shortcuts = new Shortcuts();
+$required = array(
+	"postarray"=>array("link", "name|imagepath|emoji"), 
+	"cellactions"=>"",  
+	"cellname"=>""
+);
 
+// ReusableClasses::checkRequired( $identifier, $tabledict, $required );
+// exit( json_encode( $tabledict['postarray'] ) );
 ?>
 
 <style>
-	.<?php echo $identifier ?> { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; }
-		.<?php echo $identifier ?> .header { position: relative; display: inline-block; padding: 20px 40px; margin: 0; width: calc( 100% - 80px ); }
-			.<?php echo $identifier ?> .header #title { display: inline-block; position: relative; margin: 0px 0px; padding: 0; width: 100%; }
-			.<?php echo $identifier ?> .header #divider { display: inline-block; position: absolute; padding: 0; margin: 0px; bottom: 0; width: calc( 100% - 80px ); height: 2px; background-color: #333333; left: 40px; }
-		.<?php echo $identifier ?> .table { position: relative; display: inline-block; padding: 0px 30px; margin: 0; width: calc( 100% - 60px ); text-align: center; }
-			.<?php echo $identifier ?> .cells-wrapper { position: relative; display: table; margin: 0; padding: 0; }
-@media (min-width: 0px) {
-	.<?php echo $identifier ?> .header #title { text-align: center; }
-}
-@media (min-width: 768px) {
-	.<?php echo $identifier ?> .header #title { text-align: left; }
-}
 </style>
 
-<div class="<?php echo $identifier ?>">
+<div class="<?php echo $identifier ?> table_2">
 	<div class="table">
 		<?php 
 			$i=0;
-			foreach ($tabledict['postarray'] as $post) { 
-				if(isset($tabledict['cellactions'])){ $post['actions'] = $tabledict['cellactions']; }else{ $post['actions'] = array(); }
+			for ($i=0; $i < sizeof($tabledict['postarray']['value']); $i++) { 
+				$postdict = $tabledict['postarray']['value'][$i];
+				$postkeys = array_keys( $postdict );
+				$post = [];
+				foreach ($postkeys as $pk) {
+					$post[$pk] = [ "data_id"=>"postarray", "key"=>$pk, "index"=>$i ];
+				}
 				$post['index'] = $i;
-				echo Cell::make( $tabledict['cellname'], $post, $identifier . "-cell" );
-				$i++;
+				// $post['key'] = $tabledict['postarray']['db_info'];
+				// exit(json_encode($post));
+				// foreach ($tabledict['postarray']['value'] as $post) { 
+				if(isset($tabledict['cellactions'])){ $post['actions'] = $tabledict['cellactions']; }else{ $post['actions'] = array(); }
+				echo Cell::make( $tabledict['cellname'], $post, $identifier . "_cell" );
+				// $i++;
 			}
-			
 		?>
 	</div>
 </div>

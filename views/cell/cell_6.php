@@ -6,12 +6,9 @@
 ?>
 
 <style>
-
-
-
 </style>
 
-<div class="cell6 <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['id'] ?>">
+<div class="cell_6 <?php echo $identifier ?> <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['id'] ?>">
 	<div class="container">
 		<div style="display: inline-block; width: 100%">
 			<div>
@@ -32,7 +29,6 @@
 						$result = substr($celldict['imagepath'], $n);
 					}
 					$cell6image = "https://www.youtube.com/embed/".$result."?controls=0";
-					// $cell6image = $result;
 				?>
 					
 					<div class="youtubediv" style="position: relative; display: inline-block; width: 100%; height: 44% margin: 0; padding: 0;">
@@ -64,13 +60,13 @@
 
 
 	
-	if(typeof Cell6Class == 'undefined'){
-		class Cell6 {
+	if(typeof <?php echo $identifier ?> == 'undefined'){
+		class <?php echo $identifier ?>Classes {
 
 		setupactions(){
 			// var editingon=false;
-			$('.cell6').off('click');
-			$('.cell6').click(function(){
+			$('.<?php echo $identifier ?>').off('click');
+			$('.<?php echo $identifier ?>').click(function(){
 
 				// if(typeof window.selectedfeatured == 'undefined'){var window.selectedfeatured=null;}
 				if($(this).hasClass('featured')){
@@ -135,7 +131,7 @@
 			var title = document.createElement('label');
 			var date = document.createElement('label');
 
-			cell.className = 'cell6';
+			cell.className = '<?php echo $identifier ?>';
 			cell.id = celldict['id'];
 
 			container.className = 'container';
@@ -168,10 +164,10 @@
 		}
 
 	}
-		var Cell6Class = new Cell6();
+		var <?php echo $identifier ?> = new <?php echo $identifier ?>Classes();
 	}
 	
-	Cell6Class.setupactions();
+	<?php echo $identifier ?>.setupactions();
 
 
 </script>

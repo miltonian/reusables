@@ -4,76 +4,9 @@
 	if(!isset($celldict['post_id'])){ $celldict['post_id'] = $celldict['id']; }
 ?>
 <style>
-
-.cell5 {
-	display: inline-block;
-	position: relative;
-	margin: 0;
-	padding: 0;
-
-}
-
-.cell5 .container{
-	position: relative;
-	display: inline-block;
-	margin: 0;
-	padding: 0;
-	/*width: 100%;*/
-	margin: 0px 5px;
-	text-align: center;
-	/*top: 50%;
-	transform: translateY(-50%);*/
-	float: left;
-	background-color: white;
-	padding-bottom: 10px;
-}
-
-.cell5 label { cursor: pointer; }
-	.cell5 label:hover {text-decoration: underline;}
-
-.cell5 .picture{
-	position: relative;
-	display: block;
-	margin: 0;
-	padding: 0;
-	width: 700px;
-	height: 425px;
-	background-image: url("https://c.tadst.com/gfx/750w/sunrise-sunset-sun-calculator.jpg?1"); /* the root is entrenash */
-	background-size: cover;
-	background-position: center;
-	cursor: pointer;
-}
-
-.cell5 .words{
-	position: relative;
-	display: block;
-	margin: 0;
-	padding: 0;
-	width: 700px;
-	height: 70px;
-	background-color: white;
-}
-
-.cell5 .text-container{
-	position: relative;
-	display: inline-block;
-	top: 50%;
-	transform: translateY(-50%);
-	padding-left: 10px; 
-	padding-right: 10px;
-}
-
-.cell5 .grey-label{
-	font-style: italic;
-	color: grey;
-	font-size: 0.8em;
-	font-weight: 300;
-	top: 0;
-}
-
 </style>
 
-<div class="cell5 <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['id'] ?>">
+<div class="cell_5 <?php echo $identifier ?> <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['id'] ?>">
 	<div class="container">
 		<div style="display:inline-block;">
 			<div>
@@ -96,13 +29,13 @@
 	var editingon = false;
 
 	
-	if(typeof Cell5Class == 'undefined'){
-		class Cell5 {
+	if(typeof <?php echo $identifier ?> == 'undefined'){
+		class <?php echo $identifier ?>Classes {
 
 		setupactions(){
 			var editingon=false;
-			$('.cell5').off('click');
-			$('.cell5').click(function(){
+			$('.<?php echo $identifier ?>').off('click');
+			$('.<?php echo $identifier ?>').click(function(){
 
 				// if(typeof window.selectedfeatured == 'undefined'){var window.selectedfeatured=null;}
 				if($(this).hasClass('featured')){
@@ -152,8 +85,8 @@
 		}
 
 	}
-		var Cell5Class = new Cell5();
+		var <?php echo $identifier ?> = new <?php echo $identifier ?>Classes();
 	}
 	
-	Cell5Class.setupactions();
+	<?php echo $identifier ?>.setupactions();
 </script>

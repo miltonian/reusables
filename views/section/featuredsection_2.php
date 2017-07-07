@@ -27,27 +27,11 @@
 ?>
 
 <style>
-.<?php echo $identifier ?> { position: relative; display: inline-block; margin: 0; padding: 0; max-width: 1200px; width: 100%; }
-.<?php echo $identifier ?> .headercontainer { position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; }
-.<?php echo $identifier ?> .headercontainer .line { position: absolute; display: inline-block;width: inherit;height: 1px; background-color: #333333;margin: 0;padding: 0; top: 50%; margin-top: -0.5px; left: 0; }
-.<?php echo $identifier ?> .headercontainer label {z-index: 1;position: relative;display: inline-block;margin: 0;float: left;margin-left: 70px;padding: 10px;text-transform: uppercase;}
-
-.cell2 .container {margin-left: 10px;margin-right: 10px;}
-
-.adset3 {display: inline-block;padding: 0;top: 0;position: relative;}
-.adset3 img {position: relative; display: inline-block;margin: 0;padding: 0;background-color: #e0e0e0; }
-
-@media (min-width: 0px) {
-	.adset3 { width: 90%; margin: 0; float: none;}
-}
-@media (min-width: 768px) {
-	.adset3 { width: 56%; margin: 10px 19px 10px 6%; float: left; }
-}
 </style>
 
 
 
-<div class="<?php echo $identifier ?>" >
+<div class="<?php echo $identifier ?> featuredsection_2" >
 	<?php if($sectiondict['title'] != ""){ ?>
 		<div class="headercontainer">
 			<div class="line"></div>
@@ -72,7 +56,7 @@
 		</div>
 		<div style="display: inline-block; position: relative; width: 100%;">
 			<div class="adset3" style="margin: 10px 10px 10px 0px; width: calc(66% - 15px); display: inline-block; position: relative;">
-				<a href="<?php echo $baseurlminimal ?>reusables/functions/adclicked.php?ad_id=<?php echo $adset3['id'] ?>"><img src="<?php echo $adset3['imagepath'] ?>" width="100%" height="auto" style="margin-left: 1%;"></a>
+				<a href="/reusables/functions/adclicked.php?ad_id=<?php echo $adset3['id'] ?>"><img src="<?php echo $adset3['imagepath'] ?>" width="100%" height="auto" style="margin-left: 1%;"></a>
 			</div>
 			<?php 
 				ReusableClasses::cell( "cell_2", $sectiondict['postarray'][3] );
@@ -98,7 +82,7 @@
 				ReusableClasses::cell( "cell_2", $sectiondict['postarray'][3] );
 			?>
 			<div class="adset3" style="float: right; margin: 10px 10px 10px 0px; width: calc(66% - 15px); display: inline-block; position: relative;"> 
-				<a href="<?php echo $baseurlminimal ?>reusables/functions/adclicked.php?ad_id=<?php echo $adset3['id'] ?>"><img src="<?php echo $adset3['imagepath'] ?>" width="100%" height="auto"></a>
+				<a href="/reusables/functions/adclicked.php?ad_id=<?php echo $adset3['id'] ?>"><img src="<?php echo $adset3['imagepath'] ?>" width="100%" height="auto"></a>
 			</div>
 		</div>
 		<div style="display: inline-block; position: relative; width: 100%; margin-top: 10px">

@@ -11,34 +11,46 @@ $MainClasses = new MainClasses();
 class ReusableClasses {
 	
 	public $PDO; // PHP Data Object
+	protected static $includedfiles = array();
+
 	//public static $PDO;
 	private $cryptKey = "Rxp45dn142etvQk9e17Oo3nx2xJKfkZs"; // Encryption Key
 
-	//protected static
-	public static function capture( $view_filename, array $view_data )
+	public static function addfile( $parent_dir, $file )
 	{
-		// Import the view variables to local namespace
-		extract( $view_data, EXTR_SKIP );
 
-		// Capture the view output
+		array_push( self::$includedfiles, [ "parent_dir" => $parent_dir, "file" => $file ] );
+	}
+
+	public static function addcss()
+	{
+		foreach (self::$includedfiles as $f) {
+			Style::addcss( $f['parent_dir'], $f['file'] );
+		}
+	}
+
+	public static function addjs()
+	{
+		foreach (self::$includedfiles as $f) {
+			Scripts::addjs( $f['parent_dir'], $f['file'] );
+		}
+	}
+
+	public static function startpage( $page )
+	{
 		ob_start();
+	}
 
-		try
-		{
-			// Load the view within the current scope
-			include 'reusables/views/'.$view_filename;
-		}
-		catch( \Exception $e )
-		{
-			// Delete the output buffer
-			ob_end_clean();
+	public static function endpage( $parent_dir, $page )
+	{
+		echo "</body>";
+		$output = ob_get_contents();
+		ob_end_clean();
+		ReusableClasses::addcss();
+		echo "<link rel='stylesheet' type='text/css' href='/reusables/customcss/" . $parent_dir . "/".basename($page, '.php').".css'>";
+		echo $output;
 
-			// Re-throw the exception
-			throw $e;
-		}
-
-		// Get the captured output and close the buffer
-		return ob_get_clean();
+		ReusableClasses::addjs();
 	}
 
 	public static function cell( $file, $data )
@@ -226,15 +238,7 @@ class ReusableClasses {
 		return $sendback;
 	}
 
-	public static function getPosts( $type )
-	{
-		$MainClasses = new MainClasses();
-		$query = 'SELECT posts.*, posts.id AS row_id FROM posts WHERE posts.id > ? AND posts.scheduled<? ORDER BY posts.date_made DESC, posts.id DESC LIMIT 20';
-		$values = [ 0, time() ];
-		$type = "select";
-		$postarray = $MainClasses->querySQL( $query, $values, $type )[1];
-		return $postarray;
-	}
+	
 		public static function getPosts_tablenames($postarray){
 			// make dict for tablenames
 			$tablenames = [];
@@ -244,58 +248,62 @@ class ReusableClasses {
 			}
 			return $tablenames;
 		}
-
-	public static function getNetworkInfo( $networkid )
-	{
-		$MainClasses = new MainClasses();
-		$query = 'SELECT networks.* FROM networks WHERE networks.id=?';
-		$values = [ $networkid ];
-		$type = "select";
-		$networkname = $MainClasses->querySQL( $query, $values, $type )[1][0]['name'];
-
-		$query = 'SELECT network_info.* FROM network_info WHERE network_info.network_id=?';
-		$values = [ $networkid ];
-		$type = "select";
-		$result = $MainClasses->querySQL( $query, $values, $type )[1];
-		$networkdict = [];
-		foreach ($result as $pair) {
-			$networkdict[$pair['maininfo_key']] = $pair['maininfo_value'];
+	
+		public static function getMainCategories_tablenames( $categories )
+		{
+			// make dict for tablenames
+			$tablenames = [];
+			$allkeys = array_keys($categories[0]);
+			foreach ($allkeys as $k) {
+				$tablenames[$k] = "main_categories";
+			}
+			return $tablenames;
 		}
-		$networkdict['name'] = $networkname;
 
-		return $networkdict;
-	}
-	public static function getPostInfo( $postid )
-	{
-		$MainClasses = new MainClasses();
-		$query = 'SELECT posts.* FROM posts WHERE posts.id = ?';
-		$values = [ $postid ];
-		$type = "select";
-		return $MainClasses->querySQL( $query, $values, $type )[1][0];
-	}
+	
 
-	public static function getRewards( $postid )
-	{
-		$MainClasses = new MainClasses();
-		$query = 'SELECT customtable_rewards.* FROM customtable_rewards WHERE customtable_rewards.post_id=? ORDER BY customtable_rewards.amount DESC';
-		$values = [ $postid ];
-		$type = "select";
-		$rewardsarray = $MainClasses->querySQL( $query, $values, $type )[1];
-		for ($i=0; $i < sizeof($rewardsarray); $i++) { 
-			$rewardsarray[$i]['price'] = $rewardsarray[$i]['amount'];
+	public static function toValueAndDBInfo( $result, $conditions, $default_table ){
+		$tablenames = [];
+		$thisdict = [];
+		if ( Data::isAssoc( $result ) ) {
+			// is dict
+			$thisdict = $result;
+		}else{
+			// is array
+			$thisdict = $result[0];
 		}
-		return $rewardsarray;
+		$allkeys = array_keys($thisdict);
+
+		foreach ($allkeys as $k) {
+			$tablenames[$k] = $default_table;
+		}
+
+		$returningdict = [
+			"value" => $result,
+			"db_info" => [
+				"tablenames" => $tablenames,
+				"conditions" => $conditions
+			]
+		];
+		return $returningdict;
 	}
 
-	public static function getPostFundsDict( $postid )
-	{
-		$MainClasses = new MainClasses();
-		$query = 'SELECT customtable_funds.*, SUM( customtable_funds.full_amount ) as funded, COUNT(DISTINCT customtable_funds.email) as funders FROM customtable_funds WHERE customtable_funds.post_id=? ';
-		$values = [ $postid ];
-		$type = "select";
-		$fundsarray = $MainClasses->querySQL( $query, $values, $type )[1][0];
-		return $fundsarray;
-	}
+	
+		public static function getNetworkInfo_db($networkinfo){
+			// make dict for tablenames
+			$array_for_db = [];
+			$allkeys = array_keys($networkinfo[0]);
+			// exit(json_encode())
+			foreach ($allkeys as $k) {
+
+				if($k=="name"){
+					$array_for_db[$k]['tablename'] = "networks";
+				}else{
+					$array_for_db[$k]['tablename'] = "network_info";
+				}
+			}
+			return $array_for_db;
+		}
 
 	public static function checkRequired( $filename, $viewdict, $required )
 	{

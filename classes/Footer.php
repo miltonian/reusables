@@ -4,6 +4,7 @@ class Footer {
 
 	public static function make( $file, $data, $identifier )
 	{
+		ReusableClasses::addfile( "footer", $file );
 		$View = View::factory( 'reusables/views/footer/' . $file );
 		$View->set( 'footerdict', $data );
 		$View->set( 'identifier', $identifier );

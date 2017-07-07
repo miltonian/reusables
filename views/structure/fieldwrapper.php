@@ -20,10 +20,10 @@
 ?>
 
 <style>
-	.fieldwrapper { display: inline-block; position: relative; margin: 20px; padding: 0; width: calc(<?php echo $size ?> - 40px); float: left; text-align: left; margin-bottom: 5px; }
+
 </style>
 
-<div class="fieldwrapper">
+<div class="<?php echo $identifier ?> fieldwrapper" style="width: calc(<?php echo $size ?> - 40px);">
 	<?php foreach($structuredict['maincolumn'] as $view){
 		echo $view;
 	} ?>

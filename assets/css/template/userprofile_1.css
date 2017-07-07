@@ -1,0 +1,21 @@
+.userprofile_1 { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; color: #333333; }
+		.userprofile_1 h1, .userprofile_1 h2 {width: 100%; }
+	.userprofile_1 #my-name { display: inline-block;  position: relative;  margin: 0; padding: 0; font-size: 3em; text-transform: uppercase; }
+	.userprofile_1 #i-do { display: inline-block;  position: relative;  margin: 0; padding: 0; font-size: 2em; font-weight: 400; text-transform: uppercase; margin-bottom: 30px; }
+	.userprofile_1 #profile-pic { max-width: 100%; max-height: 100%; }
+	.userprofile_1 #desc { display: inline-block; position: relative; margin: 0; padding: 30px;}
+	.userprofile_1 .socialbuttons-container { display: inline-block; position: relative; margin: 0; padding: 0;  }
+	.userprofile_1 .htmltext-container {display: inline-block;padding-left: 20px;padding-right: 20px;}
+
+@media (min-width: 0px) {
+	.userprofile_1 .profilepic-container { float: none; max-width: 100%; max-height: auto; text-align: center;}
+	.userprofile_1 #desc {float: none; max-width: auto; text-align: center; padding-top: 30px;}
+	.userprofile_1 h1, .userprofile_1 h2 { text-align: center; }
+	.userprofile_1 .htmltext-container {max-width: calc(100% - 40px);}
+}
+@media (min-width: 768px) {
+	.userprofile_1 .profilepic-container { float: left; max-width: 35%; /*max-height: 360px;*/ }
+	.userprofile_1 #desc { float: left; text-align: left; float: left; max-width: calc(65% - 60px); padding-top: 0;}
+	.userprofile_1 h1, .userprofile_1 h2 { text-align: left; }
+	.userprofile_1 .htmltext-container {max-width: calc(65% - 40px);}
+}

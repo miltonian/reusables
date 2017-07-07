@@ -1,0 +1,18 @@
+.featuredsection_4 { position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; text-align: center; }
+	.featuredsection_4 .picture { position: relative; margin: 0; background-size: cover; background-position: center; margin: 2px; }
+	.featuredsection_4 #greybox { position: relative; display: inline-block; margin: 0; padding: 0; width: 250px; height: 40px; background-color: grey; color: white; bottom: 0; }
+	.featuredsection_4 .words { position: relative; display: block; margin: 0; padding: 0; width: auto; height: 100px; background-color: white; }
+	.featuredsection_4 .text-container { position: relative; display: inline-block; top: 50%; transform: translateY(-50%); width: 100%; }
+	.featuredsection_4 .grey-label { font-style: italic; color: grey; font-size: 2em; }
+
+@media (min-width: 0px) {
+	.featuredsection_4 .picture.one, .picture.three {display: none;}
+	.featuredsection_4 .picture {width: 100%; padding: 0; padding-bottom: 68%;}
+	.featuredsection_4 .graylabel {margin-top: calc(68% - 38px);}
+}
+@media (min-width: 768px) {
+	.featuredsection_4 .picture {display: inline-block;}
+	.featuredsection_4 .picture.one, .picture.three {display: inline-block;}
+	.featuredsection_4 .picture {width: 32%; padding: 0; padding-bottom: 28%;}
+	.featuredsection_4 .graylabel {margin-top: calc(28% - 38px);}
+}

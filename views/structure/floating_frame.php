@@ -9,11 +9,9 @@
 ?>
 
 <style>
-.<?php echo $identifier ?> { position: fixed; display: inline-block; margin: 0; padding: 0; width: 400px; height: 225px; overflow: hidden; background-color: #333333; top: <?php echo $structuredict['left'] ?>; left: <?php echo $structuredict['top'] ?>; z-index: 50;}
-	.<?php echo $identifier ?> .maincolumn { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; height: 100%; background: transparent; }
 </style>
 
-<div class="<?php echo $identifier ?>">
+<div class="<?php echo $identifier ?> floating_frame">
 	<div class="maincolumn">
 		<?php 
 			foreach ($structuredict['maincolumn'] as $view) {

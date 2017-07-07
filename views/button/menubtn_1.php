@@ -3,49 +3,9 @@
 ?>
 
 <style>
-.menubtn_1 {
-	display: inline-block;
-	position: relative;
-	cursor: pointer;
-}
-.menubtn_1 .btn-container {
-	position: relative;
-	display: inline-block;
-	margin: 0;
-	padding: 10px;
-	text-align: center;
-	background: transparent;
-	cursor: pointer;
-	width: 20px;
-}
-.menubtn_1 .bar-single {
-	position: relative;
-	display: inline-block;
-	margin: 2px 0px;
-	margin-right: 0;
-	padding: 0;
-	width: 100%;
-	height: 2px;
-	background-color: #333333;
-	border-radius: 1px;
-	cursor: pointer;
-}
-.menubtn_1 label {
-	position: relative;
-	display: inline-block;
-	margin: 0;
-	padding: 0;
-	color: #706966;
-	margin-left: -5px;
-	margin-right: 5px;
-	top: -4px;
-	font-size: 12px;
-	font-weight: 500;
-	cursor: pointer;
-}
 </style>
 
-<div class="menubtn_1">
+<div class="<?php echo $identifier ?> menubtn_1">
 	<div class="btn-container">
 		<div class="bar-single 1"></div>
 		<div class="bar-single 2"></div>
@@ -70,7 +30,7 @@ var menuopen=false;
 		  });
 		};
 
-	$('.menubtn_1').click(function(){
+	$('.<?php echo $identifier ?>').click(function(){
 		// var degrees1 = 45;
 		// var degrees3 = -45;
 		// var opacity2 = '0';
@@ -89,22 +49,22 @@ var menuopen=false;
 		// 	menuopen=true;
 		// }
 
-		// $('.menubtn_1 .bar-single.1').animateRotate(degrees1, {
+		// $('.<?php echo $identifier ?> .bar-single.1').animateRotate(degrees1, {
 		//   	duration: 300,
 		//   	easing: 'linear',
 		//   	complete: function () {},
 		//   	step: function () {}
 		// });
-		// $('.menubtn_1 .bar-single.2').animate({'opacity': opacity2}, 300);
-		// $('.menubtn_1 .bar-single.3').animateRotate(degrees3, {
+		// $('.<?php echo $identifier ?> .bar-single.2').animate({'opacity': opacity2}, 300);
+		// $('.<?php echo $identifier ?> .bar-single.3').animateRotate(degrees3, {
 		//   	duration: 300,
 		//   	easing: 'linear',
 		//   	complete: function () {  },
 		//   	step: function () {}
 		// });
-		// $('.menubtn_1 .bar-single.1').animate({'top': fromtop1}, 300);
-		// $('.menubtn_1 .bar-single.3').animate({'top': fromtop3}, 300);
-		// setTimeout(function(){$('.menubtn_1 label').text(menutext);}, 200);
+		// $('.<?php echo $identifier ?> .bar-single.1').animate({'top': fromtop1}, 300);
+		// $('.<?php echo $identifier ?> .bar-single.3').animate({'top': fromtop3}, 300);
+		// setTimeout(function(){$('.<?php echo $identifier ?> label').text(menutext);}, 200);
 		
 		$('.menuview1').css({'display': 'inline-block', 'left': '0px'});
 		$('.menuview1').animate({'opacity': '1'});

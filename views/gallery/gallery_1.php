@@ -6,97 +6,14 @@ if(!isset($galleryarray)){$galleryarray = array(); }
 
 $imagepickerarray = $galleryarray;
 
-// if(substr($galleryarray[1]['imagepath'], 0,1) == "/"){exit("hello");}
-
-// exit(substr($galleryarray[1]['imagepath'], 0,1));
-// exit(json_encode($galleryarray));
-
-// exit(json_encode($shortcuts->changeURLForTesting($galleryarray[1]['imagepath'])));
-
 ?>
 
 <style>
-.gallery1 {
-	display: inline-block;
-	position: relative;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
-	background-color: black;
-	/*background-color: white;*/
-	width: calc(100% - 40px);
-	/* margin-right: 30px; */
-	padding: 0 20px;
-	margin: 0;
-	overflow: hidden;
-}
-.gallery1 .backgroundimage {
-	position: absolute;
-	display: inline-block;
-	margin: 0;
-	padding: 0;
-	top: -10%;
-	left: -10%;
-	width: 120%;
-	height: 120%;
-	background-position: center;
-	background-size: cover;
-	filter:blur(15px);
-}
-.gallery1 .image {
-	display: inline-block;
-	position: absolute;
-	margin: 0;
-	padding: 0;
-	height: 100%;
-	width: 100%;
-	background-position: center;
-	background-size: contain;
-	background-repeat: no-repeat;
-}
-.gallery1 .image.left {left: -100%;}
-.gallery1 .image.mid {left: 0;}
-.gallery1 .image.right {left: 100%;}
-
-.gallery1 .buttons {
-	display: inline-block;
-	position: absolute;
-	margin: 0;
-	padding: 0;
-	height: 100%;
-	width: 20%;
-	top: 0;
-	z-index: 1;
-	-webkit-appearance: none;
-	border: 0;
-	cursor: pointer;
-	background: transparent;
-	background-position: center;
-	background-size: 30% auto;
-	background-repeat: no-repeat;
-	opacity: 0.8;
-}
-.gallery1 .buttons:hover {background-color: rgba(0,0,0,0.5);}
-.gallery1 .buttons.left {
-	left: 0;
-	float: left;
-	background-image: url('<?php echo $baseurlminimal ?>reusables/uploads/icons/leftarrow-white.png');
-}
-.gallery1 .buttons.right {
-	right: 0;
-	float: right;
-	background-image: url('<?php echo $baseurlminimal ?>reusables/uploads/icons/rightarrow-white.png');
-}
-.gallery1.editing {
-	cursor: pointer;
-}
 </style>
 
 <?php include $docroot.'/reusables/views/imagepicker_1.php'; ?>
 
-<div class="gallery1 <?php if($isediting){ echo 'editing'; } ?>">
+<div class="gallery_1 <?php echo $identifier ?> <?php if($isediting){ echo 'editing'; } ?>">
 	<div class="backgroundimage" style="background-image: url('<?php echo $shortcuts->changeURLForTesting($galleryarray[0]['imagepath']) ?>');"></div>
 	<div class="image left" id="one" style="background-image: url('<?php echo $shortcuts->changeURLForTesting($galleryarray[sizeof($galleryarray)-1]['imagepath']) ?>');"></div>
 	<div class="image mid" id="two" style="background-image: url('<?php echo $shortcuts->changeURLForTesting($galleryarray[0]['imagepath']) ?>');"></div>
@@ -114,11 +31,11 @@ var isediting = false;
 	isediting = true;
 <?php } ?>
 var currentindex = 0;
-$('.gallery1.editing').click(function(e){
+$('.<?php echo $identifier ?>.editing').click(function(e){
 	e.preventDefault();
 	$('.imagepicker1').toggleClass('hide show');
 });
-$('.gallery1 .buttons').click(function(e){
+$('.<?php echo $identifier ?> .buttons').click(function(e){
 	e.preventDefault();
 	if( $(this).hasClass('left') ){
 		// alert('left');
@@ -139,7 +56,7 @@ $('.gallery1 .buttons').click(function(e){
 		moveright($('#two'));
 		moveright($('#three'));
 	}
-	$('.backgroundimage').css({'background-image': $('.gallery1 .image.mid').css('background-image')});
+	$('.backgroundimage').css({'background-image': $('.<?php echo $identifier ?> .image.mid').css('background-image')});
 });
 function moveleft(img){
 	if(img.hasClass('mid')){
@@ -216,19 +133,19 @@ function moveright(img){
 let imagepicker1class = new ImagePicker1();
 
 
-class Gallery1Class {
+class <?php echo $identifier ?>Classes {
 	attachobjtopicker(obj){
 		imagepicker1class.attachToObj(obj);
 	}
 
 	attachPicker(){
-		imagepicker1class.attachgallery( $('.gallery1')[0] );
+		imagepicker1class.attachgallery( $('.<?php echo $identifier ?>')[0] );
 	}
 }
 
-let gallery1 = new Gallery1Class();
+let <?php echo $identifier ?> = new <?php echo $identifier ?>Classes();
 if(isediting){
-	gallery1.attachPicker();
+	<?php echo $identifier ?>.attachPicker();
 }
 
 

@@ -97,63 +97,9 @@ $device = $GLOBALS['device'];
 ?>
 
 <style>
-.featuredsection1 {
-	display: inline-block;
-	position: relative;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	height: 450px;
-}
-.featuredsection1 .leftdiv, .featuredsection1 .rightdiv {
-	display: inline-block;
-	position: relative;
-	margin: 0;
-	padding: 0;
-	height: 100%;
-	float: left;
-	background-position: center;
-	background-size: cover;
-	background-repeat: no-repeat;
-}
-	.featuredsection1 .rightdiv{width: 50%;}
-.featuredsection1 .topdiv {
-	display: inline-block;
-	position: relative;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	height: 44%;
-	background-position: center;
-	background-size: cover;
-	background-repeat: no-repeat;
-}
-.featuredsection1 .bottomdiv {
-	display: inline-block;
-	position: relative;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	height: 56%;
-	background-position: center;
-	background-size: cover;
-	background-repeat: no-repeat;
-}
-.featuredsection1 .post {
-	outline: 2px solid white;
-}
-
-@media (min-width: 0px) {
-	.featuredsection1 .leftdiv {width: 100%;}
-	.featuredsection1 .rightdiv {display: none;}
-}
-@media (min-width: 768px) {
-	.featuredsection1 .leftdiv {width: 50%;}
-	.featuredsection1 .rightdiv {display: inline-block;}
-}
 </style>
 
-<div class="featuredsection1">
+<div class="featuredsection_1 <?php echo $identifier ?>">
 	<div class="leftdiv post">
 		<?php $isfeatured=true; $showdate=false;  $fontsize='2em'; $cell7image=$featuredpost1['featured_imagepath']; $cell7title=$featuredpost1['title']; $cell7id=$featuredpost1['id']; $cell7date=$featuredpost1['formatted_date']; $cell7mediatype=$featuredpost1['type']; include $docroot.'/reusables/views/cell_7.php' ?>
 	</div>

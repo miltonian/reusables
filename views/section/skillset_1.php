@@ -20,24 +20,10 @@ if(!isset($sectiondict['preview'])){ $sectiondict['preview'] = 0; }
 ?>
 
 <style>
-.skillset1 { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; text-align: left;}
-	.skillset1 .title {display: inline-block; position: relative; margin: 0; padding: 20px; width: calc(100% - 40px); font-weight: 500;}
-	.skillset1 .wrapper {display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; }
-	.skillset1 .wrapper .bar {display: inline-block; position: relative; margin: 10px; padding: 0; width: calc(100% - 20px); height: 60px; background-color: #efefef; overflow: hidden; border-radius: 5px; max-width: 600px;}
-		.skillset1 .wrapper .bar .fill {display: inline-block; position: relative; margin: 0; padding: 0; height: 100%; background-color: blue; float: left; border-radius: 5px;}
-			.skillset1 .wrapper .bar .fill.one { background-color: #0f1626; }
-			.skillset1 .wrapper .bar .fill.two { background-color: #ab987a }
-			.skillset1 .wrapper .bar .fill.three { background-color: #ff533d; }
-			.skillset1 .wrapper .bar .fill label {display: inline-block; position: relative; margin: 0; padding: 0px 20px; color: white; top: 50%; transform: translateY(-50%);}
-			.skillset1 .wrapper .skillname.editing { width: calc(20% - 40px); height: 50px; border-radius: 5px; border: 1px solid #e0e0e0; padding: 10px; margin: 10px; font-size: 1.1em; font-weight: 300; }
-			.skillset1 .wrapper .skillvalue.editing { width: calc( 80% - 40px ); height: 50px; border-radius: 5px; border: 1px solid #e0e0e0; padding: 10px; margin: 10px; font-size: 1.1em; font-weight: 300; }
-		}
-		.skillset1 .wrapper .bar .leftover {display: inline-block; position: relative; margin: 0; padding: 0; height: 100%; background: transparent; float: left;}
-			.skillset1 .wrapper .bar .leftover label {display: inline-block; position: relative; margin: 0; padding: 0; color: #333333; width: 100%; text-align: center; top: 50%; transform: translateY(-50%);}
 </style>
 
 
-<div class="skillset1">
+<div class="skillset_1 <?php echo $identifer ?>">
 	<?php if( ((!$GLOBALS['isadmin'] && !$GLOBALS['isuser']) || ($GLOBALS['isadmin'] != $sectiondict['userprofile_userid'] && $GLOBALS['userid'] != $sectiondict['userprofile_userid'])) || $sectiondict['preview']==1 ){ ?>
 	<h1 class="title">My Month</h1>
 		<?php $i=1; foreach ($sectiondict['skillsarray'] as $skill) { ?>

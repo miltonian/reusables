@@ -1,0 +1,26 @@
+.navbar_2 .container { position: relative;  display: inline-block; margin: 0; padding: 0; width: 100%; }
+	.navbar_2 .main-content { position: relative;  display: inline-block; margin: 0; padding: 0; width: 100%; height: 90px; background-color: white; border-bottom: 1px solid #cecece; }	
+
+	.navbar_2 .logo-div { position: absolute; display: block; margin: 0; padding: 0; width: 275px; top: 50%; transform: translateY(-50%); }
+	.navbar_2 .subnav { position: relative;  display: inline-block; margin: 0; padding: 0; width: 100%; height: 40px; background-color: white; border-bottom: 1px solid #cecece; text-align: center; }
+	.navbar_2 .categories-wrapper { position: relative; margin: 0; padding: 0; top: 50%; transform: translateY(-50%); text-transform: uppercase; }
+	.navbar_2 .category-btn { position: relative;  display: inline-block; margin: 0px 30px; padding: 5px; background: transparent; float: left; text-decoration: none; color: #555555; font-size: 0.9em; font-weight: 500; }
+	.navbar_2 .subscribe-btn { position: relative; display: inline-block; margin: 0; padding: 5px; color: #333333; font-weight: 600; font-size: 0.9em; -webkit-appearance: none; background: transparent; border: 0; cursor: pointer; }
+	.navbar_2 .tagline { position: absolute; margin: 0; padding: 0; left: 50%; color: #555555; text-decoration: none; bottom: 13px; font-weight: 400; font-size: 0.6em; transform: translateX(-50%); }
+	.navbar_2 .socialbtns-container { display: inline-block; position: relative; margin: 0; padding: 0; top: 50%; transform: translateY(-50%); float: left; margin-left: 20px; }
+
+@media ( min-width: 0px ) {
+	.navbar_2 .categories-wrapper { display: none; }
+	.navbar_2 .logo-div { left: auto; transform: translate(0, -50%); right: 0; text-align: right; padding-right: 20px; }
+	.navbar_2 .logo-div img { max-width: 70%; max-height: 70%; }
+	.navbar_2 .logo-div h3 { text-decoration: none; color: #333333; }
+	.navbar_2 .search-container { display: none; }
+	.navbar_2 .tagline { display: none; }
+}
+@media (min-width: 768px) {
+	.navbar_2 .categories-wrapper { display: inline-block; }
+	.navbar_2 .logo-div { left: 50%; transform: translate(-50%, -50%); right: auto; text-align: center; padding-right: 0; }
+	.navbar_2 .logo-div img { max-width: 90%; max-height: 90%; }
+	.navbar_2 .search-container { display: inline-block; }
+	.navbar_2 .tagline { display: inline-block; }
+}

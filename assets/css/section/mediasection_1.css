@@ -1,0 +1,4 @@
+.mediasection_1 { display: inline-block; position: relative;  margin: 0; padding: 0; width: 100%;  }
+	.mediasection_1 .container { display: inline-block; position: relative; margin: 0; padding: 0; }
+	.mediasection_1 .post { display: inline-block; position: relative; margin: 0 10%; padding: 0; width: 25%; padding-bottom: 25%; background-size: cover; background-position: center; background-repeat: no-repeat; cursor: pointer; }
+	.mediasection_1 .post:hover {opacity: 0.6}

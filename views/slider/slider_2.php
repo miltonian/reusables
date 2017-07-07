@@ -30,7 +30,7 @@ $imagepickerarray = $sliderarray;
 	echo Modal::make( "imagepicker_1", [], $identifier . "-imagepicker" );
 ?>
 
-<div class="<?php echo $identifier ?> <?php if($isediting){ echo 'editing'; } ?>">
+<div class="slider_2 <?php echo $identifier ?> <?php if($isediting){ echo 'editing'; } ?>">
 	<div class="backgroundimage" style="background-image: url('<?php echo Shortcuts::changeURLForTesting($sliderarray[0]['imagepath']) ?>');"></div>
 	<div class="image left" id="one" style="background-image: url('<?php echo Shortcuts::changeURLForTesting($sliderarray[sizeof($sliderarray)-1]['imagepath']) ?>');"></div>
 	<div class="image mid" id="two" style="background-image: url('<?php echo Shortcuts::changeURLForTesting($sliderarray[0]['imagepath']) ?>');"></div>

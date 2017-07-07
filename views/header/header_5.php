@@ -3,18 +3,10 @@
 ?>
 
 <style>
-.<?php echo $identifier ?> { position: relative; display: inline-block; padding: 20px 40px; margin: 0; width: calc( 100% - 80px ); }
-	.<?php echo $identifier ?> #title { display: inline-block; position: relative; margin: 0px 0px; padding: 0; width: 100%; color: #333333; text-transform: uppercase; font-size: 25px; font-weight: 400; }
-@media (min-width: 0px) {
-	.<?php echo $identifier ?> #title { text-align: center; }
-}
-@media (min-width: 768px) {
-
-}
 </style>
 
-<div class="<?php echo $identifier ?>">
-	<h1 id="title"><?php echo $headerdict['title'] ?></h1>
+<div class="<?php echo $identifier ?> header_5">
+	<h1 id="title"><?php echo Data::getValue( $headerdict['title'] ) ?></h1>
 </div>
 
 <script>

@@ -22,7 +22,7 @@ if(!isset($celldict['post_id'])){ $celldict['post_id'] = $celldict['id']; }
 
 <div class="<?php echo $identifier ?> <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['post_id'] ?>">
 	<div class="container">
-		<div style="display:inline-block; width: 100%;">
+		<div style="display: inline-block; width: 100%;">
 			<div>
 				<a href="<?php if($isadmin){ echo '#'; }else{ echo '/post/'.$celldict['post_id'] . '/' . preg_replace('/\PL/u', '-', preg_replace("/[^ \w]+/", "", $celldict['title']) ); } ?>">
 					<div class="picture" style="<?php if($celldict['imagepath']){ echo 'background-image: url('.$celldict['imagepath'].');'; } ?>"></div>

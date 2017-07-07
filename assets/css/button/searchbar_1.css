@@ -1,0 +1,5 @@
+.searchbar_1 { display: inline-block; position: relative; margin: 0; padding: 0; }
+	.searchbar_1 img { display: inline-block; position: relative; margin: 0; padding: 0; float: left; cursor: pointer; }
+	.searchbar_1 form { display: inline-block; position: relative; margin: 0; padding: 0; width: 0px; height: 30px; float: left; border: 0; opacity: 0; }
+	.searchbar_1 input { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; height: 100%; background-color: white; float: left; text-align: right; font-weight: 300; font-size: 1em; border: 0; border-bottom: 0.5px solid #777777; }
+		.searchbar_1 input:focus {outline:0;}

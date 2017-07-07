@@ -1,0 +1,12 @@
+.table_2 { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; }
+	.table_2 .header { position: relative; display: inline-block; padding: 20px 40px; margin: 0; width: calc( 100% - 80px ); }
+		.table_2 .header #title { display: inline-block; position: relative; margin: 0px 0px; padding: 0; width: 100%; }
+		.table_2 .header #divider { display: inline-block; position: absolute; padding: 0; margin: 0px; bottom: 0; width: calc( 100% - 80px ); height: 2px; background-color: #333333; left: 40px; }
+	.table_2 .table { position: relative; display: inline-block; padding: 0px 30px; margin: 0; width: calc( 100% - 60px ); text-align: center; }
+		.table_2 .cells-wrapper { position: relative; display: table; margin: 0; padding: 0; }
+@media (min-width: 0px) {
+	.table_2 .header #title { text-align: center; }
+}
+@media (min-width: 768px) {
+	.table_2 .header #title { text-align: left; }
+}

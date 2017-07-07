@@ -1,0 +1,15 @@
+.featuredsection_1 { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; height: 450px; }
+	.featuredsection_1 .leftdiv, .featuredsection_1 .rightdiv { display: inline-block; position: relative; margin: 0; padding: 0; height: 100%; float: left; background-position: center; background-size: cover; background-repeat: no-repeat; }
+		.featuredsection_1 .rightdiv{width: 50%;}
+	.featuredsection_1 .topdiv { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; height: 44%; background-position: center; background-size: cover; background-repeat: no-repeat; }
+	.featuredsection_1 .bottomdiv { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; height: 56%; background-position: center; background-size: cover; background-repeat: no-repeat; }
+	.featuredsection_1 .post { outline: 2px solid white; }
+	
+	@media (min-width: 0px) {
+		.featuredsection_1 .leftdiv {width: 100%;}
+		.featuredsection_1 .rightdiv {display: none;}
+	}
+	@media (min-width: 768px) {
+		.featuredsection_1 .leftdiv {width: 50%;}
+		.featuredsection_1 .rightdiv {display: inline-block;}
+	}

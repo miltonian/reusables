@@ -3,14 +3,14 @@
 		"maincolumn"=>""
 	);
 
-	ReusableClasses::checkRequired( "modal-background", $structuredict, $required );
+	ReusableClasses::checkRequired( "modal_background", $structuredict, $required );
 ?>
 
 <style>
 
 </style>
 
-<div class="<?php echo $identifier ?>">
+<div class="<?php echo $identifier ?> modal_background">
 	<div class="overlay"></div>
 	<div class="maincolumn">
 		<?php 

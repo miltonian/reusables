@@ -3,35 +3,9 @@
 ?>
 
 <style>
-.slider1 {
-	position: relative; 
-	display: inline-block; 
-	text-align: center; 
-	overflow: hidden;
-	width: 1200px;
-}
-
-.cell2 .container {
-	margin-left: 10px;
-	margin-right: 10px;
-}
-.sliderobj {
-	float: left;
-	display: inline-block;
-	position: relative;
-}
-.sliderobj.1, .sliderobj.3 {
-
-}
-.sliderobj.2 {
-	
-}
-.sliderobj.3 {
-	
-}
 </style>
 
-<div class="slider1" style="">
+<div class="slider_1 <?php echo $identifier ?>" style="">
 	<div id="sliderwrapper" style="display: inline-block; position: relative; margin: 0; padding: 0; width: 3000px; height: 500px; left: 44%; margin-left: -1500px;">
 		<div class="sliderobj 0" style="-ms-transform: scale(0.8,0.8); -webkit-transform: scale(0.8,0.8); transform: scale(0.8,0.8);"><?php $cell5id=$slider1array[3]['id']; $cell5title=$slider1array[3]['title']; $cell5image=$slider1array[3]['featured_imagepath']; $notitle=true; include $docroot.'/reusables/views/cell_5.php'; ?></div>
 		<div class="sliderobj 1" style="-ms-transform: scale(0.8,0.8); -webkit-transform: scale(0.8,0.8); transform: scale(0.8,0.8);"><?php $cell5id=$slider1array[0]['id']; $cell5title=$slider1array[0]['title']; $cell5image=$slider1array[0]['featured_imagepath']; $notitle=true; include $docroot.'/reusables/views/cell_5.php'; ?></div>

@@ -1,0 +1,22 @@
+.featuredsection_3 { position: relative; display: inline-block; margin: 0; padding: 0; max-width: 1200px; width: 100%; }
+	.featuredsection_3 .headercontainer { position: relative; display: inline-block; margin: 0; padding: 0; margin-bottom: 30px; width: 100%; }
+		.featuredsection_3 .headercontainer .line { position: absolute; display: inline-block; width: 100%; height: 1px; background-color: #333333; margin: 0; padding: 0; top: 50%; margin-top: -0.5px; left: 0; }
+		.featuredsection_3 .headercontainer label { z-index: 1; position: relative; display: inline-block; margin: 0; float: left; margin-left: 70px; padding: 10px; text-transform: uppercase; }
+	.featuredsection_3 .posts { display: inline-block;  position: relative;  width: 100%;  max-width: 1200px; text-align: center; }
+	.featuredsection_3 .left { display: inline-block;  position: relative;  margin: 0;  padding: 0;  }
+		.featuredsection_3 .right.top { display: inline-block;  position: relative;  margin: 0;  padding: 0;  width: calc(50% - 14px); padding-right: 14px; float: left; margin-bottom: 10px; }
+		.featuredsection_3 .right.bottom { display: inline-block;  position: relative;  margin: 0;  padding: 0; margin-top: 23px; float: left; }
+	.cell2 .container { margin-left: 10px; margin-right: 10px; }
+	.featuredsection_3 .thirdrow { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; text-align: center; }
+
+@media (min-width: 0px) {
+	.featuredsection_3 .left { width: 100%; }
+	.featuredsection_3 .right.bottom, .featuredsection_3 .right.top { width: auto; float: none; }
+	.featuredsection_3 .adposition2.thirdrow { margin-top: 20px; width: 70%; }
+	.featuredsection_3 .adposition2.right.bottom { display: none; }
+}
+@media (min-width: 768px) {
+	.featuredsection_3 .right.bottom, .featuredsection_3 .right.top, .featuredsection_3 .left { width: calc(50% - 14px); padding-right: 14px; float: left; margin-bottom: 10px; }
+	.featuredsection_3 .adposition2.right.bottom { display: inline-block; margin: 22px 0px 0px; width: calc(25% - 10px); }
+	.featuredsection_3 .adposition2.thirdrow { margin-top: 6px; width: calc(77% - 24px); }
+}

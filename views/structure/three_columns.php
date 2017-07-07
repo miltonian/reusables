@@ -12,7 +12,7 @@
 <style>
 </style>
 
-<div class="<?php echo $identifier ?>">
+<div class="<?php echo $identifier ?> three_columns">
 	<div class="sidecolumn_left">
 		<?php 
 			foreach ($structuredict['sidecolumn_left'] as $view) {

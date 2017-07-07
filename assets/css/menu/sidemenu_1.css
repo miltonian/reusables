@@ -1,0 +1,3 @@
+.sidemenu_1 { display: inline-block; position: relative; margin: 0; width: calc(100% - 60px); padding: 30px; padding-top: 65px; }
+	.sidemenu_1 .button { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; height: 40px; color: #333333; font-size: 0.9em; font-weight: 600; text-align: left; }
+	.sidemenu_1 .button label { text-transform: uppercase; }
