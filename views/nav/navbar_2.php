@@ -21,7 +21,7 @@ $menudict = [
 	"pages" => $navdict['pages'],
 ];
 
-exit( json_encode( $navdict ) );
+// exit( json_encode( $navdict ) );
 
 echo Menu::make( "menuview_1", $menudict, "menuview1");
 
