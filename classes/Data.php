@@ -37,6 +37,20 @@ class Data {
 		return $defaultdata;
 	}
 
+	public static function formatCellWithDefaultData( $data_id, $index )
+	{
+		$data = self::retrieveDataWithID( $data_id );
+		$dict = $data['value'][$index];
+		$allkeys = array_keys( $dict );
+		$cell = [];
+		foreach ($allkeys as $k) {
+			$cell[$k] = [ "data_id"=>$data_id, "key"=>$k, "index"=>$index ];
+		}
+		$cell['index'] = $index;
+
+		return $cell;
+	}
+
 	public static function isAssoc(array $arr)
 	{
 	    if (array() === $arr) return false;

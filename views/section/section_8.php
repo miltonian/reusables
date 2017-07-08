@@ -13,8 +13,8 @@
 
 <div class="<?php echo $identifier ?> section_8">
 	<div class="wrapper">
-		<div class="left" style="background-image: url('<?php echo $sectiondict['left_imagepath'] ?>');"></div>
-		<div class="right" style="background-image: url('<?php echo $sectiondict['right_imagepath'] ?>');"></div>
+		<div class="left" style="background-image: url('<?php echo Data::getValue($sectiondict['left_imagepath']) ?>');"></div>
+		<div class="right" style="background-image: url('<?php echo Data::getValue($sectiondict['right_imagepath']) ?>');"></div>
 	</div>
 </div>
 

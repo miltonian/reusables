@@ -24,19 +24,16 @@ $required = array(
 		<?php 
 			$i=0;
 			for ($i=0; $i < sizeof($tabledict['postarray']['value']); $i++) { 
-				$postdict = $tabledict['postarray']['value'][$i];
-				$postkeys = array_keys( $postdict );
-				$post = [];
-				foreach ($postkeys as $pk) {
-					$post[$pk] = [ "data_id"=>"postarray", "key"=>$pk, "index"=>$i ];
-				}
-				$post['index'] = $i;
-				// $post['key'] = $tabledict['postarray']['db_info'];
-				// exit(json_encode($post));
-				// foreach ($tabledict['postarray']['value'] as $post) { 
+				// $postdict = $tabledict['postarray']['value'][$i];
+				// $postkeys = array_keys( $postdict );
+				// $post = [];
+				// foreach ($postkeys as $pk) {
+				// 	$post[$pk] = [ "data_id"=>"postarray", "key"=>$pk, "index"=>$i ];
+				// }
+				// $post['index'] = $i;
+				$post = Data::formatCellWithDefaultData( "postarray", $i );
 				if(isset($tabledict['cellactions'])){ $post['actions'] = $tabledict['cellactions']; }else{ $post['actions'] = array(); }
 				echo Cell::make( $tabledict['cellname'], $post, $identifier . "_cell" );
-				// $i++;
 			}
 		?>
 	</div>
