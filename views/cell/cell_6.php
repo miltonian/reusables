@@ -8,8 +8,8 @@
 <style>
 </style>
 
-<div class="cell_6 <?php echo $identifier ?> <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['id'] ?>">
-	<div class="container">
+<div class="cell_6 main <?php echo $identifier ?> <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['id'] ?>">
+	<div class="cell_6 container">
 		<div style="display: inline-block; width: 100%">
 			<div>
 				<?php if($celldict['mediatype']=="youtube"){ ?>
@@ -31,20 +31,20 @@
 					$cell6image = "https://www.youtube.com/embed/".$result."?controls=0";
 				?>
 					
-					<div class="youtubediv" style="position: relative; display: inline-block; width: 100%; height: 44% margin: 0; padding: 0;">
+					<div class="cell_6 youtubediv" style="position: relative; display: inline-block; width: 100%; height: 44% margin: 0; padding: 0;">
 						<iframe width="100%" height="44%" src="<?php echo $celldict['imagepath'] ?>"></iframe>
 					</div>
 				<?php }else{ ?>
-				<div class="picture" style="<?php if($celldict['imagepath']){ echo 'background-image: url('.$celldict['imagepath'].');'; } ?>"></div>
-				<div class="words">
+				<div class="cell_6 picture" style="<?php if($celldict['imagepath']){ echo 'background-image: url('.$celldict['imagepath'].');'; } ?>"></div>
+				<div class="cell_6 words">
 					<!-- <div class="text-container"> -->
-						<label class="category"><?php echo $celldict['category'] ?></label>
+						<label class="cell_6 category"><?php echo $celldict['category'] ?></label>
 						<br>
-						<label class="title"><?php if(isset($celldict['title'])){echo $celldict['title'];} ?></label>
+						<label class="cell_6 title"><?php if(isset($celldict['title'])){echo $celldict['title'];} ?></label>
 						<br>
 						<br>
 						<?php if($celldict['date']!=""){ ?>
-							<label class="date"><?php echo $celldict['date'] ?></label>
+							<label class="cell_6 date"><?php echo $celldict['date'] ?></label>
 						<?php } ?>
 					<!-- </div> -->
 				</div>

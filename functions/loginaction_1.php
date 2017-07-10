@@ -22,7 +22,8 @@ $SecureClasses = new SecureClasses();
 $result = $SecureClasses->checkUserLogin( $email, $password );
 
 if($result[0] == 1){
-	$GLOBALS['userid'] = $result[1]['id'];
+	// $GLOBALS['userid'] = $result[1]['id'];
+	User\Session::setUser( $result[1] );
 	if( isset( $_POST['goto'] ) ){
 		header( 'Location: /' . $_POST['goto'] );
 	}else{
@@ -31,5 +32,3 @@ if($result[0] == 1){
 }else{
 	exit("Incorrect Login Information");
 }
-
-?>

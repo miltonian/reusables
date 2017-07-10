@@ -31,3 +31,14 @@ $userid = $result[1];
 $MainClasses->generateNewUserSlug( $userid, $userslug, 0 );
 
 header( 'Location: /signup?email='.$_POST['email'].'&goto=userprofile' );
+
+
+/*
+-ajh w t
+
+TO DO: 
+register user will have email, username, and password in db
+then another table will hold other custom data
+
+
+*/

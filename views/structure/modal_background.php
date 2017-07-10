@@ -10,9 +10,9 @@
 
 </style>
 
-<div class="<?php echo $identifier ?> modal_background">
-	<div class="overlay"></div>
-	<div class="maincolumn">
+<div class="<?php echo $identifier ?> modal_background main">
+	<div class="modal_background overlay"></div>
+	<div class="modal_background maincolumn">
 		<?php 
 			foreach ($structuredict['maincolumn'] as $view) {
 				echo $view;

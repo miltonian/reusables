@@ -7,7 +7,7 @@ $buttons = "";
 if( isset($headerdict['buttons']) ){
 	$i=0;
 	foreach ($headerdict['buttons'] as $b) {
-		$buttons .= "<button class='index_" . $i . "'>" . $b['name'] . "</button>";
+		$buttons .= "<button class='header_3 index_" . $i . "'>" . $b['name'] . "</button>";
 		$i++;
 	}
 }
@@ -17,25 +17,17 @@ if( isset($headerdict['buttons']) ){
 ?>
 
 <style>
-	.header_3 .structure_1 .sidecolumn_right button { display: inline-block; position: relative; margin: 0; padding: 10px 15px; font-size: 15px; float: right; top: 50%; transform: translateY(-50%); -webkit-appearance: none; border: 1px solid rgba(0,0,0,0.3); border-bottom-width: 3px; border-radius: 5px; background-color: blue; color: white; cursor: pointer; }
-	@media (min-width: 0px) {
-		.header_3 .structure_1 .maincolumn { width: calc(100% - 20px); }
-		.header_3 .structure_1 .sidecolumn_right { width: calc(100% - 20px); text-align: center; }
-	}
-	@media (min-width: 768px) {
-		.header_3 .structure_1 .maincolumn { width: calc(50% - 20px); }
-		.header_3 .structure_1 .sidecolumn_right { width: calc(50% - 20px); text-align: right; height: 37px; }
-	}
+	
 </style>
 
-<div class="<?php echo $identifier ?> header_3">
+<div class="<?php echo $identifier ?> header_3 main">
 	<?php
 		if(isset($headerdict['buttons'])){
 			echo Structure::make(
 				"structure_1", 
 				[
 					"maincolumn" => array( 
-						"<h1 id='title'>" . Data::getValue( $headerdict['title'] ) . "</h1>"
+						"<h1 class='header_3' id='title'>" . Data::getValue( $headerdict['title'] ) . "</h1>"
 					),
 					"sidecolumn_right" => array( 
 						$buttons
@@ -44,10 +36,10 @@ if( isset($headerdict['buttons']) ){
 				$identifier . "_header_3"
 			);
 		}else{ ?>
-			<h1 id='title'><?php echo Data::getValue( $headerdict['title'] ) ?></h1>
+			<h1 class='header_3' id='title'><?php echo Data::getValue( $headerdict['title'] ) ?></h1>
 		<?php } ?>
 
-	<div id="divider"></div>
+	<div class="header_3" id="divider"></div>
 </div>
 
 <script>

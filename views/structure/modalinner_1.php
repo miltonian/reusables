@@ -13,14 +13,14 @@
 <style>
 </style>
 
-<div class="<?php echo $identifier ?> modalinner_1">
-	<div class="header">
-		<button id="close">&#10006;</button>
+<div class="<?php echo $identifier ?> modalinner_1 main">
+	<div class="modalinner_1 header">
+		<button class="modalinner_1" id="close">&#10006;</button>
 		<?php echo Header::make( "header_5", ["title"=>$structuredict['title']], "campaignedit-header" ); ?>
 		
 	</div>
-	<div class="body">
-		<div class="column">
+	<div class="modalinner_1 body">
+		<div class="modalinner_1 column">
 			<?php 
 				foreach ($structuredict['first'] as $view) {
 					echo $view;

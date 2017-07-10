@@ -1,11 +1,15 @@
 <?php
 
+// exit( json_encode( Data::getValue( $sectiondict['skillsarray'] ) ) );
+
+$skillsarray = Data::getValue( $sectiondict['skillsarray'] );
+
 if(!isset($skillset1array)){ $skillset1array = array(); }
 if(!isset($sectiondict['skillsarray'])){ $sectiondict['skillsarray']=array(); }
 
 $skillindex = 0;
-if(sizeof($sectiondict['skillsarray'])>0){
-	$fieldname = $sectiondict['skillsarray'][sizeof($sectiondict['skillsarray'])-1]['name'];
+if(sizeof($skillsarray)>0){
+	$fieldname = $skillsarray[sizeof($skillsarray)-1]['name'];
 	$skillindex = intval(substr($fieldname, strpos($fieldname, 'skillname')))+1;
 }
 
@@ -17,28 +21,30 @@ $skillset1array = array($skill, $skill);
 
 if(!isset($sectiondict['preview'])){ $sectiondict['preview'] = 0; }
 
+// exit( json_encode( Data::getValue( $sectiondict ) ) );
+
 ?>
 
 <style>
 </style>
 
 
-<div class="skillset_1 <?php echo $identifer ?>">
-	<?php if( ((!$GLOBALS['isadmin'] && !$GLOBALS['isuser']) || ($GLOBALS['isadmin'] != $sectiondict['userprofile_userid'] && $GLOBALS['userid'] != $sectiondict['userprofile_userid'])) || $sectiondict['preview']==1 ){ ?>
-	<h1 class="title">My Month</h1>
-		<?php $i=1; foreach ($sectiondict['skillsarray'] as $skill) { ?>
+<div class="skillset_1 main <?php echo $identifer ?>">
+	<?php /*if( ((!$GLOBALS['isadmin'] && !$GLOBALS['isuser']) || ($GLOBALS['isadmin'] != $sectiondict['userprofile_userid'] && $GLOBALS['userid'] != $sectiondict['userprofile_userid'])) || $sectiondict['preview']==1 ){*/ ?>
+	<h1 class="skillset_1 title">My Month</h1>
+		<?php $i=1; foreach ($skillsarray as $skill) { ?>
 			<?php 
 				$name=$skill['fieldname']; $score=$skill['fieldvalue']; 
 			?>
-			<div class="wrapper">
-				<div class="bar">
-					<div class="fill" style="width: <?php echo $score ?>; background: <?php if($i % 3==0){ echo '#ff533d'; }else if($i % 2==0){ echo '#ab987a'; }else{ echo '#0f1626'; } ?>">
+			<div class="skillset_1 wrapper">
+				<div class="skillset_1 bar">
+					<div class="skillset_1 fill" style="width: <?php echo $score ?>; background: <?php if($i % 3==0){ echo '#ff533d'; }else if($i % 2==0){ echo '#ab987a'; }else{ echo '#0f1626'; } ?>">
 						<label><?php echo $name ?></label>
 						<?php if( floatval( str_replace('%', '', $score) ) >= 80 ){ ?>
 							<label style="float: right;"><?php echo $score ?></label>
 						<?php } ?>
 					</div>
-					<div class="leftover" style="display: inline-block; position: relative; margin: 0; padding: 0; top: 50%; transform: translateY(-50%); width: calc(100% - <?php echo $score ?>);">
+					<div class="skillset_1 leftover" style="display: inline-block; position: relative; margin: 0; padding: 0; top: 50%; transform: translateY(-50%); width: calc(100% - <?php echo $score ?>);">
 					<?php if( floatval( str_replace('%', '', $score) ) < 80 ){ ?>
 						<label style="top: 0; transform: none; text-align: right; width: calc(100% - 20px); padding-right: 20px;"><?php echo $score ?></label>
 					<?php } ?>
@@ -47,19 +53,18 @@ if(!isset($sectiondict['preview'])){ $sectiondict['preview'] = 0; }
 			</div>
 			<?php $i++; ?>
 		<?php } ?>
-	<?php }else{ ?>
-		<!-- <h1 class="title">Skills<a href="" id="add-skill" style="font-size: 15px; margin-left: 15px; cursor: pointer;">Add</a></h1> -->
-		<h1 class="title">Skills</h1>
-		<?php $i=0; ?>
-		<?php foreach ($sectiondict['skillsarray'] as $skill) { ?>
+	<?php /*}else{*/ ?>
+		<!-- <h1 class="title">Skills</h1> -->
+		<?php /*$i=0; 
+		foreach ($sectiondict['skillsarray'] as $skill) { 
 			<div class="wrapper">
 				<input type="text" class="skillname editing" name="name_skillname<?php echo $i ?>" value="<?php echo $skill['fieldname'] ?>">
 				<input type="text" class="skillvalue editing" name="name_skillvalue<?php echo $i ?>" value="<?php echo $skill['fieldvalue'] ?>"><br><br>
 			</div>
-			<?php $i++; ?>
-		<?php } ?>
-	<?php } ?>
-	
+			 $i++;
+		}
+	}*/
+	?>
 </div>
 
 

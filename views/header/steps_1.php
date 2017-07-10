@@ -9,14 +9,14 @@ $required = array(
 ?>
 
 <style>
-.steps_1 .step { width: <?php echo (100 / sizeof($headerdict['steps'])); ?>%; }
+.steps_1.step { width: <?php echo (100 / sizeof($headerdict['steps'])); ?>%; }
 </style>
 
-<div class="<?php echo $identifier ?> steps_1" >
+<div class="<?php echo $identifier ?> steps_1 main" >
 	<?php foreach (Data::getValue( $headerdict['steps'] ) as $s) { ?>
-		<div class="step">
-			<label id="title"><?php echo $s['title'] ?></label>
-			<p id="subtitle"><?php echo $s['subtitle'] ?></p>
+		<div class="steps_1 step">
+			<label class="steps_1" id="title"><?php echo $s['title'] ?></label>
+			<p class="steps_1" id="subtitle"><?php echo $s['subtitle'] ?></p>
 		</div>
 	<?php } ?>
 </div>

@@ -14,19 +14,19 @@
 <style>
 </style>
 
-<div class="productcell_2 <?php echo $identifier ?>" id="<?php echo $celldict['id'] ?>">
-	<div class="container">
+<div class="productcell_2 main <?php echo $identifier ?>" id="<?php echo $celldict['id'] ?>">
+	<div class="productcell_2 container">
 		<div style="display: inline-block; width: 100%">
 			<div>
-				<div class="picture" style="<?php if($celldict['featured_imagepath']){ echo 'background-image: url('.$celldict['featured_imagepath'].');'; } ?>"></div>
-				<div class="words">
-					<div class="text-container">
-						<label class="grey-label date">Today</label>
+				<div class="productcell_2 picture" style="<?php if($celldict['featured_imagepath']){ echo 'background-image: url('.$celldict['featured_imagepath'].');'; } ?>"></div>
+				<div class="productcell_2 words">
+					<div class="productcell_2 text-container">
+						<label class="productcell_2 grey-label date">Today</label>
 						<br>
-						<label class="title"><?php if(isset($celldict['title'])){echo $celldict['title'];} ?></label>
+						<label class="productcell_2 title"><?php if(isset($celldict['title'])){echo $celldict['title'];} ?></label>
 						<br>
-						<label class="grey-label desc"><?php echo strip_tags($celldict['html_text']) ?></label>
-						<label class="grey-label price"><?php echo $celldict['price'] ?></label>
+						<label class="productcell_2 grey-label desc"><?php echo strip_tags($celldict['html_text']) ?></label>
+						<label class="productcell_2 grey-label price"><?php echo $celldict['price'] ?></label>
 					</div>
 				</div>
 			</div>

@@ -26,12 +26,12 @@
 <style>
 </style>
 
-<div class="cell_7 <?php echo $identifier ?> <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['post_id'] ?>" style="background-image: url(<?php echo $celldict['featured_imagepath'] ?>)">
-		<div class="gradient"></div>
-		<label class="title mobile" style="font-size: <?php echo $fontsizemobile ?>"><?php echo $celldict['title'] ?></label>
-		<label class="title desktop" style="font-size: <?php echo $fontsize ?>"><?php echo $celldict['title'] ?></label>
+<div class="cell_7 main <?php echo $identifier ?> <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['post_id'] ?>" style="background-image: url(<?php echo $celldict['featured_imagepath'] ?>)">
+		<div class="cell_7 gradient"></div>
+		<label class="cell_7 title mobile" style="font-size: <?php echo $fontsizemobile ?>"><?php echo $celldict['title'] ?></label>
+		<label class="cell_7 title desktop" style="font-size: <?php echo $fontsize ?>"><?php echo $celldict['title'] ?></label>
 		<?php if($celldict['date']!=""){ ?>
-			<label class="date"><?php echo $celldict['date'] ?></label>
+			<label class="cell_7 date"><?php echo $celldict['date'] ?></label>
 		<?php } ?>
 	</div>
 

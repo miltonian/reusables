@@ -14,10 +14,10 @@ $required = array(
 	
 	$cellactionshtml = "";
 	if(isset($celldict['actions'])){
-		$cellactionshtml .= "<div class='actions-div'>";
+		$cellactionshtml .= "<div class='cell_10 actions-div'>";
 		$i=0;
 		foreach ($celldict['actions'] as $action) {
-			$cellactionshtml .= "<button id='" . $celldict['index'] . "' class='action index_".$i."' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
+			$cellactionshtml .= "<button id='" . $celldict['index'] . "' class='cell_10 action index_".$i."' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
 			$i++;
 		}
 		$cellactionshtml .= "</div>";
@@ -30,19 +30,19 @@ $required = array(
 </style>
 
 <?php 
-	echo "<div class='cell_10 " . $identifier . "' id=" . $celldict['index'] . " >";
+	echo "<div class='cell_10 main " . $identifier . "' id=" . $celldict['index'] . " >";
 		echo Wrapper::wrapper1( 
 			[],
 			array(
 				Structure::make( "three_columns", [
 					"sidecolumn_left"=>array(
-						"<div class='featuredimage-div' style='background-image: url(" . Data::getValue( $celldict['featured_imagepath'] ) . ")'></div>"
+						"<div class='cell_10 featuredimage-div' style='background-image: url(" . Data::getValue( $celldict['featured_imagepath'] ) . ")'></div>"
 					),
 					"maincolumn"=>array(
 						"
-						<div class='content'>
-							<h4 id='title'>" . Data::getValue( $celldict['title'] ) . "</h4>
-							<p id='status'>This project is Active</p>
+						<div class='cell_10 content'>
+							<h4 class='cell_10 ' id='title'>" . Data::getValue( $celldict['title'] ) . "</h4>
+							<p class='cell_10 ' id='status'>This project is Active</p>
 						</div>
 						"
 					),

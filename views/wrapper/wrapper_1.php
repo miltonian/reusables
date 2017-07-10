@@ -10,7 +10,7 @@
 <style>
 </style>
 
-<div class="<?php echo $identifier ?> wrapper_1">
+<div class="<?php echo $identifier ?> wrapper_1 main">
 	<?php
 
 		foreach ($children as $child) {

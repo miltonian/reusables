@@ -77,11 +77,32 @@ class Data {
 		}
 	}
 
+	public static function getDefaultConditionsWithID( $identifier )
+	{
+		$data = Data::retrieveDataWithID( $identifier );
+
+		return $data['db_info']['conditions'];
+	}
+
+	public static function getDefaultTableNameWithID( $identifier )
+	{
+		$data = Data::retrieveDataWithID( $identifier );
+		$tablenames = $data['db_info']['tablenames'];
+		$allkeys = array_keys($tablenames);
+		return $tablenames[$allkeys[0]];
+	}
+
 	public static function getValue( $pair )
 	{
 		$hasindex = false;
-		if( !isset( $pair['data_id'] ) ){ "<script>console.log(JSON.stringify( retrieve data is missing data_id));</script> "; return $pair; }
-		if( !isset( $pair['key'] ) ){ "<script>console.log(JSON.stringify( retrieve data is missing data_id));</script> "; return $pair; }
+		if( !isset( $pair['data_id'] ) ){ 
+			// echo "<script>console.log(JSON.stringify( 'retrieve data is missing data_id' + " . $pair . " ) );</script>"; 
+			return $pair; 
+		}
+		if( !isset( $pair['key'] ) ){ 
+			// echo "<script>console.log(JSON.stringify( 'retrieve data is missing data_id' ) );</script>"; 
+			return $pair; 
+		}
 		if( isset( $pair['index'] ) ){ $hasindex = true; }
 
 		if( $hasindex ){
@@ -91,7 +112,9 @@ class Data {
 		}
 
 		if($thevalue == null){
-			$thevalue = $pair;
+			// echo "<script>console.log(JSON.stringify( ' thevalue is null' + " . json_encode( $pair ) . " ) );</script>";
+			// $thevalue = $pair;
+			$thevalue = "";
 		}
 		return $thevalue;
 	}

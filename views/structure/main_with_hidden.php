@@ -13,9 +13,9 @@
 <style>
 </style>
 
-<div class="<?php echo $identifier ?> main_with_hidden">
-	<div class="header">
-		<button id="close">&#10006;</button>
+<div class="<?php echo $identifier ?> main_with_hidden main">
+	<div class="main_with_hidden header">
+		<button class="main_with_hidden" id="close">&#10006;</button>
 		<?php echo Header::make( "header_5", ["title"=>$structuredict['title']], "campaignedit-header" ); ?>
 		<?php echo Header::make( 
 			"steps_1", 
@@ -30,22 +30,22 @@
 		)
 		?>
 	</div>
-	<div class="body">
-		<div class="column first" id="1">
+	<div class="main_with_hidden body">
+		<div class="main_with_hidden column first" id="1">
 			<?php 
 				foreach ($structuredict['first'] as $view) {
 					echo $view;
 				}
 			?>
 		</div>
-		<div class="column second" id="2">
+		<div class="main_with_hidden column second" id="2">
 			<?php 
 				foreach ($structuredict['second'] as $view) {
 					echo $view;
 				}
 			?>
 		</div>
-		<div class="column third" id="3">
+		<div class="main_with_hidden column third" id="3">
 			<?php 
 				foreach ($structuredict['third'] as $view) {
 					echo $view;

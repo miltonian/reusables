@@ -1,4 +1,4 @@
-.steps_1 { position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; }
-	.steps_1 .step { display: inline-block; position: relative; margin: 0; padding: 0; height: 40px; float: left; cursor: pointer; }
-	.steps_1 #title { display: inline-block; position: relative; margin: 0; padding: 0; height: 25px; font-size: 20px; font-weight: 300px; text-align: center; width: 100%; pointer-events: none; }
-	.steps_1 #subtitle { display: inline-block; position: relative; margin: 0; padding: 0; height: 15px; font-size: 12px; font-weight: 400px; text-align: center; width: 100%; color: #555555; pointer-events: none; }
+.steps_1.main { position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; }
+	.steps_1.step { display: inline-block; position: relative; margin: 0; padding: 0; height: 40px; float: left; cursor: pointer; }
+	.steps_1#title { display: inline-block; position: relative; margin: 0; padding: 0; height: 25px; font-size: 20px; font-weight: 300px; text-align: center; width: 100%; pointer-events: none; }
+	.steps_1#subtitle { display: inline-block; position: relative; margin: 0; padding: 0; height: 15px; font-size: 12px; font-weight: 400px; text-align: center; width: 100%; color: #555555; pointer-events: none; }

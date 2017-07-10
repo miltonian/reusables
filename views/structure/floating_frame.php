@@ -11,8 +11,8 @@
 <style>
 </style>
 
-<div class="<?php echo $identifier ?> floating_frame">
-	<div class="maincolumn">
+<div class="<?php echo $identifier ?> floating_frame main">
+	<div class="floating_frame maincolumn">
 		<?php 
 			foreach ($structuredict['maincolumn'] as $view) {
 				echo $view;

@@ -1,21 +1,21 @@
-.featuredinline_1 { position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; cursor: pointer; }
-.featuredinline_1 .post { position: relative; display: inline-block; margin: 0; padding: 0; float: left; background-position: center; background-repeat: no-repeat; background-size: cover; outline: 2px solid white; }
+.featured_inline.main { position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; cursor: pointer; }
+.featured_inline.post { position: relative; display: inline-block; margin: 0; padding: 0; float: left; background-position: center; background-repeat: no-repeat; background-size: cover; outline: 2px solid white; }
 
-.featuredinline_1 .gradient { position: absolute; display: inline-block; height: 50%; bottom: 0; left: 0; margin: 0; padding: 0; width: 100%; background: -webkit-linear-gradient(top,rgba(0,0,0,0),rgba(0,0,0,1));  background: -o-linear-gradient(bottom,rgba(0,0,0,0),rgba(0,0,0,1));  background: -moz-linear-gradient(bottom,rgba(0,0,0,0),rgba(0,0,0,1));   background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1)); }
+.featured_inline.gradient { position: absolute; display: inline-block; height: 50%; bottom: 0; left: 0; margin: 0; padding: 0; width: 100%; background: -webkit-linear-gradient(top,rgba(0,0,0,0),rgba(0,0,0,1));  background: -o-linear-gradient(bottom,rgba(0,0,0,0),rgba(0,0,0,1));  background: -moz-linear-gradient(bottom,rgba(0,0,0,0),rgba(0,0,0,1));   background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1)); }
 
-.featuredinline_1 .title { position: absolute; display: inline-block; margin: 0; padding: 10px 20px; height: 20%; bottom: 20px; overflow: hidden; width: calc(100% - 40px); color: white; font-weight: 400; text-align: left; left: 0; text-decoration: none; cursor: pointer; line-height: 1.5; }
-.featuredinline_1 .title:hover { text-decoration: underline; }
+.featured_inline.title { position: absolute; display: inline-block; margin: 0; padding: 10px 20px; height: 20%; bottom: 20px; overflow: hidden; width: calc(100% - 40px); color: white; font-weight: 400; text-align: left; left: 0; text-decoration: none; cursor: pointer; line-height: 1.5; }
+.featured_inline.title:hover { text-decoration: underline; }
 
 @media (min-width: 0px) {.replace(/\W/g, '')
-	.featuredinline_1 { height: auto; }
-	.featuredinline_1 .post { width: 100%; padding-bottom: 70%; }
-	.featuredinline_1 .title { font-size: 2em; }
+	.featured_inline{ height: auto; }
+	.featured_inline.post { width: 100%; padding-bottom: 70%; }
+	.featured_inline.title { font-size: 2em; }
 }
 @media (min-width: 768px) {
-	.featuredinline_1 .post { width: 33.333%; padding-bottom: 30%; }
-	.featuredinline_1 .title { font-size: 1.4em; }
+	.featured_inline.post { width: 33.333%; padding-bottom: 30%; }
+	.featured_inline.title { font-size: 1.4em; }
 }
 @media (min-width: 992px) {
-	.featuredinline_1 .post { width: 33.333%; padding-bottom: 30%; }
-	.featuredinline_1 .title { font-size: 1.6em; }
+	.featured_inline.post { width: 33.333%; padding-bottom: 30%; }
+	.featured_inline.title { font-size: 1.6em; }
 }

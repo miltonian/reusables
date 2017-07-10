@@ -20,11 +20,11 @@ if( !isset($brandname) ){ $brandname = "Brand Name"; }
 </style>
 
 
-<div class="navbar_3 <?php echo $identifier ?>" style="<?php if($isadmin){ echo "margin-top: 60px"; } ?>">
-	<div class="container">
-		<div class="main-content">
+<div class="navbar_3 main <?php echo $identifier ?>" style="<?php if($isadmin){ echo "margin-top: 60px"; } ?>">
+	<div class="navbar_3 container">
+		<div class="navbar_3 main-content">
 			<a href="/">
-				<div class="logo-div">
+				<div class="navbar_3 logo-div">
 					<?php if($brandlogo){ ?>
 						<img src=<?php echo $logoimgthumb ?> width="auto" height="auto">
 					<?php }else{ ?>
@@ -33,7 +33,7 @@ if( !isset($brandname) ){ $brandname = "Brand Name"; }
 					
 				</div>
 			</a>
-			<div class="search-container" style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%);">
+			<div class="navbar_3 search-container" style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%);">
 				<?php
 					Button::make( "searchbar_1", [], "search-btn" );
 				?>

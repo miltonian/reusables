@@ -11,38 +11,34 @@ $required = array(
 
 if (!isset($navdict['logolink'])) { $navdict['logolink'] = ""; }
 
-ReusableClasses::checkRequired( "navbar", $navdict, $required );
+// ReusableClasses::checkRequired( "navbar", $navdict, $required );
 
 ?>
 
 <style>
-.navbar_4_structure { width: calc(100% - 150px - 40px); }
-	.navbar_4_structure .maincolumn { width: calc( 50% - 15px - 0px ); height: 100%; padding: 0; margin: 0; padding-left: 15px; }
-	.navbar_4_structure .sidecolumn_right { width: calc( 50% - 0px ); height: 100%; padding: 0; margin: 0; }
-		.navbar_4_structure .sidecolumn_right div { float: right; }
-		.navbar_4_structure .maincolumn a { float: left; }
+
 </style>
 	
-<div class='navbar_4 <?php echo $identifier ?> mobilenav' style='background-color: white'>
+<div class='navbar_4 main <?php echo $identifier ?> mobilenav' style='background-color: white'>
 	<a href='/<?php echo $navdict['logolink'] ?>'>
 		<?php if(isset($navdict['logo'])){ ?>
-			<img class='topbarlogo' src=<?php echo $navdict['logo'] ?> width="auto" height="auto">
+			<img class='navbar_4 topbarlogo' src=<?php echo $navdict['logo'] ?> width="auto" height="auto">
 		<?php }else{ ?>
 			<h3><?php echo $navdict['brandname'] ?></h3>
 		<?php } ?>
 	</a>
-	<img class='dropdown menubtn' src='https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png' style='width: auto; margin-right: 30px;'>
-	<div class='dropdown-content'>
+	<img class='navbar_4 dropdown menubtn' src='https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png' style='width: auto; margin-right: 30px;'>
+	<div class='navbar_4 dropdown-content'>
 		<?php foreach ($navbuttons as $b) { ?>
 			<a href='/<?php echo $b['slug'] ?>'><?php if(isset($b['imagepath'])){ "<img src='".$b['imagepath']."'>"; }else if(isset($b['emoji'])){ echo $b['emoji']; }else{ echo $b['name']; } ?></a>
 		<?php } ?>
 	</div>
 </div>
 
-<div class='navbar_4 <?php echo $identifier ?> desktopnav navbar-shadow' style='background-color: white; <?php if($isadmin){ echo "margin-top: 60px"; } ?>'>
-	<a href='/<?php echo $navdict['logolink'] ?>' class='logo-div'>
+<div class='navbar_4 main <?php echo $identifier ?> desktopnav navbar-shadow' style='background-color: white; <?php if($isadmin){ echo "margin-top: 60px"; } ?>'>
+	<a href='/<?php echo $navdict['logolink'] ?>' class='navbar_4 logo-div'>
 		<?php if(isset($navdict['logo'])){ ?>
-			<img class='topbarlogo' src=<?php echo $navdict['logo'] ?> width="auto" height="auto">
+			<img class='navbar_4 topbarlogo' src=<?php echo $navdict['logo'] ?> width="auto" height="auto">
 		<?php }else{ ?>
 			<h3><?php echo $navdict['brandname'] ?></h3>
 		<?php } ?>
@@ -53,12 +49,12 @@ ReusableClasses::checkRequired( "navbar", $navdict, $required );
 		$rightbuttons = array();
 		$button = "";
 		foreach ($navbuttons as $b) {
-			$button = "<div class='" . $b['classname'] . " wrapper ";
+			$button = "<div class='navbar_4 " . $b['classname'] . " wrapper ";
 			if(isset($b['buttons'])){
 				$button .= "has_dropdown";
 			}
 			$button .= " '> ";
-			$button .= "<a href='/" . $b['slug'] . "' class='topbar-button'>"; 
+			$button .= "<a href='/" . $b['slug'] . "' class='navbar_4 topbar-button'>"; 
 			if( isset( $b['imagepath'] ) ){ 
 				$button .= "<img src='" . $b['imagepath'] . "'>"; 
 			}if( isset( $b['emoji'] ) ){ 
@@ -68,7 +64,7 @@ ReusableClasses::checkRequired( "navbar", $navdict, $required );
 			} 
 			$button .= "</a>";
 			if(isset($b['buttons'])){
-				$button .= "<div class='dropdown-content'>";
+				$button .= "<div class='navbar_4 dropdown-content'>";
 					foreach ($b['buttons'] as $s) {
 						$button .= "<a href='/" . $s['slug'] . "'>";
 						if(isset($s['imagepath'])){ 
@@ -108,24 +104,24 @@ ReusableClasses::checkRequired( "navbar", $navdict, $required );
 
 
 <script>
-	$('.mobilenav .dropdown').click(function(){
-		$('.dropdown-content').css('display', 'block');
+	$('.navbar_4.mobilenav .navbar_4.dropdown').click(function(){
+		$('.navbar_4.dropdown-content').css('display', 'block');
 	});
 
-	$('.navbar_4.desktopnav .has_dropdown').click(function(e){
+	$('.navbar_4.desktopnav .navbar_4.has_dropdown').click(function(e){
 		// e.preventDefault();
 	})
-	$('.navbar_4.desktopnav .has_dropdown').mouseenter(function(e){
-		$(this).find('.dropdown-content').css({'display': 'block'});
+	$('.navbar_4.desktopnav .navbar_4.has_dropdown').mouseenter(function(e){
+		$(this).find('.navbar_4.dropdown-content').css({'display': 'block'});
 	});
-	$('.navbar_4.desktopnav .has_dropdown').mouseleave(function(e){
-		$(this).find('.dropdown-content').css({'display': 'none'});
+	$('.navbar_4.desktopnav .navbar_4.has_dropdown').mouseleave(function(e){
+		$(this).find('.navbar_4.dropdown-content').css({'display': 'none'});
 	});
 
 	$(document).ready(function(){
 		window.onscroll = function(ev) {
-			$('.mobilenav .dropdown-content').css('display','none');
-			$('.mobilenav .dropdown').css('background-color', 'white');
+			$('.navbar_4.mobilenav .navbar_4.dropdown-content').css('display','none');
+			$('.navbar_4.mobilenav .navbar_4.dropdown').css('background-color', 'white');
 		};
 	});
 		
