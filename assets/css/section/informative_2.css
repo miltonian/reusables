@@ -1,0 +1,7 @@
+.informative_2.main { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; max-width: 1000px; }
+	.informative_2 .structure_1.maincolumn { width: calc( 40% - 20px ); }
+	.informative_2 .structure_1.sidecolumn_right { width: calc( 60% - 20px ); border-left: 5px solid rgba(100,100,100,0.1); }
+	.informative_2.featuredimage { display: inline-block; position: relative; margin: 20px 90px; padding: 0; border-radius: 50%; width: calc( 100% - 180px ); }
+	.informative_2.title { display: inline-block; position: relative; margin: 0px; padding: 0px 40px; padding-bottom: 10px; width: calc( 100% - 80px ); text-align: center; font-size: 25px; }
+	.informative_2.subtitle { display: inline-block; position: relative; margin: 0px; padding: 0px 40px; width: calc( 100% - 80px ); text-align: center; font-size: 18px; }
+	.informative_2.desc { display: inline-block; position: relative; margin: 0; padding: 20px; width: calc( 100% - 40px ); text-align: left; font-size: 18px; font-weight: 400; }
