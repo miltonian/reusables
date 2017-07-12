@@ -5,6 +5,7 @@
     "keywords": ["reusables","reuse", "views"],
     "homepage": "https://github.com/miltonian/reusables",
     "license": "MIT",
+    "minimum-stability":"dev",
     "authors": [
         {
             "name": "Alexander Hamilton",
