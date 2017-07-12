@@ -1,0 +1,24 @@
+{
+    "name": "miltonian/Reusables",
+    "type": "library",
+    "description": "Reuses views, functions and other modules to make development faster and more reliable",
+    "keywords": ["reusables","reuse", "views"],
+    "homepage": "https://github.com/miltonian/Reusables",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexander Hamilton",
+            "email": "miltonian3@gmail.com",
+            "homepage": "",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Reusables": ""
+        }
+    }
+}
