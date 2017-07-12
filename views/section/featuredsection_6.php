@@ -20,12 +20,12 @@
 </style>
 
 <div class="featuredsection_6 <?php echo $identifier ?>">
-	<div class="backgroundimage" style="background-image: url('<?php echo Data::getValue( $sectiondict['featured_imagepath'] ) ?>');">
+	<div class="backgroundimage" style="background-image: url('<?php echo Data::getValue( $sectiondict, 'featured_imagepath' ) ?>');">
 		<div class="gradient"></div>
 	</div>
 	<div class="header">
-		<img id="logo" src="<?php echo Data::getValue( $sectiondict['logo_imagepath'] ) ?>">
-		<h3 id="title"><?php echo Data::getValue( $sectiondict['title'] ) ?></h3>
+		<img id="logo" src="<?php echo Data::getValue( $sectiondict, 'logo_imagepath' ) ?>">
+		<h3 id="title"><?php echo Data::getValue( $sectiondict, 'title' ) ?></h3>
 	</div>
 </div>
 

@@ -37,7 +37,7 @@
 						<!-- <label class="grey-label">Today</label> -->
 						<br>
 						<a href="<?php if($isadmin){ echo '#'; }else{ echo '/post/'. Data::getValue( $celldict, 'id' ) . '/' . preg_replace('/\PL/u', '', preg_replace("/[^ \w]+/", "", Data::getValue( $celldict, 'title' )) ); } ?>">
-							<label class="cell_2 title" style=""><?php if(isset($celldict, 'title')){ echo Data::getValue( $celldict, 'title' ); } ?></label>
+							<label class="cell_2 title" style=""><?php echo Data::getValue( $celldict, 'title' ); ?></label>
 						</a>
 						<br>
 						<label class="cell_2 grey-label"><?php echo implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $celldict, 'html_text' ))), 0, 10) ); ?>...</label>
