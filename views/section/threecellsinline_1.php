@@ -8,7 +8,7 @@
 
 	// ReusableClasses::checkRequired( $identifier, $sectiondict, $required );
 
-	$cellname = Data::getValue( $sectiondict['cellname'] );
+	$cellname = Data::getValue( $sectiondict, 'cellname' );
 	// exit( json_encode( $sectiondict ) );
 	$asdf = Data::formatCellWithDefaultData( $identifier . "_posts", 0 );
 	// exit( json_encode( $asdf['featured_imagepath'] ) );

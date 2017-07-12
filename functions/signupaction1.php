@@ -23,8 +23,8 @@ $result = $SecureClasses->signupNewUser( $email, $password );
 
 
 if($result[0] == 1){
-	session_start();
-	$_SESSION["token"] = $result[1]['login_token'];
+	User\Session::setUser( $result[1] );
+	// $_SESSION["token"] = $result[1]['login_token'];
 	if( isset( $_POST['goto'] ) ){
 		header( 'Location: /' . $_POST['goto'] );
 	}else{

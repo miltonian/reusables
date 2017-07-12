@@ -25,22 +25,22 @@
 
 
 
-<div class="cell_2 main <?php echo $identifier ?> <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo Data::getValue( $celldict['id'] ) ?>">
+<div class="cell_2 main <?php echo $identifier ?> <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo Data::getValue( $celldict, 'id' ) ?>">
 	<div class="cell_2 container">
 		<div style="display: inline-block; width: 100%;">
 			<div>
-				<a href="<?php if($isadmin){ echo '#'; }else{ echo '/post/'.Data::getValue( $celldict['id'] ) . '/' . preg_replace('/\PL/u', '-', preg_replace("/[^ \w]+/", "", Data::getValue( $celldict['title'] )) ); } ?>">
-					<div class="cell_2 picture" style="<?php echo 'background-image: url('.Data::getValue( $celldict['featured_imagepath'] ).');'; ?>"></div>
+				<a href="<?php if($isadmin){ echo '#'; }else{ echo '/post/'.Data::getValue( $celldict, 'id' ) . '/' . preg_replace('/\PL/u', '-', preg_replace("/[^ \w]+/", "", Data::getValue( $celldict, 'title' )) ); } ?>">
+					<div class="cell_2 picture" style="<?php echo 'background-image: url('.Data::getValue( $celldict, 'featured_imagepath' ).');'; ?>"></div>
 				</a>
 				<div class="cell_2 words">
 					<div class="cell_2 text-container">
 						<!-- <label class="grey-label">Today</label> -->
 						<br>
-						<a href="<?php if($isadmin){ echo '#'; }else{ echo '/post/'. Data::getValue( $celldict['id'] ) . '/' . preg_replace('/\PL/u', '', preg_replace("/[^ \w]+/", "", Data::getValue( $celldict['title'] )) ); } ?>">
-							<label class="cell_2 title" style=""><?php if(isset($celldict['title'])){ echo Data::getValue( $celldict['title'] ); } ?></label>
+						<a href="<?php if($isadmin){ echo '#'; }else{ echo '/post/'. Data::getValue( $celldict, 'id' ) . '/' . preg_replace('/\PL/u', '', preg_replace("/[^ \w]+/", "", Data::getValue( $celldict, 'title' )) ); } ?>">
+							<label class="cell_2 title" style=""><?php if(isset($celldict, 'title')){ echo Data::getValue( $celldict, 'title' ); } ?></label>
 						</a>
 						<br>
-						<label class="cell_2 grey-label"><?php echo implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $celldict['html_text'] ))), 0, 10) ); ?>...</label>
+						<label class="cell_2 grey-label"><?php echo implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $celldict, 'html_text' ))), 0, 10) ); ?>...</label>
 					</div>
 				</div>
 			</div>

@@ -36,12 +36,12 @@ $required = array(
 			array(
 				Structure::make( "three_columns", [
 					"sidecolumn_left"=>array(
-						"<div class='cell_10 featuredimage-div' style='background-image: url(" . Data::getValue( $celldict['featured_imagepath'] ) . ")'></div>"
+						"<div class='cell_10 featuredimage-div' style='background-image: url(" . Data::getValue( $celldict, 'featured_imagepath' ) . ")'></div>"
 					),
 					"maincolumn"=>array(
 						"
 						<div class='cell_10 content'>
-							<h4 class='cell_10 ' id='title'>" . Data::getValue( $celldict['title'] ) . "</h4>
+							<h4 class='cell_10 ' id='title'>" . Data::getValue( $celldict, 'title' ) . "</h4>
 							<p class='cell_10 ' id='status'>This project is Active</p>
 						</div>
 						"

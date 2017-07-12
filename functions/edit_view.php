@@ -91,7 +91,7 @@ if (isset($fieldarray)) {
 		$query = "UPDATE " . $tablename . " SET " . $colname . " = ? " . $whereclause;
 		$values = array_merge( [ $fieldvalue ], $conditionvalues );
 		$type = "update";
-		// exit(json_encode($query));
+		// exit(json_encode($values));
 		$result = $MainClasses->querySQL( $query, $values, $type );
 	}
 }

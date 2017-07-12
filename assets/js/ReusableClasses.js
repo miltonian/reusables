@@ -16,10 +16,11 @@ class ReusableClasses {
 			$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);
 			for (var i = 0; i < thisdict['db_info']['conditions'].length; i++) {
 				var conditions = thisdict['db_info']['conditions'];
-				if(conditions[i]['key'] == "maininfo_key"){
+				if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
 					conditions[i]['value'] = key; 
 				}else{
 					conditions[i]['value'] = thisdictvalue[conditions[i]['key']]; 
+					// alert(JSON.stringify(thisdictvalue));
 				}
 				$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
 				$( '.' + identifier + ' .' + inputclass + ' input.conditionvalue_' + i ).val( conditions[i]['value'] );
@@ -41,7 +42,7 @@ class ReusableClasses {
 			$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);
 			for (var i = 0; i < thisdict['db_info']['conditions'].length; i++) {
 				var conditions = thisdict['db_info']['conditions'];
-				if(conditions[i]['key'] == "maininfo_key"){
+				if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
 					conditions[i]['value'] = key; 
 				}else{
 					conditions[i]['value'] = thisdictvalue[conditions[i]['key']]; 
@@ -51,7 +52,7 @@ class ReusableClasses {
 			}
 	}
 
-	updateWysi( dataarray, identifier, data_id, key, inputclass, db_key, index=null, fieldindex )
+	updateWysi( dataarray, identifier, data_id, key, inputclass, db_key, index, fieldindex )
 	{
 		var thisdict = [];
 			var thisdictvalue = [];
@@ -64,7 +65,7 @@ class ReusableClasses {
 			$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);
 			for (var i = 0; i < thisdict['db_info']['conditions'].length; i++) {
 				var conditions = thisdict['db_info']['conditions'];
-				if(conditions[i]['key'] == "maininfo_key"){
+				if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
 					conditions[i]['value'] = key; 
 				}else{
 					conditions[i]['value'] = thisdictvalue[conditions[i]['key']]; 

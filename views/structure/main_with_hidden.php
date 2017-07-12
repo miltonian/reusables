@@ -1,12 +1,26 @@
 <?php
 	$required = array(
 		"title"=>"",
-		"first"=>"",  
-		"second"=>"",
-		"third"=>""
+		"c1"=>"",  
+		"c2"=>"",
+		"c3"=>""
+		// ...
 	);
 
-	ReusableClasses::checkRequired( "three_columns", $structuredict, $required );
+	$columns = array();
+	$allkeys = array_keys($structuredict);
+	foreach ($allkeys as $k) {
+
+		if( $k == "title" ){
+			continue;
+		}
+		// $dict = [$k => $structuredict[$k] ];
+		array_push($columns, $structuredict[$k]);
+		
+	}
+	// exit(json_encode(sizeof($columns)));
+
+	// ReusableClasses::checkRequired( "main_with_hidden", $structuredict, $required );
 
 ?>
 
@@ -31,32 +45,22 @@
 		?>
 	</div>
 	<div class="main_with_hidden body">
-		<div class="main_with_hidden column first" id="1">
+	<?php for ($i=0; $i < sizeof($columns); $i++) { ?>
+		<div class="main_with_hidden column c<?php echo ($i+1) ?>" id="<?php echo $i+1 ?>">
 			<?php 
-				foreach ($structuredict['first'] as $view) {
+				foreach ($columns[$i] as $view) {
 					echo $view;
 				}
 			?>
 		</div>
-		<div class="main_with_hidden column second" id="2">
-			<?php 
-				foreach ($structuredict['second'] as $view) {
-					echo $view;
-				}
-			?>
-		</div>
-		<div class="main_with_hidden column third" id="3">
-			<?php 
-				foreach ($structuredict['third'] as $view) {
-					echo $view;
-				}
-			?>
-		</div>
+
+	<?php } ?>
+		
 	</div>
 </div>
 
 <script>
-	var columncount = 3;
+	var columncount = <?php echo sizeof($columns) ?>;
 	var currentcolumn = 1;
 	$('.<?php echo $identifier ?> #close').click(function(){
 

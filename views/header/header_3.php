@@ -27,7 +27,7 @@ if( isset($headerdict['buttons']) ){
 				"structure_1", 
 				[
 					"maincolumn" => array( 
-						"<h1 class='header_3' id='title'>" . Data::getValue( $headerdict['title'] ) . "</h1>"
+						"<h1 class='header_3' id='title'>" . Data::getValue( $headerdict, 'title' ) . "</h1>"
 					),
 					"sidecolumn_right" => array( 
 						$buttons
@@ -36,7 +36,7 @@ if( isset($headerdict['buttons']) ){
 				$identifier . "_header_3"
 			);
 		}else{ ?>
-			<h1 class='header_3' id='title'><?php echo Data::getValue( $headerdict['title'] ) ?></h1>
+			<h1 class='header_3' id='title'><?php echo Data::getValue( $headerdict, 'title' ) ?></h1>
 		<?php } ?>
 
 	<div class="header_3" id="divider"></div>

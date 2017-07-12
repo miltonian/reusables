@@ -77,6 +77,18 @@ class Data {
 		}
 	}
 
+	public static function getDefaultDataID( $viewdict )
+	{
+		if ( self::isAssoc($viewdict) ) {
+			$dict = $viewdict;
+		}else{
+			$dict = $viewdict[0];
+		}
+		$allkeys = array_keys( $dict );
+		$data_id = $dict[ $allkeys[0] ]['data_id'];
+		return $data_id;
+	}
+
 	public static function getDefaultConditionsWithID( $identifier )
 	{
 		$data = Data::retrieveDataWithID( $identifier );
@@ -92,8 +104,14 @@ class Data {
 		return $tablenames[$allkeys[0]];
 	}
 
-	public static function getValue( $pair )
+	public static function getValue( $dict, $key )
 	{
+		if( isset($dict[ $key ]) ){
+			$pair = $dict[ $key ];
+		}else{
+			return "";
+		}
+
 		$hasindex = false;
 		if( !isset( $pair['data_id'] ) ){ 
 			// echo "<script>console.log(JSON.stringify( 'retrieve data is missing data_id' + " . $pair . " ) );</script>"; 
@@ -147,7 +165,9 @@ class Data {
 
 	public static function convertDataForArray( $identifier, $index )
 	{
+
 		$dict = self::retrieveDataWithID( $identifier )['value'][$index];
+
 		$allkeys = array_keys( $dict );
 		$returningdict = [];
 		foreach ($allkeys as $k) {

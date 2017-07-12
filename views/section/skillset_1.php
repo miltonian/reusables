@@ -2,7 +2,7 @@
 
 // exit( json_encode( Data::getValue( $sectiondict['skillsarray'] ) ) );
 
-$skillsarray = Data::getValue( $sectiondict['skillsarray'] );
+$skillsarray = Data::getValue( $sectiondict, 'skillsarray' );
 
 if(!isset($skillset1array)){ $skillset1array = array(); }
 if(!isset($sectiondict['skillsarray'])){ $sectiondict['skillsarray']=array(); }
@@ -34,7 +34,7 @@ if(!isset($sectiondict['preview'])){ $sectiondict['preview'] = 0; }
 	<h1 class="skillset_1 title">My Month</h1>
 		<?php $i=1; foreach ($skillsarray as $skill) { ?>
 			<?php 
-				$name=$skill['fieldname']; $score=$skill['fieldvalue']; 
+				$name=$skill['custom_key']; $score=$skill['custom_value']; 
 			?>
 			<div class="skillset_1 wrapper">
 				<div class="skillset_1 bar">

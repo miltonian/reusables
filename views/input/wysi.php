@@ -14,6 +14,8 @@
 /*
 <input type="hidden" class="row_id" value="<?php echo $inputdict['field_rowid'] ?>" name="fieldarray[<?php echo $inputdict['field_index'] ?>][row_id]">
 */
+
+// exit(json_encode($inputdict));
 ?>
 
 <style>

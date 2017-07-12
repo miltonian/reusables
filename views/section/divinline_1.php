@@ -19,7 +19,7 @@ $rightdict = $sectiondict['rightdict'];
 
 <div class="divinline_1 main <?php echo $identifier ?>">
 	<div class="divinline_1 wrapper">
-		<a href="<?php echo Data::getValue( $leftdict['link'] ) ?>" >
+		<a href="<?php echo Data::getValue( $leftdict, 'link' ) ?>" >
 			<div class="divinline_1 left cells <?php echo $leftdict['more'] ?>" style="background-color: <?php echo $leftdict['backgroundcolor'] ?>; background-image: url('<?php echo $leftdict['imagepath'] ?>');">
 				<?php foreach ($leftdict['morelinks'] as $l) { ?>
 					<div class="divinline_1 inner" style="background-image: url('<?php echo $l['imagepath'] ?>'); background-color: <?php echo $l['backgroundcolor'] ?>;"></div>
@@ -27,7 +27,7 @@ $rightdict = $sectiondict['rightdict'];
 			</div>
 		</a>
 
-		<a href="<?php echo Data::getValue( $rightdict['link'] ) ?>" >
+		<a href="<?php echo Data::getValue( $rightdict, 'link' ) ?>" >
 			<div class="divinline_1 right cells <?php echo $rightdict['more'] ?>" style="background-color: <?php echo $rightdict['backgroundcolor'] ?>; background-image: url('<?php echo $rightdict['imagepath'] ?>');">
 				<?php foreach ($rightdict['morelinks'] as $l) { ?>
 					<div class="divinline_1 inner" style="background-image: url('<?php echo $l['imagepath'] ?>'); background-color: <?php echo $l['backgroundcolor'] ?>;"></div>
