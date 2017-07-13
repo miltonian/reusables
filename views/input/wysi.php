@@ -22,7 +22,7 @@
 </style>
 
 <div class="<?php echo $identifier ?> wysi">
-	<label>Test input label</label>
+	<label style="margin-bottom: 0px; font-weight: 700; font-size: 11px"><?php echo Data::getValue( $inputdict, "labeltext") ?></label>
 	<!-- <input type="text" class="field_value" placeholder="<?php /*echo $inputdict['placeholder']*/ ?>" value="<?php /*echo $inputdict['field_value']*/ ?>" name="fieldarray[<?php /*echo $inputdict['field_index']*/ ?>][field_value]"> -->
 	<textarea class="field_value" name='fieldarray[<?php echo $inputdict['field_index'] ?>][field_value]' id='fieldarray[<?php echo $inputdict['field_index'] ?>][field_value]' rows='10' cols='80'>
 		<?php /*echo $inputdict['field_value']*/ ?>

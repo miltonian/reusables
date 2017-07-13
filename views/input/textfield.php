@@ -20,7 +20,7 @@
 </style>
 
 <div class="<?php echo $identifier ?> textfield">
-	<label>Test input label</label>
+	<label style="margin-bottom: -5px; font-weight: 700; font-size: 11px"><?php echo Data::getValue( $inputdict, "labeltext") ?></label>
 	<input type="text" class="field_value" placeholder="<?php echo $inputdict['placeholder'] ?>" value="<?php echo $inputdict['field_value'] ?>" name="fieldarray[<?php echo $inputdict['field_index'] ?>][field_value]">
 	<input type="hidden" class="field_type" name="fieldarray[<?php echo $inputdict['field_index'] ?>][field_type]" value="text" style="visibility: hidden; z-index: -1;">
 	<input type="hidden" class="tablename" value="<?php echo $inputdict['field_table'] ?>" name="fieldarray[<?php echo $inputdict['field_index'] ?>][tablename]">

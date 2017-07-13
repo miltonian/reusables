@@ -35,9 +35,9 @@
 			"steps_1", 
 			[
 				"steps"=>array(
-					["title"=>"Step 1", "subtitle"=>"Essentials"],
-					["title"=>"Step 2", "subtitle"=>"Details"],
-					["title"=>"Step 3", "subtitle"=>"Rewards"]
+					["title"=>"Step 1", "subtitle"=>""],
+					["title"=>"Step 2", "subtitle"=>""],
+					["title"=>"Step 3", "subtitle"=>""]
 				)
 			],
 			"steps_1"

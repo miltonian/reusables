@@ -60,6 +60,13 @@ if( isset($fieldimages ) ) {
 				array_push( $conditionvalues, $conditions[$i]['value'] );
 			}
 			// echo json_encode($fi); echo "<br>";
+
+			// $query = "SELECT * FROM " . $tablename . " " . $whereclause;
+			// $values = $conditionvalues;
+			// $type = "select";
+			// $result = $MainClasses->querySQL( $query, $values, $type );
+			// exit( json_encode( $result ) );
+
 			$query = "UPDATE " . $tablename . " SET " . $colname . " = ? " . $whereclause;
 			$values = array_merge( [ $fieldvalue ], $conditionvalues );
 			$type = "update";
@@ -87,12 +94,44 @@ if (isset($fieldarray)) {
 			}
 			array_push( $conditionvalues, $conditions[$i]['value'] );
 		}
-		// echo json_encode($f); echo "<br>";
-		$query = "UPDATE " . $tablename . " SET " . $colname . " = ? " . $whereclause;
-		$values = array_merge( [ $fieldvalue ], $conditionvalues );
-		$type = "update";
-		// exit(json_encode($values));
-		$result = $MainClasses->querySQL( $query, $values, $type );
+
+		$query = "SELECT * FROM " . $tablename . " " . $whereclause;
+			$values = $conditionvalues;
+			$type = "select";
+			$result = $MainClasses->querySQL( $query, $values, $type );
+			if($result[0] == 0){
+				if( isset( $_POST['ifnone_insert'] ) ){
+					if( $_POST['ifnone_insert'] == "1" ){ 
+						// $query = "INSERT INTO " . $tablename . " ( ";// . $colname . " = ? " . $whereclause;
+						// $questionmarks = "";
+						// $insertconditionvalues = [];
+						// for ($i=0; $i < sizeof($conditions); $i++) { 
+						// 	if( $i > 0 ){
+						// 		$query .= ", " . $conditions[$i]['key'];
+						// 		$questionmarks .= ", ?";
+						// 	}else{
+						// 		$query .= $conditions[$i]['key'];
+						// 		$questionmarks .= "?";
+						// 	}
+						// 	array_push( $insertconditionvalues, $conditions[$i]['value'] );
+						// }
+						// $query .= " ) VALUES ( " . $questionmarks . ")";
+						// $values = $insertconditionvalues;
+						// $type = "insert";
+						// exit( json_encode( $query ) );
+						// $result = $MainClasses->querySQL( $query, $values, $type );
+					}
+				}
+			}else{
+				// echo json_encode($f); echo "<br>";
+				$query = "UPDATE " . $tablename . " SET " . $colname . " = ? " . $whereclause;
+				$values = array_merge( [ $fieldvalue ], $conditionvalues );
+				$type = "update";
+				// exit(json_encode($values));
+				$result = $MainClasses->querySQL( $query, $values, $type );
+			}
+			
+		
 	}
 }
 

@@ -9,6 +9,7 @@
 ?>
 
 <style>
+.floating_frame.main { top: <?php echo $structuredict['left'] ?>; left: <?php echo $structuredict['top'] ?>; }
 </style>
 
 <div class="<?php echo $identifier ?> floating_frame main">
