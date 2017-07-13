@@ -47,4 +47,14 @@ Basic Guidelines
 	- this is different for wrappers, you call the wrapper class (Wrapper) then the function name is the same as the reusable view filename
 - there are three parameters when calling the make function (filename, data, identifier)
 	- two parameters for wrapper (data, identifier)
+- to connect to your database change the information in the classes/CustomData/config.php and classes/CustomData/db_pdo.php files
+
+
+nav data
+	{
+		"logo|brandname"=>text or imagepath,
+		"pages": {
+
+		}
+	}
 
