@@ -1,7 +1,6 @@
-<?php /* FILE:    ugoinout_classes/db_pdo.php
--------- Author:  Alexander Hamilton (miltonian3@gmail.com)
--------- Date:    7/07/2014
--------- Purpose: Class to construct and return PDO (PHP Data Objects) initialized using configurations from include/config.php. */
+<?php 
+
+namespace Reusables;
 
 class Reusables_db_pdo {
 	public $pdo;

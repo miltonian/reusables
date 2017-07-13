@@ -1,5 +1,7 @@
 <?php 
 
+namespace Reusables;
+
 class Modal {
 
 	public static function make( $file, $data, $identifier )

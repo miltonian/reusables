@@ -1,6 +1,6 @@
 <?php
 
-namespace CustomData;
+namespace Reusables\CustomData;
 
 class Campaign {
 

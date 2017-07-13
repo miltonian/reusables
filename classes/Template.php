@@ -1,5 +1,7 @@
 <?php 
 
+namespace Reusables;
+
 class Template {
 
 	public static function make( $file, $data, $identifier )

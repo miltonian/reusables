@@ -1,6 +1,6 @@
 <?php
 
-// namespace Reusables\Classes;
+namespace Reusables;
 
 class Style {
 

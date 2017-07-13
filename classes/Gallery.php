@@ -1,5 +1,7 @@
 <?php 
 
+namespace Reusables;
+
 class Gallery {
 
 	public static function make( $file, $data, $identifier )

@@ -1,5 +1,7 @@
 <?php 
 
+namespace Reusables;
+
 class Footer {
 
 	public static function make( $file, $data, $identifier )

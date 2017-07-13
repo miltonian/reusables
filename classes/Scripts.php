@@ -1,5 +1,7 @@
 <?php
 
+namespace Reusables;
+
 class Scripts {
 
 	protected static $alljs = array();

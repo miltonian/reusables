@@ -1,5 +1,7 @@
 <?php
 
+namespace Reusables;
+
 /*
 	some instruction:
 		- Data::addData( $entry, $identifier )

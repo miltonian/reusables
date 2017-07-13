@@ -1,7 +1,6 @@
-<?php /* FILE:    ugoinout_classes/config.php
--------- Author:  Alexander Hamilton (miltonian3@gmail.com)
--------- Date:    7/07/2014
--------- Purpose: Stores sensitive configuration data and sets general/initial configuration settings. */
+<?php 
+
+namespace Reusables;
 
 // Settings: -------------------------------------- //
 	date_default_timezone_set('America/New_York');

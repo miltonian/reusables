@@ -1,5 +1,7 @@
 <?php 
 
+namespace Reusables;
+
 class Sharing {
 
 	public static function make( $file, $data, $identifier )

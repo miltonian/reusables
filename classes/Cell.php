@@ -1,5 +1,7 @@
 <?php 
 
+namespace Reusables;
+
 class Cell {
 
 	public static function make( $file, $data, $identifier )

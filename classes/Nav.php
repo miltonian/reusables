@@ -1,5 +1,7 @@
 <?php 
 
+namespace Reusables;
+
 class Nav {
 
 	public static function make( $file, $data, $identifier )
