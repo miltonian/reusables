@@ -1,4 +1,7 @@
 .navbar_4.main { position: fixed; margin: 0; height: 60px; width: calc(100% - 50px); padding: 0; z-index: 1; box-shadow: 0px 0px 15px rgba(0,0,0,0.2); padding-right: 50px;}
+	.navbar_4_structure.structure_1.main { width: calc(100% - 150px); }
+	.navbar_4_structure .structure_1.maincolumn { height: 100%; text-align: left; }
+	.navbar_4_structure .structure_1.sidecolumn_right { height: 100%; text-align: right; }
 	.navbar_4.mobilenav { margin: 0; height: 200px; width: 100%; padding: 0; background-color: white; z-index: 3; left: 0; height: 200px; height: 100px; text-align: left; }
 	.navbar_4.desktopnav { left: 0; text-align: left;  }
 		.navbar_4.desktopnav .navbar_4.wrapper { display: inline-block; position: relative; padding: 0 20px; cursor: pointer; height: 100%; }
