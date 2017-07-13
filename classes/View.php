@@ -50,7 +50,8 @@ class View
         try
         {
             // Load the view within the current scope
-            include $view_filename;
+            // include $view_filename;
+            include realpath(__DIR__ . '/../..') . "/" . $view_filename;
         }
         catch( \Exception $e )
         {
