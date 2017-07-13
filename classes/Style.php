@@ -10,7 +10,8 @@ class Style {
 	{
 		if ( !isset( self::$allcss[ $file ] ) ) {
 			self::$allcss[ $file ] = true;
-			echo "<link rel=stylesheet href='/reusables/assets/css/" . $parent_dir . "/" . $file . ".css' type=text/css>";
+			// echo "<link rel=stylesheet href='/reusables/assets/css/" . $parent_dir . "/" . $file . ".css' type=text/css>";
+			echo "<link rel=stylesheet href='vendor/miltonian/reusables/assets/css/" . $parent_dir . "/" . $file . ".css' type='text/css'>";
 		}
 	}
 
