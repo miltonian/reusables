@@ -1,4 +1,7 @@
 <?php
+
+namespace Reusables;
+
 	$required = array(
 		"title"=>"",
 		"first"=>"",  

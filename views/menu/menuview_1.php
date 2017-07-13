@@ -1,4 +1,7 @@
 <?php
+
+namespace Reusables;
+
 	if(!isset($categoriesmodalarray)){ $categoriesmodalarray=array(); }
 	// exit( json_encode( $menudict ) );
 ?>

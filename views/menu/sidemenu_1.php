@@ -1,4 +1,7 @@
 <?php
+
+namespace Reusables;
+
 	if(!isset($sidemenuarray)){ $sidemenuarray=array(); }
 
 	//for testing 

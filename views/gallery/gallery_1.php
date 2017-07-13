@@ -1,4 +1,7 @@
 <?php
+
+namespace Reusables;
+
 	//$galleryarray
 	// exit(json_encode($galleryarray[1]));
 if(!isset($isediting)){$isediting=false;}

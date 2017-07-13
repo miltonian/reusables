@@ -1,5 +1,7 @@
 <?php 
 
+namespace Reusables;
+
 $device = $GLOBALS['device'];
 
 

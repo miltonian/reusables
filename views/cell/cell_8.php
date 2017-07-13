@@ -1,4 +1,7 @@
 <?php
+
+namespace Reusables;
+
 	// image left 
 	// text right
 	

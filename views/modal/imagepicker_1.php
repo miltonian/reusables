@@ -1,5 +1,7 @@
 <?php
 
+namespace Reusables;
+
 	if(!isset($sectiondict['imagepickerarray'])){ $sectiondict['imagepickerarray']=array(); }
 	$imagepickerarray = $sectiondict['imagepickerarray'];
 // exit(json_encode($imagepickerarray));

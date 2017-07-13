@@ -1,5 +1,7 @@
 <?php
 
+namespace Reusables;
+
 	if (!isset($headerdict['logolink'])) { $headerdict['logolink'] = ""; }
 
 ?>

@@ -1,5 +1,7 @@
 <?php 
 
+namespace Reusables;
+
 $urltitleone = str_replace(' ', '', $featuredposts[0]['title']);
 $urltitletwo = str_replace(' ', '', $featuredposts[1]['title']);
 $urltitlethree = str_replace(' ', '', $featuredposts[2]['title']);

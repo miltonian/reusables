@@ -1,5 +1,7 @@
 <?php
 
+namespace Reusables;
+
 // exit( json_encode( Data::getValue( $sectiondict['skillsarray'] ) ) );
 
 $skillsarray = Data::getValue( $sectiondict, 'skillsarray' );

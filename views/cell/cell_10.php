@@ -1,4 +1,7 @@
 <?php
+
+namespace Reusables;
+
 	// cell for admin side
 
 	// $celldict

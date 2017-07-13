@@ -1,5 +1,7 @@
 <?php
 
+namespace Reusables;
+
 if(!isset($isadmin)){ $isadmin=false; }
 $navbuttons = array();
 if(isset($navdict['pages'])){ $navbuttons = $navdict['pages']; }

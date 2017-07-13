@@ -1,4 +1,7 @@
 <?php
+
+namespace Reusables;
+
 	if(!isset($cell6mediatype)){ $cell6mediatype=""; }
 	if(!isset($showdate)){$showdate=false;}
 	if( !isset($isfeatured) ){ $isfeatured=false; }

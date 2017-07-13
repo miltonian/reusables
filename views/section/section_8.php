@@ -1,4 +1,7 @@
 <?php
+
+namespace Reusables;
+
 	/*
 		$sectiondict = [
 			"left_imagepath"=>"",

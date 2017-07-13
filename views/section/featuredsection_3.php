@@ -1,4 +1,7 @@
 <?php 
+
+namespace Reusables;
+
 	if(!isset($adposition)){
 		$adposition = 0;
 	}

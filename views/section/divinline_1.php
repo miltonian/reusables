@@ -1,5 +1,7 @@
 <?php
 
+namespace Reusables;
+
 $leftdict = $sectiondict['leftdict'];
 $rightdict = $sectiondict['rightdict'];
 

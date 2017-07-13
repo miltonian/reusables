@@ -1,4 +1,7 @@
 <?php
+
+namespace Reusables;
+
 	//3 cells inline (cell3)
 ?>
 

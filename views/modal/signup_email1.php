@@ -1,3 +1,9 @@
+<?php
+
+namespace Reusables;
+
+?>
+
 
 <div id="subscribe-popup" style="display: none; height: 100%; width: 100%; position: fixed; margin: 0; padding: 0; z-index: 9999; background-color: rgba(0,0,0,0.8); top: 0; left: 0; text-align: center;">
 	<div style="position: relative; display: inline-block; width: 800px; margin-top: 100px; border-radius: 10px;  overflow: hidden; background-color: white;">

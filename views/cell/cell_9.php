@@ -1,4 +1,7 @@
 <?php
+
+namespace Reusables;
+
 // exit( json_encode( $celldict['price'] ) );
 ?>
 

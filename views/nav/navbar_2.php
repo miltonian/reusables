@@ -1,5 +1,7 @@
 <?php
 
+namespace Reusables;
+
 $required = array(
 	"pages"=>array("link", "name|imagepath|emoji"), 
 	"logo|brandname"=>"",  

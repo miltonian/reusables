@@ -1,5 +1,7 @@
 <?php
 
+namespace Reusables;
+
 if(!isset($navtype)){ $navtype=1; }
 
 if(!isset($isadmin)){ $isadmin=false; }

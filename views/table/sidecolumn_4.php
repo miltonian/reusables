@@ -1,5 +1,7 @@
 <?php 
 
+namespace Reusables;
+
 if(!isset($hasads)){$hasads=false;}
 // exit(json_encode($hasads));
 

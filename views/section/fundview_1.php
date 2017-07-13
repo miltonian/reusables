@@ -1,5 +1,7 @@
 <?php
 
+namespace Reusables;
+
 	$funded = floatval( Data::getValue( $sectiondict, 'funded' ) );
 	$goal = floatval( Data::getValue( $sectiondict, 'goal' ) );
 

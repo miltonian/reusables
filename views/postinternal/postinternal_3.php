@@ -1,4 +1,7 @@
 <?php
+
+namespace Reusables;
+
 	/*
 		$postdict = [
 				"featured_imagepath"=>"",

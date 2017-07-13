@@ -1,4 +1,7 @@
 <?php
+
+namespace Reusables;
+
 	if(!isset($GLOBALS['isadmin'])){ $GLOBALS['isadmin']=false; }
 	if(!isset($templatedict['editor1'])){ $templatedict['editor1']=""; }
 	if(!isset($templatedict['my-name'])){ $templatedict['my-name']=""; }

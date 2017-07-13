@@ -1,5 +1,7 @@
 <?php 
 
+namespace Reusables;
+
 	$required = array(
 		$identifier . "_posts" =>array("link", "name|imagepath|emoji"), 
 		"cellactions"=>"",  

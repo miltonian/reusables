@@ -1,5 +1,7 @@
 <?php
 
+namespace Reusables;
+
 if(!isset($GLOBALS['isadmin'])){ $GLOBALS['isadmin']=false; }
 
 ?>

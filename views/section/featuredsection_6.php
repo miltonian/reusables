@@ -1,4 +1,7 @@
 <?php
+
+namespace Reusables;
+
 	/*
 		$sectiondict = [
 			"featured_imagepath"=>"",

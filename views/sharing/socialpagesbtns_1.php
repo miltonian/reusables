@@ -1,5 +1,7 @@
 <?php
 
+namespace Reusables;
+
 $twittericon_white = "https://theanywherecard.com/social_images/twitter_social_button.png";
 $facebookicon_white = "https://theanywherecard.com/social_images/facebook-256.png";
 $linkedin_white = "https://theanywherecard.com/social_images/linkedin-image.png";

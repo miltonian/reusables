@@ -1,4 +1,6 @@
 <?php
+namespace Reusables;
+
 	if(!isset($optionsmodalarray)){$optionsmodalarray = ["article"=>true, "podcast"=>true, "youtube"=>true]; }
 ?>
 

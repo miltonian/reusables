@@ -1,5 +1,7 @@
 <?php
 
+namespace Reusables;
+
 //exit("hello");
 //$MainClasses = new MainClasses();
 

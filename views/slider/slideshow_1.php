@@ -1,4 +1,6 @@
 <?php
+
+namespace Reusables;
 	
 $dir    = '../penthouse/images';
 $files1 = scandir($dir);

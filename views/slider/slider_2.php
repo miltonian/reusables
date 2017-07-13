@@ -1,4 +1,7 @@
 <?php
+
+namespace Reusables;
+
 	//$sliderarray
 	// exit(json_encode($sliderarray[1]));
 if(!isset($isediting)){$isediting=false;}

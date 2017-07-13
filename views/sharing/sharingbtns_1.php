@@ -1,4 +1,7 @@
 <?php
+
+namespace Reusables;
+
 	if( !isset($identifier) ){ $identifier = ""; }
 ?>
 

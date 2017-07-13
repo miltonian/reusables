@@ -1,4 +1,7 @@
 <?php
+
+namespace Reusables;
+
 	/*
 	$structuredict = [ 
 				"maincolumn" => array(["viewtype"=>"","filename"=>"", "data"=>""]),

@@ -1,5 +1,7 @@
 <?php
 
+namespace Reusables;
+
 if( isset($headerdict['editing']) ){ $isediting=1; }else{ $isediting=0; }
 
 $buttons = "";

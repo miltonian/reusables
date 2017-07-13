@@ -1,5 +1,7 @@
 <?php
 
+namespace Reusables;
+
 
 require_once($docroot.'/reusables/reusable.php');
 require_once($docroot.'/classes/classes.php');

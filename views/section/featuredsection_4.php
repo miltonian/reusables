@@ -1,4 +1,8 @@
+<?php
 
+namespace Reusables;
+
+?>
 
 <style>
 </style>

@@ -1,4 +1,7 @@
 <?php 
+
+namespace Reusables;
+
 	if(!isset($maincategoriesmodalarray)){ $maincategoriesmodalarray = array(); }
 	array_push($maincategoriesmodalarray, ["id"=>"0", "time_created"=>"", "name"=>"Other"]);
 	if(!isset($categoriesmodalarray)){ $categoriesmodalarray = array(); }

@@ -1,4 +1,7 @@
 <?php 
+
+namespace Reusables;
+
 	// $docroot = $_SERVER['DOCUMENT_ROOT'];
 ?>
 

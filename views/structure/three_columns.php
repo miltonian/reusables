@@ -1,4 +1,7 @@
 <?php
+
+namespace Reusables;
+
 	$required = array(
 		"sidecolumn_left"=>"",  
 		"maincolumn"=>"",

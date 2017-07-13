@@ -1,5 +1,7 @@
 <?php
 
+namespace Reusables;
+
 	/*
 		$children = array(["viewtype"=>"","filename"=>"", "data"=>""])
 		$wrapperdict = [ "children"=>$children ]

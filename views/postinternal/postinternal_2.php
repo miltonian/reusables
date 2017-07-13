@@ -1,4 +1,7 @@
 <?php
+
+namespace Reusables;
+
 	if(!isset($isediting)){ $isediting=false; }
 	if(!isset($authorname)){ $authorname=""; }
 	if(!isset($postcategory)){ $postcategory=""; }

@@ -1,5 +1,7 @@
 <?php
 
+namespace Reusables;
+
 $required = array(
 	"postarray"=>array("link", "name|imagepath|emoji"), 
 	"title"=>""

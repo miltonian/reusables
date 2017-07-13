@@ -1,5 +1,8 @@
 <?php
 
+namespace Reusables;
+
+
 if(!isset($GLOBALS['isadmin'])){ $GLOBALS['isadmin']=false; }
 // if(!isset($sectiondict[0]['formdesc'])){ $sectiondict[0]['formdesc']=""; }
 

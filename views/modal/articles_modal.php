@@ -1,4 +1,7 @@
 <?php
+
+namespace Reusables;
+
 	/* $allarticlesarray, $publishedarray, $unpublishedarray */
 	if(!isset($publishedarray)){ $publishedarray = array(); }
 	if(!isset($unpublishedarray)){ $unpublishedarray = array(); }

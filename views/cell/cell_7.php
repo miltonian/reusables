@@ -1,4 +1,7 @@
 <?php
+
+namespace Reusables;
+
 	if(!isset($fontsizemobile)){$fontsizemobile='2em';}
 	if(!isset($fontsize)){$fontsize='1.4em';}
 	if(!isset($showdate)){$showdate=false;}
