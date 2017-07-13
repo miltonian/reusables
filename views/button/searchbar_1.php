@@ -11,7 +11,7 @@ namespace Reusables;
 	<form action="/search" method="get">
 		<input type="text" name="s" placeholder="Search">
 	</form>
-	<img src="/reusables/uploads/icons/search-icon.png" width="30" height="30">
+	<img src="/vendor/miltonian/reusables/uploads/icons/search-icon.png" width="30" height="30">
 </div>
 
 <script>

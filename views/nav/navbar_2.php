@@ -119,7 +119,7 @@ echo Menu::make( "menuview_1", $menudict, "menuview1");
 </div>
 
 <?php 
-	require_once 'views/mailchimp/subscribe.php'; 
+	// require_once 'miltonian/reusables/views/mailchimp/subscribe.php'; 
 ?>
 
 <script>
