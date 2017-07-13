@@ -2,9 +2,6 @@
 
 namespace Reusables;
 
-require_once 'classes/classes.php';
-$MainClasses = new MainClasses();
-
 class ReusableClasses {
 	
 	public $PDO; // PHP Data Object
