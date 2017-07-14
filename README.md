@@ -25,6 +25,7 @@ Basic Guidelines
 	- assign the returned value to a variable
 - you can then add custom key value pairs to that variable by: $array[customkey] = customvalue
 - data format for reusable view:
+	data:
 	{
 		"value": {
 			key: { "data_id": "", "key": "", "index": "" },
@@ -50,7 +51,8 @@ Basic Guidelines
 - to connect to your database change the information in the classes/CustomData/config.php and classes/CustomData/db_pdo.php files
 
 
-nav data
+nav 
+	data:
 	{
 		"logo|brandname"=>text or imagepath,
 		"pages": {
