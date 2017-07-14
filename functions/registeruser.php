@@ -1,17 +1,17 @@
 <?php
 
-$docroot;
-$baseurlminimal;
-if($_SERVER['HTTP_HOST'] == "theanywherecard.com"){
-	$docroot = $_SERVER['DOCUMENT_ROOT']."/experiencenash_dev";
-	$baseurlminimal = "/experiencenash_dev/";
-}else{
-	$docroot = $_SERVER['DOCUMENT_ROOT'];
-	$baseurlminimal = "/";
-}
+// $docroot;
+// $baseurlminimal;
+// if($_SERVER['HTTP_HOST'] == "theanywherecard.com"){
+// 	$docroot = $_SERVER['DOCUMENT_ROOT']."/experiencenash_dev";
+// 	$baseurlminimal = "/experiencenash_dev/";
+// }else{
+// 	$docroot = $_SERVER['DOCUMENT_ROOT'];
+// 	$baseurlminimal = "/";
+// }
 
-require_once($docroot.'/classes/classes.php');
-require_once($docroot.'/reusables/classes/Shortcuts.php');
+require_once('classes/classes.php');
+require_once('vendor/miltonian/reusables/classes/Shortcuts.php');
 $MainClasses = new MainClasses();
 
 if(isset($_POST[ 'first_name' ])){ $firstname = $_POST[ 'first_name' ]; }else{ $firstname = null; }

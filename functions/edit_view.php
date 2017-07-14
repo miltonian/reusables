@@ -14,8 +14,9 @@
 
 // exit(json_encode($_FILES));
 
+
 require_once('classes/classes.php');
-require_once('reusables/classes/Shortcuts.php');
+// require_once('vendor/miltonian/reusables/classes/Shortcuts.php');
 $MainClasses = new MainClasses();
 
 $containsp = false;
@@ -38,7 +39,7 @@ if( isset($fieldimages ) ) {
 
 	$i=0;
 	foreach ($filesarray as $file) {
-		$imagepath = Shortcuts::uploadImage( $file );
+		$imagepath = Reusables\Shortcuts::uploadImage( $file );
 		$fieldimages[$i]['field_value'] = $imagepath;
 		$i++;
 	}
@@ -99,6 +100,7 @@ if (isset($fieldarray)) {
 			$values = $conditionvalues;
 			$type = "select";
 			$result = $MainClasses->querySQL( $query, $values, $type );
+			// exit(json_encode($conditionvalues));
 			if($result[0] == 0){
 				if( isset( $_POST['ifnone_insert'] ) ){
 					if( $_POST['ifnone_insert'] == "1" ){ 
@@ -127,7 +129,7 @@ if (isset($fieldarray)) {
 				$query = "UPDATE " . $tablename . " SET " . $colname . " = ? " . $whereclause;
 				$values = array_merge( [ $fieldvalue ], $conditionvalues );
 				$type = "update";
-				// exit(json_encode($values));
+				// exit(json_encode($query));
 				$result = $MainClasses->querySQL( $query, $values, $type );
 			}
 			

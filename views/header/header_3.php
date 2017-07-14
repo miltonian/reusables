@@ -9,7 +9,7 @@ $buttons = "";
 if( isset($headerdict['buttons']) ){
 	$i=0;
 	foreach ($headerdict['buttons'] as $b) {
-		$buttons .= "<button class='header_3 index_" . $i . "'>" . $b['name'] . "</button>";
+		$buttons .= "<button class='header_3 index_" . $i . " " . $b['classname'] . "'>" . $b['name'] . "</button>";
 		$i++;
 	}
 }

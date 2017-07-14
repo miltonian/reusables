@@ -76,15 +76,15 @@ class Shortcuts {
 				{
 					//echo "Return Code: " . $_FILES["mediapath"]["error"] . "<br />";
 				}else{
-					if (file_exists($docroot."/reusables/uploads/" . $newname)){
+					if (file_exists("vendor/miltonian/reusables/uploads/" . $newname)){
 						$uploadOk = 0;
 					}else{
-						move_uploaded_file($file["tmp_name"], $docroot."/reusables/uploads/" . $newname);
-						if(filesize($docroot.'/reusables/uploads/' . $newname) > 3000000){
-							$scalefactor = round(100*(3000000 / filesize($docroot."/reusables/uploads/" . $newname)));
-							$result = self::convertImage($docroot.'/reusables/uploads/' . $newname, $docroot.'/reusables/uploads/thumbs_small/' . $newname, $scalefactor);
+						move_uploaded_file($file["tmp_name"], "vendor/miltonian/reusables/uploads/" . $newname);
+						if(filesize('vendor/miltonian/reusables/uploads/' . $newname) > 3000000){
+							$scalefactor = round(100*(3000000 / filesize("vendor/miltonian/reusables/uploads/" . $newname)));
+							$result = self::convertImage('vendor/miltonian/reusables/uploads/' . $newname, 'vendor/miltonian/reusables/uploads/thumbs_small/' . $newname, $scalefactor);
 						}else{
-							$result = self::convertImage($docroot.'/reusables/uploads/' . $newname, $docroot.'/reusables/uploads/thumbs_small/' . $newname, 100);
+							$result = self::convertImage('vendor/miltonian/reusables/uploads/' . $newname, 'vendor/miltonian/reusables/uploads/thumbs_small/' . $newname, 100);
 						}
 						$uploadOk = 1;
 					}
@@ -95,7 +95,7 @@ class Shortcuts {
 
 			if($uploadOk != 0){
 				$mediapathname = $newname;
-				$imagepath = $baseurlminimal . "reusables/uploads/".$mediapathname;
+				$imagepath = "vendor/miltonian/reusables/uploads/".$mediapathname;
 				return $imagepath;
 			}else{
 				return false;

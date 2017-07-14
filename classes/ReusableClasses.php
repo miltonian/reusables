@@ -42,7 +42,7 @@ class ReusableClasses {
 		ob_end_clean();
 		ReusableClasses::addcss();
 		// echo "<link rel='stylesheet' type='text/css' href='/reusables/customcss/" . $parent_dir . "/".basename($page, '.php').".css'>";
-		echo "<link rel='stylesheet' type='text/css' href='vendor/miltonian/reusables/" . $parent_dir . "/" . basename($page, '.php') . ".css'>";
+		echo "<link rel='stylesheet' type='text/css' href='/vendor/miltonian/reusables/customcss" . $parent_dir . "/" . basename($page, '.php') . ".css'>";
 		echo $output;
 
 		ReusableClasses::addjs();

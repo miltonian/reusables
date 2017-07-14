@@ -39,6 +39,7 @@ if(!isset($sectiondict['preview'])){ $sectiondict['preview'] = 0; }
 		<?php $i=1; foreach ($skillsarray as $skill) { ?>
 			<?php 
 				$name=$skill['custom_key']; $score=$skill['custom_value']; 
+				if (substr($score, -1) != '%') { $score = $score . "%"; }
 			?>
 			<div class="skillset_2 wrapper">
 				<div class="skillset_2 bar">

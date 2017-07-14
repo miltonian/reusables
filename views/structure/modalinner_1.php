@@ -9,7 +9,7 @@ namespace Reusables;
 		"third"=>""
 	);
 
-	ReusableClasses::checkRequired( "three_columns", $structuredict, $required );
+	// ReusableClasses::checkRequired( "three_columns", $structuredict, $required );
 	// exit(json_encode($identifier));
 ?>
 
