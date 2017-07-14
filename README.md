@@ -6,7 +6,7 @@
 
 
 
-Basic Guidelines
+Basic Guidelines and How-to
 
 - write your own functions where you retrieve/deal with data in the /reusables/classes/CustomData directory with the namespace of CustomaData.
 - create pages in the views directory from the root directory.
@@ -50,13 +50,118 @@ Basic Guidelines
 	- two parameters for wrapper (data, identifier)
 - to connect to your database change the information in the classes/CustomData/config.php and classes/CustomData/db_pdo.php files
 
+- when dealing with data from the database, if you get from a "custom" table then use the function: Data::convertFromCustomTable( $data ) to turn it into a normal dictionary with key value pairs
+- add the condition keys you'll need to change something in the data you fetched, leave the condition values as ""
+- the condition values will come from this array that you fetched from the database, make sure the condition keys match the specific keys in the fetched data array. if certain keys you need for the condition aren't present in the data, add them right after the convertFromCustomTable function (if from customtable)
+- convert data into default data by using the function: ReusableClasses::toValueAndDBInfo( $data, $conditions, $tablename )
 
-nav 
+- add this to include reusable assets 
+	<link rel=stylesheet href='/vendor/miltonian/reusables/assets/css/reusables.css' type=text/css>
+	<script src='/vendor/miltonian/reusables/assets/js/reusable.js'></script>
+	<script src='/vendor/miltonian/reusables/assets/js/ReusableClasses.js'></script>
+	
+	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
+
+
+NAV 
 	data:
-	{
-		"logo|brandname"=>text or imagepath,
+	[
+		"logo|brandname"=>imagepath/text,
 		"pages": {
-
+			[ 
+				"name"=>"", 
+				"classname" => "", 
+				"slug" => "", 
+				"imagepath" => "", 
+				"position" => "left/right", 
+				"buttons" => array(
+					[ "name" => "", "classname", "slug" => "" ]
+				)
+			]
 		}
-	}
+	]
+
+HEADER
+	data:
+	[
+		"title" => "",
+		"buttons" => array(
+			[ "name"=>"", "classname"=>"", "type"=>"modal|link", "modal"=>[ "parentclass"=>"", "modalclass"=>"" ] ]
+		)
+	]
+
+in the above data, parentclass is for the outer most wrapper ( inside modal_background ) and modalclass is the main class inside the form in the modal
+
+
+- make a form inside modal
+echo Reusables\Structure::make(
+	"modal_background",
+	[
+		Reusables\Wrapper::wrapper1(
+			[],
+			array(
+				Reusables\Structure::make(
+					"modalinner_1",
+					[
+						"title"=>"",
+						"first"=>array(
+							"<form class='theform' method='post' action='/edit_view.php' enctype='multipart/form-data'>",
+							/* views inside form go here*/
+							"/form"
+						)
+					],
+					"editstructure"
+				)
+			),
+			"editwrapper"
+		)
+	],
+	"modalbackground"
+);
+
+
+
+FORM
+	- for now, you have to create your own form. but its easy
+	- create the php script for you form in the /views/CustomView directory
+	- put this at the top of the file:
+			namespace Reusables\CustomView;
+			extract( \Reusables\CustomView::makeFormVars( $customviewdict ) );
+	- now you have these already defined vars to work with: $data_id, $default_tablename, $customviewdict
+	- put this right after "?>"
+		<div class="<?php echo $identifier ?> form_simple_2 main">
+			<div class='container' style='text-align: left; margin-top: 10px; margin-bottom: 30px; text-align: center;'>
+				<input type="hidden" name="goto" value="userprofile">
+
+				// put your code here
+
+				<button class="modalinner_1 save custombutton">Save</button>
+			</div>
+		</div>
+	- where it says "put your code here", put your code to make the form content
+	- after the last <div> in this file, add this:
+		<script>
+			var customviewdict = <?php echo json_encode($customviewdict) ?>;
+			var dataarray = <?php echo json_encode( \Reusables\Data::getFullArray( $customviewdict ) ) ?>;
+			var identifier = "<?php echo $identifier ?>";
+			class <?php echo $identifier ?>Classes {
+				populateview(index=null){
+					// put your code here
+					// use the below functions to add values and conditions to the form inputs
+					/*
+						Reusable.updateTextField( dataarray, identifier, data_id, key, inputclass, db_key, index=null )
+						Reusable.updateTextArea( dataarray, identifier, data_id, key, inputclass, db_key, index=null )
+						Reusable.updateFileImage( dataarray, identifier, data_id, key, inputclass, db_key, index=null )
+						Reusable.updateWysi( dataarray, identifier, data_id, key, inputclass, db_key, index, fieldindex )
+					*/
+				}
+			}
+			if(<?php echo $identifier ?> !== undefined || <?php echo $identifier ?> !== null) {
+				let <?php echo $identifier ?> = new <?php echo $identifier ?>Classes();
+				<?php echo $identifier ?>.populateview();
+			}
+		</script>
+	- again, where it says "put your code here", put your code to make the form content
+	- after this you're done creating the form
+
 
