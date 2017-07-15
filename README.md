@@ -163,6 +163,34 @@ FORM
 		</script>
 	- again, where it says "put your code here", put your code to make the form content
 	- after this you're done creating the form
-	
+
+
+SECTION
+	- most sections require a unique set of parameters so you have to look in the section file to see what exactly it needs
+	- for example, we'll look at the section: threecellsinline_1
+	data:
+	[
+		"cellname"=>"",
+		identifier . "_posts"
+	]
+
+
+TABLE
+	- get data the same way as you do the other views
+	 	- here's a brief overview of getting data
+		 	- customdata -> query from db
+		 	- conditions
+		 	- toValueAndDBInfo
+		 	- then return the data to the page file
+		 	- addData( $data, $identifier )
+		 		- IMPORTANT: the identifier of this must be the same plus "_posts" as the table identifer you are going to assign this to
+		 			- e.g. 
+		 				table identifier: "maintable"
+		 				data_id: "maintable_posts"
+	 	- now for the other reusable views you would normally call formatForDefaultData( $dataid )
+	 	- instead of calling that function, call Data::retrieveDataWithID( $data_id ) and assign to variable
+	 	- make dictionary where the above variable equals the key: tableidentifier + "_posts" ( like the above example )
+	 	- now add a "cellname" key value pair to that table dict with the filename of the cell you would like to use ( minus the .php )
+	 	- the default link on each cell in the table is to go to the posts slug. to add a "pre_slug" (before the slug) to the link, simply add a preslug key value pair to the table dictionary. to change the slug, add a "slug" key value pair to the table dictionary
 
 

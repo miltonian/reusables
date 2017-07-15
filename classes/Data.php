@@ -73,7 +73,7 @@ class Data {
 	public static function retrieveDataWithID( $identifier )
 	{
 		if ( !isset( self::$alldata[ $identifier ] ) ) {
-			exit( "Could not find data id: '" . $identifier . "'. " );
+			return null;
 		}else{
 			return self::$alldata[ $identifier ];
 		}
@@ -126,9 +126,19 @@ class Data {
 		if( isset( $pair['index'] ) ){ $hasindex = true; }
 
 		if( $hasindex ){
-			$thevalue = self::retrieveDataWithID( $pair['data_id'] )['value'][ $pair['index'] ][ $pair['key'] ];
+			$thevalue = self::retrieveDataWithID( $pair['data_id'] );
+			if( $thevalue ){
+				$thevalue = $thevalue['value'][ $pair['index'] ][ $pair['key'] ];
+			}else{
+				$thevalue = "";
+			}
 		}else{
-			$thevalue = self::retrieveDataWithID( $pair['data_id'] )['value'][ $pair['key'] ];
+			$thevalue = self::retrieveDataWithID( $pair['data_id'] );
+			if( $thevalue ){
+				$thevalue = $thevalue['value'][ $pair['key'] ];
+			}else{
+				$thevalue = "";
+			}
 		}
 
 		if($thevalue == null){

@@ -3,23 +3,8 @@
 namespace Reusables;
 
 if(!isset($GLOBALS['isadmin'])){ $GLOBALS['isadmin']=false; }
-// if(!isset($sectiondict[0]['formdesc'])){ $sectiondict[0]['formdesc']=""; }
 
-$optionsarray = array( "Brand Engagement", "Core Partner", "Concert Promotion", "Business Promotion" );
 
-$data_id = Data::getDefaultDataID( $sectiondict );
-
-$formstep = $sectiondict['step'];
-$default_tablename = Data::getDefaultTableNameWithID( $data_id );
-
-if( isset($sectiondict['index'] ) ){
-	$sectiondict = Data::convertDataForArray( $sectiondict['data_id'], $sectiondict['index'] );
-}
-
-// exit( json_encode( Data::getConditions( $sectiondict['profile-pic'] ) ) );
-// exit(json_encode($sectiondict));
-
-// exit( json_encode( Data::getFullArray( $sectiondict ) ) );
 	
 ?>
 
@@ -33,11 +18,11 @@ if( isset($sectiondict['index'] ) ){
 			<?php 
 
 			if($formstep==1){
-				echo Structure::make( 
+				echo \Reusables\Structure::make( 
 					"structure_1",
 					[
 						"maincolumn" => array(
-							Input::make(
+							\Reusables\Input::make(
 								"file_image",
 								[
 									"labeltext"=>"Profile Picture",
@@ -46,18 +31,18 @@ if( isset($sectiondict['index'] ) ){
 									"field_index"=>0,
 									"field_table"=>$default_tablename,
 									"field_colname"=>"custom_value",
-									"field_conditions"=>Data::getConditions( $sectiondict['profile-pic'] )
+									"field_conditions"=>\Reusables\Data::getConditions( $customviewdict['profile-pic'] )
 								],
 								"profilepic_input"
 							)
 						),
 						"sidecolumn_right" => array(
-							Structure::make( 
+							\Reusables\Structure::make( 
 								"fieldwrapper", 
 								[
 									"size" => "large",
 									"maincolumn" => array(
-										Input::make( 
+										\Reusables\Input::make( 
 											"textfield", 
 											[
 												"placeholder"=>"Your Name",
@@ -66,11 +51,11 @@ if( isset($sectiondict['index'] ) ){
 												"field_index"=>1,
 												"field_table"=>$default_tablename,
 												"field_colname"=>"custom_value",
-												"field_conditions"=>Data::getConditions( $sectiondict['my-name'] )
+												"field_conditions"=>\Reusables\Data::getConditions( $customviewdict['my-name'] )
 											], 
 											"myname_input"
 										),
-										Input::make( 
+										\Reusables\Input::make( 
 											"textfield",
 											[
 												"placeholder"=>"What You Do",
@@ -79,11 +64,11 @@ if( isset($sectiondict['index'] ) ){
 												"field_index"=>2,
 												"field_table"=>$default_tablename,
 												"field_colname"=>"custom_value",
-												"field_conditions"=>Data::getConditions( $sectiondict['i-do'] )
+												"field_conditions"=>\Reusables\Data::getConditions( $customviewdict['i-do'] )
 											], 
 											"ido_input"
 										),
-										Input::make( 
+										\Reusables\Input::make( 
 											"textfield",
 											[
 												"placeholder"=>"Your Email",
@@ -92,11 +77,11 @@ if( isset($sectiondict['index'] ) ){
 												"field_index"=>3,
 												"field_table"=>$default_tablename,
 												"field_colname"=>"custom_value",
-												"field_conditions"=>Data::getConditions( $sectiondict['contactemail'] )
+												"field_conditions"=>\Reusables\Data::getConditions( $customviewdict['contactemail'] )
 											], 
 											"contactemail_input"
 										),
-										Input::make( 
+										\Reusables\Input::make( 
 											"textfield",
 											[
 												"placeholder"=>"Your Phone Number",
@@ -105,7 +90,7 @@ if( isset($sectiondict['index'] ) ){
 												"field_index"=>4,
 												"field_table"=>$default_tablename,
 												"field_colname"=>"custom_value",
-												"field_conditions"=>Data::getConditions( $sectiondict['contactphone'] )
+												"field_conditions"=>\Reusables\Data::getConditions( $customviewdict['contactphone'] )
 											], 
 											"contactphone_input"
 										)
@@ -118,16 +103,16 @@ if( isset($sectiondict['index'] ) ){
 					"stepone-structure"
 				);
 			}else if($formstep==2){
-				echo Structure::make( 
+				echo \Reusables\Structure::make( 
 					"structure_2",
 					[
 						"maincolumn" => array(
-							Structure::make( 
+							\Reusables\Structure::make( 
 								"fieldwrapper", 
 								[
 									"size" => "large",
 									"maincolumn" => array(
-										Input::make( 
+										\Reusables\Input::make( 
 											"wysi",
 											[
 												"labeltext"=>"Tell Us About Yourself",
@@ -136,7 +121,7 @@ if( isset($sectiondict['index'] ) ){
 												"field_index"=>5,
 												"field_table"=>$default_tablename,
 												"field_colname"=>"custom_value",
-												"field_conditions"=>Data::getConditions( $sectiondict['editor1'] )
+												"field_conditions"=>\Reusables\Data::getConditions( $customviewdict['editor1'] )
 											], 
 											"editor1_input"
 										)
@@ -149,16 +134,16 @@ if( isset($sectiondict['index'] ) ){
 					"steptwo-structure"
 				);
 			}else if($formstep==3){
-				echo Structure::make( 
+				echo \Reusables\Structure::make( 
 					"structure_2",
 					[
 						"maincolumn" => array(
-							Structure::make( 
+							\Reusables\Structure::make( 
 								"fieldwrapper", 
 								[
 									"size" => "small",
 									"maincolumn" => array(
-										Input::make( 
+										\Reusables\Input::make( 
 											"textfield",
 											[
 												"placeholder"=>"Skill Name #1",
@@ -167,7 +152,7 @@ if( isset($sectiondict['index'] ) ){
 												"field_index"=>6,
 												"field_table"=>$default_tablename,
 												"field_colname"=>"custom_value",
-												"field_conditions"=>Data::getConditions( $sectiondict['skillname0'] )
+												"field_conditions"=>\Reusables\Data::getConditions( $customviewdict['skillname0'] )
 											], 
 											"skillname0_input"
 										)
@@ -175,12 +160,12 @@ if( isset($sectiondict['index'] ) ){
 								],
 								"fieldwrapper"
 							),
-							Structure::make( 
+							\Reusables\Structure::make( 
 								"fieldwrapper", 
 								[
 									"size" => "medium",
 									"maincolumn" => array(
-										Input::make( 
+										\Reusables\Input::make( 
 											"textfield",
 											[
 												"placeholder"=>"Skill Value #1",
@@ -189,7 +174,7 @@ if( isset($sectiondict['index'] ) ){
 												"field_index"=>7,
 												"field_table"=>$default_tablename,
 												"field_colname"=>"custom_value",
-												"field_conditions"=>Data::getConditions( $sectiondict['skillvalue0'] )
+												"field_conditions"=>\Reusables\Data::getConditions( $customviewdict['skillvalue0'] )
 											], 
 											"skillvalue0_input"
 										)
@@ -197,12 +182,12 @@ if( isset($sectiondict['index'] ) ){
 								],
 								"fieldwrapper"
 							),
-							Structure::make( 
+							\Reusables\Structure::make( 
 								"fieldwrapper", 
 								[
 									"size" => "small",
 									"maincolumn" => array(
-										Input::make( 
+										\Reusables\Input::make( 
 											"textfield",
 											[
 												"placeholder"=>"Skill Name #1",
@@ -211,7 +196,7 @@ if( isset($sectiondict['index'] ) ){
 												"field_index"=>8,
 												"field_table"=>$default_tablename,
 												"field_colname"=>"custom_value",
-												"field_conditions"=>Data::getConditions( $sectiondict['skillvalue1'] )
+												"field_conditions"=>\Reusables\Data::getConditions( $customviewdict['skillvalue1'] )
 											], 
 											"skillname1_input"
 										)
@@ -219,12 +204,12 @@ if( isset($sectiondict['index'] ) ){
 								],
 								"fieldwrapper"
 							),
-							Structure::make( 
+							\Reusables\Structure::make( 
 								"fieldwrapper", 
 								[
 									"size" => "medium",
 									"maincolumn" => array(
-										Input::make( 
+										\Reusables\Input::make( 
 											"textfield",
 											[
 												"placeholder"=>"Skill Value #1",
@@ -233,7 +218,7 @@ if( isset($sectiondict['index'] ) ){
 												"field_index"=>9,
 												"field_table"=>$default_tablename,
 												"field_colname"=>"custom_value",
-												"field_conditions"=>Data::getConditions( $sectiondict['skillvalue1'] )
+												"field_conditions"=>\Reusables\Data::getConditions( $customviewdict['skillvalue1'] )
 											], 
 											"skillvalue1_input"
 										)
@@ -241,12 +226,12 @@ if( isset($sectiondict['index'] ) ){
 								],
 								"fieldwrapper"
 							),
-							Structure::make( 
+							\Reusables\Structure::make( 
 								"fieldwrapper", 
 								[
 									"size" => "small",
 									"maincolumn" => array(
-										Input::make( 
+										\Reusables\Input::make( 
 											"textfield",
 											[
 												"placeholder"=>"Skill Name #2",
@@ -255,7 +240,7 @@ if( isset($sectiondict['index'] ) ){
 												"field_index"=>10,
 												"field_table"=>$default_tablename,
 												"field_colname"=>"custom_value",
-												"field_conditions"=>Data::getConditions( $sectiondict['skillvalue2'] )
+												"field_conditions"=>\Reusables\Data::getConditions( $customviewdict['skillvalue2'] )
 											], 
 											"skillname2_input"
 										)
@@ -263,12 +248,12 @@ if( isset($sectiondict['index'] ) ){
 								],
 								"fieldwrapper"
 							),
-							Structure::make( 
+							\Reusables\Structure::make( 
 								"fieldwrapper", 
 								[
 									"size" => "medium",
 									"maincolumn" => array(
-										Input::make( 
+										\Reusables\Input::make( 
 											"textfield",
 											[
 												"placeholder"=>"Skill Value #3",
@@ -277,7 +262,7 @@ if( isset($sectiondict['index'] ) ){
 												"field_index"=>11,
 												"field_table"=>$default_tablename,
 												"field_colname"=>"custom_value",
-												"field_conditions"=>Data::getConditions( $sectiondict['skillvalue2'] )
+												"field_conditions"=>\Reusables\Data::getConditions( $customviewdict['skillvalue2'] )
 											], 
 											"skillvalue2_input"
 										)
@@ -299,8 +284,8 @@ if( isset($sectiondict['index'] ) ){
 </div>
 <script>
 
-	var sectiondict = <?php echo json_encode($sectiondict) ?>;
-	var dataarray = <?php echo json_encode( Data::getFullArray( $sectiondict ) ) ?>;
+	var customviewdict = <?php echo json_encode($customviewdict) ?>;
+	var dataarray = <?php echo json_encode( \Reusables\Data::getFullArray( $customviewdict ) ) ?>;
 	var identifier = "<?php echo $identifier ?>";
 	var step = <?php echo $formstep ?>;
 
