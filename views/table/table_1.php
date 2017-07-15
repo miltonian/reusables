@@ -29,6 +29,7 @@ namespace Reusables;
 				$post['network_slug'] = ["data_id"=>"network_info", "key"=>"slug"];
 				$post['index'] = $i;
 				$post['pre_slug'] = Data::getValue( $tabledict, 'pre_slug' );
+				if( isset( $tabledict['slug'] ) ) { $post['slug'] = Data::getValue( $tabledict, 'slug' ); }
 				
 				if( isset( $tabledict['cellactions'] ) ){ $post['actions'] = $tabledict['cellactions']; }else{ $post['actions'] = array(); }
 				if($i==0 || sizeof($tabledict[ $identifier . '_posts' ]) < 4 ){
