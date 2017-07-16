@@ -14,8 +14,10 @@
 * add your own css to style pages in reusables/customcss. create a file with the same name as the page you want to modify ( with file extension .css ). if the page is in a directory ( or directories ) within /views then create that same directory in /customcss and place your custom css file in it
 
 * in each page, add the following functions and add reusable views in between the two function:
+	```
 	ReusableClasses::startpage( __FILE__ );
 	ReusableClasses::endpage( "", __FILE__ );
+	```
 * in the first parameter of the endpage function, add the directory the page is in, if its in the /views root directory then leave it as "". 
 * when dealing with data in CustomData, make sure you return it to a variable in the format below (desired data format)
 	* most of the time this can easily be done by first specifying the conditions (e.g. [ [ "key"=>"","value"=>"" ], [ "key"=>"","value"=>"" ] ] ). Make sure your condition keys are also in the returned dict/array. now pass both the data ( e.g. from an sql query ) and the conditions through the function \ReusableClasses::toValueAndDBInfo( $data, $conditions, "" ) where the third parameter is the default tablename
@@ -58,15 +60,16 @@
 * convert data into default data by using the function: ReusableClasses::toValueAndDBInfo( $data, $conditions, $tablename )
 
 * add this to include reusable assets 
+	```
 	<link rel=stylesheet href='/vendor/miltonian/reusables/assets/css/reusables.css' type=text/css>
 	<script src='/vendor/miltonian/reusables/assets/js/reusable.js'></script>
 	<script src='/vendor/miltonian/reusables/assets/js/ReusableClasses.js'></script>
 	
 	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
-
+	```
 
 ### NAV 
-
+	* example
 	```
 	data:
 	[
@@ -87,7 +90,7 @@
 	```
 
 ### HEADER
-
+	* example
 	```
 	data:
 	[
@@ -131,12 +134,13 @@ echo Reusables\Structure::make(
 
 
 ### FORM 
-
 	* for now, you have to create your own form. but its easy
 	* create the php script for you form in the /views/CustomView directory
 	* put this at the top of the file:
-			namespace Reusables\CustomView;
-			extract( \Reusables\CustomView::makeFormVars( $customviewdict ) );
+		```
+		namespace Reusables\CustomView;
+		extract( \Reusables\CustomView::makeFormVars( $customviewdict ) );
+		```
 	* now you have these already defined vars to work with: $data_id, $default_tablename, $customviewdict
 	* put this right after "?>"
 		```
