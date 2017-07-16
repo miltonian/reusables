@@ -69,7 +69,7 @@
 	```
 
 ### NAV 
-	* example
+	example
 	```
 	data:
 	[
