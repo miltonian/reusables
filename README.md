@@ -1,12 +1,12 @@
-#reusables
--Alexander Hamilton
+# Reusables
+- Alexander Hamilton
 
 
 
 
 
 
-Basic Guidelines and How-to
+## Basic Guidelines and How-to
 
 - write your own functions where you retrieve/deal with data in the /reusables/classes/CustomData directory with the namespace of CustomaData.
 - create pages in the views directory from the root directory.
@@ -25,6 +25,7 @@ Basic Guidelines and How-to
 	- assign the returned value to a variable
 - you can then add custom key value pairs to that variable by: $array[customkey] = customvalue
 - data format for reusable view:
+	```
 	data:
 	{
 		"value": {
@@ -42,6 +43,7 @@ Basic Guidelines and How-to
 			}
 		}
 	}
+	```
 - echo each root reusable view
 - each reusable view has a set of parameters you can define
 - to add an existing reusable view to a page call the reusable view class (e.g. Header is the class for all the headers) then call the make function
@@ -63,7 +65,8 @@ Basic Guidelines and How-to
 	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
 
 
-NAV 
+### NAV 
+	```
 	data:
 	[
 		"logo|brandname"=>imagepath/text,
@@ -80,8 +83,10 @@ NAV
 			]
 		}
 	]
+	```
 
-HEADER
+### HEADER
+	```
 	data:
 	[
 		"title" => "",
@@ -89,11 +94,13 @@ HEADER
 			[ "name"=>"", "classname"=>"", "type"=>"modal|link", "modal"=>[ "parentclass"=>"", "modalclass"=>"" ] ]
 		)
 	]
+	```
 
 in the above data, parentclass is for the outer most wrapper ( inside modal_background ) and modalclass is the main class inside the form in the modal
 
 
 - make a form inside modal
+```
 echo Reusables\Structure::make(
 	"modal_background",
 	[
@@ -118,10 +125,10 @@ echo Reusables\Structure::make(
 	],
 	"modalbackground"
 );
+```
 
 
-
-FORM
+### FORM
 	- for now, you have to create your own form. but its easy
 	- create the php script for you form in the /views/CustomView directory
 	- put this at the top of the file:
@@ -129,6 +136,7 @@ FORM
 			extract( \Reusables\CustomView::makeFormVars( $customviewdict ) );
 	- now you have these already defined vars to work with: $data_id, $default_tablename, $customviewdict
 	- put this right after "?>"
+		```
 		<div class="<?php echo $identifier ?> form_simple_2 main">
 			<div class='container' style='text-align: left; margin-top: 10px; margin-bottom: 30px; text-align: center;'>
 				<input type="hidden" name="goto" value="userprofile">
@@ -138,8 +146,10 @@ FORM
 				<button class="modalinner_1 save custombutton">Save</button>
 			</div>
 		</div>
+		```
 	- where it says "put your code here", put your code to make the form content
 	- after the last <div> in this file, add this:
+		```
 		<script>
 			var customviewdict = <?php echo json_encode($customviewdict) ?>;
 			var dataarray = <?php echo json_encode( \Reusables\Data::getFullArray( $customviewdict ) ) ?>;
@@ -161,21 +171,24 @@ FORM
 				<?php echo $identifier ?>.populateview();
 			}
 		</script>
+		```
 	- again, where it says "put your code here", put your code to make the form content
 	- after this you're done creating the form
 
 
-SECTION
+### SECTION
 	- most sections require a unique set of parameters so you have to look in the section file to see what exactly it needs
 	- for example, we'll look at the section: threecellsinline_1
+	```
 	data:
 	[
 		"cellname"=>"",
 		identifier . "_posts"
 	]
+	```
 
 
-TABLE
+### TABLE
 	- get data the same way as you do the other views
 	 	- here's a brief overview of getting data
 		 	- customdata -> query from db
@@ -193,8 +206,9 @@ TABLE
 	 	- now add a "cellname" key value pair to that table dict with the filename of the cell you would like to use ( minus the .php )
 	 	- the default link on each cell in the table is to go to the posts slug. to add a "pre_slug" (before the slug) to the link, simply add a preslug key value pair to the table dictionary. to change the slug, add a "slug" key value pair to the table dictionary
 
-STRUCTURE
+### STRUCTURE
 	- most structures have a "maincolumn", which is where you put an array of views
+	```
 	echo Structure::make(
 		"structure_2",
 		[
@@ -207,9 +221,11 @@ STRUCTURE
 		],
 		"structure_identifier"
 	)
+	```
 
-WRAPPER
+### WRAPPER
 	- set up like:
+		```
 		echo Wrapper::wrapper1( 
 			[], 
 			array(
@@ -219,6 +235,7 @@ WRAPPER
 			),
 			"wrapper_identifier"
 		)
+		```
 
 
 
