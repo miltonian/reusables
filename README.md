@@ -68,7 +68,7 @@
 	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
 	```
 
-### NAV ###
+## NAV
 	example
 	```
 	data:
@@ -89,7 +89,7 @@
 	]
 	```
 
-### HEADER
+## HEADER
 	* example
 	```
 	data:
@@ -133,7 +133,7 @@ echo Reusables\Structure::make(
 ```
 
 
-### FORM 
+## FORM 
 	* for now, you have to create your own form. but its easy
 	* create the php script for you form in the /views/CustomView directory
 	* put this at the top of the file:
@@ -183,7 +183,7 @@ echo Reusables\Structure::make(
 	* after this you're done creating the form
 
 
-### SECTION
+## SECTION
 
 	* most sections require a unique set of parameters so you have to look in the section file to see what exactly it needs
 	* for example, we'll look at the section: threecellsinline_1
@@ -196,7 +196,7 @@ echo Reusables\Structure::make(
 	```
 
 
-### TABLE
+## TABLE
 
 	* get data the same way as you do the other views
 	 	* here's a brief overview of getting data
@@ -215,7 +215,7 @@ echo Reusables\Structure::make(
 	 	* now add a "cellname" key value pair to that table dict with the filename of the cell you would like to use ( minus the .php )
 	 	* the default link on each cell in the table is to go to the posts slug. to add a "pre_slug" (before the slug) to the link, simply add a preslug key value pair to the table dictionary. to change the slug, add a "slug" key value pair to the table dictionary
 
-### STRUCTURE
+## STRUCTURE
 
 	* most structures have a "maincolumn", which is where you put an array of views
 	```
@@ -233,7 +233,7 @@ echo Reusables\Structure::make(
 	)
 	```
 
-### WRAPPER
+## WRAPPER
 
 	* set up like:
 		```
