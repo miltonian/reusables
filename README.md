@@ -1,5 +1,5 @@
 # Reusables
-- Alexander Hamilton
+- By Alexander Hamilton
 
 
 
@@ -66,6 +66,7 @@
 
 
 ### NAV 
+
 	```
 	data:
 	[
@@ -86,6 +87,7 @@
 	```
 
 ### HEADER
+
 	```
 	data:
 	[
@@ -128,7 +130,8 @@ echo Reusables\Structure::make(
 ```
 
 
-### FORM
+### FORM 
+
 	- for now, you have to create your own form. but its easy
 	- create the php script for you form in the /views/CustomView directory
 	- put this at the top of the file:
@@ -177,6 +180,7 @@ echo Reusables\Structure::make(
 
 
 ### SECTION
+
 	- most sections require a unique set of parameters so you have to look in the section file to see what exactly it needs
 	- for example, we'll look at the section: threecellsinline_1
 	```
@@ -189,6 +193,7 @@ echo Reusables\Structure::make(
 
 
 ### TABLE
+
 	- get data the same way as you do the other views
 	 	- here's a brief overview of getting data
 		 	- customdata -> query from db
@@ -207,6 +212,7 @@ echo Reusables\Structure::make(
 	 	- the default link on each cell in the table is to go to the posts slug. to add a "pre_slug" (before the slug) to the link, simply add a preslug key value pair to the table dictionary. to change the slug, add a "slug" key value pair to the table dictionary
 
 ### STRUCTURE
+
 	- most structures have a "maincolumn", which is where you put an array of views
 	```
 	echo Structure::make(
@@ -224,6 +230,7 @@ echo Reusables\Structure::make(
 	```
 
 ### WRAPPER
+
 	- set up like:
 		```
 		echo Wrapper::wrapper1( 
