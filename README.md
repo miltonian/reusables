@@ -193,4 +193,32 @@ TABLE
 	 	- now add a "cellname" key value pair to that table dict with the filename of the cell you would like to use ( minus the .php )
 	 	- the default link on each cell in the table is to go to the posts slug. to add a "pre_slug" (before the slug) to the link, simply add a preslug key value pair to the table dictionary. to change the slug, add a "slug" key value pair to the table dictionary
 
+STRUCTURE
+	- most structures have a "maincolumn", which is where you put an array of views
+	echo Structure::make(
+		"structure_2",
+		[
+			"maincolumn" => array(
+				// here is where you put your views inside of the structure
+				// you also don't need to echo views that are inside of other views
+				// for example
+				Header::make( "header_5", $headerdict, "headeridentifier" )
+			)
+		],
+		"structure_identifier"
+	)
+
+WRAPPER
+	- set up like:
+		echo Wrapper::wrapper1( 
+			[], 
+			array(
+				// here are the views inside of the wrapper
+				// view 1,
+				// view 2
+			),
+			"wrapper_identifier"
+		)
+
+
 
