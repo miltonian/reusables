@@ -151,8 +151,8 @@ class Data {
 
 	public static function getConditions( $pair )
 	{
-		if( !isset( $pair['data_id'] ) ){ exit("retrieve data is missing data_id"); }
-		if( !isset( $pair['key'] ) ){ exit("retrieve data is missing key"); }
+		if( !isset( $pair['data_id'] ) ){ return ""; }
+		if( !isset( $pair['key'] ) ){ return ""; }
 		
 		$conditions = self::retrieveDataWithID( $pair['data_id'] )['db_info'][ "conditions" ];
 
