@@ -8,10 +8,10 @@
 
 ## Basic Guidelines and How-to
 
-* write your own functions where you retrieve/deal with data in the /reusables/classes/CustomData directory with the namespace of CustomaData.
+* write your own functions where you retrieve/deal with data in the /miltonian/custom/data directory with no namespace.
 * create pages in the views directory from the root directory.
 * add paths to pages in the index.php file
-* add your own css to style pages in reusables/customcss. create a file with the same name as the page you want to modify ( with file extension .css ). if the page is in a directory ( or directories ) within /views then create that same directory in /customcss and place your custom css file in it
+* add your own css to style pages in /miltonian/custom/css/pages. create a file with the same name as the page you want to modify ( with file extension .css ). if the page is in a directory ( or directories ) within /views then create that same directory and place your custom css file in it
 
 * in each page, add the following functions and add reusable views in between the two function:
 	```
@@ -19,8 +19,9 @@
 	ReusableClasses::endpage( "", __FILE__ );
 	```
 * in the first parameter of the endpage function, add the directory the page is in, if its in the /views root directory then leave it as "". 
-* when dealing with data in CustomData, make sure you return it to a variable in the format below (desired data format)
-	* most of the time this can easily be done by first specifying the conditions (e.g. [ [ "key"=>"","value"=>"" ], [ "key"=>"","value"=>"" ] ] ). Make sure your condition keys are also in the returned dict/array. now pass both the data ( e.g. from an sql query ) and the conditions through the function \ReusableClasses::toValueAndDBInfo( $data, $conditions, "" ) where the third parameter is the default tablename
+* call functions from /miltonian/custom/data by using this function Reusables\CustomData::call( $classname, $functionname, [ $vars ] ) 
+* when dealing with custom data, make sure you return it to a variable in the format below (desired data format)
+	* most of the time this can easily be done by first specifying the conditions (e.g. [ [ "key"=>"","value"=>"" ], [ "key"=>"","value"=>"" ] ] ). Make sure your condition keys are also in the returned dict/array. now pass both the data ( e.g. from an sql query ) and the conditions through the function ReusableClasses::toValueAndDBInfo( $data, $conditions, "" ) where the third parameter is the default tablename
 * this returns the array in a format very similar to the "desired data format". the only difference is that the array inside "value" is the same array returned previously (e.g. from the sql query). 
 * when getting the above data in a page, we will save this array in the data class with this function: Data::addData( $data, $unique_identifier )
 * then translate the data into the format each reusable view will understand with this function: formatForDefaultData( $dataid )
@@ -52,7 +53,7 @@
 	* this is different for wrappers, you call the wrapper class (Wrapper) then the function name is the same as the reusable view filename
 * there are three parameters when calling the make function (filename, data, identifier)
 	* two parameters for wrapper (data, identifier)
-* to connect to your database change the information in the classes/CustomData/config.php and classes/CustomData/db_pdo.php files
+* to connect to your database change the information in the /miltonian/custom/data/config.php and /miltonian/custom/data/db_pdo.php files
 
 * when dealing with data from the database, if you get from a "custom" table then use the function: Data::convertFromCustomTable( $data ) to turn it into a normal dictionary with key value pairs
 * add the condition keys you'll need to change something in the data you fetched, leave the condition values as ""
@@ -136,11 +137,10 @@ echo Reusables\Structure::make(
 
 ### FORM 
 	* for now, you have to create your own form. but its easy
-	* create the php script for you form in the /views/CustomView directory
+	* create the php script for your form in the /miltonian/custom/views directory
 	* put this at the top of the file:
 		```
-		namespace Reusables\CustomView;
-		extract( \Reusables\CustomView::makeFormVars( $customviewdict ) );
+		extract( Reusables\CustomView::makeFormVars( $customviewdict ) );
 		```
 	* now you have these already defined vars to work with: $data_id, $default_tablename, $customviewdict
 	* put this right after "?>"
@@ -160,7 +160,7 @@ echo Reusables\Structure::make(
 		```
 		<script>
 			var customviewdict = <?php echo json_encode($customviewdict) ?>;
-			var dataarray = <?php echo json_encode( \Reusables\Data::getFullArray( $customviewdict ) ) ?>;
+			var dataarray = <?php echo json_encode( Reusables\Data::getFullArray( $customviewdict ) ) ?>;
 			var identifier = "<?php echo $identifier ?>";
 			class <?php echo $identifier ?>Classes {
 				populateview(index=null){
