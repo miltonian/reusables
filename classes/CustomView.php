@@ -6,8 +6,9 @@ class CustomView {
 
 	public static function make( $file, $data, $identifier )
 	{
-		ReusableClasses::addfile( "CustomView", $file );
-		$View = View::factory( 'reusables/views/CustomView/' . $file );
+		// ReusableClasses::addfile( "CustomView", $file );
+		ReusableClasses::addfile( "custom", $file );
+		$View = View::factory( 'custom/views/' . $file );
 		$View->set( 'customviewdict', $data );
 		$View->set( 'identifier', $identifier );
 		return $View->render();

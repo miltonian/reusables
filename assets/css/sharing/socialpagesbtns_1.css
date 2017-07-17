@@ -3,9 +3,9 @@
 .socialpagesbtns_1 .social-icon:hover { -webkit-filter: grayscale(0%); filter: grayscale(0%); }
 
 .socialpagesbtns_1 a {display: inline-block;}
-.socialpagesbtns_1 .social-icon.facebook {background-image: url('/vendor/miltonian/reusables/uploads/icons/facebook-icon.png');}
-.socialpagesbtns_1 .social-icon.twitter {background-image: url('/vendor/miltonian/reusables/uploads/icons/twitter-icon.png');}
-.socialpagesbtns_1 .social-icon.instagram {background-image: url('/vendor/miltonian/reusables/uploads/icons/insta-icon.png');}
+.socialpagesbtns_1 .social-icon.facebook {background-image: url('/vendor/miltonian/reusables/assets/images/icons/facebook-icon.png');}
+.socialpagesbtns_1 .social-icon.twitter {background-image: url('/vendor/miltonian/reusables/assets/images/icons/twitter-icon.png');}
+.socialpagesbtns_1 .social-icon.instagram {background-image: url('/vendor/miltonian/reusables/assets/images/icons/insta-icon.png');}
 	.socialpagesbtns_1 .social-icon.facebook:hover {border: 2px solid #3b5998}
 	.socialpagesbtns_1 .social-icon.twitter:hover {border: 2px solid #4099FF}
 	.socialpagesbtns_1 .social-icon.instagram:hover {border: 2px solid #8a3ab9}

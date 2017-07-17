@@ -10,8 +10,15 @@ class Style {
 	{
 		if ( !isset( self::$allcss[ $file ] ) ) {
 			self::$allcss[ $file ] = true;
-			// echo "<link rel=stylesheet href='/reusables/assets/css/" . $parent_dir . "/" . $file . ".css' type=text/css>";
-			echo "<link rel=stylesheet href='/vendor/miltonian/reusables/assets/css/" . $parent_dir . "/" . $file . ".css' type='text/css'>";
+			// echo "<link rel=stylesheet href='/vendor/miltonian/reusables/assets/css/" . $parent_dir . "/" . $file . ".css' type='text/css'>";
+			if( $parent_dir == "custom" ){
+				$parent_dir = "/vendor/miltonian/custom/css/views/";
+			}else if( $parent_dir != "" ){
+				$parent_dir = "/vendor/miltonian/reusables/assets/css/" . $parent_dir . "/";
+			}else{
+				$parent_dir = "/vendor/miltonian/reusables/assets/css/";
+			}
+			echo "<link rel=stylesheet href='" . $parent_dir . $file . ".css' type='text/css'>";
 		}
 	}
 
