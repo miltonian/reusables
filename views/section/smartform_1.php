@@ -7,9 +7,8 @@ if( !isset( $sectiondict['input_keys'] ) ){
 	$input_keys = array_keys( $sectiondict ); 
 }else{
 	$input_keys = $sectiondict['input_keys'];
+	unset( $sectiondict['input_keys'] );
 }
-
-// exit( json_encode( $input_keys ) );
 
 extract( CustomView::makeFormVars( $sectiondict, "sectiondict" ) );
 
@@ -51,7 +50,7 @@ foreach ($input_keys as $k) {
 				);
 			
 			?>
-		<button class="modalinner_1 save custombutton">Save</button>
+		<button class="smartform_1 modalinner_1 save custombutton">Save</button>
 	</div>
 </div>
 </form>

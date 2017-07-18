@@ -284,7 +284,12 @@ echo Reusables\Structure::make(
 		* e.g. for a cell named "cell_10", your class name will be cell_10_classes
 	* your JS class can be called with your file name
 		* e.g. if "cell_10" has a function called "myfunc()" then you can call it like this: cell_10.myfunc()
-	
+
+
+## SMART FORMS
+	* just pass a formatted data array to the form and itll auto generate a form based on the given data
+	* if you only want inputs pertaining to certain keys or if you want the inputs in a different order, add an array of the keys you want to the key "input_keys" of the dictionary that is passed to the form
+		* e.g. $formdict['input_keys'] = array( "key1", "key2", "key3" )
 
 
 

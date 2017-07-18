@@ -4,4 +4,5 @@
 	.smartform_1.field-wrapper input { display: inline-block; position: relative; margin: 0px; padding: 10px; width: 100%; border: 0; border: 1px solid #e0e0e0; border-radius: 5px; background-color: white; float: left; height: 50px; font-weight: 300; font-size: 1.1em; background-color: rgba(255,255,255,0.2); border: 0; background-color: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.2); font-weight: 500; color: white; }
 		.smartform_1.field-wrapper input::placeholder { color: white; font-weight: 300; }
 		.smartform_1 input:focus { outline: none; }
-		.file_image#imglabel { width: calc(30% - 0px); padding-bottom: 27%; float: none; }
+		label.file_image#imglabel { width: calc(30% - 0px); padding-bottom: 27%; float: none; }
+		.smartform_1.custombutton { display: inline-block; position: relative; margin: 0; padding: 20px 0px; color: white; background-color: green; border: 0; -webkit-appearance: none; border-bottom: 3px solid rgba(0,0,0,0.4) font-weight: 500; width: 100%; font-size: 20px; border-radius: 5px; margin-top: 20px; }
