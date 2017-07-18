@@ -9,7 +9,7 @@ $buttons = "";
 if( isset($headerdict['buttons']) ){
 	$i=0;
 	foreach ($headerdict['buttons'] as $b) {
-		$buttons .= "<button class='header_3 index_" . $i . " " . $b['classname'] . "'>" . $b['name'] . "</button>";
+		$buttons .= "<button class='header_3 index_" . $i . " " . Data::getValue($b,'classname') . "'>" . $b['name'] . "</button>";
 		$i++;
 	}
 }

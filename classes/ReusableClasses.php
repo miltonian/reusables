@@ -41,8 +41,13 @@ class ReusableClasses {
 		$output = ob_get_contents();
 		ob_end_clean();
 		ReusableClasses::addcss();
-		// echo "<link rel='stylesheet' type='text/css' href='/vendor/miltonian/reusables/customcss" . $parent_dir . "/" . basename($page, '.php') . ".css'>";
-		echo "<link rel='stylesheet' type='text/css' href='/vendor/miltonian/custom/css/pages/" . basename($page, '.php') . ".css'>";
+		
+		if( $parent_dir == ""){
+			echo "<link rel='stylesheet' type='text/css' href='/vendor/miltonian/custom/css/pages/" . basename($page, '.php') . ".css'>";
+		}else{
+			echo "<link rel='stylesheet' type='text/css' href='/vendor/miltonian/custom/css/pages/" . $parent_dir . "/" . basename($page, '.php') . ".css'>";
+		}
+		// echo "<link rel='stylesheet' type='text/css' href='/vendor/miltonian/custom/css/pages/" . basename($page, '.php') . ".css'>";
 		ReusableClasses::addjs();
 		echo $output;
 		
