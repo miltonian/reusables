@@ -200,6 +200,16 @@ class Data {
 		return $returningdict;
 	}
 
+	public static function convertFromCustomTable( $data, $customkey, $customvalue )
+	{
+		$returningdict = [];
+		foreach ($data as $keyvalue) {
+			$returningdict[$keyvalue[$customkey]] = $keyvalue[$customvalue];
+		}
+
+		return $returningdict;
+	}
+
 
 
 }

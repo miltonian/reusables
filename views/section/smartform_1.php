@@ -3,7 +3,14 @@
 namespace Reusables;
 
 // exit( json_encode( $sectiondict ) );
-$input_keys = $sectiondict['input_keys'];
+if( !isset( $sectiondict['input_keys'] ) ){ 
+	$input_keys = array_keys( $sectiondict ); 
+}else{
+	$input_keys = $sectiondict['input_keys'];
+}
+
+// exit( json_encode( $input_keys ) );
+
 extract( CustomView::makeFormVars( $sectiondict, "sectiondict" ) );
 
 if( !isset( $typearray ) ){ $typearray = null; }
@@ -19,6 +26,8 @@ foreach ($input_keys as $k) {
 	);
 	$i++;
 }
+
+
 	// exit( json_encode( $inputs ) );
 ?>
 

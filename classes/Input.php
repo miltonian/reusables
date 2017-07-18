@@ -31,16 +31,12 @@ class Input {
 				"background-image"=>"",
 				"field_value"=>"",
 				"field_index"=>$index,
-				"field_table"=>Data::getDefaultTableNameWithID( $dict['title']['data_id'] ),
-				"field_colname"=>Data::getColName( $dict['title'] ),
-				"field_conditions"=>Data::getConditions( $dict['title'] )
+				"field_table"=>Data::getDefaultTableNameWithID( $dict[$key]['data_id'] ),
+				"field_colname"=>Data::getColName( $dict[$key] ),
+				"field_conditions"=>Data::getConditions( $dict[$key] )
 			],
 			$key . "_input"
 		);
-
-
-
-		
 	}
 
 	public static function getInputType( $key )
