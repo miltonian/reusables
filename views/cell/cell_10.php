@@ -61,47 +61,18 @@ $required = array(
 	?>
 
 <script>
-var cellactions = <?php echo json_encode($celldict['actions']) ?>;
+	var cellactions = <?php echo json_encode($celldict['actions']) ?>;
 
-var editingfunctions = [];
-<?php foreach ($celldict['actions'] as $ca) { ?>
-	<?php if( $ca['type'] == "modal" ){ ?>
-		var thismodalclass = new <?php echo $ca['modal']['modalclass'] ?>Classes();
-		editingfunctions.push( thismodalclass );
-	<?php }else{ ?>
-		editingfunctions.push( "nothing" );
+	var editingfunctions = [];
+	<?php foreach ($celldict['actions'] as $ca) { ?>
+		<?php if( $ca['type'] == "modal" ){ ?>
+			var thismodalclass = new <?php echo $ca['modal']['modalclass'] ?>Classes();
+			editingfunctions.push( thismodalclass );
+		<?php }else{ ?>
+			editingfunctions.push( "nothing" );
+		<?php } ?>
+		<?php $i++; ?>
 	<?php } ?>
-	<?php $i++; ?>
-<?php } ?>
 
-$('.cell_10 button#select').click(function(e){
-	e.preventDefault();
-});
-
-$('.cell_10 button.action').click(function(e){
-	e.preventDefault();
-	var classes = $(this).attr('class');
-	var classarray = classes.split(' ');
-	var theindex = -1;
-	for (var i = 0; i < classarray.length; i++) {
-		if(classarray[i].match("^index_")){
-			theindex = parseInt( classarray[i].split('_')[1] );
-		}
-	}
-	if(theindex != -1){
-		var type = cellactions[theindex]['type'];
-		if( type == "link" ){
-			window.open(cellactions[theindex][type]);
-		}else if( type == "modal" ){
-			// let modalclass = new cellactions[theindex][type]['modalclass']+Classes();
-			// modalclass.populateview( $(this).id );
-			editingfunctions[theindex].populateview(this.id);
-			$('.modal_background').css({'display': 'inline-block'});
-			$('.' + cellactions[theindex][type]['parentclass']).css({'display': 'inline-block'});
-		}else if( type == "popview" ){
-
-		}
-	}
-
-});
+	cell_10.setupactions( cellactions, editingfunctions );
 </script>

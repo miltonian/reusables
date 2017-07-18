@@ -14,21 +14,25 @@ class CustomView {
 		return $View->render();
 	}
 
-	public static function makeFormVars( $customviewdict )
+	public static function makeFormVars( $dict, $viewtypedict=null )
 	{
-		if( !isset( $customviewdict['data_id'] ) ){
-			$data_id = \Reusables\Data::getDefaultDataID( $customviewdict );
+		if( !isset( $dict['data_id'] ) ){
+			$data_id = \Reusables\Data::getDefaultDataID( $dict );
 		}else{
-			$data_id = $customviewdict['data_id'];
+			$data_id = $dict['data_id'];
 		}
 
 		$default_tablename = \Reusables\Data::getDefaultTableNameWithID( $data_id );
 
-		if( isset($customviewdict['index'] ) ){
-			$customviewdict = \Reusables\Data::convertDataForArray( $data_id, $customviewdict['index'] );
+		if( isset($dict['index'] ) ){
+			$dict = \Reusables\Data::convertDataForArray( $data_id, $dict['index'] );
 		}
 
-		return [ "data_id"=>$data_id, "customviewdict"=>$customviewdict, "default_tablename"=>$default_tablename ];
+		if( $viewtypedict ){
+			return [ "data_id"=>$data_id, $viewtypedict=>$dict, "default_tablename"=>$default_tablename ];
+		}else{
+			return [ "data_id"=>$data_id, "customviewdict"=>$dict, "default_tablename"=>$default_tablename ];
+		}
 	}
 
 }

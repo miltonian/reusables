@@ -74,18 +74,7 @@ var isediting = <?php echo $isediting ?>;
 		
 		if(theindex != -1){
 			var buttondict = headerdict['buttons'][theindex];
-			var type = buttondict['type'];
-			if( type == "link" ){
-				window.open(buttondict[type]);
-			}else if( type == "modal" ){
-				// let modalclass = new buttondict[type]['modalclass']+Classes();
-				// modalclass.populateview( $(this).id );
-				editingfunctions[theindex].populateview(this.id);
-				$('.modal_background').css({'display': 'inline-block'});
-				$('.' + buttondict[type]['parentclass']).css({'display': 'inline-block'});
-			}else if( type == "popview" ){
-
-			}
+			Reusable.addAction( buttondict, editingfunctions, theindex )
 		}
 	});
 

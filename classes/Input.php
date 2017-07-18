@@ -13,4 +13,46 @@ class Input {
 		return $View->render();
 	}
 
+	public static function fill( $dict, $key, $index, $type=null, $placeholder=null, $labeltext=null )
+	{
+
+		if( !$type ){
+			$type = self::getInputType( $key );
+		}
+
+		if( !$placeholder ){ $placeholder = ucfirst( $key ); }
+		if( !$labeltext ){ $labeltext = ucfirst( $key ); }
+
+		return Input::make( 
+			$type, 
+			[
+				"placeholder"=>$placeholder,
+				"labeltext"=>$labeltext,
+				"background-image"=>"",
+				"field_value"=>"",
+				"field_index"=>$index,
+				"field_table"=>Data::getDefaultTableNameWithID( $dict['title']['data_id'] ),
+				"field_colname"=>Data::getColName( $dict['title'] ),
+				"field_conditions"=>Data::getConditions( $dict['title'] )
+			],
+			$key . "_input"
+		);
+
+
+
+		
+	}
+
+	public static function getInputType( $key )
+	{
+		if( $key=="html_text" || $key=="desc" || $key=="description" || $key=="comment" ){
+			$type = "textarea";
+		}else if( strpos($key, "image") !== false ){
+			$type = "file_image";
+		}else{
+			$type = "textfield";
+		}
+		return $type;
+	}
+
 }

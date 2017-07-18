@@ -10,7 +10,6 @@ class ReusableClasses {
 			var thisdictvalue = [];
 			thisdict = dataarray[data_id];
 			if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
-
 		$('.' + identifier + ' .' + inputclass + ' input.field_value').val(thisdictvalue[key]);
 			$('.' + identifier + ' .' + inputclass + ' input.tablename').val(thisdict['db_info']['tablenames'][key]);
 			$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);
@@ -99,6 +98,52 @@ class ReusableClasses {
 				$( '.' + identifier + ' .' + inputclass + ' input.conditionvalue_' + i ).val( conditions[i]['value'] );
 			}
 	}
+
+	addAction( button, editingfunctions, index )
+	{
+		var type = button['type'];
+		if( type == "link" ){
+			window.open(button[type]);
+		}else if( type == "modal" ){
+			editingfunctions[index].populateview(this.id);
+			$('.modal_background').css({'display': 'inline-block'});
+			$('.' + button[type]['parentclass']).css({'display': 'inline-block'});
+		}else if( type == "popview" ){
+
+		}
+	}
+
+
+
+	readthisURL(input, previewobj, newwidth, newheight) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        
+        var extension = input.files[0].name.split('.').pop().toLowerCase(); 
+        var type = ''; 
+        var previewit = false;
+        if(extension == 'mp3' || extension == 'mp4' || extension == 'wma' || extension == 'm4v' ||  extension == 'mov' || extension == 'wmv' || extension == 'avi' || extension == 'mpg' || extension == 'ogv' || extension == '3gp' || extension == '3g2'){
+            previewit = true;
+            type='video';
+        }else if( extension == 'jpg' || extension == 'jpeg' || extension == 'gif' || extension == 'png'  ){
+            previewit = true;
+            type='image';
+        }
+        if(previewobj){
+            reader.onload = function (e) {
+                if ( previewobj.is( "img" ) ) {
+                    $(previewobj).attr('src', e.target.result);
+                }else if( previewobj.is( "label" ) ) {
+                    $(previewobj).css('background-image', 'url('+e.target.result+')');
+                }
+                
+                $(previewobj).css('width', newwidth);
+                $(previewobj).css('height', newheight);
+             }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+}
 
 
 

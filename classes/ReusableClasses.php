@@ -43,9 +43,9 @@ class ReusableClasses {
 		ReusableClasses::addcss();
 		// echo "<link rel='stylesheet' type='text/css' href='/vendor/miltonian/reusables/customcss" . $parent_dir . "/" . basename($page, '.php') . ".css'>";
 		echo "<link rel='stylesheet' type='text/css' href='/vendor/miltonian/custom/css/pages/" . basename($page, '.php') . ".css'>";
-		echo $output;
-
 		ReusableClasses::addjs();
+		echo $output;
+		
 	}
 
 
@@ -261,8 +261,9 @@ class ReusableClasses {
 
 	
 
-	public static function toValueAndDBInfo( $result, $conditions, $default_table ){
+	public static function toValueAndDBInfo( $result, $conditions, $default_table, $customcolname=null ){
 		$tablenames = [];
+		$colnames = [];
 		$thisdict = [];
 		if ( Data::isAssoc( $result ) ) {
 			// is dict
@@ -275,15 +276,22 @@ class ReusableClasses {
 
 		foreach ($allkeys as $k) {
 			$tablenames[$k] = $default_table;
+			if( $customcolname ){
+				$colnames[$k] = $customcolname;
+			}else{
+				$colnames[$k] = $k;
+			}
 		}
 
 		$returningdict = [
 			"value" => $result,
 			"db_info" => [
 				"tablenames" => $tablenames,
+				"colnames" => $colnames,
 				"conditions" => $conditions
 			]
 		];
+
 		return $returningdict;
 	}
 

@@ -159,6 +159,16 @@ class Data {
 		return $conditions;
 	}
 
+	public static function getColName( $pair )
+	{
+		if( !isset( $pair['data_id'] ) ){ return ""; }
+		if( !isset( $pair['key'] ) ){ return ""; }
+		
+		$colname = self::retrieveDataWithID( $pair['data_id'] )['db_info'][ "colnames" ][$pair['key']];
+
+		return $colname;
+	}
+
 	public static function getFullArray( $viewdict )
 	{
 		$allkeys = array_keys($viewdict);

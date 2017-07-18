@@ -12,7 +12,7 @@ namespace Reusables;
 	);
 	// exit(json_encode($inputdict));
 	ReusableClasses::checkRequired( $identifier, $inputdict, $required );
-/* <input type="hidden" class="row_id" value="<?php echo $inputdict['field_rowid'] ?>" name="fieldimage[<?php echo $inputdict['field_index'] ?>][row_id]">*/
+
 ?>
 
 <style>
@@ -20,7 +20,7 @@ namespace Reusables;
 
 <div class="<?php echo $identifier ?> file_image">
 	<label style="margin-bottom: -5px; font-weight: 700; font-size: 11px"><?php echo Data::getValue( $inputdict, "labeltext") ?></label>
-	<label id='imglabel' for='<?php echo $identifier ?>_field_value' style="background-image: url('<?php echo $inputdict['background-image'] ?>');"></label>
+	<label class="file_image" id='imglabel' for='<?php echo $identifier ?>_field_value' style="background-image: url('<?php echo $inputdict['background-image'] ?>');"></label>
 	<input type="file" class="field_value" id="<?php echo $identifier ?>_field_value" value="<?php echo $inputdict['field_value'] ?>" name="fieldimage[<?php echo $inputdict['field_index'] ?>][field_value]" style="visibility: hidden; z-index: -1;">
 	<input type="hidden" class="field_type" name="fieldimage[<?php echo $inputdict['field_index'] ?>][field_type]" value="image_<?php echo $inputdict['field_index'] ?>" style="visibility: hidden; z-index: -1;">
 	<input type="hidden" class="tablename" value="<?php echo $inputdict['field_table'] ?>" name="fieldimage[<?php echo $inputdict['field_index'] ?>][tablename]">
@@ -35,6 +35,6 @@ namespace Reusables;
 
 <script>
 	$('#<?php echo $identifier ?>_field_value').change(function(){
-		ReusableGlobalFunctionsClass.readthisURL(this, $('.<?php echo $identifier ?>').find('#imglabel'), null, null);
+		Reusable.readthisURL(this, $('.<?php echo $identifier ?>').find('#imglabel'), null, null);
 	});
 </script>

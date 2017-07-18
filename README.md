@@ -250,4 +250,41 @@ echo Reusables\Structure::make(
 		```
 
 
+## CREATE A REUSABLE VIEW
+
+	* decide what type of view it is
+		* ad
+		* button
+		* cell
+		* footer
+		* gallery
+		* header
+		* input
+		* menu
+		* modal
+		* nav
+		* postinternal
+		* section
+		* sharing
+		* slider
+		* structure
+		* table
+		* template
+		* wrapper
+	* create a new php file in the view type directory
+		* IMPORTANT: no dashes or periods in the filename
+	* also create new css and js files with the same name (different file extensions of course) and put that in the directory with the same name under /reusables/assets
+	* for your outer most html element, assign the classnames: your filename and "main" and <?php echo $identifier ?>
+	* for every other element in the view, make the classnames for each your filename (plus whatever else you want). it's just important to have your filename there so it doesnt mix with other views
+	* parameters that have been passed to your view will be your view's dictionary
+		* your view's dictionary is named after your viewtype + "dict"
+			* e.g. for a cell, your dictionary is $celldict
+	* get values from your dictionary with the function Data::getValue( $dict, $key )
+	* in your JS file. make a class with your filename + "_classes" as your classname
+		* e.g. for a cell named "cell_10", your class name will be cell_10_classes
+	* your JS class can be called with your file name
+		* e.g. if "cell_10" has a function called "myfunc()" then you can call it like this: cell_10.myfunc()
+	
+
+
 
