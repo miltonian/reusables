@@ -26,7 +26,6 @@ foreach ($input_keys as $k) {
 	$i++;
 }
 
-
 	// exit( json_encode( $inputs ) );
 ?>
 
@@ -83,6 +82,8 @@ foreach ($input_keys as $k) {
 					Reusable.updateFileImage( dataarray, "<?php echo $identifier ?>", "<?php echo $data_id ?>", key, key+"_input", colname, index );
 				}else if(type=="textfield"){
 					Reusable.updateTextField( dataarray, "<?php echo $identifier ?>", "<?php echo $data_id ?>", key, key+"_input", colname, index );
+				}else if(type=="colorpicker"){
+					Reusable.updateColorPicker( dataarray, "<?php echo $identifier ?>", "<?php echo $data_id ?>", key, key+"_input", colname, index );
 				}
 			}
 

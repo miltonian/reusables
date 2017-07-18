@@ -41,10 +41,12 @@ class Input {
 
 	public static function getInputType( $key )
 	{
-		if( $key=="html_text" || $key=="desc" || $key=="description" || $key=="comment" ){
+		if( strpos($key, "text") !== false || $key=="desc" || $key=="description" || $key=="comment" ){
 			$type = "textarea";
 		}else if( strpos($key, "image") !== false ){
 			$type = "file_image";
+		}else if( strpos( $key, "color" ) ){
+			$type = "colorpicker";
 		}else{
 			$type = "textfield";
 		}
