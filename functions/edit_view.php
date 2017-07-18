@@ -27,13 +27,14 @@ if(!$containsp){ exit("missing parameters"); }
 
 if( isset($fieldimages ) ) {
 	$filesarray = array();
+	$indexes = array_keys( $_FILES['fieldimage']['name']);
 	for ($i=0; $i < sizeof($_FILES['fieldimage']['name']); $i++) { 
 		$filedict = [];
-		$filedict['name'] = $_FILES['fieldimage']['name'][$i]['field_value'];
-		$filedict['type'] = $_FILES['fieldimage']['type'][$i]['field_value'];
-		$filedict['tmp_name'] = $_FILES['fieldimage']['tmp_name'][$i]['field_value'];
-		$filedict['error'] = $_FILES['fieldimage']['error'][$i]['field_value'];
-		$filedict['size'] = $_FILES['fieldimage']['size'][$i]['field_value'];
+		$filedict['name'] = $_FILES['fieldimage']['name'][ $indexes[$i] ]['field_value'];
+		$filedict['type'] = $_FILES['fieldimage']['type'][ $indexes[$i] ]['field_value'];
+		$filedict['tmp_name'] = $_FILES['fieldimage']['tmp_name'][ $indexes[$i] ]['field_value'];
+		$filedict['error'] = $_FILES['fieldimage']['error'][ $indexes[$i] ]['field_value'];
+		$filedict['size'] = $_FILES['fieldimage']['size'][ $indexes[$i] ]['field_value'];
 		array_push( $filesarray, $filedict );
 	}
 
@@ -45,7 +46,12 @@ if( isset($fieldimages ) ) {
 	}
 
 	foreach ($fieldimages as $fi) {
-		$fieldvalue = $fi['field_value'];
+
+		if( !isset($fi['field_value'] ) ){
+			$fieldvalue = false;
+		}else{
+			$fieldvalue = $fi['field_value'];
+		}
 		if ($fieldvalue) {
 			$tablename = $fi['tablename'];
 			$colname = $fi['col_name'];

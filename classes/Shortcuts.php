@@ -95,7 +95,7 @@ class Shortcuts {
 
 			if($uploadOk != 0){
 				$mediapathname = $newname;
-				$imagepath = "vendor/miltonian/custom/uploads/".$mediapathname;
+				$imagepath = "/vendor/miltonian/custom/uploads/".$mediapathname;
 				return $imagepath;
 			}else{
 				return false;

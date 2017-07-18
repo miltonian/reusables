@@ -35,9 +35,10 @@ foreach ($input_keys as $k) {
 <style>
 </style>
 
+<form class='theform' method='post' action='/edit_view.php' enctype='multipart/form-data'>
 <div class="<?php echo $identifier ?> smartform_1 main">
 	<div class='container' style='text-align: left; margin-top: 10px; margin-bottom: 30px; text-align: center;'>
-		<input type="hidden" name="goto" value="userprofile">
+		<input type="hidden" name="goto" value="">
 			<?php 
 
 				echo Structure::make( 
@@ -53,6 +54,7 @@ foreach ($input_keys as $k) {
 		<button class="modalinner_1 save custombutton">Save</button>
 	</div>
 </div>
+</form>
 
 <script>
 
