@@ -128,7 +128,7 @@ var colorvalue = "#"+thisdictvalue[key];
 
 	}
 
-	addAction( button, editingfunctions, index )
+	addAction( button, editingfunctions, index, dataarray=null )
 	{
 		var type = button['type'];
 		if( type == "link" ){
@@ -137,42 +137,48 @@ var colorvalue = "#"+thisdictvalue[key];
 			editingfunctions[index].populateview(this.id);
 			$('.modal_background').css({'display': 'inline-block'});
 			$('.' + button[type]['parentclass']).css({'display': 'inline-block'});
-		}else if( type == "popview" ){
+		}else if( type == "dropdown" ){
+			
 
+			
 		}
 	}
 
 
 
 	readthisURL(input, previewobj, newwidth, newheight) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        
-        var extension = input.files[0].name.split('.').pop().toLowerCase(); 
-        var type = ''; 
-        var previewit = false;
-        if(extension == 'mp3' || extension == 'mp4' || extension == 'wma' || extension == 'm4v' ||  extension == 'mov' || extension == 'wmv' || extension == 'avi' || extension == 'mpg' || extension == 'ogv' || extension == '3gp' || extension == '3g2'){
-            previewit = true;
-            type='video';
-        }else if( extension == 'jpg' || extension == 'jpeg' || extension == 'gif' || extension == 'png'  ){
-            previewit = true;
-            type='image';
-        }
-        if(previewobj){
-            reader.onload = function (e) {
-                if ( previewobj.is( "img" ) ) {
-                    $(previewobj).attr('src', e.target.result);
-                }else if( previewobj.is( "label" ) ) {
-                    $(previewobj).css('background-image', 'url('+e.target.result+')');
-                }
-                
-                $(previewobj).css('width', newwidth);
-                $(previewobj).css('height', newheight);
-             }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-}
+	    if (input.files && input.files[0]) {
+	        var reader = new FileReader();
+	        
+	        var extension = input.files[0].name.split('.').pop().toLowerCase(); 
+	        var type = ''; 
+	        var previewit = false;
+	        if(extension == 'mp3' || extension == 'mp4' || extension == 'wma' || extension == 'm4v' ||  extension == 'mov' || extension == 'wmv' || extension == 'avi' || extension == 'mpg' || extension == 'ogv' || extension == '3gp' || extension == '3g2'){
+	            previewit = true;
+	            type='video';
+	        }else if( extension == 'jpg' || extension == 'jpeg' || extension == 'gif' || extension == 'png'  ){
+	            previewit = true;
+	            type='image';
+	        }
+	        if(previewobj){
+	            reader.onload = function (e) {
+	                if ( previewobj.is( "img" ) ) {
+	                    $(previewobj).attr('src', e.target.result);
+	                }else if( previewobj.is( "label" ) ) {
+	                    $(previewobj).css('background-image', 'url('+e.target.result+')');
+	                }
+	                
+	                $(previewobj).css('width', newwidth);
+	                $(previewobj).css('height', newheight);
+	             }
+	            reader.readAsDataURL(input.files[0]);
+	        }
+	    }
+	}
+
+	addSortable(  ){
+		
+	}
 
 
 

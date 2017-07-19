@@ -20,7 +20,22 @@ $required = array(
 		$cellactionshtml .= "<div class='cell_10 actions-div'>";
 		$i=0;
 		foreach ($celldict['actions'] as $action) {
-			$cellactionshtml .= "<button id='" . $celldict['index'] . "' class='cell_10 action index_".$i."' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
+			if($action['type'] == "dropdown" ){
+				$cellactionshtml .= "<div class='dropdown_1'>";
+					$cellactionshtml .= "<div class='inner-dropdown'>";
+						$cellactionshtml .= "<button id='" . $celldict['index'] . "' class='inner-dropbtn cell_10 action index_".$i."' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
+						$cellactionshtml .= "<div id='inner-myDropdown_" . $celldict['index'] . "' class='inner-dropdown-content'>";
+							for ($a=0; $a < sizeof( $action['dropdown_array'] ); $a++) {
+								$dropdownarray = $action['dropdown_array'];
+								$cellactionshtml .= "<a href='" . $dropdownarray[$a]['link'] . "'>" . $dropdownarray[$a]['text'] . "</a>";
+							}
+						$cellactionshtml .= "</div>";
+					$cellactionshtml .= "</div>";
+				$cellactionshtml .= "</div>";
+			}else{
+				$cellactionshtml .= "<button id='" . $celldict['index'] . "' class='cell_10 action index_".$i."' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
+			}
+
 			$i++;
 		}
 		$cellactionshtml .= "</div>";
@@ -61,6 +76,7 @@ $required = array(
 	?>
 
 <script>
+
 	var cellactions = <?php echo json_encode($celldict['actions']) ?>;
 
 	var editingfunctions = [];
@@ -75,4 +91,33 @@ $required = array(
 	<?php } ?>
 
 	cell_10.setupactions( cellactions, editingfunctions );
+
+$('.inner-dropbtn.cell_10.action').click(function(){
+	document.getElementById("inner-myDropdown_"+this.id).classList.toggle("show");
+});
+
+	function dropdownaction(e) {
+				// e.preventDefault();
+				// $('#inner-dropdown-content').toggle("show");
+			    document.getElementById("inner-myDropdown").classList.toggle("show");
+			}
+
+			// Close the dropdown if the user clicks outside of it
+			window.onclick = function(event) {
+				// event.preventDefault();
+				// alert(event.target)
+			  if (!event.target.matches('.inner-dropbtn')) {
+
+			    var dropdowns = document.getElementsByClassName("inner-dropdown-content");
+			    var i;
+			    for (i = 0; i < dropdowns.length; i++) {
+			      var openDropdown = dropdowns[i];
+			      if (openDropdown.classList.contains('show')) {
+			        openDropdown.classList.remove('show');
+			      }
+			    }
+			  }else{
+			  	event.preventDefault();
+			  }
+			}
 </script>
