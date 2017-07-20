@@ -23,6 +23,8 @@ class Input {
 		if( !$placeholder ){ $placeholder = ucfirst( $key ); }
 		if( !$labeltext ){ $labeltext = ucfirst( $key ); }
 
+		// exit( json_encode( $key ) );
+
 		return Input::make( 
 			$type, 
 			[

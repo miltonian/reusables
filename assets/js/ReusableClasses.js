@@ -66,9 +66,11 @@ class ReusableClasses {
 			$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);
 			for (var i = 0; i < thisdict['db_info']['conditions'].length; i++) {
 				var conditions = thisdict['db_info']['conditions'];
+				// alert(JSON.stringify(conditions));
 				if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
 					conditions[i]['value'] = key; 
 				}else{
+					// alert(JSON.stringify(thisdictvalue))
 					conditions[i]['value'] = thisdictvalue[conditions[i]['key']]; 
 				}
 				$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );

@@ -41,11 +41,14 @@ if( isset($fieldimages ) ) {
 	$i=0;
 	foreach ($filesarray as $file) {
 		$imagepath = Reusables\Shortcuts::uploadImage( $file );
-		$fieldimages[$i]['field_value'] = $imagepath;
+		$fieldimages[$indexes[$i]]['field_value'] = $imagepath;
 		$i++;
 	}
 
-	foreach ($fieldimages as $fi) {
+	// foreach ($fieldimages as $fi) {
+	// exit( json_encode( $_FILES['fieldimage']['name'] ) );
+	for( $i=0; $i<sizeof($indexes);$i++ ){
+		$fi = $fieldimages[$indexes[$i]];
 
 		if( !isset($fi['field_value'] ) ){
 			$fieldvalue = false;
@@ -53,6 +56,7 @@ if( isset($fieldimages ) ) {
 			$fieldvalue = $fi['field_value'];
 		}
 		if ($fieldvalue) {
+			// exit( json_encode( $fieldimages ) );
 			$tablename = $fi['tablename'];
 			$colname = $fi['col_name'];
 			$conditions = $fi['field_conditions'];
