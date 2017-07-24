@@ -11,7 +11,12 @@ class Scripts {
 		
 		// $filename = "<script type='text/javascript' src='vendor/miltonian/reusables/assets/js/" . $parent_dir . "/" . $file . ".js'></script>";
 		if( $parent_dir == "custom" ){
-				$parent_dir = "vendor/miltonian/custom/js/views/";
+				$currentversion = CustomView::getCurrentVersion();
+				if( $currentversion ){
+					$parent_dir = "vendor/miltonian/custom/" . $currentversion . "/js/views/";
+				}else{
+					$parent_dir = "vendor/miltonian/custom/js/views/";
+				}
 		}else if( $parent_dir != "" ){
 			$parent_dir = "vendor/miltonian/reusables/assets/js/" . $parent_dir . "/";
 		}else{

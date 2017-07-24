@@ -12,12 +12,12 @@ class ReusableClasses {
 
 	public static function addfile( $parent_dir, $file )
 	{
-
 		array_push( self::$includedfiles, [ "parent_dir" => $parent_dir, "file" => $file ] );
 	}
 
 	public static function addcss()
 	{
+		// exit( json_encode( self::$includedfiles ) );
 		foreach (self::$includedfiles as $f) {
 			Style::addcss( $f['parent_dir'], $f['file'] );
 		}
@@ -25,6 +25,7 @@ class ReusableClasses {
 
 	public static function addjs()
 	{
+		// exit( json_encode( self::$includedfiles ) );
 		foreach (self::$includedfiles as $f) {
 			Scripts::addjs( $f['parent_dir'], $f['file'] );
 		}
@@ -43,14 +44,14 @@ class ReusableClasses {
 		ReusableClasses::addcss();
 		
 		if( $parent_dir == ""){
-			echo "<link rel='stylesheet' type='text/css' href='/vendor/miltonian/custom/css/pages/" . basename($page, '.php') . ".css'>";
+			echo "<link rel='stylesheet' type='text/css' href='../vendor/miltonian/custom/css/pages/" . basename($page, '.php') . ".css'>";
 		}else{
-			echo "<link rel='stylesheet' type='text/css' href='/vendor/miltonian/custom/css/pages/" . $parent_dir . "/" . basename($page, '.php') . ".css'>";
+			echo "<link rel='stylesheet' type='text/css' href='../vendor/miltonian/custom/css/pages/" . $parent_dir . "/" . basename($page, '.php') . ".css'>";
 		}
 		// echo "<link rel='stylesheet' type='text/css' href='/vendor/miltonian/custom/css/pages/" . basename($page, '.php') . ".css'>";
-		ReusableClasses::addjs();
-		echo $output;
 		
+		echo $output;
+		ReusableClasses::addjs();
 	}
 
 

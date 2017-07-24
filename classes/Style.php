@@ -12,7 +12,12 @@ class Style {
 			self::$allcss[ $file ] = true;
 			// echo "<link rel=stylesheet href='/vendor/miltonian/reusables/assets/css/" . $parent_dir . "/" . $file . ".css' type='text/css'>";
 			if( $parent_dir == "custom" ){
-				$parent_dir = "/vendor/miltonian/custom/css/views/";
+				$currentversion = CustomView::getCurrentVersion();
+				if( $currentversion ){
+					$parent_dir = "/vendor/miltonian/custom/" . $currentversion . "/css/views/";
+				}else{
+					$parent_dir = "/vendor/miltonian/custom/css/views/";
+				}
 			}else if( $parent_dir != "" ){
 				$parent_dir = "/vendor/miltonian/reusables/assets/css/" . $parent_dir . "/";
 			}else{

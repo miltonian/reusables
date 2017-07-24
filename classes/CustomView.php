@@ -4,14 +4,30 @@ namespace Reusables;
 
 class CustomView {
 
+	protected static $currentversion = null;
+
 	public static function make( $file, $data, $identifier )
 	{
 		// ReusableClasses::addfile( "CustomView", $file );
+		$custompath = 'custom/views/';
+		if( self::$currentversion ){
+			$custompath = 'custom/' . self::$currentversion . '/views/';
+		}
 		ReusableClasses::addfile( "custom", $file );
-		$View = View::factory( 'custom/views/' . $file );
+		$View = View::factory( 'custom/6.0.0/views/' . $file );
 		$View->set( 'customviewdict', $data );
 		$View->set( 'identifier', $identifier );
 		return $View->render();
+	}
+
+	public static function setCurrentVersion( $version )
+	{
+		self::$currentversion = $version;
+	}
+
+	public static function getCurrentVersion()
+	{
+		return self::$currentversion;
 	}
 
 	public static function makeFormVars( $dict, $viewtypedict=null )
