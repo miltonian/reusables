@@ -14,7 +14,7 @@ class CustomView {
 			$custompath = 'custom/' . self::$currentversion . '/views/';
 		}
 		ReusableClasses::addfile( "custom", $file );
-		$View = View::factory( 'custom/6.0.0/views/' . $file );
+		$View = View::factory( $custompath . $file );
 		$View->set( 'customviewdict', $data );
 		$View->set( 'identifier', $identifier );
 		return $View->render();
