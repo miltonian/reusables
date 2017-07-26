@@ -68,7 +68,7 @@ if (!isset($navdict['logolink'])) { $navdict['logolink'] = ""; }
 			if(isset($b['buttons'])){
 				$button .= "<div class='navbar_4 dropdown-content'>";
 					foreach ($b['buttons'] as $s) {
-						$button .= "<a href='/" . $s['slug'] . "'>";
+						$button .= "<a class='navbar_4' id='link' href='/" . $s['slug'] . "'>";
 						if(isset($s['imagepath'])){ 
 							$button .= "<img src='" . $s['imagepath'] . "'>"; 
 						}else if(isset($s['emoji'])){ 
