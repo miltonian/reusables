@@ -27,7 +27,14 @@ class Session {
 
 	public static function isLoggedIn()
 	{
-
+		if( session_status() == PHP_SESSION_NONE ){
+			return false; 
+		}
+		if( isset( $_SESSION['user'] ) ){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	public static function logout()
