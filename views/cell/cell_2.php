@@ -36,7 +36,15 @@ namespace Reusables;
 		<div style="display: inline-block; width: 100%;">
 			<div>
 				<a href="<?php echo $linkpath ?>">
-					<div class="cell_2 picture" style="<?php echo 'background-image: url('.Data::getValue( $celldict, 'featured_imagepath' ).');'; ?>"></div>
+					<div class="cell_2 picture" style="<?php echo 'background-image: url('.Data::getValue( $celldict, 'featured_imagepath' ).');'; ?>; <?php if( $mediatype == "video" ){ echo 'padding-bottom: 0;';  } ?>)">
+						<?php if($mediatype == "video"){ ?>
+							<video width="100%" height="auto" autoplay loop>
+							  <source src="<?php echo Data::getValue( $celldict, 'featured_imagepath' ) ?>" type="video/mp4">
+							  <source src="<?php echo Data::getValue( $celldict, 'featured_imagepath' ) ?>" type="video/ogg">
+							Your browser does not support the video tag.
+							</video>
+						<?php } ?>
+					</div>
 				</a>
 				<div class="cell_2 words">
 					<div class="cell_2 text-container">

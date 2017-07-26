@@ -21,7 +21,15 @@ namespace Reusables;
 
 <div class="cell_8 main <?php echo $identifier ?> <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo Data::getValue( $celldict, 'mediatype' ); } ?>" id="<?php echo Data::getValue( $celldict, 'id' ) ?>">
 		<a href="<?php echo $linkpath; ?>">
-			<div class="cell_8 picture" style="<?php if( Data::getValue( $celldict, 'featured_imagepath' ) ){ echo 'background-image: url('.Data::getValue( $celldict, 'featured_imagepath' ).');'; } ?>"></div>
+			<div class="cell_8 picture" style="background-color: #333333; <?php if( Data::getValue( $celldict, 'featured_imagepath' ) ){ echo 'background-image: url('.Data::getValue( $celldict, 'featured_imagepath' ).');'; } ?>">
+				<?php if($celldict['mediatype']){ ?>
+					<video width="100%" height="auto" autoplay loop>
+					  <source src="<?php echo Data::getValue( $celldict, 'featured_imagepath' ) ?>" type="video/mp4">
+					  <source src="<?php echo Data::getValue( $celldict, 'featured_imagepath' ) ?>" type="video/ogg">
+					Your browser does not support the video tag.
+					</video>
+				<?php } ?>
+			</div>
 		</a>
 		<div class="cell_8 words">
 			<div class="cell_8 text-container">
