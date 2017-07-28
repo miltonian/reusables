@@ -6,6 +6,7 @@ namespace Reusables;
 	// text right
 	
 	if(!isset($isadmin)){ $isadmin=false; }
+	if( !isset($celldict['type'])){ $celldict['type'] = ""; }
 	// if(!isset($celldict['post_id'])){ $celldict['post_id'] = $celldict['id']; }
 
 	$linkpath = "";
@@ -19,7 +20,7 @@ namespace Reusables;
 <style>
 </style>
 
-<div class="cell_8 main <?php echo $identifier ?> <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo Data::getValue( $celldict, 'mediatype' ); } ?>" id="<?php echo Data::getValue( $celldict, 'id' ) ?>">
+<div class="cell_8 main <?php echo $identifier ?> <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo Data::getValue( $celldict, 'mediatype' ); } ?>" id="<?php echo Data::getValue( $celldict, 'index' ) ?>">
 		<a href="<?php echo $linkpath; ?>">
 			<div class="cell_8 picture" style="background-color: #333333; <?php if( Data::getValue( $celldict, 'featured_imagepath' ) ){ echo 'background-image: url('.Data::getValue( $celldict, 'featured_imagepath' ).');'; } ?>">
 				<?php if($celldict['mediatype']){ ?>
@@ -43,4 +44,19 @@ namespace Reusables;
 </div>
 
 <script>
+
+	var thismodalclass = "";
+	<?php if( $celldict['type'] == "modal" ){ ?>
+		thismodalclass = new <?php echo $celldict['modal']['modalclass'] ?>Classes();
+	<?php }?>
+
+
+
+	var celldict = <?php echo json_encode($celldict) ?>;
+
+	$('.<?php echo $identifier ?>').off().click(function(e){
+		e.preventDefault();
+		Reusable.addAction( celldict, [thismodalclass], 0 );
+	});
+
 </script>

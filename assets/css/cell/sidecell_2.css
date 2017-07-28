@@ -1,0 +1,15 @@
+.sidecell_2.main { display: inline-block; position: relative; margin: 0; padding: 20px 5px; width: calc(100% - 10px); }
+	.sidecell_2.picture { display: inline-block; position: relative; margin: 0; padding: 0; border: 0; border-radius: 0px; background-size: cover; background-position: center; background-repeat: no-repeat; float: left; height: 0; cursor: pointer; }
+	.sidecell_2.words { display: inline-block; position: relative; margin: 0; padding: 0px 20px; }
+		.sidecell_2.words a {text-decoration: none;}
+		.sidecell_2.words #title { margin: 0; padding: 0; text-decoration: none; color: #333333; font-size: 15px; }
+			.sidecell_2.words #title:hover { cursor: pointer; text-decoration: underline; }
+
+@media (min-width: 0px) {
+		.sidecell_2.picture { width: 90%; padding-bottom: 80%; float: none; }
+		.sidecell_2.words { width: calc( 90% - 40px); text-align: center; float: none; }
+}
+@media (min-width: 768px) {
+		.sidecell_2.picture { width: 15%; padding-bottom: 10%; float: left; }
+		.sidecell_2.words { width: calc( 85% - 40px); text-align: left; float: left; }
+}

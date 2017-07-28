@@ -12,7 +12,10 @@ namespace Reusables;
 		]
 	*/
 
-	if(!isset($cell2)){ $cell2mediatype=""; }
+	$data_id = Data::getDefaultDataID( $celldict );
+	$fullcelldict = Data::getFullArray( $celldict );
+	if(!isset($celldict)){ $cell2mediatype=""; }
+	if( !isset($celldict['type'])){ $celldict['type'] = ""; }
 	if( !isset($celldict['isfeatured']) ){ $celldict['isfeatured']=false; }
 	// if( !isset($mediatype) ){ $mediatype="post"; }
 	if( !isset($isadmin) ){ $isadmin=false; }
@@ -24,6 +27,8 @@ namespace Reusables;
 
 	$mediatype = Data::getValue( $celldict, 'mediatype' );
 
+	// echo Data::getValue( $celldict, 'id' )
+
 ?>
 
 <style>
@@ -31,7 +36,7 @@ namespace Reusables;
 
 
 
-<div class="cell_2 main <?php echo $identifier ?> <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo $mediatype; } ?>" id="<?php echo Data::getValue( $celldict, 'id' ) ?>">
+<div class="cell_2 main <?php echo $identifier ?> <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo $mediatype; } ?>" id="<?php echo Data::getValue( $celldict, 'index' ) ?>">
 	<div class="cell_2 container">
 		<div style="display: inline-block; width: 100%;">
 			<div>
@@ -64,67 +69,19 @@ namespace Reusables;
 
 <script>
 
-	var editingon = false;
+	var thismodalclass = "";
+	<?php if( $celldict['type'] == "modal" ){ ?>
+		thismodalclass = new <?php echo $celldict['modal']['modalclass'] ?>Classes();
+		var dataarray = <?php echo json_encode( $fullcelldict ) ?>;
+	<?php }?>
+
+
+
+	var celldict = <?php echo json_encode($celldict) ?>;
+
+	$('.<?php echo $identifier ?>').off().click(function(e){
+		e.preventDefault();
+		Reusable.addAction( celldict, [thismodalclass], 0, dataarray, this );
+	});
 	
-	if(typeof <?php echo $identifier ?> == 'undefined'){
-		class <?php echo $identifier ?>Classes {
-
-		setupactions(){
-			var editingon=false;
-			$('.<?php echo $identifier ?>').off('click');
-			$('.<?php echo $identifier ?>').click(function(){
-
-				if($(this).hasClass('featured')){
-					window.selectedfeatured = $(this).parent().attr('class');
-				}else{
-					window.selectedfeatured=null;
-				}
-
-				var gotothis;
-				var whichfeatured;
-				var posturl = '/post/';
-				// window.selectedfeatured = this.id;
-				var thedict;
-				
-				if(editingon==true){
-					// $('.articlesbackground').css('display', 'inline-block');
-					// $('.articlespopview').css('display', 'inline-block');
-					//updateifvideo(type, path, div);
-					if(window.selectedfeatured==null || window.selectedfeatured==""){
-						window.location.href = "/editing/post?p="+this.id;
-					}else{
-						$('.articlesbackground').css('display', 'inline-block');
-						$('.articlespopview').css('display', 'inline-block');
-					}
-				}else{
-					// var mediatype = thedict['type'];
-					// var prehref = '';
-					// var preprehref = '';
-					// preprehref = '/';
-					// //alert(mediatype);
-					// if(mediatype != 'podcast'){
-					// 	prehref = preprehref+'post?p=';
-					// 	var thehref = prehref.concat(thedict['id']);
-					// 	var urltitle = thedict['title'].replace(/\s/g, '');
-					// 	window.location.href = thehref+'&'+urltitle;
-					// }else{
-					// 	preprehref = '/brand-forward';
-					// 	prehref = preprehref+'?p=';
-					// 	var thehref = prehref.concat(thedict['id']);
-					// 	var urltitle = thedict['title'].replace(/\s/g, '');
-					// 	window.location.href = thehref+'&'+urltitle;
-					// }
-					// window.location.href = "http://theanywherecard.com/experiencenash_dev/post?p="+this.id;
-					window.location.href = "/post/"+this.id+"/"+$(this).find('.title').text().replace(/[^ \w]+/, '').replace(/\W/g, '-');
-				}
-			});
-		}
-
-	}
-		var <?php echo $identifier ?> = new <?php echo $identifier ?>Classes();
-	}
-	
-	<?php echo $identifier ?>.setupactions();
-
-
 </script>

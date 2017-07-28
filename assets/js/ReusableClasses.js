@@ -10,6 +10,7 @@ class ReusableClasses {
 			var thisdictvalue = [];
 			thisdict = dataarray[data_id];
 			if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
+			// alert(JSON.stringify(thisdict['db_info']['tablenames'][key]))
 		$('.' + identifier + ' .' + inputclass + ' input.field_value').val(thisdictvalue[key]);
 			$('.' + identifier + ' .' + inputclass + ' input.tablename').val(thisdict['db_info']['tablenames'][key]);
 			$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);
@@ -130,13 +131,15 @@ var colorvalue = "#"+thisdictvalue[key];
 
 	}
 
-	addAction( button, editingfunctions, index, dataarray=null )
+	addAction( button, editingfunctions, index, dataarray=null, view=null )
 	{
 		var type = button['type'];
 		if( type == "link" ){
 			window.open(button[type]);
 		}else if( type == "modal" ){
-			editingfunctions[index].populateview(this.id);
+			var theid = null;
+			if(view){ theid=view.id }
+			editingfunctions[index].populateview(theid);
 			$('.modal_background').css({'display': 'inline-block'});
 			$('.' + button[type]['parentclass']).css({'display': 'inline-block'});
 		}else if( type == "dropdown" ){

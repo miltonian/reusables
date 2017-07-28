@@ -23,8 +23,6 @@ class Input {
 		if( !$placeholder ){ $placeholder = ucfirst( $key ); }
 		if( !$labeltext ){ $labeltext = ucfirst( $key ); }
 
-		// exit( json_encode( $key ) );
-
 		return Input::make( 
 			$type, 
 			[
@@ -43,7 +41,7 @@ class Input {
 
 	public static function getInputType( $key )
 	{
-		if( strpos($key, "text") !== false || $key=="desc" || $key=="description" || $key=="comment" ){
+		if( strpos($key, "text") !== false || strpos($key, "desc") || strpos($key, "description") || strpos($key, "comment") || strpos($key, "snippet") ){
 			$type = "textarea";
 		}else if( strpos($key, "image") !== false ){
 			$type = "file_image";

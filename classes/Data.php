@@ -173,15 +173,30 @@ class Data {
 	{
 		$allkeys = array_keys($viewdict);
 		$dataidarray = array();
-		// exit(json_encode($viewdict));
+
+		// foreach ($allkeys as $k) {
+		// 	$dataid = $viewdict[$k]['data_id'];
+		// 	if ($dataid != null) {
+		// 		if( !isset( $dataidarray[ $dataid ] ) ){ 
+		// 			$dataidarray[ $dataid ] = self::retrieveDataWithID( $dataid ); 
+		// 		}
+		// 	}
+		// }
+
 		foreach ($allkeys as $k) {
-			$dataid = $viewdict[$k]['data_id'];
-			if ($dataid != null) {
-				if( !isset( $dataidarray[ $dataid ] ) ){ 
-					$dataidarray[ $dataid ] = self::retrieveDataWithID( $dataid ); 
+			$dataid=null;
+			if( isset( $viewdict[$k]['data_id'] ) ){
+				$dataid = $viewdict[$k]['data_id'];
+			}
+			if( $dataid ){
+				if ($dataid != null) {
+					if( !isset( $dataidarray[ $dataid ] ) ){ 
+						$dataidarray[ $dataid ] = Data::retrieveDataWithID( $dataid ); 
+					}
 				}
 			}
 		}
+
 		return $dataidarray;
 	}
 

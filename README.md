@@ -108,30 +108,26 @@ in the above data, parentclass is for the outer most wrapper ( inside modal_back
 
 * make a form inside modal
 ```
-echo Reusables\Structure::make(
-	"modal_background",
-	[
-		Reusables\Wrapper::wrapper1(
+echo Reusables\Structure::make( "modal_background", [
+	"maincolumn"=>array(
+		Reusables\Wrapper::wrapper1( 
 			[],
 			array(
-				Reusables\Structure::make(
-					"modalinner_1",
-					[
-						"title"=>"",
+				Reusables\Structure::make( 
+					"modalinner_1", 
+					array(
+						"title"=>"Edit Your Page",
 						"first"=>array(
-							"<form class='theform' method='post' action='/edit_view.php' enctype='multipart/form-data'>",
-							/* views inside form go here*/
-							"/form"
+							Reusables\Section::make( "smartform_1", $reusableviews_form, "main_form" )
 						)
-					],
-					"editstructure"
+					),
+					"mainform_structure" 
 				)
 			),
-			"editwrapper"
-		)
-	],
-	"modalbackground"
-);
+			"mainform_wrapper modal"
+		),
+	)
+], "modal_background");
 ```
 
 

@@ -16,9 +16,9 @@ $linkedin_white = "https://theanywherecard.com/social_images/linkedin-image.png"
 
 
 <div class="<?php echo $identifier ?> socialpagesbtns_1">
-	<a href="<?php echo $facebookpagelink ?>" target="_blank"><button class="social-icon facebook"></button></a>
-	<a href="<?php echo $twitterpagelink ?>" target="_blank"><button class="social-icon twitter"></button></a>
-	<a href="<?php echo $instagrampagelink ?>" target="_blank"><button class="social-icon instagram"></button></a>
+	<a href="<?php echo Data::getValue( $sharingdict, 'facebook' ) ?>" target="_blank"><button class="social-icon facebook"></button></a>
+	<a href="<?php echo Data::getValue( $sharingdict, 'twitter' ) ?>" target="_blank"><button class="social-icon twitter"></button></a>
+	<a href="<?php echo Data::getValue( $sharingdict, 'instagram' ) ?>" target="_blank"><button class="social-icon instagram"></button></a>
 </div>
 
 

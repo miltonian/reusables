@@ -49,6 +49,7 @@ $required = array(
 				}
 				$post = Data::formatCellWithDefaultData( $identifier . '_posts' , $i );
 				$post['pre_slug'] = Data::getValue( $tabledict, 'pre_slug' );
+				$post = array_merge( $post, $tabledict['celldict'] );
 				if( isset( $tabledict['slug'] ) ) { $post['slug'] = Data::getValue( $tabledict, 'slug' ); }
 				if(isset($tabledict['cellactions'])){ $post['actions'] = $tabledict['cellactions']; }else{ $post['actions'] = array(); }
 				echo Cell::make( $tabledict['cellname'], $post, $identifier . "_cell" );
