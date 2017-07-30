@@ -45,7 +45,7 @@ foreach ($input_keys as $ik) {
 
 	// if( !isset( $inputs['c' . $steps] ) ){ $inputs['c' . $steps] = array(); }
 	$thekey = $ik;
-if( is_numeric( $ik ) ){ $thekey = $input_keydicts[$i]; }
+if( is_numeric( $ik ) ){ $thekey = $input_keydicts[$ik]; }
 array_push( $input_onlykeys, $thekey );
 // exit( json_encode( $sectiondict ) );
 	array_push( 
