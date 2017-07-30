@@ -25,3 +25,5 @@
 @media (min-width: 992px) {
 	.cell_2.main {/*width: 350px;*/ width: calc( 33.33% - 0px); float: left; margin: 10px 0px;}
 }
+
+.cell_2.hide { display: none; }

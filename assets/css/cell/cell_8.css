@@ -13,3 +13,5 @@
 		.cell_8.picture { width: 35%; padding-bottom: 27%; float: left; }
 		.cell_8.words { width: calc( 65% - 40px); text-align: left; float: left; }
 }
+
+.cell_2.hide { display: none; }

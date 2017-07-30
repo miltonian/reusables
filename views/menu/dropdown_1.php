@@ -6,7 +6,24 @@ namespace Reusables;
 // exit( json_encode( Data::getValue( $menudict['otherusers'] ) ) );
 // exit( json_encode( sizeof( $menudict['otherusers'] ) ) );
 
-$otheruservalues = Data::retrieveDataWithID( "otherusers" )['value'];
+// $otheruservalues = Data::retrieveDataWithID( "otherusers" )['value'];
+
+$dropdownlist = $menudict['list'];
+$dropdownlist_keydicts = $dropdownlist;
+$dropdownlist_keys = array_keys($dropdownlist);
+
+$dropdownlist_onlykeys = [];
+
+$inputs = array();
+$i=0;
+foreach ($dropdownlist_keys as $ik) {
+	$thekey = $ik;
+	if( is_numeric( $ik ) ){ $thekey = $dropdownlist_keydicts[$ik]; }
+	array_push( $dropdownlist_onlykeys, $thekey );
+	$i++;
+}
+
+// exit( json_encode( $dropdownlist_keydicts ) );
 
 ?>
 
@@ -14,12 +31,14 @@ $otheruservalues = Data::retrieveDataWithID( "otherusers" )['value'];
 
 </style>
 
-<div class="dropdown_1">
+<div class="dropdown_1 <?php echo $identifier ?>">
 	<div class="inner-dropdown">
-		<button onclick="myFunction()" class="inner-dropbtn">Other Users</button>
+		<button onclick="myFunction()" class="inner-dropbtn"><?php echo Data::getValue( $menudict, "title" ) ?></button>
 		<div id="inner-myDropdown" class="inner-dropdown-content">
-			<?php for ($i=0; $i < sizeof( $otheruservalues ); $i++) { ?>
-				<a href="/u/<?php echo $otheruservalues[$i]['slug'] ?>"><?php echo $otheruservalues[$i]['first_name'] . " " . $otheruservalues[$i]['last_name'] ?></a>
+		<?php $i=0; ?>
+			<?php foreach ($dropdownlist as $row) { ?>
+				<a href="<?php echo Data::getValue( $row, 'pre_slug' ) ?><?php echo Data::getValue( $row, 'slug' ) ?>" id="<?php echo $i ?>"><?php echo $dropdownlist_onlykeys[$i] ?></a>
+				<?php $i++; ?>
 			<?php } ?>
 		</div>
 	</div>

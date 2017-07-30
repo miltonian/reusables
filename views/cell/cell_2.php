@@ -28,6 +28,9 @@ namespace Reusables;
 	$mediatype = Data::getValue( $celldict, 'mediatype' );
 
 	// echo Data::getValue( $celldict, 'id' )
+	$cellindex = Data::getValue( $celldict, 'index' );
+	// echo json_encode($cellindex);
+	// exit(json_encode($cellindex));
 
 ?>
 
@@ -36,7 +39,7 @@ namespace Reusables;
 
 
 
-<div class="cell_2 main <?php echo $identifier ?> <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo $mediatype; } ?>" id="<?php echo Data::getValue( $celldict, 'index' ) ?>">
+<div id="<?php echo $cellindex ?>" class="cell_2 main <?php echo $identifier ?> <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo $mediatype; } ?> index_<?php echo $cellindex ?>" >
 	<div class="cell_2 container">
 		<div style="display: inline-block; width: 100%;">
 			<div>
