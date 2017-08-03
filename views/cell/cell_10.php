@@ -90,11 +90,13 @@ $required = array(
 		<?php $i++; ?>
 	<?php } ?>
 
+function cell_10_start(){
 	cell_10.setupactions( cellactions, editingfunctions );
-
-$('.inner-dropbtn.cell_10.action').click(function(){
-	document.getElementById("inner-myDropdown_"+this.id).classList.toggle("show");
-});
+	
+	$('.inner-dropbtn.cell_10.action').click(function(){
+		document.getElementById("inner-myDropdown_"+this.id).classList.toggle("show");
+	});
+}
 
 	function dropdownaction(e) {
 				// e.preventDefault();

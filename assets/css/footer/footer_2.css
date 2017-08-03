@@ -1,0 +1,6 @@
+.footer_2.main { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; min-height: 200px; background-color: #555555; text-align: center; }
+		.footer_2.content_container { display: inline-block; position: relative; margin: 0; padding: 20px; text-align: left; width: calc(96% - 40px); }
+		.footer_2.column { display: inline-block; position: relative; margin: 0; padding: 0; float: left; width: 33.33%;  }
+		.footer_2#title { display: inline-block; position: relative; margin: 0; padding: 0; color: white; font-size: 28px; font-weight: 400; }
+		.footer_2 p { display: inline-block; position: relative; margin: 0; padding: 5px 0; width: 100%; color: white; font-weight: 300; font-size: 13px; }
+		.footer_2 p#first { margin-top: 20px; }

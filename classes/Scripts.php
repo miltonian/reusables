@@ -24,9 +24,7 @@ class Scripts {
 		}
 		$filename = $parent_dir . $file . ".js";
 
-		$path = BASE_DIR . rtrim($path, '/') . $filename;
-
-		if ( !isset( self::$alljs[ $file ] ) && file_exists( $path ) ) {
+		if ( !isset( self::$alljs[ $file ] ) && file_exists( BASE_DIR . '/' . $filename ) ) {
 			self::$alljs[ $file ] = true;
 
 			echo "<script type='text/javascript' src='" . '/' . $filename . "'></script>";
@@ -36,6 +34,10 @@ class Scripts {
 					let " . $file . " = new " . $file . "_classes();
 				</script>
 			";
+
+			echo "<script>
+				" . $file . "_start();
+			</script>";
 		}
 
 	}

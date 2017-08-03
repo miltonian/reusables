@@ -1,0 +1,5 @@
+.postinternal_4.main { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; min-height: 200px; }
+	.postinternal_4#title { margin: 0; }
+	.postinternal_4#desc { font-weight: 300; }
+	.postinternal_4.featured_image_container { display: inline-block; position: relative; margin: 0; padding: 0;  }
+		.postinternal_4.featured_image { display: inline-block; position: relative; margin: 0; padding: 0; width: auto; height: auto; max-width: 90%; max-height: 90%;  }
