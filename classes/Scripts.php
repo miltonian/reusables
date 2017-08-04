@@ -61,16 +61,13 @@ class Scripts {
 		}
 		$filename = $parent_dir . $file . ".js";
 
+		
+
 		if ( !isset( self::$allbeforejs[ $file ] ) && file_exists( BASE_DIR . '/' . $filename ) ) {
 			self::$allbeforejs[ $file ] = true;
 
 			echo "<script type='text/javascript' src='" . '/' . $filename . "'></script>";
 			
-			echo "
-				<script>
-					let " . $file . " = new " . $file . "_classes();
-				</script>
-			";
 
 		}
 
