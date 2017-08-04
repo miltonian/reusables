@@ -42,6 +42,9 @@ class ReusableClasses {
 		$output = ob_get_contents();
 		ob_end_clean();
 		ReusableClasses::addcss();
+
+		// exit( json_encode( $page ) );
+		$page = rtrim($page, ".php");
 		
 		if( $parent_dir == ""){
 			echo "<link rel='stylesheet' type='text/css' href='../vendor/miltonian/custom/css/pages/" . basename($page, '.php') . ".css'>";
