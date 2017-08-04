@@ -31,6 +31,14 @@ class ReusableClasses {
 		}
 	}
 
+	public static function addbeforejs()
+	{
+		// exit( json_encode( self::$includedfiles ) );
+		foreach (self::$includedfiles as $f) {
+			Scripts::addbeforejs( $f['parent_dir'], $f['file'] );
+		}
+	}
+
 	public static function startpage( $page )
 	{
 		ob_start();
@@ -42,6 +50,7 @@ class ReusableClasses {
 		$output = ob_get_contents();
 		ob_end_clean();
 		ReusableClasses::addcss();
+		ReusableClasses::addbeforejs();
 
 		// exit( json_encode( $page ) );
 		$page = rtrim($page, ".php");
