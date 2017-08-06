@@ -33,7 +33,7 @@ class ReusableClasses {
 
 	public static function addbeforejs()
 	{
-		// exit( json_encode( self::$includedfiles ) );
+		// echo "<script>console.log( JSON.stringify(" . json_encode( self::$includedfiles ) . "))</script>" ;
 		foreach (self::$includedfiles as $f) {
 			Scripts::addbeforejs( $f['parent_dir'], $f['file'] );
 		}
@@ -62,8 +62,9 @@ class ReusableClasses {
 			}
 		}else{
 			echo "<link rel='stylesheet' type='text/css' href='/vendor/miltonian/custom/css/pages/" . $parent_dir . "/" . basename($page, '.php') . ".css'>";
-			if( file_exists( BASE_DIR . '/vendor/miltonian/custom/js/pages/before/' . basename($page, '.php') . ".js" ) ){
-				echo "<script type='text/javascript' src='" . '/vendor/miltonian/custom/js/pages/before/' . basename($page, '.php') . ".js" . "'></script>";
+			echo '<script>alert(JSON.stringify("' . BASE_DIR . "/vendor/miltonian/custom/js/pages/before/" . $parent_dir . "/" . basename($page, '.php') . ".js" . '"))</script>';
+			if( file_exists( BASE_DIR . "/vendor/miltonian/custom/js/pages/before/" . $parent_dir . "/" . basename($page, '.php') . ".js" ) ){
+				echo "<script type='text/javascript' src='" . '/vendor/miltonian/custom/js/pages/before/' . $parent_dir . '/' . basename($page, '.php') . ".js" . "'></script>";
 			}
 		}
 		// echo "<link rel='stylesheet' type='text/css' href='/vendor/miltonian/custom/css/pages/" . basename($page, '.php') . ".css'>";
