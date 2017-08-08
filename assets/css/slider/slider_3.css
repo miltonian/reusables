@@ -3,9 +3,9 @@
 		.slider_3.one { opacity: 1 }
 
 @media( min-width: 0px ){
-	.slider_3.main { max-height: 275px; }
+	.slider_3.main { min-height: 275px; }
 }
 
 @media ( min-width: 768px ) { 
-	.slider_3.main { max-height: 500px; }
+	.slider_3.main { min-height: 500px; }
 }
