@@ -43,12 +43,25 @@ class ReusableClasses {
 		ob_start();
 	}
 
+	public static function addReusableJS()
+	{
+		echo "
+			<script src='/vendor/miltonian/reusables/assets/js/ReusableClasses.js'></script>
+			<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+			<script>
+			let Reusables = new ReusableClasses();
+			Reusables.addJQuery();
+			</script>
+		";
+	}
+
 	public static function endpage( $parent_dir, $page )
 	{
 		echo "</body>";
 		$output = ob_get_contents();
 		ob_end_clean();
 		ReusableClasses::addcss();
+		ReusableClasses::addReusableJS();
 		ReusableClasses::addbeforejs();
 
 		// exit( json_encode( $page ) );
