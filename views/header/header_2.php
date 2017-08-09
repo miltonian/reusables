@@ -3,7 +3,11 @@
 namespace Reusables;
 
 	if (!isset($headerdict['logolink'])) { $headerdict['logolink'] = ""; }
-
+	
+	if( isset( $headerdict['value'] ) ){ 
+		$data_id = Data::getDefaultDataID( $headerdict );
+		$headerdict = Data::formatForDefaultData( $data_id ); 
+	}
 ?>
 
 <style>
