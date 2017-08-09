@@ -20,8 +20,14 @@ $required = array(
 	"cellname"=>""
 );
 
+if( isset($tabledict[ $identifier . '_posts' ]['value']) ){
+	$tablearray = $tabledict[ $identifier . '_posts' ]['value'];
+}else{
+	$tablearray = $tabledict[ $identifier . '_posts' ];
+}
+
 // ReusableClasses::checkRequired( $identifier, $tabledict, $required );
-// exit( json_encode( $tabledict['postarray'] ) );
+// exit( json_encode( $tablearray ) );
 ?>
 
 <style>
@@ -40,14 +46,19 @@ $required = array(
 	<ul id="sortable">
 <?php } ?>
 		<?php 
-			for ($i=0; $i < sizeof($tabledict[ $identifier . '_posts' ]['value']); $i++) { 
+			for ($i=0; $i < sizeof($tablearray); $i++) { 
 				if($sortable){
 					?>
 
 					<li id="<?php echo $i ?>" class="ui-state-default">
 					<?php 
 				}
-				$post = Data::formatCellWithDefaultData( $identifier . '_posts' , $i );
+				if( isset($tabledict[ $identifier . '_posts' ]['value']) ){
+					$post = Data::formatCellWithDefaultData( $identifier . '_posts' , $i );
+				}else{
+					$post = Data::getValue( $tablearray, $i );
+				}
+				// exit( json_encode( $post ) );
 				$post['pre_slug'] = Data::getValue( $tabledict, 'pre_slug' );
 				$post = array_merge( $post, $tabledict['celldict'] );
 				if( isset( $tabledict['slug'] ) ) { $post['slug'] = Data::getValue( $tabledict, 'slug' ); }

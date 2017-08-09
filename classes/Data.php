@@ -87,8 +87,13 @@ class Data {
 			$dict = $viewdict[0];
 		}
 		$allkeys = array_keys( $dict );
-		$data_id = $dict[ $allkeys[0] ]['data_id'];
-		return $data_id;
+		if( isset($dict[ $allkeys[0] ]['data_id']) ){
+			$data_id = $dict[ $allkeys[0] ]['data_id'];
+			return $data_id;
+		}else{
+			return "";
+		}
+		
 	}
 
 	public static function getDefaultConditionsWithID( $identifier )
