@@ -62,6 +62,7 @@ class Data {
 	public static function addData( $entry, $identifier )
 	{
 		if ( !isset( self::$alldata[ $identifier ] ) ) {
+			$entry['data_id'] = $identifier;
 			self::$alldata[ $identifier ] = $entry;
 
 		}else{
@@ -85,6 +86,9 @@ class Data {
 			$dict = $viewdict;
 		}else{
 			$dict = $viewdict[0];
+		}
+		if( isset( $viewdict['data_id'] ) ){
+			return $viewdict['data_id'];
 		}
 		$allkeys = array_keys( $dict );
 		if( isset($dict[ $allkeys[0] ]['data_id']) ){

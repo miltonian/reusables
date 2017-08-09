@@ -11,6 +11,10 @@ namespace Reusables;
 			"desc"=>""
 		]
 	*/
+	if( isset( $sectiondict['value'] ) ){ 
+		$data_id = Data::getDefaultDataID( $sectiondict );
+		$sectiondict = Data::formatForDefaultData( $data_id ); 
+	}
 	if( isset($sectiondict['editing']) ){ $isediting=1; }else{ $isediting=0; }
 
 ?>
