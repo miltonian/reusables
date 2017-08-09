@@ -43,17 +43,6 @@ class ReusableClasses {
 		ob_start();
 	}
 
-	public static function addReusableJS()
-	{
-		echo "
-			<script src='/vendor/miltonian/reusables/assets/js/ReusableClasses.js'></script>
-			<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-			<script>
-			let Reusables = new ReusableClasses();
-			Reusables.addJQuery();
-			</script>
-		";
-	}
 
 	public static function endpage( $parent_dir, $page )
 	{
@@ -85,6 +74,24 @@ class ReusableClasses {
 		ReusableClasses::addjs();
 	}
 
+	public static function addReusableJS()
+	{
+		echo "
+			<script src='/vendor/miltonian/reusables/assets/js/ReusableClasses.js'></script>
+			<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+			<script>
+			let Reusables = new ReusableClasses();
+			Reusables.addJQuery();
+			</script>
+		";
+	}
+
+	public static function testReusables()
+	{
+		ReusableClasses::startpage( "" );
+		echo Header::make( "header_3", ["title"=>"It works!"], "test_header" );
+		ReusableClasses::endpage( "", "" );
+	}
 
 
 
