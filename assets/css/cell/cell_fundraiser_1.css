@@ -1,0 +1,36 @@
+.cell_fundraiser_1.main { display: inline-block; position: relative; margin: 0; padding: 20px 5px; width: calc(100% - 10px);  }
+	.cell_fundraiser_1.picture { display: inline-block; position: relative; margin: 0; padding: 0; border: 0; border-radius: 5px; background-size: cover; background-position: center; background-repeat: no-repeat; float: left; height: 0; cursor: pointer; }
+	.cell_fundraiser_1.words { display: inline-block; position: relative; margin: 0; padding: 0px 20px; }
+		.cell_fundraiser_1.words a {text-decoration: none;}
+		.cell_fundraiser_1.words #title { margin: 0; padding: 0; text-decoration: none; color: #333333; }
+			.cell_fundraiser_1.words #title:hover { cursor: pointer; text-decoration: underline; }
+
+.campaigns_table_cell.picture { width: 100%; }
+
+.cell_fundraiser_1.words a { text-decoration: underline; }
+
+.campaigns_table_cell .words #titlelink { text-decoration: none; }
+
+.cell_fundraiser_2 label.title { font-weight: 500; }
+
+
+	
+
+
+@media (min-width: 0px) {
+	.cell_fundraiser_1.text-container { height: calc(180px); }
+	.cell_fundraiser_1.main { max-height: auto; }
+		.cell_fundraiser_1.picture { width: 90%; padding-bottom: 80%; float: none; }
+		.cell_fundraiser_1.words { width: calc( 100% - 0px); text-align: left; float: none; margin-top: 20px; }
+		.cell_fundraiser_1.picture_container { position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; height: 100%; max-height: calc(320px - 40px); float: none; }
+	.cell_fundraiser_1.picture { position: relative; display: inline-block; margin: 0; padding: 0; height: 100%; max-height: 100%; width: 100%; }
+}
+@media (min-width: 768px) {
+	.cell_fundraiser_1.text-container { height: calc(320px - 40px); }
+		.cell_fundraiser_1.picture { width: 100%; padding-bottom: 27%; float: left; }
+		.cell_fundraiser_1.words { width: calc( 65% - 0px); text-align: left; float: left; margin-top: 0; }
+	.cell_fundraiser_1.picture_container { position: relative; display: inline-block; margin: 0; padding: 0; width: 39%; max-height: calc(320px - 40px); height: 100%; float: left; }
+	.cell_fundraiser_1.picture { position: relative; display: inline-block; margin: 0; padding: 0; height: 100%; max-height: 100%; width: 100%; }
+}
+
+.cell_2.hide { display: none; }

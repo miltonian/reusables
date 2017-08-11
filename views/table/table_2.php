@@ -14,6 +14,14 @@ namespace Reusables;
 		$sortable = $tabledict['sortable']; 
 	}
 
+	if( !isset($tabledict['convert_keys'])){ 
+		$convertkeys = false; 
+	}else { 
+		$convertkeys = $tabledict['convert_keys']; 
+	}
+
+	// exit( json_encode( $convertkeys ) );
+
 $required = array(
 	 $identifier . '_posts' =>array("link", "name|imagepath|emoji"), 
 	"cellactions"=>"",  
@@ -27,7 +35,7 @@ if( isset($tabledict[ $identifier . '_posts' ]['value']) ){
 }
 
 // ReusableClasses::checkRequired( $identifier, $tabledict, $required );
-// exit( json_encode( $tablearray ) );
+// exit( json_encode( $tabledict['slug'] ) );
 ?>
 
 <style>
@@ -58,7 +66,10 @@ if( isset($tabledict[ $identifier . '_posts' ]['value']) ){
 				}else{
 					$post = Data::getValue( $tablearray, $i );
 				}
-				// exit( json_encode( $post ) );
+				$postkeys = array_keys($post);
+				foreach ( $postkeys as $k ) {
+					if( isset( $convertkeys[$k] ) ){ $post[$convertkeys[$k]] = $post[$k]; }
+				}
 				$post['pre_slug'] = Data::getValue( $tabledict, 'pre_slug' );
 				$post = array_merge( $post, $tabledict['celldict'] );
 				if( isset( $tabledict['slug'] ) ) { $post['slug'] = Data::getValue( $tabledict, 'slug' ); }

@@ -83,7 +83,7 @@ namespace Reusables;
 	var celldict = <?php echo json_encode($celldict) ?>;
 
 	$('.<?php echo $identifier ?>').off().click(function(e){
-		e.preventDefault();
+		// e.preventDefault();
 		Reusable.addAction( celldict, [thismodalclass], 0, dataarray, this );
 	});
 	

@@ -1,0 +1,6 @@
+.bargraph_1.funding_container { position: absolute; bottom: 0; width: calc(100% - 40px); }
+	.bargraph_1#fund_goal { color: #444444; text-transform: none; font-weight: 200; font-size: 1.2em; }
+	.bargraph_1#raised { font-size: 1.9em; font-weight: 300; }
+	.bargraph_1#bar { height: 10px; border-radius: 5px; background-color: #dcdce5; overflow: hidden; position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; }
+	.bargraph_1#fill { position: absolute; display: inline-block; margin: 0; padding: 0; min-width: 2%; height: 100%; left: 0; top: 0; }
+	.bargraph_1#fill { min-width: 2%; background-color: green }
