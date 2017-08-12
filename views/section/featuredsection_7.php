@@ -11,6 +11,11 @@ namespace Reusables;
 			"desc"=>""
 		]
 	*/
+
+	$sectiondict = Data::convertKeys( $sectiondict );
+	// exit( json_encode( Data::getValue( $sectiondict, 'desc' ) ) );
+
+
 	if( isset( $sectiondict['value'] ) ){ 
 		$data_id = Data::getDefaultDataID( $sectiondict );
 		$sectiondict = Data::formatForDefaultData( $data_id ); 

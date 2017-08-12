@@ -255,6 +255,36 @@ class Data {
 		return $returningdict;
 	}
 
+	public static function convertKeys( $dict )
+	{
+		$convertkeys = Data::getValue( $dict, 'convert_keys' );
+		if( $convertkeys == "" ){
+			return $dict;
+		}
+		if( !isset( $convertkeys ) ){ 
+			$convertkeys = false; 
+		}else { 
+			$convertkeys = $convertkeys; 
+		}
+		$convertdict = $dict;
+		if( isset( $dict['value'] ) ){
+			$convertdict = $dict['value'];
+		}
+		$sectionkeys = array_keys( $convertdict );
+
+
+		foreach ( $sectionkeys as $k ) {
+			if( isset( $convertkeys[$k] ) ){ $convertdict[$convertkeys[$k]] = $convertdict[$k]; }
+		}
+
+		if( isset( $dict['value'] ) ){
+			$dict['value'] = $convertdict;
+		}else{
+			$dict = $convertdict;
+		}
+		return $dict;
+	}
+
 
 
 }

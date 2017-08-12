@@ -12,31 +12,7 @@ namespace Reusables;
 		]
 	*/
 
-	$convertkeys = Data::getValue( $sectiondict, 'convert_keys' );
-
-	if( !isset( $convertkeys ) ){ 
-		$convertkeys = false; 
-	}else { 
-		$convertkeys = $convertkeys; 
-	}
-
-	$convertdict = $sectiondict;
-	if( isset( $sectiondict['value'] ) ){
-		$convertdict = $sectiondict['value'];
-	}
-	$sectionkeys = array_keys( $convertdict );
-
-
-	foreach ( $sectionkeys as $k ) {
-		if( isset( $convertkeys[$k] ) ){ $convertdict[$convertkeys[$k]] = $convertdict[$k]; }
-	}
-
-	if( isset( $sectiondict['value'] ) ){
-		$sectiondict['value'] = $convertdict;
-	}else{
-		$sectiondict = $convertdict;
-	}
-
+	$sectiondict = Data::convertKeys( $sectiondict );
 
 	if( isset( $sectiondict['value'] ) ){ 
 		$data_id = Data::getDefaultDataID( $sectiondict );

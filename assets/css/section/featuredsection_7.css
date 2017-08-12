@@ -1,7 +1,7 @@
 .featuredsection_7 { display: inline-block; position: relative; margin: 0; padding: 20px 0px; width: 100%; background-color: white; border-bottom: 1px solid #e3e3e3; }
 	.featuredsection_7 .featuredimage { display: inline-block; position: relative; margin: 0; padding: 0; background-size: cover; background-position: center; background-repeat: no-repeat; border: 0; border-radius: 5px; }
 	.featuredsection_7 .content { display: inline-block; position: relative; padding: 0px 20px; }
-		.featuredsection_7 .content #title { margin: 0; }
+		.featuredsection_7 .content #title { margin: 0; font-size: 23px; }
 
 	@media (min-width: 0px) {
 		.featuredsection_7 { text-align: center; }
