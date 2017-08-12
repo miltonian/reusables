@@ -22,14 +22,16 @@ if (!isset($navdict['logolink'])) { $navdict['logolink'] = ""; }
 </style>
 	
 <div class='navbar_4 main <?php echo $identifier ?> mobilenav' style='background-color: white'>
-	<a href='/<?php echo $navdict['logolink'] ?>'>
+	<a class="navbar_4" id="brandlink" href='/<?php echo $navdict['logolink'] ?>'>
 		<?php if(isset($navdict['logo'])){ ?>
 			<img class='navbar_4 topbarlogo' src=<?php echo $navdict['logo'] ?> width="auto" height="auto">
 		<?php }else{ ?>
-			<h3><?php echo $navdict['brandname'] ?></h3>
+			<h3 class="navbar_4" id="brandname"><?php echo $navdict['brandname'] ?></h3>
 		<?php } ?>
 	</a>
-	<img class='navbar_4 dropdown menubtn' src='https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png' style='width: auto; margin-right: 30px;'>
+	<?php if( sizeof( $navdict['pages'] ) > 0 ){ ?>
+		<img class='navbar_4 dropdown menubtn' src='https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png' style='width: auto; margin-right: 30px;'>
+	<?php } ?>
 	<div class='navbar_4 dropdown-content'>
 		<?php foreach ($navbuttons as $b) { ?>
 			<a href='/<?php echo $b['slug'] ?>'><?php if(isset($b['imagepath'])){ "<img src='".$b['imagepath']."'>"; }else if(isset($b['emoji'])){ echo $b['emoji']; }else{ echo $b['name']; } ?></a>
