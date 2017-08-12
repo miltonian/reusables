@@ -25,7 +25,7 @@
 .navbar_4.logo-div { margin: 0; padding: 0; width: 150px; height: 100%; }
 .navbar_4.logo-div h3 { display: inline-block; position: relative; margin: 0; margin-left: 20px; padding: 0; top: 50%; transform: translateY(-50%); font-size: 15px; }
 .navbar_4.topbar-button { display: inline-block; position: relative; margin: 0 5px; padding: 0; background: transparent; float: right; text-decoration: none; color: #333333; top: 50%; transform: translateY(-50%); }
-
+.navbar_4.main { border-radius: 0; width: 100%; }
 @media (min-width: 0px) {
 	.navbar_4.mobilenav {display: block;}
 	.navbar_4.desktopnav {display: none;}

@@ -71,6 +71,16 @@ class Data {
 
 	}
 
+	public static function setKeyValue( $pair, $identifier )
+	{
+		if( !isset( self::$alldata[ $identifier ] ) ) {
+			return;
+		}else{
+			$key = array_keys( $pair )[0];
+			self::$alldata[ $identifier ]['value'][ $key ] = $pair[ $key ];
+		}
+	}
+
 	public static function retrieveDataWithID( $identifier )
 	{
 		if ( !isset( self::$alldata[ $identifier ] ) ) {
@@ -117,11 +127,22 @@ class Data {
 
 	public static function getValue( $dict, $key )
 	{
+		if( !is_array( $dict ) ){
+			$dict = Data::retrieveDataWithID( $dict );
+		}
+
 		if( isset($dict[ $key ]) ){
 			$pair = $dict[ $key ];
 		}else{
-			return "";
+			if( isset( $dict['value'][ $key ] )  ){
+				$pair = $dict['value'][ $key ];
+				// if( $key == "logo_imagepath" ){
+				// }
+			}else{
+				return "";
+			}
 		}
+
 
 		$hasindex = false;
 		if( !isset( $pair['data_id'] ) ){ 

@@ -289,3 +289,17 @@ echo Reusables\Structure::make( "modal_background", [
 
 
 
+ADD OPTIONAL JS TO VIEWS
+	e.g. Reusables\ReusableClasses::addJSToView( "navbar_4", "navbar", "showonscroll" );
+	Reusables\ReusableClasses::addJSToView( $file, $custom_identifier, $func )
+
+
+
+
+
+
+
+
+
+
+

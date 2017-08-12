@@ -7,6 +7,8 @@ class ReusableClasses {
 	public $PDO; // PHP Data Object
 	protected static $includedfiles = array();
 
+	protected static $addedjs = "";
+
 	//public static $PDO;
 	private $cryptKey = "Rxp45dn142etvQk9e17Oo3nx2xJKfkZs"; // Encryption Key
 
@@ -29,6 +31,8 @@ class ReusableClasses {
 		foreach (self::$includedfiles as $f) {
 			Scripts::addjs( $f['parent_dir'], $f['file'] );
 		}
+
+		echo self::$addedjs;
 	}
 
 	public static function addbeforejs()
@@ -69,7 +73,6 @@ class ReusableClasses {
 			}
 		}
 		// echo "<link rel='stylesheet' type='text/css' href='/vendor/miltonian/custom/css/pages/" . basename($page, '.php') . ".css'>";
-		
 		echo $output;
 		ReusableClasses::addjs();
 	}
@@ -91,6 +94,13 @@ class ReusableClasses {
 		ReusableClasses::startpage( "" );
 		echo Header::make( "header_3", ["title"=>"It works!"], "test_header" );
 		ReusableClasses::endpage( "", "" );
+	}
+
+	public static function addJSToView( $file, $custom_identifier=null, $func )
+	{
+		self::$addedjs .= "<script>
+			" . $file . "." . $func . "( '" . $custom_identifier . "' );
+		</script>";
 	}
 
 
