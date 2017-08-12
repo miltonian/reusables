@@ -9,7 +9,7 @@ $(document).ready(function(){
 			
 		}
 		showonscroll(){
-			$('.navbar_4.desktop.main').css({'top': '-100px'});
+			$('.navbar_4.desktopnav.main').css({'top': '-100px'});
 				$(window).scroll(function(){
 					var top1;
 					var top2;
@@ -33,7 +33,7 @@ $(document).ready(function(){
 					}
 					if(changenav==true){
 						changenav=false;
-						$('.navbar_4.desktop.main').stop().animate({
+						$('.navbar_4.desktopnav.main').stop().animate({
 					       		'top': top1
 				       			}, 300);
 					}
