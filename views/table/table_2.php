@@ -28,14 +28,18 @@ $required = array(
 	"cellname"=>""
 );
 
+$tabledict[$identifier . '_posts' ] = Data::retrieveDataWithID( $identifier . '_posts' );
+// exit( json_encode( $tabledict[$identifier . '_posts' ] ) );
 if( isset($tabledict[ $identifier . '_posts' ]['value']) ){
 	$tablearray = $tabledict[ $identifier . '_posts' ]['value'];
 }else{
 	$tablearray = $tabledict[ $identifier . '_posts' ];
 }
 
+// exit( json_encode( $tablearray ) );
+
 // ReusableClasses::checkRequired( $identifier, $tabledict, $required );
-// exit( json_encode( $tabledict['slug'] ) );
+// exit( json_encode( $tabledict[$identifier . '_posts'][0] ) );
 ?>
 
 <style>
@@ -70,12 +74,16 @@ if( isset($tabledict[ $identifier . '_posts' ]['value']) ){
 				foreach ( $postkeys as $k ) {
 					if( isset( $convertkeys[$k] ) ){ $post[$convertkeys[$k]] = $post[$k]; }
 				}
+				// exit( json_encode( Data::getValue( $post, 'title' ) ) );
 				$post['pre_slug'] = Data::getValue( $tabledict, 'pre_slug' );
-				$post = array_merge( $post, $tabledict['celldict'] );
+				if( isset( $tabledict['celldict'] ) ) {
+					$post = array_merge( $post, $tabledict['celldict'] );
+				}
 				if( isset( $tabledict['slug'] ) ) { $post['slug'] = Data::getValue( $tabledict, 'slug' ); }
 				if(isset($tabledict['cellactions'])){ $post['actions'] = $tabledict['cellactions']; }else{ $post['actions'] = array(); }
-				echo Cell::make( $tabledict['cellname'], $post, $identifier . "_cell" );
 
+				Data::addData( $post, $identifier . "_cell_" . $i );
+				echo Cell::make( $tabledict['cellname'], $identifier . "_cell_" . $i );
 				if($sortable){ ?>
 					</li>
 				<?php } 

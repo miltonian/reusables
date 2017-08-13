@@ -4,6 +4,8 @@ namespace Reusables;
 
 $width = ( floatval( Data::getValue( $sectiondict, 'raised' ) ) / floatval( Data::getValue( $sectiondict, 'goal' ) ) ) * 100;
 
+// exit( json_encode( $sectiondict ) );
+
 ?>
 
 

@@ -2,8 +2,8 @@
 	.structure_1.maincolumn { display: inline-block; position: relative; margin: 0px; margin-right: 5px; padding: 0px; float: left; }
 	.structure_1.sidecolumn_right { display: inline-block; position: relative; margin: 0px; margin-left: 5px; padding: 0px; float: left; }
 @media (min-width: 0px) {
-	.structure_1.maincolumn { width: calc(100% - 20px); }
-	.structure_1.sidecolumn_right { width: calc( 100% - 20px ); }
+	.structure_1.maincolumn { width: 100% /*calc(100% - 20px)*/; }
+	.structure_1.sidecolumn_right { width: 100% /*calc( 100% - 20px )*/; }
 }
 @media (min-width: 768px) {
 	.structure_1.maincolumn { width: calc(70% - 20px); }

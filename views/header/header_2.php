@@ -2,6 +2,8 @@
 
 namespace Reusables;
 
+$headerdict = Data::convertKeys( $headerdict );
+
 	if (!isset($headerdict['logolink'])) { $headerdict['logolink'] = ""; }
 	
 	if( isset( $headerdict['value'] ) ){ 

@@ -8,6 +8,9 @@ namespace Reusables;
 				"html_text"=>""
 			]
 	*/
+	
+	$sharingdict = Data::getValue( $postdict, 'sharingdict' );
+
 ?>
 
 <style>
@@ -19,8 +22,9 @@ namespace Reusables;
 <div class="postinternal3">
 	<div id="featuredimage" style="background-image: url('<?php echo Data::getValue( $postdict, 'featured_imagepath' ); ?>');" ></div>
 	<?php
-		if($postdict['sharingdict']){
-			echo Sharing::make( "sharingbtns_1", $postdict['sharingdict'], $identifier . "_sharingbtns_1" );
+		if( $sharingdict != "" ){
+			Data::addData( Data::getValue( $postdict, 'sharingdict' ), $identifier . "_sharingbtns_1" );
+			echo Sharing::make( "sharingbtns_1", $identifier . "_sharingbtns_1" );
 		}
 	?>
 	<div class="text-container">

@@ -4,10 +4,11 @@ namespace Reusables;
 
 class Footer {
 
-	public static function make( $file, $data, $identifier )
+	public static function make( $file, $identifier )
 	{
 		ReusableClasses::addfile( "footer", $file );
 		$View = View::factory( 'reusables/views/footer/' . $file );
+		$data = Data::retrieveDataWithID( $identifier );
 		$View->set( 'footerdict', $data );
 		$View->set( 'identifier', $identifier );
 		return $View->render();

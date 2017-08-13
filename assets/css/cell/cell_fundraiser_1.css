@@ -9,9 +9,11 @@
 
 .cell_fundraiser_1.words a { text-decoration: underline; }
 
-.campaigns_table_cell .words #titlelink { text-decoration: none; }
+.cell_fundraiser_1#titlelink { text-decoration: none; }
 
-.cell_fundraiser_2 label.title { font-weight: 500; }
+.cell_fundraiser_1 label.title { font-weight: 500; }
+
+.cell_fundraiser_1#desc { font-weight: 300 }
 
 
 	
@@ -28,7 +30,7 @@
 @media (min-width: 768px) {
 	.cell_fundraiser_1.text-container { height: calc(320px - 40px); }
 		.cell_fundraiser_1.picture { width: 100%; padding-bottom: 27%; float: left; }
-		.cell_fundraiser_1.words { width: calc( 65% - 0px); text-align: left; float: left; margin-top: 0; }
+		.cell_fundraiser_1.words { width: calc( 61% - 0px); text-align: left; float: left; margin-top: 0; }
 	.cell_fundraiser_1.picture_container { position: relative; display: inline-block; margin: 0; padding: 0; width: 39%; max-height: calc(320px - 40px); height: 100%; float: left; }
 	.cell_fundraiser_1.picture { position: relative; display: inline-block; margin: 0; padding: 0; height: 100%; max-height: 100%; width: 100%; }
 }

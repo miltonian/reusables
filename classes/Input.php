@@ -4,10 +4,11 @@ namespace Reusables;
 
 class Input {
 
-	public static function make( $file, $data, $identifier )
+	public static function make( $file, $identifier )
 	{
 		ReusableClasses::addfile( "input", $file );
 		$View = View::factory( 'reusables/views/input/' . $file );
+		$data = Data::retrieveDataWithID( $identifier );
 		$View->set( 'inputdict', $data );
 		$View->set( 'identifier', $identifier );
 		return $View->render();

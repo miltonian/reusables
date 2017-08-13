@@ -1,2 +1,10 @@
-.wrapper_1.main { display: inline-block; position: relative; margin: 20px 0px; padding: 20px; background-color: white; border: 1px solid #e0e0e0; border-radius: 10px; width: calc( 100% - 40px ); }
+.wrapper_1.main { display: inline-block; position: relative;  background-color: white; border: 1px solid #e0e0e0; }
 	.wrapper_1.main.modal { display: none; max-width: 600px; max-height: 80%; overflow-y: scroll; }
+
+@media( min-width: 0px ) {
+	.wrapper_1.main { margin: 0; padding: 10px; width: 100%; border-radius: 0; }
+}
+
+@media( min-width: 768px ) {
+	.wrapper_1.main { margin: 20px 0px; padding: 20px; width: calc( 100% - 40px ); border-radius: 10px; }
+}

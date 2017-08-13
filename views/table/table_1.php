@@ -17,7 +17,8 @@ namespace Reusables;
 	}else { 
 		$convertkeys = $tabledict['convert_keys']; 
 	}
-
+// exit( json_encode( $tabledict[$identifier.'_posts'][1] ) );
+	$tabledict[$identifier . '_posts' ] = Data::retrieveDataWithID( $identifier . '_posts' );
 	if( isset($tabledict[ $identifier . '_posts' ]['value']) ){
 		$tablearray = $tabledict[ $identifier . '_posts' ]['value'];
 	}else{
@@ -32,6 +33,8 @@ namespace Reusables;
 	if( isset( $tabledict['cellname'] ) ){
 		$normal_cellname = $tabledict['cellname'];
 	}
+
+	// exit( json_encode( sizeof($tabledict[ $identifier . '_posts' ]) ) );
 
 ?>
 
@@ -58,10 +61,11 @@ namespace Reusables;
 				if( isset( $tabledict['slug'] ) ) { $post['slug'] = Data::getValue( $tabledict, 'slug' ); }
 				
 				if( isset( $tabledict['cellactions'] ) ){ $post['actions'] = $tabledict['cellactions']; }else{ $post['actions'] = array(); }
-				if($i==0 || sizeof($tabledict[ $identifier . '_posts' ]) < 4 ){
-					echo Cell::make( $featured_cellname, $post, $identifier . "_cell" );
+				Data::addData( $post, $identifier . "_cell_" . $i );
+				if($i==0 || sizeof($tablearray) < 4 ){
+					echo Cell::make( $featured_cellname, $identifier . "_cell_" . $i );
 				}else{
-					echo Cell::make( $normal_cellname, $post, $identifier . "_cell" );
+					echo Cell::make( $normal_cellname, $identifier . "_cell_" . $i );
 				}
 			}
 

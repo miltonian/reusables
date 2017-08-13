@@ -3,15 +3,16 @@
 namespace Reusables;
 
 	if( !isset($identifier) ){ $identifier = ""; }
+	// exit( json_encode( $sharingdict ) );
 ?>
 
 <style>
 </style>
 
 <div class="sharingbtns_1 <?php echo $identifier ?>">
-	<div style="position: relative; display: inline-block; width: 90%; text-align: left; margin-top: 10px;">
-		<a href="#" class="sharingbuttons" id="fb"><img src="vendor/miltonian/reusables/uploads/icons/facebook-256-2.png"><p>Share on Facebook</p></a>
-		<a href="#" class="sharingbuttons" id="twitter"><img src="/reusables/uploads/icons/twitter-512.gif" /><p>Share on Twitter</p></a>
+	<div style="position: relative; display: inline-block; width: 100%; text-align: left; margin-top: 10px;">
+		<a href="#" class="sharingbuttons" id="fb"><img src="/vendor/miltonian/reusables/images/icons/facebook-256-2.png"><p>Share on Facebook</p></a>
+		<a href="#" class="sharingbuttons" id="twitter"><img src="/vendor/miltonian/reusables/images/icons/twitter-512.gif" /><p>Share on Twitter</p></a>
 	</div>
 </div>
 

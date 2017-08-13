@@ -45,7 +45,8 @@ namespace Reusables;
 				</a>
 				<br>
 				<label class="cell_fundraiser_1" id="desc"><?php echo implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $celldict, 'html_text' ))), 0, 10) ); ?>... <a href="<?php echo $linkpath ?>">Learn More</a></label>
-				<?php echo Section::make( "bargraph_1", $celldict, "bargraph") ?>
+				<?php Data::addData( $celldict, $identifier . "_bargraph" ); ?>
+				<?php echo Section::make( "bargraph_1", $identifier . "_bargraph") ?>
 			</div>
 		</div>
 </div>

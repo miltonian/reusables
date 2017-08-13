@@ -61,6 +61,10 @@ class Data {
 
 	public static function addData( $entry, $identifier )
 	{
+		if( !is_array( $entry ) ){
+			$entry = Data::retrieveDataWithID( $entry );
+		}
+		
 		if ( !isset( self::$alldata[ $identifier ] ) ) {
 			$entry['data_id'] = $identifier;
 			self::$alldata[ $identifier ] = $entry;
