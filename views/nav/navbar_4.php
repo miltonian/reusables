@@ -43,9 +43,9 @@ if (!isset($navdict['logolink'])) { $navdict['logolink'] = ""; }
 	<a href='/<?php echo $navdict['logolink'] ?>' class='navbar_4 logo-div'>
 		<?php if(isset($navdict['logo'])){ ?>
 			<img class='navbar_4 topbarlogo' src=<?php echo $navdict['logo'] ?> width="auto" height="auto">
-		<?php }else{ ?>
-			<h3><?php echo $navdict['brandname'] ?></h3>
 		<?php } ?>
+			<h3><?php echo $navdict['brandname'] ?></h3>
+
 	</a>
 	<?php
 		

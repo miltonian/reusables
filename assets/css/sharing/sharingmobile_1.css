@@ -1,0 +1,16 @@
+.sharingmobile_1.main { position: fixed; display: inline-block; margin: 0; padding: 0; width: 100%; height: 60px; left: 0; bottom: 0; }
+	.sharingmobile_1.facebook { background-color: #3b5998; }
+	.sharingmobile_1.twitter { background-color: #55ACEE; }
+	.sharingmobile_1 a { display: inline-block; position: relative; height: 100%; float: left; }
+	.sharingmobile_1.facebook img { content:url("/vendor/miltonian/reusables/images/icons/facebook-256-2.png"); display: inline-block; position: relative; margin: 0; padding: 0; height: 50%; top: 50%; transform: translateY(-50%); }
+	.sharingmobile_1.twitter img { content:url("/vendor/miltonian/reusables/images/icons/twitter-512.gif"); display: inline-block; position: relative; margin: 0; padding: 0; height: 50%; top: 50%; transform: translateY(-50%); }
+.sharingmobile_1.button { color: white; }
+.sharingmobile_1#text { position: relative; display: inline-block; margin: 0; padding: 0; top: 50%; transform: translateY(-50%); }
+
+@media( min-width: 0px ) {
+	.sharingmobile_1.main { display: inline-block; }
+}
+
+@media( min-width: 768px ) {
+	.sharingmobile_1.main { display: none; }
+}
