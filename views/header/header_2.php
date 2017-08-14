@@ -3,8 +3,6 @@
 namespace Reusables;
 
 $headerdict = Data::convertKeys( $headerdict );
-
-	if (!isset($headerdict['logolink'])) { $headerdict['logolink'] = ""; }
 	
 	if( isset( $headerdict['value'] ) ){ 
 		$data_id = Data::getDefaultDataID( $headerdict );
@@ -17,7 +15,7 @@ $headerdict = Data::convertKeys( $headerdict );
 
 <div class="<?php echo $identifier ?> header_2 main" style="background-image: url('<?php echo Data::getValue( $headerdict, 'featured_imagepath' ) ?>');">
 	<div class="header_2 overlay"></div>
-	<a href="/<?php echo $headerdict['logolink'] ?>">
+	<a href="<?php echo Data::getValue( $headerdict, 'logolink' ) ?>">
 		<img src="<?php echo Data::getValue( $headerdict, 'logo_imagepath' ) ?>" class="header_2" id="logo">
 	</a>
 </div>

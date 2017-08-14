@@ -3,4 +3,4 @@
 	.bargraph_1#raised { font-size: 1.9em; font-weight: 300; }
 	.bargraph_1#bar { height: 10px; border-radius: 5px; background-color: #dcdce5; overflow: hidden; position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; }
 	.bargraph_1#fill { position: absolute; display: inline-block; margin: 0; padding: 0; min-width: 2%; height: 100%; left: 0; top: 0; }
-	.bargraph_1#fill { min-width: 2%; background-color: green }
+	.bargraph_1#fill { min-width: 2%; background-color: #19C826 }
