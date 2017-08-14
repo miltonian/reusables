@@ -276,9 +276,17 @@ class Data {
 		}
 		$sectionkeys = array_keys( $convertdict );
 
-
 		foreach ( $sectionkeys as $k ) {
-			if( isset( $convertkeys[$k] ) ){ $convertdict[$convertkeys[$k]] = $convertdict[$k]; }
+			// if( isset( $convertkeys[$k] ) ){ $convertdict[$convertkeys[$k]] = $convertdict[$k]; }
+			if( isset( $convertkeys[$k] ) ){ 
+				if( is_array( $convertkeys[$k] ) ){
+					foreach ($convertkeys[$k] as $ck) {
+						$convertdict[$ck] = $convertdict[$k];
+					}
+				}else{
+					$convertdict[$convertkeys[$k]] = $convertdict[$k]; 
+				}
+			}
 		}
 
 		if( isset( $dict['value'] ) ){

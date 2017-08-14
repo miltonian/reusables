@@ -34,6 +34,9 @@ namespace Reusables;
 		$normal_cellname = $tabledict['cellname'];
 	}
 
+	$temp_tablearray = $tablearray; 
+	unset( $temp_tablearray['data_id'] );
+
 	// exit( json_encode( sizeof($tabledict[ $identifier . '_posts' ]) ) );
 
 ?>
@@ -44,7 +47,7 @@ namespace Reusables;
 <div class="<?php echo $identifier ?>">
 	<div class="table">
 		<?php 
-			for ( $i=0; $i < sizeof($tablearray ); $i++) { 
+			for ( $i=0; $i < sizeof($temp_tablearray ); $i++) { 
 				$postdict = $tablearray[$i];
 				$postkeys = array_keys( $postdict );
 				$post = [];
@@ -52,7 +55,19 @@ namespace Reusables;
 					$post[$pk] = [ "data_id"=> $identifier . '_posts' , "key"=>$pk, "index"=>$i ];
 				}
 				foreach ( $postkeys as $k ) {
-					if( isset( $convertkeys[$k] ) ){ $post[$convertkeys[$k]] = $postdict[$k]; }
+					// if( isset( $convertkeys[$k] ) ){ $post[$convertkeys[$k]] = $postdict[$k]; }
+					if( isset( $convertkeys[$k] ) ){ 
+						if( is_array( $convertkeys[$k] ) ){
+							foreach ($convertkeys[$k] as $ck) {
+								echo "<script>console.log('" . $ck . "')</script>";
+								$post[$ck] = $post[$k];
+							}
+						}else{
+							echo "<script>console.log('" . $convertkeys[$k] . "')</script>";
+							$post[$convertkeys[$k]] = $post[$k]; 
+						}
+						// $post[$convertkeys[$k] ]['key'] = $convertkeys[$k];
+					}
 				}
 				// exit( json_encode( $post ) );
 				$post['network_slug'] = ["data_id"=>"network_info", "key"=>"slug"];

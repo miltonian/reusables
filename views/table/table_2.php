@@ -36,7 +36,8 @@ if( isset($tabledict[ $identifier . '_posts' ]['value']) ){
 	$tablearray = $tabledict[ $identifier . '_posts' ];
 }
 
-// exit( json_encode( $tablearray ) );
+$temp_tablearray = $tablearray; 
+unset( $temp_tablearray['data_id'] );
 
 // ReusableClasses::checkRequired( $identifier, $tabledict, $required );
 // exit( json_encode( $tabledict[$identifier . '_posts'][0] ) );
@@ -58,7 +59,7 @@ if( isset($tabledict[ $identifier . '_posts' ]['value']) ){
 	<ul id="sortable">
 <?php } ?>
 		<?php 
-			for ($i=0; $i < sizeof($tablearray); $i++) { 
+			for ($i=0; $i < sizeof( $temp_tablearray ); $i++) { 
 				if($sortable){
 					?>
 
@@ -72,8 +73,20 @@ if( isset($tabledict[ $identifier . '_posts' ]['value']) ){
 				}
 				$postkeys = array_keys($post);
 				foreach ( $postkeys as $k ) {
-					if( isset( $convertkeys[$k] ) ){ $post[$convertkeys[$k]] = $post[$k]; }
+					if( isset( $convertkeys[$k] ) ){ 
+						if( is_array( $convertkeys[$k] ) ){
+							foreach ($convertkeys[$k] as $ck) {
+								echo "<script>console.log('" . $ck . "')</script>";
+								$post[$ck] = $post[$k];
+							}
+						}else{
+							echo "<script>console.log('" . $convertkeys[$k] . "')</script>";
+							$post[$convertkeys[$k]] = $post[$k]; 
+						}
+						// $post[$convertkeys[$k] ]['key'] = $convertkeys[$k];
+					}
 				}
+					// exit( json_encode( $post ) );
 				// exit( json_encode( Data::getValue( $post, 'title' ) ) );
 				$post['pre_slug'] = Data::getValue( $tabledict, 'pre_slug' );
 				if( isset( $tabledict['celldict'] ) ) {

@@ -321,10 +321,18 @@ class ReusableClasses {
 		$thisdict = [];
 		if ( Data::isAssoc( $result ) ) {
 			// is dict
+			if( $result == null ){
+				return [];
+			}
 			$thisdict = $result;
 		}else{
 			// is array
+			if( !isset($result[0]) ){
+				return [];
+			}
+
 			$thisdict = $result[0];
+
 		}
 		$allkeys = array_keys($thisdict);
 
