@@ -24,7 +24,7 @@ if (!isset($navdict['logolink'])) { $navdict['logolink'] = ""; }
 <div class='navbar_4 main <?php echo $identifier ?> mobilenav' style='background-color: white'>
 	<a class="navbar_4" id="brandlink" href='/<?php echo $navdict['logolink'] ?>'>
 		<?php if(isset($navdict['logo'])){ ?>
-			<img class='navbar_4 topbarlogo' src=<?php echo $navdict['logo'] ?> width="auto" height="auto">
+			<img class='navbar_4 topbarlogo' src='<?php echo $navdict['logo'] ?>' width="auto" height="auto">
 		<?php }else{ ?>
 			<h3 class="navbar_4" id="brandname"><?php echo $navdict['brandname'] ?></h3>
 		<?php } ?>
@@ -42,7 +42,7 @@ if (!isset($navdict['logolink'])) { $navdict['logolink'] = ""; }
 <div class='navbar_4 main <?php echo $identifier ?> desktopnav navbar-shadow' style='background-color: white; <?php if($isadmin){ echo "margin-top: 60px"; } ?>'>
 	<a href='/<?php echo $navdict['logolink'] ?>' class='navbar_4 logo-div'>
 		<?php if(isset($navdict['logo'])){ ?>
-			<img class='navbar_4 topbarlogo' src=<?php echo $navdict['logo'] ?> width="auto" height="auto">
+			<img class='navbar_4 topbarlogo' src='<?php echo $navdict['logo'] ?>' width="auto" height="auto">
 		<?php } ?>
 			<h3><?php echo $navdict['brandname'] ?></h3>
 
