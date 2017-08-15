@@ -20,6 +20,8 @@ namespace Reusables;
 	// exit( json_encode( $celldict['needed'] ) );
 	// exit( json_encode( Data::getValue( $celldict, 'needed' ) ) );
 
+	// exit( json_encode( $celldict['html_text'] ) );
+
 ?>
 
 <style>
@@ -41,10 +43,10 @@ namespace Reusables;
 		<div class="cell_fundraiser_1 words">
 			<div class="cell_fundraiser_1 text-container">
 				<a class="cell_fundraiser_1" id="titlelink" href="<?php echo $linkpath; ?>">
-					<h2 class="cell_fundraiser_1" id="title" style=""><?php if(isset($celldict['title'])){ echo Data::getValue( $celldict, 'title' ); } ?></h2>
+					<h2 class="cell_fundraiser_1" id="title" style=""><?php echo implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $celldict, 'title' ))), 0, 20) ); ?></h2>
 				</a>
 				<br>
-				<label class="cell_fundraiser_1" id="desc"><?php echo implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $celldict, 'html_text' ))), 0, 10) ); ?>... <a href="<?php echo $linkpath ?>">Learn More</a></label>
+				<label class="cell_fundraiser_1" id="desc"><?php echo implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $celldict, 'html_text' ))), 0, 20) ); ?>... <a href="<?php echo $linkpath ?>">Learn More</a></label>
 				<?php Data::addData( $celldict, $identifier . "_bargraph" ); ?>
 				<?php echo Section::make( "bargraph_1", $identifier . "_bargraph") ?>
 			</div>

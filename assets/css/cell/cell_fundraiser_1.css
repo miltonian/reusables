@@ -11,7 +11,7 @@
 
 .cell_fundraiser_1#titlelink { text-decoration: none; }
 
-.cell_fundraiser_1 label.title { font-weight: 500; }
+.cell_fundraiser_1#title { font-weight: 500; overflow: hidden; height: 66px; }
 
 .cell_fundraiser_1#desc { font-weight: 300 }
 
