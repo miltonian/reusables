@@ -16,17 +16,15 @@ class Input {
 
 	public static function fill( $dict, $key, $index, $type=null, $placeholder=null, $labeltext=null )
 	{
-
 		if( !$type ){
 			$type = self::getInputType( $key );
 		}
-
+		// echo json_encode( $placeholder );
 		if( !$placeholder ){ $placeholder = ucfirst( $key ); }
+		// exit( json_encode( $placeholder ) );
 		if( !$labeltext ){ $labeltext = ucfirst( $key ); }
 
-		return Input::make( 
-			$type, 
-			[
+		$inputdict = [
 				"placeholder"=>$placeholder,
 				"labeltext"=>$labeltext,
 				"background-image"=>"",
@@ -35,7 +33,11 @@ class Input {
 				"field_table"=>Data::getDefaultTableNameWithID( $dict[$key]['data_id'] ),
 				"field_colname"=>Data::getColName( $dict[$key] ),
 				"field_conditions"=>Data::getConditions( $dict[$key] )
-			],
+			];
+			// exit( json_encode( $inputdict ) );
+		Data::addData( $inputdict, $key . "_input" );
+		return Input::make( 
+			$type, 
 			$key . "_input"
 		);
 	}

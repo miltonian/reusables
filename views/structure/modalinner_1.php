@@ -19,7 +19,10 @@ namespace Reusables;
 <div class="<?php echo $identifier ?> modalinner_1 main">
 	<div class="modalinner_1 header">
 		<button class="modalinner_1" id="close">&#10006;</button>
-		<?php echo Header::make( "header_5", ["title"=>$structuredict['title']], "campaignedit-header" ); ?>
+		<?php 
+			Data::addData( ["title"=>$structuredict['title']], $identifier . "_modalinner_header" );
+			echo Header::make( "header_5", $identifier . "_modalinner_header" ); 
+		?>
 		
 	</div>
 	<div class="modalinner_1 body">

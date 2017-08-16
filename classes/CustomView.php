@@ -33,15 +33,15 @@ class CustomView {
 	public static function makeFormVars( $dict, $viewtypedict=null )
 	{
 		if( !isset( $dict['data_id'] ) ){
-			$data_id = \Reusables\Data::getDefaultDataID( $dict );
+			$data_id = Data::getDefaultDataID( $dict );
 		}else{
 			$data_id = $dict['data_id'];
 		}
 
-		$default_tablename = \Reusables\Data::getDefaultTableNameWithID( $data_id );
+		$default_tablename = Data::getDefaultTableNameWithID( $data_id );
 
 		if( isset($dict['index'] ) ){
-			$dict = \Reusables\Data::convertDataForArray( $data_id, $dict['index'] );
+			$dict = Data::convertDataForArray( $data_id, $dict['index'] );
 		}
 
 		if( $viewtypedict ){

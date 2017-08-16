@@ -25,24 +25,25 @@ if( !isset( $sectiondict['input_keys'] ) ){
 
 $input_onlykeys = [];
 
-
+$original_data_id = $sectiondict[array_keys($sectiondict)[0]]['data_id'];
 // exit( json_encode( $input_keydicts ) );
 
 
 extract( CustomView::makeFormVars( $sectiondict, "sectiondict" ) );
+// exit( "hey" );
 
 $steps = 1;
 
 $inputs = array();
 $i=0;
 foreach ($input_keys as $ik) {
-	// exit( json_encode( $input_keydicts ) );
+	// echo json_encode( $input_keydicts[ $ik ]['placeholder'] ) ;
 	$placeholder=null; $labeltext=null; $type=null;
 	if( isset( $input_keydicts[ $ik ]['step'] ) ){ $steps = $input_keydicts[ $ik ]['step']; }
 	if( isset( $input_keydicts[ $ik ]['placeholder'] ) ){ $placeholder = $input_keydicts[ $ik ]['placeholder']; }else{ $placeholder=null;}
 	if( isset( $input_keydicts[ $ik ]['labeltext'] ) ){ $labeltext = $input_keydicts[ $ik ]['labeltext']; }else{ $labeltext=null;}
 	if( isset( $input_keydicts[ $ik ]['type'] ) ){ $type = $input_keydicts[ $ik ]['type']; }else{ $type=null;}
-
+// exit( json_encode( $placeholder ) );
 	// if( !isset( $inputs['c' . $steps] ) ){ $inputs['c' . $steps] = array(); }
 	$thekey = $ik;
 if( is_numeric( $ik ) ){ $thekey = $input_keydicts[$ik]; }
@@ -102,26 +103,27 @@ array_push( $input_onlykeys, $thekey );
 	<?php } ?>
 
 	var dataarray = <?php echo json_encode( Data::getFullArray( $sectiondict ) ) ?>;
-	var formatteddata = <?php echo json_encode( Data::retrieveDataWithID( $data_id ) ) ?>;
+	var formatteddata = <?php echo json_encode( Data::retrieveDataWithID( $original_data_id ) ) ?>;
 	var identifier = "<?php echo $identifier ?>";
 
 	class <?php echo $identifier ?>Classes {
 		populateview(index=null){
-// alert( JSON.stringify( dataarray ) );
+			// alert( JSON.stringify( sectiondict ) );
 			for (var i = 0; i < input_keys.length; i++) {
 				var key = input_keys[i];
+				// alert( JSON.stringify( formatteddata['db_info']['colnames'][key] ) );
 				var colname = formatteddata['db_info']['colnames'][key];
 				var type = typearray[i];
 				if(type=="textarea"){
-					Reusable.updateTextArea( dataarray, "<?php echo $identifier ?>", "<?php echo $data_id ?>", key, key+"_input", colname, index );
+					Reusable.updateTextArea( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, key+"_input", colname, index );
 				}else if(type=="wysi"){
-					Reusable.updateWysi( dataarray, "<?php echo $identifier ?>", "<?php echo $data_id ?>", key, key+"_input", colname, index, i );
+					Reusable.updateWysi( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, key+"_input", colname, index, i );
 				}else if(type=="file_image"){
-					Reusable.updateFileImage( dataarray, "<?php echo $identifier ?>", "<?php echo $data_id ?>", key, key+"_input", colname, index );
+					Reusable.updateFileImage( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, key+"_input", colname, index );
 				}else if(type=="textfield"){
-					Reusable.updateTextField( dataarray, "<?php echo $identifier ?>", "<?php echo $data_id ?>", key, key+"_input", colname, index );
+					Reusable.updateTextField( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, key+"_input", colname, index );
 				}else if(type=="colorpicker"){
-					Reusable.updateColorPicker( dataarray, "<?php echo $identifier ?>", "<?php echo $data_id ?>", key, key+"_input", colname, index );
+					Reusable.updateColorPicker( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, key+"_input", colname, index );
 				}
 			}
 		}

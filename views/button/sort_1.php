@@ -5,7 +5,8 @@ namespace Reusables;
 
 <!-- <button class="<?php echo $identifier ?> sort_1"><?php echo Data::getValue( $buttondict, 'title' ) ?></button> -->
 <?php
-	echo Menu::make( "dropdown_1", $buttondict['dropdown_array'], $identifier . "_dropdown" );
+	Data::addData( $buttondict['dropdown_array'], $identifier . "_dropdown" );
+	echo Menu::make( "dropdown_1", $identifier . "_dropdown" );
 ?>
 
 <script>
@@ -22,11 +23,11 @@ $('.<?php echo $identifier ?>_dropdown.dropdown_1 .inner-dropdown-content a').cl
 
 	for( var i=0; i < sortarray.length; i++ ){
 		if(sortvalue.toLowerCase() == "all"){
-			$('.'+tableclass+' .'+tableclass+'_cell'+'.index_'+i).removeClass('hide');
+			$('.'+tableclass+' .'+tableclass+'_cell_'+i+'.index_'+i).removeClass('hide');
 		}else if(sortarray[i][sortkey] == sortvalue){
-			$('.'+tableclass+' .'+tableclass+'_cell'+'.index_'+i).removeClass('hide');
+			$('.'+tableclass+' .'+tableclass+'_cell_'+i+'.index_'+i).removeClass('hide');
 		}else{
-			$('.'+tableclass+' .'+tableclass+'_cell'+'.index_'+i).addClass('hide');
+			$('.'+tableclass+' .'+tableclass+'_cell_'+i+'.index_'+i).addClass('hide');
 		}
 		
 	}

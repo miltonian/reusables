@@ -10,6 +10,7 @@ namespace Reusables;
 
 $dropdownlist = $menudict['list'];
 $dropdownlist_keydicts = $dropdownlist;
+// exit( json_encode( $menudict ) );
 $dropdownlist_keys = array_keys($dropdownlist);
 
 $dropdownlist_onlykeys = [];

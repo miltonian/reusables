@@ -87,6 +87,9 @@ class Data {
 
 	public static function retrieveDataWithID( $identifier )
 	{
+		if( is_array( $identifier ) ){
+			return null;
+		}
 		if ( !isset( self::$alldata[ $identifier ] ) ) {
 			return null;
 		}else{
@@ -124,6 +127,10 @@ class Data {
 	public static function getDefaultTableNameWithID( $identifier )
 	{
 		$data = Data::retrieveDataWithID( $identifier );
+		// exit( json_encode( $data ) );
+		if( !isset($data['db_info']) ){
+			return "";
+		}
 		$tablenames = $data['db_info']['tablenames'];
 		$allkeys = array_keys($tablenames);
 		return $tablenames[$allkeys[0]];
@@ -168,6 +175,7 @@ class Data {
 			}
 		}else{
 			$thevalue = self::retrieveDataWithID( $pair['data_id'] );
+			// exit( json_encode( $thevalue['value'][0]['id'] ) );
 			if( $thevalue ){
 				$thevalue = $thevalue['value'][ $pair['key'] ];
 			}else{
@@ -205,6 +213,9 @@ class Data {
 
 	public static function getFullArray( $viewdict )
 	{
+		if( !is_array( $viewdict ) ){
+			$viewdict = Data::retrieveDataWithID( $viewdict );
+		}
 		$allkeys = array_keys($viewdict);
 		$dataidarray = array();
 

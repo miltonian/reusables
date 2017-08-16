@@ -9,8 +9,9 @@ class ReusableClasses {
 		var thisdict = [];
 			var thisdictvalue = [];
 			thisdict = dataarray[data_id];
+			// alert( JSON.stringify( data_id ) );
 			if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
-			// alert(JSON.stringify(thisdict['db_info']['tablenames'][key]))
+			// alert(JSON.stringify(index))
 		$('.' + identifier + ' .' + inputclass + ' input.field_value').val(thisdictvalue[key]);
 			$('.' + identifier + ' .' + inputclass + ' input.tablename').val(thisdict['db_info']['tablenames'][key]);
 			$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);

@@ -1,7 +1,7 @@
 <?php
 
 namespace Reusables;
-
+// exit( json_encode( $headerdict ) );
 ?>
 
 <style>
