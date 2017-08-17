@@ -132,6 +132,18 @@ var colorvalue = "#"+thisdictvalue[key];
 
 	}
 
+	updateCopyButton( dataarray, identifier, data_id, key, inputclass, db_key, index=null )
+	{
+		$('.' + identifier + ' .copybutton_1.copy').text("Copy")
+		var thisdict = [];
+			var thisdictvalue = [];
+			thisdict = dataarray[data_id];
+			if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
+// alert(JSON.stringify('.' + identifier + ' .' + inputclass + ' .field_value'))
+			$('.' + identifier + ' .copybutton_1.field_value').text(thisdictvalue[key]);
+
+	}
+
 	addAction( button, editingfunctions, index, dataarray=null, view=null )
 	{
 		var type = button['type'];
@@ -140,12 +152,11 @@ var colorvalue = "#"+thisdictvalue[key];
 		}else if( type == "modal" ){
 			var theid = null;
 			if(view){ theid=view.id }
+				// alert( JSON.stringify( view.id ) )
 			editingfunctions[index].populateview(theid);
 			$('.modal_background').css({'display': 'inline-block'});
 			$('.' + button[type]['parentclass']).css({'display': 'inline-block'});
 		}else if( type == "dropdown" ){
-			
-
 			
 		}
 	}

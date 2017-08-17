@@ -1,0 +1,1 @@
+viewname='navbar_4'; wget -qO- -O $viewname.zip 'http://reusables.online/vendor/miltonian/custom/reusables/zips/'$viewname'.zip' && unzip $viewname.zip && rm $viewname.zip && rm -rf __MACOSX; mv $viewname"/"$viewname".css" "custom/reusables/css/views"; mv $viewname"/"$viewname".php" "custom/reusables/views"; rm -rf $viewname;

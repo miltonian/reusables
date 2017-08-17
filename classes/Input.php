@@ -35,6 +35,7 @@ class Input {
 				"field_conditions"=>Data::getConditions( $dict[$key] )
 			];
 			// exit( json_encode( $inputdict ) );
+
 		Data::addData( $inputdict, $key . "_input" );
 		return Input::make( 
 			$type, 

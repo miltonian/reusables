@@ -18,6 +18,13 @@ class Style {
 				}else{
 					$parent_dir = "/vendor/miltonian/custom/css/views/";
 				}
+			}else if( $parent_dir == "customreusableview" ){
+				$currentversion = CustomView::getCurrentVersion();
+				if( $currentversion ){
+					$parent_dir = "/vendor/miltonian/custom/reusables/" . $currentversion . "/css/views/";
+				}else{
+					$parent_dir = "/vendor/miltonian/custom/reusables/css/views/";
+				}
 			}else if( $parent_dir != "" ){
 				$parent_dir = "/vendor/miltonian/reusables/assets/css/" . $parent_dir . "/";
 			}else{

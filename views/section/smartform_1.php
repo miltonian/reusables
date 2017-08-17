@@ -36,6 +36,7 @@ $steps = 1;
 
 $inputs = array();
 $i=0;
+// exit( json_encode( $input_keys['download_script'] ) );
 foreach ($input_keys as $ik) {
 	// echo json_encode( $input_keydicts[ $ik ]['placeholder'] ) ;
 	$placeholder=null; $labeltext=null; $type=null;
@@ -43,7 +44,7 @@ foreach ($input_keys as $ik) {
 	if( isset( $input_keydicts[ $ik ]['placeholder'] ) ){ $placeholder = $input_keydicts[ $ik ]['placeholder']; }else{ $placeholder=null;}
 	if( isset( $input_keydicts[ $ik ]['labeltext'] ) ){ $labeltext = $input_keydicts[ $ik ]['labeltext']; }else{ $labeltext=null;}
 	if( isset( $input_keydicts[ $ik ]['type'] ) ){ $type = $input_keydicts[ $ik ]['type']; }else{ $type=null;}
-// exit( json_encode( $placeholder ) );
+	// echo json_encode( $ik ) . ", " . json_encode( $input_keydicts[ $ik ]['viewtype'] ) . ". <br>";
 	// if( !isset( $inputs['c' . $steps] ) ){ $inputs['c' . $steps] = array(); }
 	$thekey = $ik;
 if( is_numeric( $ik ) ){ $thekey = $input_keydicts[$ik]; }
@@ -99,7 +100,11 @@ array_push( $input_onlykeys, $thekey );
 	var input_keys = <?php echo json_encode($input_onlykeys) ?>;
 	var typearray = [];
 	<?php foreach ($input_onlykeys as $k) { ?>
-		typearray.push( '<?php echo Input::getInputType( $k ) ?>' );
+		<?php if( $k == "download_script" ){ ?>
+			typearray.push( 'copybutton_1' );
+		<?php }else{ ?>
+			typearray.push( '<?php echo Input::getInputType( $k ) ?>' );
+		<?php } ?>
 	<?php } ?>
 
 	var dataarray = <?php echo json_encode( Data::getFullArray( $sectiondict ) ) ?>;
@@ -108,7 +113,8 @@ array_push( $input_onlykeys, $thekey );
 
 	class <?php echo $identifier ?>Classes {
 		populateview(index=null){
-			// alert( JSON.stringify( sectiondict ) );
+			// alert( JSON.stringify( index ) );
+				// alert( JSON.stringify( typearray ) )
 			for (var i = 0; i < input_keys.length; i++) {
 				var key = input_keys[i];
 				// alert( JSON.stringify( formatteddata['db_info']['colnames'][key] ) );
@@ -124,6 +130,8 @@ array_push( $input_onlykeys, $thekey );
 					Reusable.updateTextField( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, key+"_input", colname, index );
 				}else if(type=="colorpicker"){
 					Reusable.updateColorPicker( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, key+"_input", colname, index );
+				}else if(type=="copybutton_1"){
+					Reusable.updateCopyButton( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, key+"_input", colname, index );
 				}
 			}
 		}
