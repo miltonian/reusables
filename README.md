@@ -8,6 +8,14 @@
 
 ## Basic Guidelines and How-to
 
+## Setting Up
+	* in terminal, go to your project's root directory
+	* type: composer require miltonian/reusables
+	* press enter
+	* after that loads cd to the miltonian/reusables directory
+	* type: sh prepare_reusables.sh 
+	* press enter
+
 * write your own functions where you retrieve/deal with data in the /miltonian/custom/data directory with no namespace.
 * create pages in the views directory from the root directory.
 * add paths to pages in the index.php file
@@ -295,6 +303,16 @@ ADD OPTIONAL JS TO VIEWS
 
 
 
+MAKE CUSTOM CHANGES TO REUSABLE VIEW
+	#### Create some files
+		* create a new php file in /miltonian/custom/views/
+		* create a new css file with same name (except with .css) in /miltonian/custom/assets/css/
+		* create a new js file with same name (with .js) in /miltonian/custom/assets/js/
+		* if you want to add js before the html add a new file to /miltonian/custom/assets/js/before/
+	#### Copy some code
+		* copy the code of the reusable view from the php, css, js, and before/js files into the corresponding files you just created
+		* in the newly created php file, change all the main view dictionary (e.g. $navdict, $sectiondict, $headerdict, etc.) to $customviewdict
+	### Then make your changes!
 
 
 

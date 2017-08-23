@@ -26,8 +26,7 @@ if( !isset( $sectiondict['input_keys'] ) ){
 $input_onlykeys = [];
 
 $original_data_id = $sectiondict[array_keys($sectiondict)[0]]['data_id'];
-// exit( json_encode( $input_keydicts ) );
-
+// exit( json_encode( Data::getFullArray( $sectiondict ) ) );
 
 extract( CustomView::makeFormVars( $sectiondict, "sectiondict" ) );
 // exit( "hey" );
@@ -52,19 +51,25 @@ array_push( $input_onlykeys, $thekey );
 // exit( json_encode( $sectiondict ) );
 	array_push( 
 		$inputs, 
-		Input::fill( $sectiondict, $thekey, $i, $type, $placeholder, $labeltext )
+		Input::fill( $sectiondict, $thekey, $i, $type, $placeholder, $labeltext, $identifier  )
 	);
 	$i++;
 }
 
-	// exit( json_encode( $input_onlykeys ) );
+if( !isset( $sectiondict['formaction'] ) ){
+	$formaction = '/edit_view.php';
+}else{
+	$formaction = $sectiondict['formaction'];
+}
+// exit( json_encode( $original_data_id ) );
+
 ?>
 
 
 <style>
 </style>
 
-<form class='theform' method='post' action='/edit_view.php' enctype='multipart/form-data'>
+<form class='theform' method='post' action='<?php echo $formaction ?>' enctype='multipart/form-data'>
 <?php if( $ifnone_insert ){ ?>
 	<input type='hidden' name='ifnone_insert' value='1' >
 <?php } ?>
@@ -98,6 +103,9 @@ array_push( $input_onlykeys, $thekey );
 
 	var sectiondict = <?php echo json_encode($sectiondict) ?>;
 	var input_keys = <?php echo json_encode($input_onlykeys) ?>;
+	var data_id = "<?php echo $data_id ?>";
+	var original_data_id = "<?php echo $original_data_id ?>";
+	// alert( JSON.stringify( original_data_id ) );
 	var typearray = [];
 	<?php foreach ($input_onlykeys as $k) { ?>
 		<?php if( $k == "download_script" ){ ?>
@@ -108,6 +116,7 @@ array_push( $input_onlykeys, $thekey );
 	<?php } ?>
 
 	var dataarray = <?php echo json_encode( Data::getFullArray( $sectiondict ) ) ?>;
+// alert(JSON.stringify(dataarray))
 	var formatteddata = <?php echo json_encode( Data::retrieveDataWithID( $original_data_id ) ) ?>;
 	var identifier = "<?php echo $identifier ?>";
 
@@ -121,17 +130,17 @@ array_push( $input_onlykeys, $thekey );
 				var colname = formatteddata['db_info']['colnames'][key];
 				var type = typearray[i];
 				if(type=="textarea"){
-					Reusable.updateTextArea( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, key+"_input", colname, index );
+					Reusable.updateTextArea( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input", colname, index );
 				}else if(type=="wysi"){
-					Reusable.updateWysi( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, key+"_input", colname, index, i );
+					Reusable.updateWysi( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input", colname, index, i );
 				}else if(type=="file_image"){
-					Reusable.updateFileImage( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, key+"_input", colname, index );
+					Reusable.updateFileImage( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input", colname, index );
 				}else if(type=="textfield"){
-					Reusable.updateTextField( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, key+"_input", colname, index );
+					Reusable.updateTextField( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input", colname, index );
 				}else if(type=="colorpicker"){
-					Reusable.updateColorPicker( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, key+"_input", colname, index );
+					Reusable.updateColorPicker( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input", colname, index );
 				}else if(type=="copybutton_1"){
-					Reusable.updateCopyButton( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, key+"_input", colname, index );
+					Reusable.updateCopyButton( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input", colname, index );
 				}
 			}
 		}

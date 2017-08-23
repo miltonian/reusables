@@ -84,6 +84,7 @@ namespace Reusables;
 
 	$('.<?php echo $identifier ?>').off().click(function(e){
 		// e.preventDefault();
+		alert( JSON.stringify(thismodalclass ) );
 		Reusable.addAction( celldict, [thismodalclass], 0, dataarray, this );
 	});
 	

@@ -153,6 +153,7 @@ var colorvalue = "#"+thisdictvalue[key];
 			var theid = null;
 			if(view){ theid=view.id }
 				// alert( JSON.stringify( view.id ) )
+			// alert(JSON.stringify(editingfunctions));
 			editingfunctions[index].populateview(theid);
 			$('.modal_background').css({'display': 'inline-block'});
 			$('.' + button[type]['parentclass']).css({'display': 'inline-block'});
@@ -265,6 +266,30 @@ var colorvalue = "#"+thisdictvalue[key];
 			// Run your jQuery Code
 
 		};
+	}
+
+	addDropzone( classname, callback=null, paramname=null ){
+		
+		if(!paramname){
+			paramname='file';
+		}
+		$(classname).dropzone({ 
+			url: "/file/post", 
+			paramName: paramname,
+			drop: function(){ 
+
+			},
+			thumbnail: function(imgdict){
+				var dataURL = imgdict['dataURL'];
+				if(callback){
+					callback(classname, dataURL );
+				}
+			}
+		});
+		// var thedropzone = new Dropzone("."+classname, { url: "/file/post" });
+		// thedropzone.on("sending", function(file) { alert("Added file."); });
+
+
 	}
 
 

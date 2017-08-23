@@ -10,11 +10,6 @@ $rightdict = $sectiondict['rightdict'];
 ?>
 
 <style>
-.divinline_1.main { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; text-align: center; }
-	.divinline_1.wrapper{ display: inline-block; position: relative; margin: 0; padding: 0; }
-		.divinline_1.cells { display: inline-block; position: relative; margin: 0; padding: 0; width: 585px; height: 350px; float: left; cursor: pointer; overflow: hidden; }
-
-			.divinline_1.inner { display: inline-block; position: relative; margin: 0; padding: 0; float: left; height: 70%; background-position: center; background-size: 50% auto; background-repeat: no-repeat; top: 100%; }
 			.divinline_1.left .divinline_1.inner { width: <?php echo ( 100.0 / sizeof( $leftdict['morelinks'] ) ) ?>%; }
 			.divinline_1.right .divinline_1.inner { width: <?php echo ( 100.0 / sizeof( $rightdict['morelinks'] ) ) ?>%; }
 </style>

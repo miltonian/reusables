@@ -14,7 +14,7 @@ class Input {
 		return $View->render();
 	}
 
-	public static function fill( $dict, $key, $index, $type=null, $placeholder=null, $labeltext=null )
+	public static function fill( $dict, $key, $index, $type=null, $placeholder=null, $labeltext=null, $parentclass=null )
 	{
 		if( !$type ){
 			$type = self::getInputType( $key );
@@ -35,11 +35,15 @@ class Input {
 				"field_conditions"=>Data::getConditions( $dict[$key] )
 			];
 			// exit( json_encode( $inputdict ) );
-
-		Data::addData( $inputdict, $key . "_input" );
+$stuff = "";
+if($parentclass){
+	$stuff = $parentclass . "_";
+}
+// exit( json_encode( $stuff . $key . "_input" ) );
+		Data::addData( $inputdict, $stuff . $key . "_input" );
 		return Input::make( 
 			$type, 
-			$key . "_input"
+			$stuff . $key . "_input"
 		);
 	}
 

@@ -82,6 +82,7 @@ class ReusableClasses {
 		echo "
 			<script src='/vendor/miltonian/reusables/assets/js/ReusableClasses.js'></script>
 			<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+			<script src='/vendor/miltonian/reusables/assets/thirdparty/dropzone.js'></script>
 			<script>
 			let Reusables = new ReusableClasses();
 			Reusables.addJQuery();
