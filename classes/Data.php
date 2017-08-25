@@ -49,6 +49,8 @@ class Data {
 			$cell[$k] = [ "data_id"=>$data_id, "key"=>$k, "index"=>$index ];
 		}
 		$cell['index'] = $index;
+		
+		$cell = Data::convertKeys( $cell );
 
 		return $cell;
 	}
