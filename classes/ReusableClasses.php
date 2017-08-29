@@ -93,7 +93,8 @@ class ReusableClasses {
 	public static function testReusables()
 	{
 		ReusableClasses::startpage( "" );
-		echo Header::make( "header_3", ["title"=>"It works!"], "test_header" );
+		Data::addData(["title"=>"It works!"], "test_header" );
+		echo Header::make( "header_3", "test_header" );
 		ReusableClasses::endpage( "", "" );
 	}
 

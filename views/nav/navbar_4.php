@@ -21,7 +21,7 @@ if (!isset($navdict['logolink'])) { $navdict['logolink'] = ""; }
 
 </style>
 	
-<div class='navbar_4 main <?php echo $identifier ?> mobilenav' style='background-color: white'>
+<div class='navbar_4 main <?php echo $identifier ?> mobilenav'>
 	<a class="navbar_4" id="brandlink" href='/<?php echo $navdict['logolink'] ?>'>
 		<?php if(isset($navdict['logo'])){ ?>
 			<img class='navbar_4 topbarlogo' src='<?php echo $navdict['logo'] ?>' width="auto" height="auto">
@@ -39,7 +39,7 @@ if (!isset($navdict['logolink'])) { $navdict['logolink'] = ""; }
 	</div>
 </div>
 
-<div class='navbar_4 main <?php echo $identifier ?> desktopnav navbar-shadow' style='background-color: white; <?php if($isadmin){ echo "margin-top: 60px"; } ?>'>
+<div class='navbar_4 main <?php echo $identifier ?> desktopnav navbar-shadow' style='<?php if($isadmin){ echo "margin-top: 60px"; } ?>'>
 	<a href='/<?php echo $navdict['logolink'] ?>' class='navbar_4 logo-div'>
 		<?php if(isset($navdict['logo'])){ ?>
 			<img class='navbar_4 topbarlogo' src='<?php echo $navdict['logo'] ?>' width="auto" height="auto">

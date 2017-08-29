@@ -2,6 +2,13 @@
 
 namespace Reusables;
 
+$adsetlink = Data::getValue( $addict, "link");
+$adsetid = Data::getValue( $addict, "id" );
+$adsetimg = Data::getValue( $addict, "imagepath" );
+// $adsetimg = "http://experiencenash.com/reusables/uploads/ads/BV-300x600-Ad.png";
+
+// exit( json_encode( $addict ) );
+
 ?>
 
 <style>
@@ -10,8 +17,8 @@ namespace Reusables;
 
 
 <div class="<?php echo $identifier ?> adset_2" style='position: relative; display: inline-block; width: 100%; padding: 10px 0px; text-align: center;'>
-	<?php if($adsetlink!=""){ ?><a href="<?php echo $baseurlminimal ?>reusables/functions/adclicked.php?ad_id=<?php echo $adsetid ?>" ><?php } ?>
-	<img src=<?php echo $adsetimg ?> style='position: relative; display: inline-block;'>
+	<?php if($adsetlink!=""){ ?><a href="/reusables/functions/adclicked.php?ad_id=<?php echo $adsetid ?>" ><?php } ?>
+	<img src=<?php echo $adsetimg ?> style='position: relative; display: inline-block; width: 100%;'>
 	<?php if($adsetlink!=""){ echo '</a>'; } ?>
 </div>
 
