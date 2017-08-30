@@ -42,6 +42,9 @@ class Data {
 	public static function formatCellWithDefaultData( $data_id, $index )
 	{
 		$data = self::retrieveDataWithID( $data_id );
+		if( !isset( $data['value'][$index] ) ){
+			return null;
+		}
 		$dict = $data['value'][$index];
 		$allkeys = array_keys( $dict );
 		$cell = [];
