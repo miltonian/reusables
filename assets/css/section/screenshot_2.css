@@ -1,0 +1,4 @@
+
+.screenshot_2.main { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; }
+	.screenshot_2.iphone { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; padding-bottom: 203.5%; background-image: url('http://sites.superfanu.com/bbnrewards.com/download/img/iphone-frame.png'); background-size: contain; background-repeat: no-repeat; background-position: center; }
+	.screenshot_2.picture { display: inline-block; position: absolute; margin: 0; padding: 0; width: 86%; height: 100%; background-position: center; background-size: calc(100% + 2px); background-repeat: no-repeat; left: 50.3%; transform: translateX(-50%); top: 0px; }

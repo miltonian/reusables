@@ -8,7 +8,7 @@ class CustomData {
 
 	public static function call( $classname, $func, $vars )
 	{
-		require_once 'vendor/miltonian/custom/data/' . $classname . ".php";
+		require_once BASE_DIR . '/vendor/miltonian/custom/data/' . $classname . ".php";
 
 		if( sizeof( $vars ) > 0 ){
 			return call_user_func_array($classname . "::" . $func, $vars );
