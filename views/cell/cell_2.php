@@ -32,6 +32,11 @@ namespace Reusables;
 	// echo json_encode($cellindex);
 	// exit(json_encode($cellindex));
 
+	$description = implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $celldict, 'html_text' ))), 0, 10) ) . "...";
+	if( $description == "..." ){
+		$description = "";
+	}
+
 ?>
 
 <style>
@@ -62,7 +67,7 @@ namespace Reusables;
 							<label class="cell_2 title" style=""><?php echo Data::getValue( $celldict, 'title' ); ?></label>
 						</a>
 						<br>
-						<label class="cell_2 grey-label"><?php echo implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $celldict, 'html_text' ))), 0, 10) ); ?>...</label>
+						<label class="cell_2 grey-label"><?php echo $description ?></label>
 					</div>
 				</div>
 			</div>
@@ -84,7 +89,7 @@ namespace Reusables;
 
 	$('.<?php echo $identifier ?>').off().click(function(e){
 		// e.preventDefault();
-		alert( JSON.stringify(thismodalclass ) );
+		// alert( JSON.stringify(thismodalclass ) );
 		Reusable.addAction( celldict, [thismodalclass], 0, dataarray, this );
 	});
 	
