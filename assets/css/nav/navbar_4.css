@@ -17,7 +17,7 @@
 	.navbar_4.dropdown-content a.navbar_4#link { color: #333333; padding: 30px 20px; text-decoration: none; display: block; font-size: 0.7em; border-bottom: 1px solid #e0e0e0; padding: 15px 0; font-size: 15px; }
 		.navbar_4.desktopnav .navbar_4.dropdown-content { background: white; width: calc(100% - 40px); box-shadow: none; margin-top: 60px; }
 	/*.navbar_4:hover{ background-color: rgba(124,199,192, 0.6); }*/
-	.navbar_4:hover{ background-color: rgba(100,100,100,0.1); }
+	.navbar_4.page:hover{ background-color: rgba(100,100,100,0.1); }
 
 .navbar_4.menubtn { width: auto; margin-right: 30px; height: 50%; top: 50% !important; transform: translateY(-50%); float: right; cursor: pointer; position: absolute; display: inline-block; }
 

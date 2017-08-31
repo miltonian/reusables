@@ -56,7 +56,7 @@ if (!isset($navdict['logolink'])) { $navdict['logolink'] = ""; }
 		$button = "";
 		foreach ($navbuttons as $b) {
 			// exit( json_encode( $b ) );
-			$button = "<div class='navbar_4 " . $b['classname'] . " wrapper ";
+			$button = "<div class='navbar_4 page " . $b['classname'] . " wrapper ";
 			if(isset($b['buttons'])){
 				$button .= "has_dropdown";
 			}
