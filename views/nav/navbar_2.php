@@ -27,7 +27,8 @@ $categories = Data::getValue( $navdict, 'categories' );
 
 // exit( json_encode( $navdict ) );
 
-echo Menu::make( "menuview_1", $menudict, "menuview1");
+Data::addData( $menudict, "menuview1" );
+echo Menu::make( "menuview_1", "menuview1");
 
 ?>
 

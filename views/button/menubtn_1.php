@@ -68,9 +68,9 @@ var menuopen=false;
 		// $('.<?php echo $identifier ?> .bar-single.3').animate({'top': fromtop3}, 300);
 		// setTimeout(function(){$('.<?php echo $identifier ?> label').text(menutext);}, 200);
 		
-		$('.menuview1').css({'display': 'inline-block', 'left': '0px'});
-		$('.menuview1').animate({'opacity': '1'});
-		$('.menuview1 .container').animate({'left': '0px'});
+		$('.menuview_1').css({'display': 'inline-block', 'left': '0px'});
+		$('.menuview_1').animate({'opacity': '1'});
+		$('.menuview_1 .container').animate({'left': '0px'});
 	});
 </script>
 
