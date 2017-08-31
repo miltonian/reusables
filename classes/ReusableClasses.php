@@ -3,7 +3,7 @@
 namespace Reusables;
 
 if( !defined( 'PROJECT_ROOT' ) ){
-	define( 'PROJECT_ROOT', "/" );
+	define( 'PROJECT_ROOT', "" );
 }
 
 class ReusableClasses {
