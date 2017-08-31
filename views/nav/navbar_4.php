@@ -36,7 +36,7 @@ if (!isset($navdict['logolink'])) { $navdict['logolink'] = ""; }
 	<?php } ?>
 	<div class='navbar_4 dropdown-content'>
 		<?php foreach ($navbuttons as $b) { ?>
-			<a href='/<?php echo $b['slug'] ?>'><?php if(isset($b['imagepath'])){ "<img src='".$b['imagepath']."'>"; }else if(isset($b['emoji'])){ echo $b['emoji']; }else{ echo $b['name']; } ?></a>
+			<a href='<?php echo $b['slug'] ?>'><?php if(isset($b['imagepath'])){ "<img src='".$b['imagepath']."'>"; }else if(isset($b['emoji'])){ echo $b['emoji']; }else{ echo $b['name']; } ?></a>
 		<?php } ?>
 	</div>
 </div>
@@ -61,7 +61,7 @@ if (!isset($navdict['logolink'])) { $navdict['logolink'] = ""; }
 				$button .= "has_dropdown";
 			}
 			$button .= " '> ";
-			$button .= "<a href='/" . $b['slug'] . "' class='navbar_4 topbar-button'>"; 
+			$button .= "<a href='" . $b['slug'] . "' class='navbar_4 topbar-button'>"; 
 			if( isset( $b['imagepath'] ) ){ 
 				$button .= "<img src='" . $b['imagepath'] . "'>"; 
 			}if( isset( $b['emoji'] ) ){ 
@@ -73,7 +73,7 @@ if (!isset($navdict['logolink'])) { $navdict['logolink'] = ""; }
 			if(isset($b['buttons'])){
 				$button .= "<div class='navbar_4 dropdown-content'>";
 					foreach ($b['buttons'] as $s) {
-						$button .= "<a class='navbar_4' id='link' href='/" . $s['slug'] . "'>";
+						$button .= "<a class='navbar_4' id='link' href='" . $s['slug'] . "'>";
 						if(isset($s['imagepath'])){ 
 							$button .= "<img src='" . $s['imagepath'] . "'>"; 
 						}else if(isset($s['emoji'])){ 

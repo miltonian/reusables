@@ -21,11 +21,11 @@ namespace Reusables;
 				<a href="#" class="drop-down"><li><label><?php echo $p['name'] ?></label></li></a>
 				<ul class="tags-drop">
 					<?php foreach ($p['buttons'] as $c) { ?>
-						<a href="/<?php echo $c['slug'] ?>"><li><label><?php echo $c['name'] ?></label></li></a>
+						<a href="<?php echo $c['slug'] ?>"><li><label><?php echo $c['name'] ?></label></li></a>
 					<?php } ?>
 				</ul>
 			<?php }else{ ?>
-				<a href="/<?php echo $p['slug']; ?>"><li><label><?php echo $p['name'] ?></label></li></a>
+				<a href="<?php echo $p['slug']; ?>"><li><label><?php echo $p['name'] ?></label></li></a>
 			<?php } ?>
 		<?php } ?>
 			<!-- <a href="/"><li><label>HOME</label></li></a>
