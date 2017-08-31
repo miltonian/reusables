@@ -20,7 +20,7 @@ if (!isset($navdict['logolink'])) { $navdict['logolink'] = ""; }
 <style>
 
 </style>
-	
+
 <div class='navbar_4 main <?php echo $identifier ?> mobilenav'>
 	<a class="navbar_4" id="brandlink" href='/<?php echo $navdict['logolink'] ?>'>
 		<?php if(isset($navdict['logo'])){ ?>
@@ -104,6 +104,9 @@ if (!isset($navdict['logolink'])) { $navdict['logolink'] = ""; }
 		<a href='/<?php echo $b['slug'] ?>' class='topbar-button'><?php if(isset($b['imagepath'])){ echo "<img src='".$b['imagepath']."'>"; }else if(isset($b['emoji'])){ echo $b['emoji']; }else{ echo $b['name']; } ?></a>
 	<?php } ?> -->
 </div>
+
+
+<div class="navbar_4 spacing"></div>
 
 
 

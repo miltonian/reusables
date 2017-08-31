@@ -23,6 +23,8 @@ $menudict = [
 	"pages" => $navdict['pages'],
 ];
 
+$categories = Data::getValue( $navdict, 'categories' );
+
 // exit( json_encode( $navdict ) );
 
 echo Menu::make( "menuview_1", $menudict, "menuview1");
@@ -57,9 +59,9 @@ echo Menu::make( "menuview_1", $menudict, "menuview1");
 				<?php echo Button::make( "menubtn_1", [], "menubtn" ); ?>
 			</div>
 
-			<?php if( sizeof( $navdict['categories'] ) > 0 ){ ?>
+			<?php if( $categories != "" ){ ?>
 				<div class='navbar_2 categories-wrapper'>
-				<?php foreach ($navdict['categories'] as $c) { ?>
+				<?php foreach ($categories as $c) { ?>
 					<a href="<?php echo '/'.$c['id'] . '/' . preg_replace('/\PL/u', '', $c['name']); ?>" 
 						id="<?php echo $c['id'] ?>" 
 						class="navbar_2 category category-btn 1 sortorder_1 featuredsectionid_<?php echo $featuredsectionid ?>"><?php echo $c['name'] ?></a>

@@ -35,6 +35,7 @@
 @media (min-width: 768px) {
 	.navbar_4.mobilenav {display: none;}
 	.navbar_4.desktopnav {display: inline-block;}
+	.navbar_4.spacing { height: 60px; }
 }
 @media (min-width: 992px) {
 
