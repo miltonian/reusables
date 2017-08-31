@@ -6,6 +6,8 @@ if(!isset($isadmin)){ $isadmin=false; }
 $navbuttons = array();
 if(isset($navdict['pages'])){ $navbuttons = $navdict['pages']; }
 
+// exit( json_encode( $navbuttons ) );
+
 $required = array(
 	"pages"=>array("slug", "name|imagepath|emoji"), 
 	"logo|brandname"=>"",  
@@ -53,6 +55,7 @@ if (!isset($navdict['logolink'])) { $navdict['logolink'] = ""; }
 		$rightbuttons = array();
 		$button = "";
 		foreach ($navbuttons as $b) {
+			// exit( json_encode( $b ) );
 			$button = "<div class='navbar_4 " . $b['classname'] . " wrapper ";
 			if(isset($b['buttons'])){
 				$button .= "has_dropdown";
