@@ -51,12 +51,18 @@ echo Menu::make( "menuview_1", $menudict, "menuview1");
 				<h6 class="navbar_2 tagline"><?php echo $tagline ?></h6>
 			</a>
 			<div class="navbar_2 search-container" style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%);">
-				<?php echo Button::make( "searchbar_1", [], "searchbar" ); ?>
+				<?php 
+					Data::addData( [], $identifier . "_searchbar" );
+					echo Button::make( "searchbar_1", $identifier . "_searchbar" ); 
+				?>
 			</div>
 		</div>
 		<div class="navbar_2 subnav">
 			<div style="display: inline-block; position: absolute; float: left; margin-left: 8px; left: 8px;">
-				<?php echo Button::make( "menubtn_1", [], "menubtn" ); ?>
+				<?php 
+					Data::addData( [], $identifier . "_menubtn");
+					echo Button::make( "menubtn_1", $identifier . "_menubtn" ); 
+				?>
 			</div>
 
 			<?php if( $categories != "" ){ ?>
