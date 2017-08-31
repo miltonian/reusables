@@ -10,25 +10,26 @@ class Style {
 	{
 		if ( !isset( self::$allcss[ $file ] ) ) {
 			self::$allcss[ $file ] = true;
+			// exit( json_encode( PROJECT_ROOT ) );
 			// echo "<link rel=stylesheet href='/vendor/miltonian/reusables/assets/css/" . $parent_dir . "/" . $file . ".css' type='text/css'>";
 			if( $parent_dir == "custom" ){
 				$currentversion = CustomView::getCurrentVersion();
 				if( $currentversion ){
-					$parent_dir = "/vendor/miltonian/custom/" . $currentversion . "/css/views/";
+					$parent_dir = PROJECT_ROOT . "/vendor/miltonian/custom/" . $currentversion . "/css/views/";
 				}else{
-					$parent_dir = "/vendor/miltonian/custom/css/views/";
+					$parent_dir = PROJECT_ROOT . "/vendor/miltonian/custom/css/views/";
 				}
 			}else if( $parent_dir == "customreusableview" ){
 				$currentversion = CustomView::getCurrentVersion();
 				if( $currentversion ){
-					$parent_dir = "/vendor/miltonian/custom/reusables/" . $currentversion . "/css/views/";
+					$parent_dir = PROJECT_ROOT . "/vendor/miltonian/custom/reusables/" . $currentversion . "/css/views/";
 				}else{
-					$parent_dir = "/vendor/miltonian/custom/reusables/css/views/";
+					$parent_dir = PROJECT_ROOT . "/vendor/miltonian/custom/reusables/css/views/";
 				}
 			}else if( $parent_dir != "" ){
-				$parent_dir = "/vendor/miltonian/reusables/assets/css/" . $parent_dir . "/";
+				$parent_dir = PROJECT_ROOT . "/vendor/miltonian/reusables/assets/css/" . $parent_dir . "/";
 			}else{
-				$parent_dir = "/vendor/miltonian/reusables/assets/css/";
+				$parent_dir = PROJECT_ROOT . "/vendor/miltonian/reusables/assets/css/";
 			}
 			echo "<link rel=stylesheet href='" . $parent_dir . $file . ".css' type='text/css'>";
 		}
