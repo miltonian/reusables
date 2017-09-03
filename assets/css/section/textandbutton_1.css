@@ -1,0 +1,17 @@
+.textandbutton_1.main { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; text-align: center; }
+
+@media( min-width: 0px ) {
+	.intro .header_5.main { padding: 20px 0; }
+	.intro .header_5#title { font-size: 30px; }
+}
+@media( min-width: 768px ) {
+	.intro .header_5.main { padding: 20px 40px; }
+	.intro .header_5#title { font-size: 40px; }
+}
+
+/*.intro.main { margin-top: 100px; }*/
+/*.getstarted.main { text-align: left; }*/
+	.intro .header_5#title, .getstarted .header_5#title { color: #fff; text-transform: none; font-weight: 300; margin-bottom: 20px; }
+
+.textandbutton_1.link { display: inline-block; position: relative; margin: 0; padding: 0; }
+.textandbutton_1.button { display: inline-block; position: relative; margin: 0; padding: 15px 60px; background-color: white; color: #000858; border: 0; border-radius: 0px; font-weight: 300; font-size: 20px; left: calc(50% - 0px); transform: translateX(-50%); color: #333; }

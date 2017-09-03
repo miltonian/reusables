@@ -23,6 +23,7 @@ if (!isset($navdict['logolink'])) { $navdict['logolink'] = ""; }
 
 </style>
 
+<div class="navbar_4 <?php echo $identifier ?> all">
 <div class='navbar_4 main <?php echo $identifier ?> mobilenav'>
 	<a class="navbar_4" id="brandlink" href='/<?php echo $navdict['logolink'] ?>'>
 		<?php if(isset($navdict['logo'])){ ?>
@@ -111,6 +112,8 @@ if (!isset($navdict['logolink'])) { $navdict['logolink'] = ""; }
 
 <div class="navbar_4 spacing"></div>
 
+</div>
+
 
 
 <script>
@@ -131,7 +134,7 @@ if (!isset($navdict['logolink'])) { $navdict['logolink'] = ""; }
 	$(document).ready(function(){
 		window.onscroll = function(ev) {
 			$('.navbar_4.mobilenav .navbar_4.dropdown-content').css('display','none');
-			$('.navbar_4.mobilenav .navbar_4.dropdown').css('background-color', 'white');
+			$('.navbar_4.mobilenav .navbar_4.dropdown').css('background-color', 'transparent');
 		};
 	});
 		

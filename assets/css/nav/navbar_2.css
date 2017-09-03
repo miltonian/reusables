@@ -1,3 +1,4 @@
+.navbar_2.main { width: 100%; }
 .navbar_2.container { position: relative;  display: inline-block; margin: 0; padding: 0; width: 100%; }
 	.navbar_2.main-content { position: relative;  display: inline-block; margin: 0; padding: 0; width: 100%; height: 90px; background-color: white; border-bottom: 1px solid #cecece; }	
 
