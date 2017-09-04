@@ -44,7 +44,7 @@ namespace Reusables;
 
 
 
-<div id="<?php echo $cellindex ?>" class="cell_2 main <?php echo $identifier ?> <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo $mediatype; } ?> index_<?php echo $cellindex ?>" >
+<div class="cell_2 main <?php echo $identifier ?> index_<?php echo $cellindex ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo $mediatype; } ?> index_<?php echo $cellindex ?>" >
 	<div class="cell_2 container">
 		<div style="display: inline-block; width: 100%;">
 			<div>
