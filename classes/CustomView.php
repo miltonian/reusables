@@ -6,7 +6,7 @@ class CustomView {
 
 	protected static $currentversion = null;
 
-	public static function make( $file, $data, $identifier )
+	public static function make( $file, $identifier )
 	{
 		// ReusableClasses::addfile( "CustomView", $file );
 		$custompath = 'custom/views/';
@@ -15,6 +15,7 @@ class CustomView {
 		}
 		ReusableClasses::addfile( "custom", $file );
 		$View = View::factory( $custompath . $file );
+		$data = Data::retrieveDataWithID( $identifier );
 		$View->set( 'customviewdict', $data );
 		$View->set( 'identifier', $identifier );
 		return $View->render();
