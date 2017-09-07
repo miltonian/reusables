@@ -52,13 +52,15 @@ class ReusableClasses {
 	}
 
 
-	public static function endpage( $parent_dir, $page )
+	public static function endpage( $parent_dir, $page, $endbody=true, $addjquery=true )
 	{
-		echo "</body>";
+		if( $endbody ){
+			echo "</body>";
+		}
 		$output = ob_get_contents();
 		ob_end_clean();
 		ReusableClasses::addcss();
-		ReusableClasses::addReusableJS();
+		ReusableClasses::addReusableJS( $addjquery );
 		ReusableClasses::addbeforejs();
 
 		// exit( json_encode( $page ) );
@@ -81,17 +83,23 @@ class ReusableClasses {
 		ReusableClasses::addjs();
 	}
 
-	public static function addReusableJS()
+	public static function addReusableJS( $addjquery )
 	{
 		echo "
 			<script src='/vendor/miltonian/reusables/assets/js/ReusableClasses.js'></script>
-			<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 			<script src='/vendor/miltonian/reusables/assets/thirdparty/dropzone.js'></script>
 			<script>
-			let Reusables = new ReusableClasses();
-			Reusables.addJQuery();
+
+			if ( typeof ReusableClasses === 'function' ){
+				let Reusables = new ReusableClasses();
+				Reusables.addJQuery();
+			}
 			</script>
 		";
+
+		if( $addjquery ){
+			echo "<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>";
+		}
 	}
 
 	public static function testReusables()
