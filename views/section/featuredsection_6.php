@@ -58,12 +58,15 @@ $('.featuredsection_6').click(function(e){
 			window.open(editingdict[type]);
 		}else if( type == "modal" ){
 			// var theclasses = $.extend( { editingdict[type]['modalclass']+Classes; } );
-			
-			let modalclasses = new <?php echo $sectiondict['editing']['modal']['modalclass'] ?>Classes();
-			// modalclass.populateview( $(this).id );
-			modalclasses.populateview();
-			$('.modal_background').css({'display': 'inline-block'});
-			$('.' + editingdict[type]['parentclass']).css({'display': 'inline-block'});
+			<?php if( isset( $sectiondict['editing'] ) ) { ?>
+
+				let modalclasses = new <?php echo $sectiondict['editing']['modal']['modalclass'] ?>Classes();
+				// modalclass.populateview( $(this).id );
+				modalclasses.populateview();
+				$('.modal_background').css({'display': 'inline-block'});
+				$('.' + editingdict[type]['parentclass']).css({'display': 'inline-block'});
+				
+			<?php } ?>
 		}else if( type == "popview" ){
 
 		}

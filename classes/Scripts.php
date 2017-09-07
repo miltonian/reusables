@@ -44,7 +44,9 @@ class Scripts {
 			";
 
 			echo "<script>
-				" . $file . "_start();
+				if (typeof " . $file . "_start == 'function') { 
+					" . $file . "_start();
+				}
 			</script>";
 		}
 
