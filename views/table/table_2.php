@@ -14,14 +14,6 @@ namespace Reusables;
 		$sortable = $tabledict['sortable']; 
 	}
 
-	if( !isset($tabledict['convert_keys'])){ 
-		$convertkeys = false; 
-	}else { 
-		$convertkeys = $tabledict['convert_keys']; 
-	}
-
-	// exit( json_encode( $convertkeys ) );
-
 $required = array(
 	 $identifier . '_posts' =>array("link", "name|imagepath|emoji"), 
 	"cellactions"=>"",  
@@ -71,23 +63,9 @@ unset( $temp_tablearray['data_id'] );
 				}else{
 					$post = Data::getValue( $tablearray, $i );
 				}
-				$postkeys = array_keys($post);
-				foreach ( $postkeys as $k ) {
-					if( isset( $convertkeys[$k] ) ){ 
-						if( is_array( $convertkeys[$k] ) ){
-							foreach ($convertkeys[$k] as $ck) {
-								echo "<script>console.log('" . $ck . "')</script>";
-								$post[$ck] = $post[$k];
-							}
-						}else{
-							echo "<script>console.log('" . $convertkeys[$k] . "')</script>";
-							$post[$convertkeys[$k]] = $post[$k]; 
-						}
-						// $post[$convertkeys[$k] ]['key'] = $convertkeys[$k];
-					}
-				}
-					// exit( json_encode( $post ) );
-				// exit( json_encode( Data::getValue( $post, 'title' ) ) );
+
+				$post = Data::convertKeysInTable( $tabledict, $post );
+
 				$post['pre_slug'] = Data::getValue( $tabledict, 'pre_slug' );
 				if( isset( $tabledict['celldict'] ) ) {
 					$post = array_merge( $post, $tabledict['celldict'] );

@@ -298,9 +298,13 @@ if ( typeof ReusableClasses !== 'function' )
 
 
 	}
+	var Reusable = new ReusableClasses();
 }
 
-if ( typeof ReusableClasses === 'function' )
-{
-	let Reusable = new ReusableClasses();
-}
+
+	// alert( JSON.stringify( typeof ReusableClasses ) );
+// if ( typeof ReusableClasses === 'function' )
+// {
+
+
+// }

@@ -59,11 +59,9 @@ namespace Reusables;
 					if( isset( $convertkeys[$k] ) ){ 
 						if( is_array( $convertkeys[$k] ) ){
 							foreach ($convertkeys[$k] as $ck) {
-								echo "<script>console.log('" . $ck . "')</script>";
 								$post[$ck] = $post[$k];
 							}
 						}else{
-							echo "<script>console.log('" . $convertkeys[$k] . "')</script>";
 							$post[$convertkeys[$k]] = $post[$k]; 
 						}
 						// $post[$convertkeys[$k] ]['key'] = $convertkeys[$k];

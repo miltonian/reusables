@@ -313,6 +313,31 @@ class Data {
 		return $dict;
 	}
 
+	public static function convertKeysInTable( $tabledict, $post )
+	{
+		if( !isset($tabledict['convert_keys'])){ 
+			$convertkeys = false; 
+		}else { 
+			$convertkeys = $tabledict['convert_keys']; 
+		}
+
+		$postkeys = array_keys($post);
+		foreach ( $postkeys as $k ) {
+			if( isset( $convertkeys[$k] ) ){ 
+				if( is_array( $convertkeys[$k] ) ){
+					foreach ($convertkeys[$k] as $ck) {
+						$post[$ck] = $post[$k];
+					}
+				}else{
+					$post[$convertkeys[$k]] = $post[$k]; 
+				}
+				// $post[$convertkeys[$k] ]['key'] = $convertkeys[$k];
+			}
+		}
+
+		return $post;
+	}
+
 
 
 }

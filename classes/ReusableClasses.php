@@ -80,6 +80,7 @@ class ReusableClasses {
 		}
 		// echo "<link rel='stylesheet' type='text/css' href='/vendor/miltonian/custom/css/pages/" . basename($page, '.php') . ".css'>";
 		echo $output;
+
 		ReusableClasses::addjs();
 	}
 

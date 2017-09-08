@@ -20,12 +20,6 @@ namespace Reusables;
 		$adarray = $tabledict['ads']; 
 	}
 
-	if( !isset($tabledict['convert_keys'])){ 
-		$convertkeys = false; 
-	}else { 
-		$convertkeys = $tabledict['convert_keys']; 
-	}
-
 	// exit( json_encode( $convertkeys ) );
 
 $required = array(
@@ -82,21 +76,9 @@ unset( $temp_tablearray['data_id'] );
 							}else{
 								$post = Data::getValue( $adarray, $adindex );
 							}
-							$postkeys = array_keys($post);
-							foreach ( $postkeys as $k ) {
-								if( isset( $convertkeys[$k] ) ){ 
-									if( is_array( $convertkeys[$k] ) ){
-										foreach ($convertkeys[$k] as $ck) {
-											echo "<script>console.log('" . $ck . "')</script>";
-											$post[$ck] = $post[$k];
-										}
-									}else{
-										echo "<script>console.log('" . $convertkeys[$k] . "')</script>";
-										$post[$convertkeys[$k]] = $post[$k]; 
-									}
-									// $post[$convertkeys[$k] ]['key'] = $convertkeys[$k];
-								}
-							}
+
+							$post = Data::convertKeysInTable( $tabledict, $post );
+
 								// exit( json_encode( $post ) );
 							// exit( json_encode( Data::getValue( $post, 'title' ) ) );
 							$post['pre_slug'] = Data::getValue( $adarray, 'pre_slug' );
