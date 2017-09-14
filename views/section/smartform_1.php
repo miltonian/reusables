@@ -129,7 +129,7 @@ if( !isset( $sectiondict['formaction'] ) ){
 	<input type='hidden' name='ifnone_insert' value='1' >
 <?php } ?>
 <div class="<?php echo $identifier ?> smartform_1 main">
-	<div class='thecontainer' style='text-align: left; margin-top: 10px; margin-bottom: 30px; text-align: center;'>
+	<div class='thecontainer' style='text-align: left; margin-top: 10px; margin-bottom: 0px; text-align: center;'>
 		<input type="hidden" name="goto" value="<?php echo Data::getValue( $sectiondict, 'goto' ) ?>">
 			<?php 
 
@@ -197,6 +197,14 @@ if( !isset( $sectiondict['formaction'] ) ){
 						Reusable.updateCopyButton( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input_"+i, colname, index );
 					}
 				}
+
+				<?php if( $steps > 1 ) { ?>
+					$('.main_with_hidden.next').css({'display': 'inline-block'});
+					$('.main_with_hidden.save').css({'display': 'none'});
+				<?php } else { ?>
+					$('.main_with_hidden.save').css({'display': 'inline-block'});
+					$('.main_with_hidden.next').css({'display': 'none'});
+				<?php } ?>
 			}
 		}
 
