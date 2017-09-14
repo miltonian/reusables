@@ -1,9 +1,9 @@
-.main_with_hidden.main { position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; overflow: hidden; }
-	.main_with_hidden.header { position: relative; display: inline-block; margin: 0; padding: 10px 0; width: 100%; }
+.main_with_hidden.main { position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; /*overflow: hidden; height: 100%;*/ }
+	.main_with_hidden.header { position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; }
 	.main_with_hidden.body { position: relative; display: inline-block; margin: 0; padding: 10px 0; width: 100%; }
 	.main_with_hidden.column { position: absolute; display: inline-block; margin: 0; padding: 0; width: 100%; left: 100%; top: 0; margin-top: 0px;}
 		.main_with_hidden.column.c1 { left: 0; position: relative; }
-	.main_with_hidden#close { display: inline-block; position: absolute; margin: 0; padding: 0; width: 40px; height: 40px; background: transparent; border-radius: 50%; border: 0px solid #efefef; font-size: 15px; top: 5px; cursor: pointer; z-index: 99; }
+	.main_with_hidden#close { display: inline-block; position: absolute; margin: 0; padding: 0; width: 40px; height: 60px; background: transparent; border-radius: 50%; border: 0px solid #efefef; font-size: 15px; top: 5px; cursor: pointer; z-index: 99; }
 
 /*.main_with_hidden{ position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; overflow: hidden; }
 	.main_with_hidden.column { position: absolute; display: inline-block; margin: 0; padding: 0; width: 100%; left: 0; top: 0; }

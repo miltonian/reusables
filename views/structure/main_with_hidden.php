@@ -12,9 +12,10 @@ namespace Reusables;
 
 	$columns = array();
 	$allkeys = array_keys($structuredict);
+
 	foreach ($allkeys as $k) {
 
-		if( $k == "title" ){
+		if( $k == "title" || $k == "steps" ){
 			continue;
 		}
 		// $dict = [$k => $structuredict[$k] ];
@@ -25,6 +26,23 @@ namespace Reusables;
 
 	// ReusableClasses::checkRequired( "main_with_hidden", $structuredict, $required );
 
+	// $step1dict = [
+	// 			"steps"=>array(
+	// 				["title"=>"Step 1", "subtitle"=>""],
+	// 				["title"=>"Step 2", "subtitle"=>""],
+	// 				["title"=>"Step 3", "subtitle"=>""]
+	// 			)
+	// 		];
+
+	$mainheaderdict = [ "title"=>$structuredict['title'] ];
+
+	$step1dict = ["steps" => Data::getValue( $structuredict, 'steps' ) ];
+	// exit( json_encode( $structuredict ) );
+
+
+	Data::addData( $mainheaderdict, $identifier . "_main_header" );
+	Data::addData( $step1dict, $identifier . "_steps_1" );
+
 ?>
 
 <style>
@@ -33,19 +51,8 @@ namespace Reusables;
 <div class="<?php echo $identifier ?> main_with_hidden main">
 	<div class="main_with_hidden header">
 		<button class="main_with_hidden" id="close">&#10006;</button>
-		<?php echo Header::make( "header_5", ["title"=>$structuredict['title']], "campaignedit-header" ); ?>
-		<?php echo Header::make( 
-			"steps_1", 
-			[
-				"steps"=>array(
-					["title"=>"Step 1", "subtitle"=>""],
-					["title"=>"Step 2", "subtitle"=>""],
-					["title"=>"Step 3", "subtitle"=>""]
-				)
-			],
-			"steps_1"
-		)
-		?>
+		<?php echo Header::make( "header_5", $identifier . "_main_header" ); ?>
+		<?php echo Header::make( "steps_1", $identifier . "_steps_1" ); ?>
 	</div>
 	<div class="main_with_hidden body">
 	<?php for ($i=0; $i < sizeof($columns); $i++) { ?>
@@ -58,7 +65,7 @@ namespace Reusables;
 		</div>
 
 	<?php } ?>
-		
+
 	</div>
 </div>
 

@@ -12,10 +12,30 @@ if( !isset( $sectiondict['ifnone_insert'] ) ){
 	unset( $sectiondict['ifnone_insert'] );
 }
 
-if( !isset( $sectiondict['input_keys'] ) ){ 
-	$input_keys = array_keys( $sectiondict ); 
-	$input_keydicts = [];
+// its getting the index from the button order
 
+
+
+
+// $sectiondict_value = Data::getValue( $sectiondict, 'value' );
+// if( !Data::isAssoc( $sectiondict_value ) ){
+// 	$sectiondict = $sectiondict['value'];
+// }
+
+// PROBLEM: not showing modal for array ( inputs are db_info, data_id, etc )
+// exit( json_encode( $sectiondict['input_keys'] ) );
+
+if( !isset( $sectiondict['input_keys'] ) ){ 
+	if( isset( $sectiondict['value'] ) ){
+		if ( !Data::isAssoc( $sectiondict['value'] ) ) {
+			$input_keys = array_keys( $sectiondict['value'][0] );
+		}else{
+			$input_keys = array_keys( $sectiondict['value'] );
+		}
+	}else{
+		$input_keys = array_keys( $sectiondict ); 
+	}
+	$input_keydicts = [];
 }else{
 	$input_keydicts = $sectiondict['input_keys'];
 	$input_keys = array_keys($sectiondict['input_keys']);
@@ -25,7 +45,12 @@ if( !isset( $sectiondict['input_keys'] ) ){
 
 $input_onlykeys = [];
 
-$original_data_id = $sectiondict[array_keys($sectiondict)[0]]['data_id'];
+if( isset( $sectiondict[array_keys($sectiondict)[0]]['data_id'] ) ){
+	$original_data_id = $sectiondict[array_keys($sectiondict)[0]]['data_id'];
+}else{
+	$original_data_id = $sectiondict['data_id'];
+}
+// exit( json_encode( $original_data_id ) );
 // exit( json_encode( Data::getFullArray( $sectiondict ) ) );
 
 extract( CustomView::makeFormVars( $sectiondict, "sectiondict" ) );
@@ -36,16 +61,18 @@ $steps = 1;
 $inputs = array();
 $i=0;
 // exit( json_encode( $input_keys['download_script'] ) );
+// exit( json_encode( $input_keys ) );
 foreach ($input_keys as $ik) {
 	// echo json_encode( $input_keydicts[ $ik ]['placeholder'] ) ;
-	$placeholder=null; $labeltext=null; $type=null;
+	$placeholder = null; $labeltext = null; $type = null;
 	if( isset( $input_keydicts[ $ik ]['step'] ) ){ $steps = $input_keydicts[ $ik ]['step']; }
-	if( isset( $input_keydicts[ $ik ]['placeholder'] ) ){ $placeholder = $input_keydicts[ $ik ]['placeholder']; }else{ $placeholder=null;}
-	if( isset( $input_keydicts[ $ik ]['labeltext'] ) ){ $labeltext = $input_keydicts[ $ik ]['labeltext']; }else{ $labeltext=null;}
-	if( isset( $input_keydicts[ $ik ]['type'] ) ){ $type = $input_keydicts[ $ik ]['type']; }else{ $type=null;}
+	if( isset( $input_keydicts[ $ik ]['placeholder'] ) ){ $placeholder = $input_keydicts[ $ik ]['placeholder']; }else{ $placeholder = null; }
+	if( isset( $input_keydicts[ $ik ]['labeltext'] ) ){ $labeltext = $input_keydicts[ $ik ]['labeltext']; }else{ $labeltext = null; }
+	if( isset( $input_keydicts[ $ik ]['type'] ) ){ $type = $input_keydicts[ $ik ]['type']; }else{ $type = null; }
 	// echo json_encode( $ik ) . ", " . json_encode( $input_keydicts[ $ik ]['viewtype'] ) . ". <br>";
 	// if( !isset( $inputs['c' . $steps] ) ){ $inputs['c' . $steps] = array(); }
 	$thekey = $ik;
+	// exit( json_encode( $ik ) );
 if( is_numeric( $ik ) ){ $thekey = $input_keydicts[$ik]; }
 array_push( $input_onlykeys, $thekey );
 // exit( json_encode( $sectiondict ) );
@@ -55,6 +82,7 @@ array_push( $input_onlykeys, $thekey );
 	);
 	$i++;
 }
+
 
 if( !isset( $sectiondict['formaction'] ) ){
 	$formaction = '/edit_view.php';
@@ -74,7 +102,7 @@ if( !isset( $sectiondict['formaction'] ) ){
 	<input type='hidden' name='ifnone_insert' value='1' >
 <?php } ?>
 <div class="<?php echo $identifier ?> smartform_1 main">
-	<div class='container' style='text-align: left; margin-top: 10px; margin-bottom: 30px; text-align: center;'>
+	<div class='thecontainer' style='text-align: left; margin-top: 10px; margin-bottom: 30px; text-align: center;'>
 		<input type="hidden" name="goto" value="">
 			<?php 
 
@@ -116,17 +144,16 @@ if( !isset( $sectiondict['formaction'] ) ){
 	<?php } ?>
 
 	var dataarray = <?php echo json_encode( Data::getFullArray( $sectiondict ) ) ?>;
-// alert(JSON.stringify(dataarray))
+
 	var formatteddata = <?php echo json_encode( Data::retrieveDataWithID( $original_data_id ) ) ?>;
 	var identifier = "<?php echo $identifier ?>";
 
 	class <?php echo $identifier ?>Classes {
 		populateview(index=null){
-			// alert( JSON.stringify( index ) );
-				// alert( JSON.stringify( typearray ) )
+			// alert( JSON.stringify( typearray ) )
 			for (var i = 0; i < input_keys.length; i++) {
 				var key = input_keys[i];
-				// alert( JSON.stringify( formatteddata['db_info']['colnames'][key] ) );
+
 				var colname = formatteddata['db_info']['colnames'][key];
 				var type = typearray[i];
 				if(type=="textarea"){

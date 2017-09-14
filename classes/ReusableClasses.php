@@ -330,7 +330,8 @@ class ReusableClasses {
 
 	
 
-	public static function toValueAndDBInfo( $result, $conditions, $default_table, $customcolname=null ){
+	public static function toValueAndDBInfo( $result, $conditions, $default_table, $customcolname=null )
+	{
 		$tablenames = [];
 		$colnames = [];
 		$thisdict = [];

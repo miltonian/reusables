@@ -19,6 +19,8 @@ namespace Reusables;
 // exit( json_encode( $inputdict ) );
 if( !isset($inputdict['field_conditions'] ) ){
 	$inputdict['field_conditions'] = [];
+}else if( $inputdict['field_conditions'] == "" ){
+	$inputdict['field_conditions'] = [];
 }
 
 ?>

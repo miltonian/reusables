@@ -232,12 +232,10 @@ class Data {
 		// 		}
 		// 	}
 		// }
+// echo "<script>alert( JSON.stringify( " . json_encode( $viewdict ) . " ) );</script>";
+		if( isset( $viewdict['data_id'] ) ){
+			$dataid = $viewdict['data_id'];
 
-		foreach ($allkeys as $k) {
-			$dataid=null;
-			if( isset( $viewdict[$k]['data_id'] ) ){
-				$dataid = $viewdict[$k]['data_id'];
-			}
 			if( $dataid ){
 				if ($dataid != null) {
 					if( !isset( $dataidarray[ $dataid ] ) ){ 
@@ -245,7 +243,26 @@ class Data {
 					}
 				}
 			}
+
+		}else{
+			foreach ($allkeys as $k) {
+				$dataid=null;
+				if( isset( $viewdict[$k]['data_id'] ) ){
+					$dataid = $viewdict[$k]['data_id'];
+				}
+							// echo "<script>alert( JSON.stringify( " . json_encode( $dataid ) . " ) );</script>";
+				if( $dataid ){
+					if ($dataid != null) {
+						if( !isset( $dataidarray[ $dataid ] ) ){ 
+							$dataidarray[ $dataid ] = Data::retrieveDataWithID( $dataid ); 
+						}
+					}
+				}
+			}
 		}
+
+
+		
 
 		return $dataidarray;
 	}

@@ -8,6 +8,12 @@ $required = array(
 
 // ReusableClasses::checkRequired( $identifier, $headerdict, $required );
 
+$steps = Data::getValue( $headerdict, 'steps' );
+if( $steps == "" ){
+	$steps = [];
+}
+
+
 ?>
 
 <style>
@@ -15,7 +21,7 @@ $required = array(
 </style>
 
 <div class="<?php echo $identifier ?> steps_1 main" >
-	<?php foreach (Data::getValue( $headerdict, 'steps' ) as $s) { ?>
+	<?php foreach ( $steps as $s) { ?>
 		<div class="steps_1 step">
 			<label class="steps_1" id="title"><?php echo $s['title'] ?></label>
 			<p class="steps_1" id="subtitle"><?php echo $s['subtitle'] ?></p>

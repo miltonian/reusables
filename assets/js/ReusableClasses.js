@@ -1,6 +1,6 @@
 if ( typeof ReusableClasses !== 'function' )
 {
-
+var editingorder = false;
 	class ReusableClasses {
 
 		testing(){
@@ -149,20 +149,37 @@ if ( typeof ReusableClasses !== 'function' )
 
 		addAction( button, editingfunctions, index, dataarray=null, view=null )
 		{
+			// index is the button's index, not the cell's
 			var type = button['type'];
 			if( type == "link" ){
 				window.open(button[type]);
 			}else if( type == "modal" ){
-				var theid = null;
-				if(view){ theid=view.id }
-					// alert( JSON.stringify( view.id ) )
-				// alert(JSON.stringify(editingfunctions));
-				editingfunctions[index].populateview(theid);
+				var cellindex = null;
+				if( view ){ 
+					// theid=view.id 
+					// var Reusable = new ReusableClasses();
+					var cellindex = Reusable.getIndexFromClass( "index_", view )
+					// alert( JSON.stringify( "testing: "+cellindex ) );
+				}
+				editingfunctions[index].populateview( cellindex );
 				$('.modal_background').css({'display': 'inline-block'});
 				$('.' + button[type]['parentclass']).css({'display': 'inline-block'});
 			}else if( type == "dropdown" ){
 				
 			}
+		}
+
+		getIndexFromClass( prefix, view )
+		{
+			let classesstring = $(view).attr( 'class' )
+			var classes = classesstring.split(" ")
+			for (var i = 0; i < classes.length ; i++) {
+				if( classes[i].startsWith(prefix) ){
+					var theindex = classes[i].split("_")[1]
+					// alert( "index is: " + theindex )
+				}
+			}
+			return theindex
 		}
 
 
@@ -197,7 +214,7 @@ if ( typeof ReusableClasses !== 'function' )
 		    }
 		}
 
-		addSortable(  ){
+		addSortable(){
 			
 		}
 

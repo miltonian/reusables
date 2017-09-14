@@ -46,16 +46,16 @@ unset( $temp_tablearray['data_id'] );
 </style>
 
 <div class="<?php echo $identifier ?> table_2">
-	<div class="table">
+	<div class="table" style="background-color: transparent;">
 <?php if($sortable){ ?>
-	<ul id="sortable">
+	<ul id="sortable" style="background-color: transparent;">
 <?php } ?>
 		<?php 
 			for ($i=0; $i < sizeof( $temp_tablearray ); $i++) { 
 				if($sortable){
 					?>
 
-					<li id="<?php echo $i ?>" class="ui-state-default">
+					<li id="<?php echo $i ?>" class="ui-state-default" style="background-color: transparent; border: 0;">
 					<?php 
 				}
 				if( isset($tabledict[ $identifier . '_posts' ]['value']) ){
@@ -64,8 +64,10 @@ unset( $temp_tablearray['data_id'] );
 					$post = Data::getValue( $tablearray, $i );
 				}
 
+
 				$post = Data::convertKeysInTable( $tabledict, $post );
 
+				$post['index'] = $i;
 				$post['pre_slug'] = Data::getValue( $tabledict, 'pre_slug' );
 				if( isset( $tabledict['celldict'] ) ) {
 					$post = array_merge( $post, $tabledict['celldict'] );
@@ -135,7 +137,7 @@ unset( $temp_tablearray['data_id'] );
 		  } );
 		$( function() {
 		    $( "#sortable" ).sortable({
-			    disabled: false,
+			    disabled: true,
 			    start: function(){
 					$(this).data("startingScrollTop",$(this).parent().scrollTop());
 				},
@@ -146,5 +148,23 @@ unset( $temp_tablearray['data_id'] );
 			});
 
 	    });
+
+	    $('.<?php echo $identifier ?>_button#sortablebutton').click(function(){
+			if(editingorder){
+				$( function() {
+				    $( "#sortable" ).sortable({
+					    disabled: true,
+					});
+			    });
+				editingorder=false;
+			}else{
+				editingorder=true;
+				$( function() {
+				    $( "#sortable" ).sortable({
+					    disabled: false,
+					});
+			    });
+			}
+		});
 <?php } ?>
 </script>

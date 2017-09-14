@@ -9,17 +9,11 @@ class cell_10_classes {
 
 		$('.cell_10 button.action').off().click(function(e){
 			e.preventDefault();
-			var classes = $(this).attr('class');
-			var classarray = classes.split(' ');
-			var theindex = -1;
-			for (var i = 0; i < classarray.length; i++) {
-				if(classarray[i].match("^index_")){
-					theindex = parseInt( classarray[i].split('_')[1] );
-				}
-			}
+			var theindex = Reusable.getIndexFromClass( "actionindex_", this )
 			if(theindex != -1){
 				var cellbutton = cellactions[theindex];
-				Reusable.addAction( cellbutton, editingfunctions, theindex )
+
+				Reusable.addAction( cellbutton, editingfunctions, theindex, null, this )
 			}
 		});
 	}

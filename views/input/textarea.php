@@ -18,7 +18,10 @@ namespace Reusables;
 */
 if( !isset($inputdict['field_conditions'] ) ){
 	$inputdict['field_conditions'] = [];
+}else if( $inputdict['field_conditions'] == "" ){
+	$inputdict['field_conditions'] = [];
 }
+
 ?>
 
 <style>

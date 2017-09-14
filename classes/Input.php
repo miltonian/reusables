@@ -24,15 +24,21 @@ class Input {
 		// exit( json_encode( $placeholder ) );
 		if( !$labeltext ){ $labeltext = ucfirst( $key ); }
 
+		if( isset( $dict[$key]['data_id'] ) ){
+			$dataid = $dict[$key]['data_id'];
+		}else{
+			$dataid = $dict['data_id'];
+		}
+		// exit( json_encode( Data::getValue( $dict, $key ) ) );
 		$inputdict = [
 				"placeholder"=>$placeholder,
 				"labeltext"=>$labeltext,
 				"background-image"=>"",
 				"field_value"=>"",
 				"field_index"=>$index,
-				"field_table"=>Data::getDefaultTableNameWithID( $dict[$key]['data_id'] ),
-				"field_colname"=>Data::getColName( $dict[$key] ),
-				"field_conditions"=>Data::getConditions( $dict[$key] )
+				"field_table"=>Data::getDefaultTableNameWithID( $dataid ),
+				"field_colname"=>Data::getColName( Data::getValue( $dict, $key ) ),
+				"field_conditions"=>Data::getConditions( Data::getValue( $dict, $key ) )
 			];
 			// exit( json_encode( $inputdict ) );
 $stuff = "";
@@ -40,10 +46,10 @@ if($parentclass){
 	$stuff = $parentclass . "_";
 }
 // exit( json_encode( $stuff . $key . "_input" ) );
-		Data::addData( $inputdict, $stuff . $key . "_input" );
+		Data::addData( $inputdict, $stuff . $key . "_input_" . $index );
 		return Input::make( 
 			$type, 
-			$stuff . $key . "_input"
+			$stuff . $key . "_input_" . $index
 		);
 	}
 

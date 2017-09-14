@@ -9,7 +9,7 @@ $buttons = "";
 if( isset($headerdict['buttons']) ){
 	$i=0;
 	foreach ($headerdict['buttons'] as $b) {
-		$buttons .= "<button class='header_3 index_" . $i . " " . Data::getValue($b,'classname') . "'>" . $b['name'] . "</button>";
+		$buttons .= "<button id='".Data::getValue($b, 'view_id')."' class='header_3 index_" . $i . " " . Data::getValue($b,'classname') . "'>" . $b['name'] . "</button>";
 		$i++;
 	}
 }
@@ -49,7 +49,8 @@ if( isset($headerdict['buttons']) ){
 <?php if( isset( $headerdict['buttons'] ) ){ ?>
 var editingfunctions = [];
 <?php foreach ($headerdict['buttons'] as $hb) { ?>
-	<?php if( $hb['type'] == "modal" ){ ?>
+	<?php $hb_type = Data::getValue( $hb, 'type' ); ?>
+	<?php if( $hb_type == "modal" ){ ?>
 		var thismodalclass = new <?php echo $hb['modal']['modalclass'] ?>Classes();
 		editingfunctions.push( thismodalclass );
 	<?php }else{ ?>

@@ -4,6 +4,9 @@
 		.cell_10.actions-div button:hover { background-color: rgba(0,0,5,0.1); }
 		h4.cell_10#title { margin-bottom: 5px; }
 
+		.cell_10 .three_columns.sidecolumn_right { text-align: right }
+		.cell_10.actions-div { display: inline-block; }
+
 
 
 

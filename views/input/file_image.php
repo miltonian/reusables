@@ -14,7 +14,10 @@ namespace Reusables;
 	// ReusableClasses::checkRequired( $identifier, $inputdict, $required );
 if( !isset($inputdict['field_conditions'] ) ){
 	$inputdict['field_conditions'] = [];
+}else if( $inputdict['field_conditions'] == "" ){
+	$inputdict['field_conditions'] = [];
 }
+
 ?>
 
 <style>

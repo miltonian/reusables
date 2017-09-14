@@ -12,6 +12,10 @@ $required = array(
 	"title"=>"",
 	"index"=>""
 );
+$cellindex = Data::getValue( $celldict, 'index' );
+// if($cellindex == 2){ exit("hey!" ); }
+
+// exit( json_encode( Data::retrieveDataWithID( Data::getValue( $celldict, 'data_id' ) ) ) );
 
 $actiontype = Data::getValue( $celldict, 'type' );
 
@@ -26,7 +30,7 @@ $actiontype = Data::getValue( $celldict, 'type' );
 			if( $actiontype == "dropdown" ){
 				$cellactionshtml .= "<div class='dropdown_1'>";
 					$cellactionshtml .= "<div class='inner-dropdown'>";
-						$cellactionshtml .= "<button id='" . Data::getValue( $celldict, 'index' ) . "' class='inner-dropbtn cell_10 action index_".$i."' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
+						$cellactionshtml .= "<button id='" . Data::getValue( $celldict, 'index' ) . "' class='inner-dropbtn cell_10 action actionindex_" . $i . " index_" . $cellindex . "' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
 						$cellactionshtml .= "<div id='inner-myDropdown_" . Data::getValue( $celldict, 'index' ) . "' class='inner-dropdown-content'>";
 							for ($a=0; $a < sizeof( $action['dropdown_array'] ); $a++) {
 								$dropdownarray = $action['dropdown_array'];
@@ -36,7 +40,7 @@ $actiontype = Data::getValue( $celldict, 'type' );
 					$cellactionshtml .= "</div>";
 				$cellactionshtml .= "</div>";
 			}else{
-				$cellactionshtml .= "<button id='" . Data::getValue( $celldict, 'index' ) . "' class='cell_10 action index_".$i."' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
+				$cellactionshtml .= "<button id='" . Data::getValue( $celldict, 'index' ) . "' class='cell_10 action actionindex_" . $i . " index_" . $cellindex . "' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
 			}
 
 			$i++;
@@ -45,6 +49,7 @@ $actiontype = Data::getValue( $celldict, 'type' );
 	}else{
 		$celldict['actions'] = array();
 	}
+
 ?>
 
 <style>
@@ -80,10 +85,10 @@ $actiontype = Data::getValue( $celldict, 'type' );
 
 <script>
 
-	var cellactions = <?php echo json_encode($celldict['actions']) ?>;
+	var cellactions = <?php echo json_encode( $celldict['actions'] ) ?>;
 
 	var editingfunctions = [];
-	<?php foreach ($celldict['actions'] as $ca) { ?>
+	<?php foreach ( $celldict['actions'] as $ca ) { ?>
 		<?php $ca_type = Data::getValue( $ca, 'type' ) ?>
 		<?php if( $ca_type == "modal" ){ ?>
 			var thismodalclass = new <?php echo $ca['modal']['modalclass'] ?>Classes();
@@ -98,7 +103,9 @@ function cell_10_start(){
 	cell_10.setupactions( cellactions, editingfunctions );
 	
 	$('.inner-dropbtn.cell_10.action').click(function(){
-		document.getElementById("inner-myDropdown_"+this.id).classList.toggle("show");
+		var actionindex = Reusable.getIndexFromClass( "actionindex_")
+		// CHECK AGAIN
+		document.getElementById("inner-myDropdown_"+actionindex).classList.toggle("show");
 	});
 }
 
