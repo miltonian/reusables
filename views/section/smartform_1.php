@@ -150,30 +150,28 @@ if( !isset( $sectiondict['formaction'] ) ){
 
 	class <?php echo $identifier ?>Classes {
 		populateview(index=null){
-			// alert( JSON.stringify( typearray ) )
 			for (var i = 0; i < input_keys.length; i++) {
 				var key = input_keys[i];
 
 				var colname = formatteddata['db_info']['colnames'][key];
 				var type = typearray[i];
 				if(type=="textarea"){
-					Reusable.updateTextArea( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input", colname, index );
+					Reusable.updateTextArea( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input_"+i, colname, index );
 				}else if(type=="wysi"){
-					Reusable.updateWysi( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input", colname, index, i );
+					Reusable.updateWysi( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input_"+i, colname, index, i );
 				}else if(type=="file_image"){
-					Reusable.updateFileImage( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input", colname, index );
+					Reusable.updateFileImage( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input_"+i, colname, index );
 				}else if(type=="textfield"){
-					Reusable.updateTextField( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input", colname, index );
+					Reusable.updateTextField( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input_"+i, colname, index );
 				}else if(type=="colorpicker"){
-					Reusable.updateColorPicker( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input", colname, index );
+					Reusable.updateColorPicker( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input_"+i, colname, index );
 				}else if(type=="copybutton_1"){
-					Reusable.updateCopyButton( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input", colname, index );
+					Reusable.updateCopyButton( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input_"+i, colname, index );
 				}
 			}
 		}
 	}
-
-	if( <?php echo $identifier ?> !== undefined || <?php echo $identifier ?> !== null ) {
+	if( typeof <?php echo $identifier ?> == undefined || typeof <?php echo $identifier ?> == null ) {
 		let <?php echo $identifier ?> = new <?php echo $identifier ?>Classes();
 		// <?php echo $identifier ?>.populateview();
 	}
