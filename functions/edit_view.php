@@ -15,11 +15,12 @@
 // exit(json_encode($_FILES));
 
 
-require_once('classes/classes.php');
+// require_once('classes/classes.php');
 // require_once('vendor/miltonian/reusables/classes/Shortcuts.php');
-$MainClasses = new MainClasses();
 
 $containsp = false;
+
+
 
 $lastinsertid = false;
 
@@ -81,6 +82,8 @@ if( isset($fieldimages ) ) {
 			$values = $conditionvalues;
 			$type = "select";
 			// $result = $MainClasses->querySQL( $query, $values, $type );
+
+			// exit( json_encode( $query ) );
 			$result = Reusables\CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
 			if($result[0] == 0){
 
@@ -91,6 +94,8 @@ if( isset($fieldimages ) ) {
 				$type = "update";
 				// exit(json_encode($query));
 				// $result = $MainClasses->querySQL( $query, $values, $type );
+
+				// exit( json_encode( array( $query, $values, $type ) ) );
 				$result = Reusables\CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
 			}
 		}
@@ -124,6 +129,8 @@ if( isset($fieldimages ) ) {
 				$type = "insert";
 				// exit( json_encode( $query ) );
 				// $result = $MainClasses->querySQL( $query, $values, $type );
+				// exit( "3" );
+				// exit( json_encode( $query ) );
 				$result = Reusables\CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
 				$lastinsertid = $result[1];
 				// exit( json_encode( $lastinsertid ) );
@@ -167,7 +174,10 @@ if (isset($fieldarray)) {
 		$type = "select";
 		// exit( json_encode( $conditions ) );
 		// $result = $MainClasses->querySQL( $query, $values, $type );
+		// exit( "4" );
+		// exit( json_encode( array( $query, $values, $type ) ) );
 		$result = Reusables\CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
+
 		// exit(json_encode($conditionvalues));
 		if($result[0] == 0){
 
@@ -182,6 +192,8 @@ if (isset($fieldarray)) {
 			$type = "update";
 			// exit(json_encode($query));
 			// $result = $MainClasses->querySQL( $query, $values, $type );
+// exit( "5" );
+			// exit( json_encode( array( $query, $values, $type ) ) );
 			$result = Reusables\CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
 		}
 			
@@ -210,6 +222,8 @@ if (isset($fieldarray)) {
 				$values = $insertconditionvalues;
 				$type = "insert";
 				// $result = $MainClasses->querySQL( $query, $values, $type );
+				// exit( "6" );
+				// exit( json_encode( $query ) );
 				$result = Reusables\CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
 			}
 		}
@@ -217,7 +231,7 @@ if (isset($fieldarray)) {
 }
 
 if( isset( $_POST['goto'] ) ){
-	header( 'Location: /' . $_POST['goto'] );
+	header( 'Location: ' . $_POST['goto'] );
 }else{
 	header( 'Location: /' );
 }

@@ -29,7 +29,7 @@ class Input {
 		}else{
 			$dataid = $dict['data_id'];
 		}
-		// exit( json_encode( Data::getValue( $dict, $key ) ) );
+		// exit( json_encode( Data::getValue( $dict['value'][0], $key ) ) );
 		$inputdict = [
 				"placeholder"=>$placeholder,
 				"labeltext"=>$labeltext,
@@ -37,8 +37,8 @@ class Input {
 				"field_value"=>"",
 				"field_index"=>$index,
 				"field_table"=>Data::getDefaultTableNameWithID( $dataid ),
-				"field_colname"=>Data::getColName( Data::getValue( $dict, $key ) ),
-				"field_conditions"=>Data::getConditions( Data::getValue( $dict, $key ) )
+				"field_colname"=>Data::getColName( ["data_id"=>$dataid, "key" => $key] ),
+				"field_conditions"=>Data::getConditions( ["data_id"=>$dataid, "key" => $key] )
 			];
 			// exit( json_encode( $inputdict ) );
 $stuff = "";
@@ -46,7 +46,22 @@ if($parentclass){
 	$stuff = $parentclass . "_";
 }
 // exit( json_encode( $stuff . $key . "_input" ) );
-		Data::addData( $inputdict, $stuff . $key . "_input_" . $index );
+		$dataexists = Data::retrieveDataWithID( $stuff . $key . "_input_" . $index );
+		if( $dataexists ) {
+			for ($b=0; $b < 100; $b++) { 
+				$index++;
+				$dataexists = Data::retrieveDataWithID( $stuff . $key . "_input_" . $index );
+				if( $dataexists == null ) {
+					Data::addData( $inputdict, $stuff . $key . "_input_" . $index );
+					$b==100;
+				}
+			}
+		}else{
+			Data::addData( $inputdict, $stuff . $key . "_input_" . $index );
+		}
+
+
+		// ReusableClasses::setFormInputIndex( $parentclass, $index );
 		return Input::make( 
 			$type, 
 			$stuff . $key . "_input_" . $index

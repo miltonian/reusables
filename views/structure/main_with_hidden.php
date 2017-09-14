@@ -55,7 +55,9 @@ namespace Reusables;
 		<?php echo Header::make( "steps_1", $identifier . "_steps_1" ); ?>
 	</div>
 	<div class="main_with_hidden body">
+	
 	<?php for ($i=0; $i < sizeof($columns); $i++) { ?>
+
 		<div class="main_with_hidden column c<?php echo ($i+1) ?>" id="<?php echo $i+1 ?>">
 			<?php 
 				foreach ($columns[$i] as $view) {
@@ -96,6 +98,7 @@ namespace Reusables;
 		$('.main_with_hidden .column#' + (currentcolumn+1) ).css({'position': 'relative'});
 		$('.main_with_hidden .column#' + (currentcolumn+1) ).animate({'left': '0'});
 		currentcolumn++;
+		// alert( "currentcolumn: " + currentcolumn + ", columncount: " + columncount )
 		if( currentcolumn == columncount ){
 			$('.main_with_hidden.next').css({'display': 'none'});
 			$('.main_with_hidden.save').css({'display': 'inline-block'});

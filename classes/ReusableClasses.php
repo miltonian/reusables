@@ -10,6 +10,8 @@ class ReusableClasses {
 	
 	public $PDO; // PHP Data Object
 	protected static $includedfiles = array();
+	protected static $forminputlastindexes = [];
+	protected static $formonstep = [];
 
 	protected static $addedjs = "";
 
@@ -117,6 +119,49 @@ class ReusableClasses {
 			" . $file . "." . $func . "( '" . $custom_identifier . "' );
 		</script>";
 	}
+
+	public static function getOnStepForm( $identifier )
+	{
+		if( isset( self::$formonstep[ $identifier ] ) ) {
+			$laststep = intval( self::$formonstep[$identifier] );
+			$onstep = $laststep + 1;
+			return $onstep;
+		}else{
+			return 1;
+		}
+	}
+
+	public static function setOnStepForm( $identifier, $step )
+	{
+		if($identifier == null){ return; }
+		self::$formonstep[$identifier] = $step;
+	}
+
+	public static function getLastInputIndexForForm( $identifier )
+	{
+		if( !isset( self::$forminputlastindexes[$identifier] ) ) {
+			return null;
+		}
+
+		$lastindex = self::$forminputlastindexes[$identifier];
+	}
+
+	public static function setFormInputIndex( $identifier, $index )
+	{
+		if( $identifier == null || $identifier==""){
+			return;
+		}
+
+		self::$forminputlastindexes[$identifier] = $index;
+
+	}
+
+
+
+
+
+
+
 
 
 
