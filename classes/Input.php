@@ -4,6 +4,8 @@ namespace Reusables;
 
 class Input {
 
+	protected static $inputtypes = [];
+
 	public static function make( $file, $identifier )
 	{
 		ReusableClasses::addfile( "input", $file );
@@ -17,8 +19,9 @@ class Input {
 	public static function fill( $dict, $key, $index, $type=null, $placeholder=null, $labeltext=null, $parentclass=null )
 	{
 		if( !$type ){
-			$type = self::getInputType( $key );
+			$type = Input::getInputType( $key );
 		}
+		Input::setInputType( $key, $type );
 		// echo json_encode( $placeholder );
 		if( !$placeholder ){ $placeholder = ucfirst( $key ); }
 		// exit( json_encode( $placeholder ) );
@@ -29,6 +32,7 @@ class Input {
 		}else{
 			$dataid = $dict['data_id'];
 		}
+		
 		// exit( json_encode( Data::getValue( $dict['value'][0], $key ) ) );
 		$inputdict = [
 				"placeholder"=>$placeholder,
@@ -41,11 +45,13 @@ class Input {
 				"field_conditions"=>Data::getConditions( ["data_id"=>$dataid, "key" => $key] )
 			];
 			// exit( json_encode( $inputdict ) );
-$stuff = "";
-if($parentclass){
-	$stuff = $parentclass . "_";
-}
-// exit( json_encode( $stuff . $key . "_input" ) );
+
+		$stuff = "";
+		if($parentclass){
+			$stuff = $parentclass . "_";
+		}
+
+		// exit( json_encode( $stuff . $key . "_input" ) );
 		$dataexists = Data::retrieveDataWithID( $stuff . $key . "_input_" . $index );
 		if( $dataexists ) {
 			for ($b=0; $b < 100; $b++) { 
@@ -53,14 +59,17 @@ if($parentclass){
 				$dataexists = Data::retrieveDataWithID( $stuff . $key . "_input_" . $index );
 				if( $dataexists == null ) {
 					Data::addData( $inputdict, $stuff . $key . "_input_" . $index );
-					$b==100;
+				// echo '<script>console.log(JSON.stringify('.json_encode($index) .') )</script>';
+					break;
 				}
 			}
 		}else{
 			Data::addData( $inputdict, $stuff . $key . "_input_" . $index );
 		}
 
+		// echo '<script>console.log(JSON.stringify('.json_encode($index) .') )</script>';
 
+		// echo $index . ", ";
 		// ReusableClasses::setFormInputIndex( $parentclass, $index );
 		return Input::make( 
 			$type, 
@@ -70,16 +79,28 @@ if($parentclass){
 
 	public static function getInputType( $key )
 	{
-		if( strpos($key, "text") !== false || strpos($key, "desc") || strpos($key, "description") || strpos($key, "comment") || strpos($key, "snippet") ){
+			// exit( json_encode( self::$inputtypes ) );
+		if( isset( self::$inputtypes[$key] ) ){
+			return self::$inputtypes[$key];
+		}
+
+		if( strpos( $key, "text") !== false || strpos($key, "desc") || strpos($key, "description") || strpos($key, "comment") || strpos($key, "snippet") ){
 			$type = "textarea";
-		}else if( strpos($key, "image") !== false ){
+		}else if( strpos( $key, "image" ) !== false ) {
 			$type = "file_image";
-		}else if( strpos( $key, "color" ) ){
+		}else if( strpos( $key, "color" ) ) {
 			$type = "colorpicker";
 		}else{
 			$type = "textfield";
 		}
 		return $type;
 	}
+
+	public static function setInputType( $key, $type )
+	{
+		self::$inputtypes[$key] = $type;
+	}
+
+
 
 }

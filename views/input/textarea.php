@@ -22,6 +22,9 @@ if( !isset($inputdict['field_conditions'] ) ){
 	$inputdict['field_conditions'] = [];
 }
 
+// exit( json_encode( $identifier ) );
+
+
 ?>
 
 <style>

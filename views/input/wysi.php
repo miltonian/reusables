@@ -24,6 +24,7 @@ if( !isset($inputdict['field_conditions'] ) ){
 ?>
 
 <style>
+.wysi img { max-width: 100%; }
 </style>
 
 <div class="<?php echo $identifier ?> wysi">
@@ -36,6 +37,7 @@ if( !isset($inputdict['field_conditions'] ) ){
 	<script>
 		CKEDITOR.replace( 'fieldarray[<?php echo Data::getValue( $inputdict, 'field_index' ) ?>][field_value]');
 		CKEDITOR.config.height = '150' ;
+		$('.cke_editor img').css({'max-width': '100%'})
 	</script>
 
 	<input type="hidden" class="field_type" name="fieldarray[<?php echo Data::getValue( $inputdict, 'field_index' ) ?>][field_type]" value="text" style="visibility: hidden; z-index: -1;">
@@ -49,5 +51,7 @@ if( !isset($inputdict['field_conditions'] ) ){
 	<?php } ?>
 </div>
 
+
 <script>
+
 </script>

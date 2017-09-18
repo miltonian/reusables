@@ -54,7 +54,7 @@ class ReusableClasses {
 	}
 
 
-	public static function endpage( $parent_dir, $page, $endbody=true, $addjquery=true )
+	public static function endpage( $parent_dir, $page, $endbody=true, $addjquery=true, $addeditor=false )
 	{
 		if( $endbody ){
 			echo "</body>";
@@ -63,6 +63,7 @@ class ReusableClasses {
 		ob_end_clean();
 		ReusableClasses::addcss();
 		ReusableClasses::addReusableJS( $addjquery );
+		ReusableClasses::addEditor( $addeditor );
 		ReusableClasses::addbeforejs();
 
 		// exit( json_encode( $page ) );
@@ -144,6 +145,7 @@ class ReusableClasses {
 		}
 
 		$lastindex = self::$forminputlastindexes[$identifier];
+		return $lastindex;
 	}
 
 	public static function setFormInputIndex( $identifier, $index )
@@ -151,9 +153,15 @@ class ReusableClasses {
 		if( $identifier == null || $identifier==""){
 			return;
 		}
-
 		self::$forminputlastindexes[$identifier] = $index;
 
+	}
+
+	public static function addEditor( $addit ) {
+		if( $addit ) {
+			echo "<script src='/vendor/miltonian/custom/thirdparty/ckeditor/ckeditor.js'></script>";
+		// exit(json_encode( $addit ) );
+		}
 	}
 
 
