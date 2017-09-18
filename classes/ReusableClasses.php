@@ -54,7 +54,7 @@ class ReusableClasses {
 	}
 
 
-	public static function endpage( $parent_dir, $page, $endbody=true, $addjquery=true, $addeditor=false )
+	public static function endpage( $parent_dir, $page, $endbody=true, $addjquery=true, $addeditor=true )
 	{
 		if( $endbody ){
 			echo "</body>";
@@ -159,7 +159,7 @@ class ReusableClasses {
 
 	public static function addEditor( $addit ) {
 		if( $addit ) {
-			echo "<script src='/vendor/miltonian/custom/thirdparty/ckeditor/ckeditor.js'></script>";
+			echo '<script src="//cdn.ckeditor.com/4.7.3/standard/ckeditor.js"></script>';
 		// exit(json_encode( $addit ) );
 		}
 	}
