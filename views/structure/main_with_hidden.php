@@ -104,4 +104,31 @@ namespace Reusables;
 			$('.main_with_hidden.save').css({'display': 'inline-block'});
 		}
 	});
+
+	function gotostep( tostep ) {
+
+		if( tostep != currentcolumn ){
+			$('.main_with_hidden .column#' + currentcolumn).css({'position': 'absolute'});
+
+			if( tostep > currentcolumn ){
+				$('.main_with_hidden .column#' + currentcolumn).animate({'left': '-100%'});
+			}else{
+				$('.main_with_hidden .column#' + currentcolumn).animate({'left': '100%'});
+			}
+
+			$('.main_with_hidden .column#' + (tostep) ).css({'position': 'relative'});
+			$('.main_with_hidden .column#' + (tostep) ).animate({'left': '0'});
+			currentcolumn = tostep;
+
+			if( currentcolumn == columncount ){
+				$('.main_with_hidden.next').css({'display': 'none'});
+				$('.main_with_hidden.save').css({'display': 'inline-block'});
+			}else{
+				$('.main_with_hidden.next').css({'display': 'inline-block'});
+				$('.main_with_hidden.save').css({'display': 'none'});
+			}
+		}
+
+	}
+
 </script>
