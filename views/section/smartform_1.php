@@ -12,6 +12,10 @@ if( !isset( $sectiondict['ifnone_insert'] ) ){
 	unset( $sectiondict['ifnone_insert'] );
 }
 
+if( isset( $sectiondict['formtitle'] ) ) {
+	unset( $sectiondict['formtitle'] );
+}
+
 // its getting the index from the button order
 
 $onstep = ReusableClasses::getOnStepForm( $identifier );
