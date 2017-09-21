@@ -121,7 +121,7 @@ $s = $onstep;
 
 // }
 
-// exit();
+// exit( json_encode( $sectiondict ) );
 
 if( !isset( $sectiondict['formaction'] ) ){
 	$formaction = '/edit_view.php';
@@ -238,7 +238,7 @@ if( !isset( $sectiondict['formaction'] ) ){
 
 		if( typeof <?php echo $identifier ?> == 'undefined'  ) {
 			var <?php echo $identifier ?> = new <?php echo $identifier ?>Classes();
-			// <?php echo $identifier ?>.populateview();
+			<?php echo $identifier ?>.populateview();
 		}
 
 	<?php } ?>
