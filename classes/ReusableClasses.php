@@ -164,6 +164,78 @@ class ReusableClasses {
 		}
 	}
 
+	public static function getTypeArray( $input_onlykeys ) {
+
+		$typearray = [];
+
+		foreach ( $input_onlykeys as $k ) {
+			if( $k == "download_script" ){
+				array_push( $typearray, 'copybutton_1' );
+			}else{
+				$inputtype = Input::getInputType( $k );
+				array_push( $typearray, $inputtype );
+			}
+		}
+
+		return $typearray;
+	}
+
+	public static function getEditingFunctionsJS( $dict )
+	{
+		$action_key = ReusableClasses::getViewActionKey( $dict );
+		if( $action_key == '' ){ return []; }
+
+		echo "var editingfunctions = [];";
+		$i=0;
+		foreach ( $dict[$action_key] as $ca ) {
+			$ca_type = Data::getValue( $ca, 'type' );
+			if( $ca_type == "modal" ){
+				echo "var thismodalclass = new " . $ca['modal']['modalclass'] . "Classes();
+				editingfunctions.push( thismodalclass );";
+			}else{
+				echo 'editingfunctions.push( "nothing" );';
+			}
+			$i++;
+		}
+
+		
+	}
+
+	public static function convertViewActions( $dict )
+	{
+		$action_key = ReusableClasses::getViewActionKey( $dict );
+		if( $action_key == '' ){ return []; }
+		$i=0;
+		foreach ($dict[$action_key] as $action) {
+			if( isset( $action['modal'] ) ){
+				$dict[$action_key][$i]['type'] = "modal";
+				$actionmodal = Data::getValue( $action, 'modal' );
+				if( !is_array( $actionmodal ) && $actionmodal != "" ){
+					$new_actionmodal = [
+						"parentclass" => $actionmodal . "_wrapper", 
+						"modalclass" => $actionmodal
+					];
+					$dict[$action_key][$i]['modal'] = $new_actionmodal;
+				}
+			}
+			$i++;
+		}
+
+		return $dict;
+	}
+
+	public static function getViewActionKey( $dict )
+	{
+		$action_key = '';
+		if( isset( $dict['buttons'] ) ){
+			$action_key = 'buttons';
+		}else if( isset($dict['actions']) ) {
+			$action_key = 'actions';
+		}
+
+		return $action_key;
+	}
+
 
 
 

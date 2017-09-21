@@ -18,6 +18,7 @@ namespace Reusables;
 class Data {
 
 	protected static $alldata = array();
+	protected static $alloptions = array();
 
 	public static function formatForDefaultData( $dataid )
 	{
@@ -64,15 +65,15 @@ class Data {
 	    return array_keys($arr) !== range(0, count($arr) - 1);
 	}
 
-	public static function addData( $entry, $identifier )
+	public static function addData( $data, $identifier )
 	{
-		if( !is_array( $entry ) ){
-			$entry = Data::retrieveDataWithID( $entry );
+		if( !is_array( $data ) ){
+			$data = Data::retrieveDataWithID( $data );
 		}
 		
 		if ( !isset( self::$alldata[ $identifier ] ) ) {
-			$entry['data_id'] = $identifier;
-			self::$alldata[ $identifier ] = $entry;
+			$data['data_id'] = $identifier;
+			self::$alldata[ $identifier ] = $data;
 
 		}else{
 			exit( "Duplicate data id: '" . $identifier . "' entries. " );
@@ -90,6 +91,22 @@ class Data {
 		}
 	}
 
+	public static function addOption( $data, $key, $identifier )
+	{
+		if( !isset( self::$alloptions[ $identifier ] ) ) {
+			self::$alloptions[ $identifier ] = [];
+		}
+		self::$alloptions[ $identifier ][ $key ] = $data;
+	}
+
+	public static function addOptions( $data, $identifier )
+	{
+		if( !isset( self::$alloptions[ $identifier ] ) ) {
+			self::$alloptions[ $identifier ] = $data;
+		}
+		
+	}
+
 	public static function retrieveDataWithID( $identifier )
 	{
 		if( is_array( $identifier ) ){
@@ -99,6 +116,18 @@ class Data {
 			return null;
 		}else{
 			return self::$alldata[ $identifier ];
+		}
+	}
+
+	public static function retrieveOptionsWithID( $identifier )
+	{
+		if( is_array( $identifier ) ){
+			return null;
+		}
+		if ( !isset( self::$alloptions[ $identifier ] ) ) {
+			return null;
+		}else{
+			return self::$alloptions[ $identifier ];
 		}
 	}
 
@@ -330,15 +359,19 @@ class Data {
 		return $dict;
 	}
 
-	public static function convertKeysInTable( $tabledict, $post )
+	public static function convertKeysInTable( $identifier, $post )
 	{
-		if( !isset($tabledict['convert_keys'])){ 
-			$convertkeys = false; 
+		$data = Data::retrieveDataWithID( $identifier );
+		$options = Data::retrieveOptionsWithID( $identifier );
+
+		if( !isset($options['convert_keys'])){ 
+			$options = false; 
 		}else { 
-			$convertkeys = $tabledict['convert_keys']; 
+			$options = $options['convert_keys']; 
 		}
 
 		$postkeys = array_keys($post);
+
 		foreach ( $postkeys as $k ) {
 			if( isset( $convertkeys[$k] ) ){ 
 				if( is_array( $convertkeys[$k] ) ){
@@ -353,6 +386,23 @@ class Data {
 		}
 
 		return $post;
+	}
+
+	public static function getViewLinkPath( $identifier )
+	{
+		$data = Data::retrieveDataWithID( $identifier );
+		$options = Data::retrieveOptionsWithID( $identifier );
+		
+		$linkpath = "";
+		$linkpath .= Data::getValue( $options, 'pre_slug' );
+		$optionalslug = Data::getValue( $options, 'slug' );
+		if( $optionalslug != "" ) {
+			$linkpath .= $optionalslug;
+		}else{
+			$linkpath .= Data::getValue( $data, 'slug' );
+		}
+
+		return $linkpath;
 	}
 
 

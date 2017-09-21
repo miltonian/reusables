@@ -2,133 +2,33 @@
 
 namespace Reusables;
 
-// exit( json_encode( $sectiondict['input_keys'] ) );
-// exit( json_encode( $sectiondict ) );
-
-if( !isset( $sectiondict['ifnone_insert'] ) ){
+if( !isset( $sectionoptions['ifnone_insert'] ) ){
 	$ifnone_insert = false;
 }else{
-	$ifnone_insert = $sectiondict['ifnone_insert'];
-	unset( $sectiondict['ifnone_insert'] );
+	$ifnone_insert = $sectionoptions['ifnone_insert'];
+}
+
+if( !isset( $sectionoptions['formaction'] ) ){
+	$formaction = '/edit_view.php';
+}else{
+	$formaction = $sectionoptions['formaction'];
 }
 
 if( isset( $sectiondict['formtitle'] ) ) {
 	unset( $sectiondict['formtitle'] );
 }
 
-// its getting the index from the button order
-
-$onstep = ReusableClasses::getOnStepForm( $identifier );
-ReusableClasses::setOnStepForm( $identifier, $onstep );
-
-$lastinputindex = ReusableClasses::getLastInputIndexForForm( $identifier );
-if( $lastinputindex == null ) {
-	$nextinputindex = 0;
-}else{
-	// echo '<script>console.log(JSON.stringify(' . "json_encode( array( $i, $s ) )" . ') )</script>';
-	$nextinputindex = $lastinputindex+1;
-}
-
-
-// echo "<script>console.log( 'c" . $onstep . "')</script>";
-
-// $sectiondict_value = Data::getValue( $sectiondict, 'value' );
-// if( !Data::isAssoc( $sectiondict_value ) ){
-// 	$sectiondict = $sectiondict['value'];
+// if( isset( $sectiondict[array_keys($sectiondict)[0]][ 'data_id' ] ) ){
+// 	$original_data_id = $sectiondict[ array_keys( $sectiondict )[ 0 ] ][ 'data_id' ];
+// }else{
+// 	$original_data_id = $sectiondict[ 'data_id' ];
 // }
 
-// exit( json_encode( $sectiondict['input_keys'] ) );
-
-if( !isset( $sectiondict['input_keys'] ) ){ 
-	if( isset( $sectiondict['value'] ) ){
-		if ( !Data::isAssoc( $sectiondict['value'] ) ) {
-			$input_keys = array_keys( $sectiondict['value'][0] );
-		}else{
-			$input_keys = array_keys( $sectiondict['value'] );
-		}
-	}else{
-		$input_keys = array_keys( $sectiondict ); 
-	}
-	$input_keydicts = [];
-}else{
-	$input_keydicts = $sectiondict['input_keys'];
-	$input_keys = array_keys($sectiondict['input_keys']);
-
-	unset( $sectiondict[ 'input_keys' ] );
-}
-
-$input_onlykeys = [];
-
-if( isset( $sectiondict[array_keys($sectiondict)[0]][ 'data_id' ] ) ){
-	$original_data_id = $sectiondict[ array_keys( $sectiondict )[ 0 ] ][ 'data_id' ];
-}else{
-	$original_data_id = $sectiondict[ 'data_id' ];
-}
-
-$steps = Data::getValue( $sectiondict, 'steps' );
-
-if( $steps == "" ) {
-	$steps = 1;
-}else{
-	unset( $sectiondict[ 'steps' ] );
-}
-// exit( json_encode( $original_data_id ) );
-// exit( json_encode( Data::getFullArray( $sectiondict ) ) );
+$original_data_id = $identifier;
 
 extract( CustomView::makeFormVars( $sectiondict, "sectiondict" ) );
-// exit( "hey" );
+extract( Input::convertInputKeys( $identifier ) );
 
-
-$inputs = array();
-$i=$nextinputindex;
-
-// exit( json_encode( $input_keys['download_script'] ) );
-// exit( json_encode( $input_keys ) );
-
-$s = $onstep;
-// for ($s=1; $s <= $steps; $s++) { 
-
-	foreach ($input_keys as $ik) {
-		// echo json_encode( $input_keydicts[ $ik ]['placeholder'] ) ;
-		$placeholder = null; $labeltext = null; $type = null;
-		if( isset( $input_keydicts[ $ik ]['step'] ) ){ $steps = $input_keydicts[ $ik ]['step']; }
-		if( isset( $input_keydicts[ $ik ]['placeholder'] ) ){ $placeholder = $input_keydicts[ $ik ]['placeholder']; }else{ $placeholder = null; }
-		if( isset( $input_keydicts[ $ik ]['labeltext'] ) ){ $labeltext = $input_keydicts[ $ik ]['labeltext']; }else{ $labeltext = null; }
-		if( isset( $input_keydicts[ $ik ]['type'] ) ){ $type = $input_keydicts[ $ik ]['type']; }else{ $type = null; }
-		// echo json_encode( $ik ) . ", " . json_encode( $input_keydicts[ $ik ]['viewtype'] ) . ". <br>";
-		// if( !isset( $inputs['c' . $steps] ) ){ $inputs['c' . $steps] = array(); }
-		$thekey = $ik;
-		// exit( json_encode( $ik ) );
-		if( is_numeric( $ik ) ){ $thekey = $input_keydicts[$ik]; }
-		array_push( $input_onlykeys, $thekey );
-		// exit( json_encode( $sectiondict ) );
-		$input_fields = [];
-		if( isset($inputs['c' . $s ] ) ){
-			$input_fields = $inputs['c' . $s ];
-		}
-		if( $steps == $s ){
-			ReusableClasses::setFormInputIndex( $identifier, $i );
-		// echo '<script>console.log(JSON.stringify('.json_encode($type) .') )</script>';
-			array_push( 
-				$input_fields, 
-				Input::fill( $sectiondict, $thekey, $i, $type, $placeholder, $labeltext, $identifier  )
-			);
-			$inputs['c' . $s] = $input_fields;
-
-			$i++;
-		}
-	}
-
-// }
-
-// exit( json_encode( $sectiondict ) );
-
-if( !isset( $sectiondict['formaction'] ) ){
-	$formaction = '/edit_view.php';
-}else{
-	$formaction = $sectiondict['formaction'];
-}
-// exit( json_encode( Input::getInputType( "description" ) ) );
 ?>
 
 
@@ -152,7 +52,7 @@ if( !isset( $sectiondict['formaction'] ) ){
 <?php } ?>
 <div class="<?php echo $identifier ?> smartform_1 main">
 	<div class='thecontainer' style='text-align: left; margin-top: 10px; margin-bottom: 0px; text-align: center;'>
-		<input type="hidden" name="goto" value="<?php echo Data::getValue( $sectiondict, 'goto' ) ?>">
+		<input type="hidden" name="goto" value="<?php echo Data::getValue( $sectionoptions, 'goto' ) ?>">
 			<?php 
 
 				echo Structure::make( 
@@ -184,57 +84,24 @@ if( !isset( $sectiondict['formaction'] ) ){
 
 		var sectiondict = <?php echo json_encode($sectiondict) ?>;
 		var input_keys = <?php echo json_encode($input_onlykeys) ?>;
-		var data_id = "<?php echo $data_id ?>";
-		var original_data_id = "<?php echo $original_data_id ?>";
-		// alert( JSON.stringify( original_data_id ) );
-		var typearray = [];
-		<?php foreach ($input_onlykeys as $k) { ?>
-			var k = '<?php echo $k ?>';
-			<?php if( $k == "download_script" ){ ?>
-				typearray.push( 'copybutton_1' );
-			<?php }else{ ?>
-				typearray.push( '<?php echo Input::getInputType( $k ) ?>' );
-			<?php } ?>
-		<?php } ?>
-
+		var typearray = <?php echo json_encode( ReusableClasses::getTypeArray( $input_onlykeys ) ) ?>;
 		var dataarray = <?php echo json_encode( Data::getFullArray( $sectiondict ) ) ?>;
-
 		var formatteddata = <?php echo json_encode( Data::retrieveDataWithID( $original_data_id ) ) ?>;
 		var identifier = "<?php echo $identifier ?>";
 
+		class <?php echo $identifier ?>Classes {
+			populateview( index=null ){
+				Reusable.setinputvalues( sectiondict, input_keys, identifier, typearray, dataarray, formatteddata, index )
 
-			class <?php echo $identifier ?>Classes {
-				populateview(index=null){
-					for (var i = 0; i < input_keys.length; i++) {
-						var key = input_keys[i];
-
-						var colname = formatteddata['db_info']['colnames'][key];
-						var type = typearray[i];
-						if(type=="textarea"){
-							Reusable.updateTextArea( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input_"+i, colname, index );
-						}else if(type=="wysi"){
-							Reusable.updateWysi( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input_"+i, colname, index, i );
-						}else if(type=="file_image"){
-							Reusable.updateFileImage( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input_"+i, colname, index );
-						}else if(type=="textfield"){
-							Reusable.updateTextField( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input_"+i, colname, index );
-						}else if(type=="colorpicker"){
-							Reusable.updateColorPicker( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input_"+i, colname, index );
-						}else if(type=="copybutton_1"){
-							Reusable.updateCopyButton( dataarray, "<?php echo $identifier ?>", "<?php echo $original_data_id ?>", key, "<?php echo $identifier ?>_"+key+"_input_"+i, colname, index );
-						}
-					}
-
-					<?php if( $steps > 1 ) { ?>
-						$('.main_with_hidden.next').css({'display': 'inline-block'});
-						$('.main_with_hidden.save').css({'display': 'none'});
-					<?php } else { ?>
-						$('.main_with_hidden.save').css({'display': 'inline-block'});
-						$('.main_with_hidden.next').css({'display': 'none'});
-					<?php } ?>
-				}
+				<?php if( $steps > 1 ) { ?>
+					$('.main_with_hidden.next').css({'display': 'inline-block'});
+					$('.main_with_hidden.save').css({'display': 'none'});
+				<?php } else { ?>
+					$('.main_with_hidden.save').css({'display': 'inline-block'});
+					$('.main_with_hidden.next').css({'display': 'none'});
+				<?php } ?>
 			}
-
+		}
 
 		if( typeof <?php echo $identifier ?> == 'undefined'  ) {
 			var <?php echo $identifier ?> = new <?php echo $identifier ?>Classes();

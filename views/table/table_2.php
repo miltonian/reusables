@@ -2,37 +2,24 @@
 
 namespace Reusables;
 
-	/*
-		$tabledict = [
-			"postarray"=>array()
-		]
-	*/
-
-	if( !isset($tabledict['sortable'])){ 
+	if( !isset($tableoptions['sortable'])){ 
 		$sortable = false; 
 	}else { 
-		$sortable = $tabledict['sortable']; 
+		$sortable = $tableoptions['sortable']; 
+	}
+// exit( json_encode( $sortable ) );
+
+
+	if( isset($tabledict['value']) ){
+		$tablearray = $tabledict['value'];
+	}else{
+		$tablearray = $tabledict;
 	}
 
-$required = array(
-	 $identifier . '_posts' =>array("link", "name|imagepath|emoji"), 
-	"cellactions"=>"",  
-	"cellname"=>""
-);
+	$temp_tablearray = $tablearray; 
+	// exit( json_encode( $temp_tablearray ) );
+	unset( $temp_tablearray['data_id'] );
 
-$tabledict[$identifier . '_posts' ] = Data::retrieveDataWithID( $identifier . '_posts' );
-// exit( json_encode( $tabledict[$identifier . '_posts' ] ) );
-if( isset($tabledict[ $identifier . '_posts' ]['value']) ){
-	$tablearray = $tabledict[ $identifier . '_posts' ]['value'];
-}else{
-	$tablearray = $tabledict[ $identifier . '_posts' ];
-}
-
-$temp_tablearray = $tablearray; 
-unset( $temp_tablearray['data_id'] );
-
-// ReusableClasses::checkRequired( $identifier, $tabledict, $required );
-// exit( json_encode( $tabledict[$identifier . '_posts'][0] ) );
 ?>
 
 <style>
@@ -58,25 +45,29 @@ unset( $temp_tablearray['data_id'] );
 					<li id="<?php echo $i ?>" class="ui-state-default" style="background-color: transparent; border: 0;">
 					<?php 
 				}
-				if( isset($tabledict[ $identifier . '_posts' ]['value']) ){
-					$post = Data::formatCellWithDefaultData( $identifier . '_posts' , $i );
+
+				if( isset($tabledict['value']) ){
+					$post = Data::formatCellWithDefaultData( $identifier , $i );
 				}else{
 					$post = Data::getValue( $tablearray, $i );
 				}
 
 
-				$post = Data::convertKeysInTable( $tabledict, $post );
+				$post = Data::convertKeysInTable( $identifier, $post );
 
 				$post['index'] = $i;
-				$post['pre_slug'] = Data::getValue( $tabledict, 'pre_slug' );
-				if( isset( $tabledict['celldict'] ) ) {
-					$post = array_merge( $post, $tabledict['celldict'] );
+				$postoptions['pre_slug'] = Data::getValue( $tableoptions, 'pre_slug' );
+
+				if( isset( $tableoptions['celldict'] ) ) {
+					$post = array_merge( $post, $tableoptions['celldict'] );
 				}
-				if( isset( $tabledict['slug'] ) ) { $post['slug'] = Data::getValue( $tabledict, 'slug' ); }
-				if(isset($tabledict['cellactions'])){ $post['actions'] = $tabledict['cellactions']; }else{ $post['actions'] = array(); }
+
+				if( isset( $tableoptions['slug'] ) ) { $postoptions['slug'] = Data::getValue( $tableoptions, 'slug' ); }
+				if( isset( $tableoptions['actions'] ) ){ $postoptions['actions'] = $tableoptions['actions']; }else{ $postoptions['actions'] = array(); }
 
 				Data::addData( $post, $identifier . "_cell_" . $i );
-				echo Cell::make( $tabledict['cellname'], $identifier . "_cell_" . $i );
+				Data::addOptions( $postoptions, $identifier . "_cell_" . $i );
+				echo Cell::make( $tableoptions['cellname'], $identifier . "_cell_" . $i );
 				if($sortable){ ?>
 					</li>
 				<?php } 
@@ -92,21 +83,8 @@ unset( $temp_tablearray['data_id'] );
 
 <script>
 
-// $('.admin-projects').each(function(e) {
-// 	alert();
-// 			var apid = $(this).attr('id');
-// 			Sortable.create( document.getElementById( apid ), {
-// 				onUpdate: function (evt/**Event*/){
-// 					var sort = '';
-// 					$('#'+apid + ' .admin-project').each(function(e) {
-// 						sort+= $(this).attr('id').replace('pid-','')+',';
-// 					});
-// 					console.log(sort);
-// 					$('#sort_order').val(sort);
-// 				}
-// 			} );
-// 		});
-<?php if( $sortable ){ ?>
+
+	<?php if( $sortable ){ ?>
 		$( function() {
 		    $( "#sortable" ).sortable({
 			    axis: 'y',
@@ -114,17 +92,7 @@ unset( $temp_tablearray['data_id'] );
 			    disabled: true,
 			    helper: 'clone',
 			  update: function( event, ui ) {
-				  // var sortedIDs = $( "#sortable" ).sortable( "toArray" );
-				  
-				  // sortedarray = [];
-				  // $('#project-sort-order').val("");
-				  // for(var i=0;i<sortedIDs.length;i++){
-					 //  if(sortedIDs[i]!=""){
-						//   var index = parseInt(sortedIDs[i]);
-						//   sortedarray.push(i, [projectsarray[index]['info']['id']]);
-						//   $('#project-sort-order').val( $('#project-sort-order').val() + projectsarray[index]['info']['id'] + ',' );
-					 //  }
-				  // }
+				
 				},
 				start: function( event, ui ) {
 

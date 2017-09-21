@@ -12,7 +12,7 @@ class cell_10_classes {
 			var theindex = Reusable.getIndexFromClass( "actionindex_", this )
 			if(theindex != -1){
 				var cellbutton = cellactions[theindex];
-
+// alert("index is "+theindex)
 				Reusable.addAction( cellbutton, editingfunctions, theindex, null, this )
 			}
 		});

@@ -1,8 +1,8 @@
 <?php
 
-namespace Reusables;
+		namespace Reusables;
 
-// exit( json_encode( $celldict['price'] ) );
+		extract( Cell::prepareCell( $identifier ) );
 ?>
 
 <style>

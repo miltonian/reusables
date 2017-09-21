@@ -17,16 +17,16 @@ $cellindex = Data::getValue( $celldict, 'index' );
 
 // exit( json_encode( Data::retrieveDataWithID( Data::getValue( $celldict, 'data_id' ) ) ) );
 
-$actiontype = Data::getValue( $celldict, 'type' );
+$celloptions = ReusableClasses::convertViewActions( $celloptions );
 
-// exit( json_encode( $celldict ) );
 // ReusableClasses::checkRequired( $identifier, $celldict, $required );
 	
 	$cellactionshtml = "";
-	if( isset( $celldict['actions'] ) ){
+	if( isset( $celloptions['actions'] ) ){
 		$cellactionshtml .= "<div class='cell_10 actions-div'>";
 		$i=0;
-		foreach ( $celldict['actions'] as $action ) {
+		foreach ( $celloptions['actions'] as $action ) {
+			$actiontype = Data::getValue( $action, 'type' );
 			if( $actiontype == "dropdown" ){
 				$cellactionshtml .= "<div class='dropdown_1'>";
 					$cellactionshtml .= "<div class='inner-dropdown'>";
@@ -47,7 +47,7 @@ $actiontype = Data::getValue( $celldict, 'type' );
 		}
 		$cellactionshtml .= "</div>";
 	}else{
-		$celldict['actions'] = array();
+		$celloptions['actions'] = array();
 	}
 
 ?>
@@ -85,19 +85,10 @@ $actiontype = Data::getValue( $celldict, 'type' );
 
 <script>
 
-	var cellactions = <?php echo json_encode( $celldict['actions'] ) ?>;
+	var cellactions = <?php echo json_encode( $celloptions['actions'] ) ?>;
 
-	var editingfunctions = [];
-	<?php foreach ( $celldict['actions'] as $ca ) { ?>
-		<?php $ca_type = Data::getValue( $ca, 'type' ) ?>
-		<?php if( $ca_type == "modal" ){ ?>
-			var thismodalclass = new <?php echo $ca['modal']['modalclass'] ?>Classes();
-			editingfunctions.push( thismodalclass );
-		<?php }else{ ?>
-			editingfunctions.push( "nothing" );
-		<?php } ?>
-		<?php $i++; ?>
-	<?php } ?>
+	<?php ReusableClasses::getEditingFunctionsJS( $celloptions ) ?>;
+	
 
 function cell_10_start(){
 	cell_10.setupactions( cellactions, editingfunctions );

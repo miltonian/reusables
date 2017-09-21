@@ -6,15 +6,17 @@ if( isset($headerdict['editing']) ){ $isediting=1; }else{ $isediting=0; }
 
 $buttons = "";
 
-if( isset($headerdict['buttons']) ){
+if( isset($headeroptions['buttons']) ){
 	$i=0;
-	foreach ($headerdict['buttons'] as $b) {
-		$buttons .= "<button id='".Data::getValue($b, 'view_id')."' class='header_3 index_" . $i . " " . Data::getValue($b,'classname') . "'>" . $b['name'] . "</button>";
+	foreach ($headeroptions['buttons'] as $b) {
+		$buttons .= "<button id='".Data::getValue($b, 'view_id')."' class='header_3 index_" . $i . " " . Data::getValue($b,'classname') . "'>" . $b['text'] . "</button>";
 		$i++;
 	}
 }
 
-// exit( json_encode( $headerdict ) );
+$headeroptions = ReusableClasses::convertViewActions( $headeroptions );
+// exit( json_encode( $headeroptions ) );
+
 
 ?>
 
@@ -24,7 +26,7 @@ if( isset($headerdict['buttons']) ){
 
 <div class="<?php echo $identifier ?> header_3 main">
 	<?php
-		if(isset($headerdict['buttons'])){
+		if(isset($headeroptions['buttons'])){
 			echo Structure::make(
 				"structure_1", 
 				[
@@ -46,20 +48,12 @@ if( isset($headerdict['buttons']) ){
 
 <script>
 
-<?php if( isset( $headerdict['buttons'] ) ){ ?>
-var editingfunctions = [];
-<?php foreach ($headerdict['buttons'] as $hb) { ?>
-	<?php $hb_type = Data::getValue( $hb, 'type' ); ?>
-	<?php if( $hb_type == "modal" ){ ?>
-		var thismodalclass = new <?php echo $hb['modal']['modalclass'] ?>Classes();
-		editingfunctions.push( thismodalclass );
-	<?php }else{ ?>
-		editingfunctions.push( "nothing" );
-	<?php } ?>
-	<?php $i++; ?>
-<?php } ?>
+<?php if( isset( $headeroptions['buttons'] ) ){ ?>
+
+<?php ReusableClasses::getEditingFunctionsJS( $headeroptions ) ?>;
 
 var headerdict = <?php echo json_encode($headerdict) ?>;
+var headeroptions = <?php echo json_encode($headeroptions) ?>;
 var isediting = <?php echo $isediting ?>;
 	$('.header_3 .structure_1 .sidecolumn_right button').click(function(e){
 		e.preventDefault();
@@ -74,7 +68,7 @@ var isediting = <?php echo $isediting ?>;
 		}
 		
 		if(theindex != -1){
-			var buttondict = headerdict['buttons'][theindex];
+			var buttondict = headeroptions['buttons'][theindex];
 			Reusable.addAction( buttondict, editingfunctions, theindex )
 		}
 	});

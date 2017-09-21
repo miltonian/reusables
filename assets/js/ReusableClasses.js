@@ -85,24 +85,24 @@ var editingorder = false;
 		updateWysi( dataarray, identifier, data_id, key, inputclass, db_key, index, fieldindex )
 		{
 			var thisdict = [];
-				var thisdictvalue = [];
-				thisdict = dataarray[data_id];
-				if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
+			var thisdictvalue = [];
+			thisdict = dataarray[data_id];
+			if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
 			
 			CKEDITOR.instances['fieldarray[' + fieldindex + '][field_value]'].setData( thisdictvalue[key] ); 
 
-				$('.' + identifier + ' .' + inputclass + ' input.tablename').val(thisdict['db_info']['tablenames'][key]);
-				$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);
-				for (var i = 0; i < thisdict['db_info']['conditions'].length; i++) {
-					var conditions = thisdict['db_info']['conditions'];
-					if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
-						conditions[i]['value'] = key; 
-					}else{
-						conditions[i]['value'] = thisdictvalue[conditions[i]['key']]; 
-					}
-					$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
-					$( '.' + identifier + ' .' + inputclass + ' input.conditionvalue_' + i ).val( conditions[i]['value'] );
+			$('.' + identifier + ' .' + inputclass + ' input.tablename').val(thisdict['db_info']['tablenames'][key]);
+			$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);
+			for (var i = 0; i < thisdict['db_info']['conditions'].length; i++) {
+				var conditions = thisdict['db_info']['conditions'];
+				if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
+					conditions[i]['value'] = key; 
+				}else{
+					conditions[i]['value'] = thisdictvalue[conditions[i]['key']]; 
 				}
+				$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
+				$( '.' + identifier + ' .' + inputclass + ' input.conditionvalue_' + i ).val( conditions[i]['value'] );
+			}
 		}
 
 		updateColorPicker( dataarray, identifier, data_id, key, inputclass, db_key, index=null )
@@ -310,6 +310,38 @@ var editingorder = false;
 
 
 		}
+
+		setinputvalues( sectiondict, input_keys, identifier, typearray, dataarray, formatteddata, index ) {
+
+			for (var i = 0; i < input_keys.length; i++) {
+				var key = input_keys[i];
+				var colname = formatteddata['db_info']['colnames'][key];
+				var type = typearray[i];
+				Reusable.fillinputvalues( type, dataarray, identifier, key, colname, index, i )
+			}
+
+		}
+
+		fillinputvalues( type, dataarray, identifier, key, colname, index, fieldindex ) {
+
+			var inputclass = identifier + "_" + key + "_input_" + fieldindex
+
+			if(type=="textarea"){
+				Reusable.updateTextArea( dataarray, identifier, identifier, key, inputclass, colname, index );
+			}else if(type=="wysi"){
+				Reusable.updateWysi( dataarray, identifier, identifier, key, inputclass, colname, index, fieldindex );
+			}else if(type=="file_image"){
+				Reusable.updateFileImage( dataarray, identifier, identifier, key, inputclass, colname, index );
+			}else if(type=="textfield"){
+				Reusable.updateTextField( dataarray, identifier, identifier, key, inputclass, colname, index );
+			}else if(type=="colorpicker"){
+				Reusable.updateColorPicker( dataarray, identifier, identifier, key, inputclass, colname, index );
+			}else if(type=="copybutton_1"){
+				Reusable.updateCopyButton( dataarray, identifier, identifier, key, inputclass, colname, index );
+			}
+		}
+
+		
 
 
 

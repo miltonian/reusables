@@ -22,15 +22,13 @@ $tablearray = array(
 	$celldict,
 );
 
-// this is for the table's reusable view
-$tabledict = [
-	"cellname" => "cell_2",
-];
 
 // DATA
 Reusables\Data::addData( $headerdict, "page_header" );
-Reusables\Data::addData( $tablearray, "table_posts" );
-Reusables\Data::addData( $tabledict, "table" );
+Reusables\Data::addData( $tablearray, "table" );
+
+// this is for the table's reusable view
+Reusables\Data::addOption( "cell_2", "cellname", "table" );
 
 Reusables\ReusableClasses::startpage( __FILE__ );
 

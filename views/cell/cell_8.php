@@ -5,17 +5,7 @@ namespace Reusables;
 	// image left 
 	// text right
 	
-	if(!isset($isadmin)){ $isadmin=false; }
-	if( !isset($celldict['type'])){ $celldict['type'] = ""; }
-	// if(!isset($celldict['post_id'])){ $celldict['post_id'] = $celldict['id']; }
-
-	$linkpath = "";
-	$linkpath .= Data::getValue( $celldict, 'pre_slug' );
-	$linkpath .= Data::getValue( $celldict, 'slug' );
-
-	$mediatype = Data::getValue( $celldict, 'mediatype' );
-
-	if( isset($celldict['isfeatured']) ){ $isfeatured = $celldict['isfeatured']; }else { $isfeatured = false; }
+	extract( Cell::prepareCell( $identifier ) );
 
 ?>
 

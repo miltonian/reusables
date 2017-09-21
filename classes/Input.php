@@ -8,13 +8,18 @@ class Input {
 
 	public static function make( $file, $identifier )
 	{
-		ReusableClasses::addfile( "input", $file );
-		$View = View::factory( 'reusables/views/input/' . $file );
-		$data = Data::retrieveDataWithID( $identifier );
-		$View->set( 'inputdict', $data );
-		$View->set( 'identifier', $identifier );
-		return $View->render();
+		return Views::setDefaultViewInfo( $file, $identifier, "input" );
 	}
+
+	// public static function make( $file, $identifier )
+	// {
+	// 	ReusableClasses::addfile( "input", $file );
+	// 	$View = View::factory( 'reusables/views/input/' . $file );
+	// 	$data = Data::retrieveDataWithID( $identifier );
+	// 	$View->set( 'inputdict', $data );
+	// 	$View->set( 'identifier', $identifier );
+	// 	return $View->render();
+	// }
 
 	public static function fill( $dict, $key, $index, $type=null, $placeholder=null, $labeltext=null, $parentclass=null )
 	{
@@ -99,6 +104,96 @@ class Input {
 	public static function setInputType( $key, $type )
 	{
 		self::$inputtypes[$key] = $type;
+	}
+
+	public static function convertInputKeys( $identifier )
+	{
+		$data = Data::retrieveDataWithID( $identifier );
+		$options = Data::retrieveOptionsWithID( $identifier );
+
+		$onstep = ReusableClasses::getOnStepForm( $identifier );
+		ReusableClasses::setOnStepForm( $identifier, $onstep );
+
+		$input_onlykeys = [];
+
+		if( !isset( $options['input_keys'] ) ){ 
+			if( isset( $data['value'] ) ){
+				if ( !Data::isAssoc( $data['value'] ) ) {
+					$input_keys = array_keys( $data['value'][0] );
+				}else{
+					$input_keys = array_keys( $data['value'] );
+				}
+			}else{
+				$input_keys = array_keys( $data ); 
+			}
+			$input_keydicts = [];
+		}else{
+			$input_keydicts = $options['input_keys'];
+			$input_keys = array_keys($options['input_keys']);
+		}
+
+
+
+		$steps = Data::getValue( $options, 'steps' );
+
+		if( $steps == "" ) {
+			$steps = 1;
+		}else{
+			unset( $options[ 'steps' ] );
+		}
+
+		// extract( CustomView::makeFormVars( $options, "options" ) );
+
+		$lastinputindex = ReusableClasses::getLastInputIndexForForm( $identifier );
+		if( $lastinputindex == null ) {
+			$nextinputindex = 0;
+		}else{
+			$nextinputindex = $lastinputindex+1;
+		}
+
+		$inputs = array();
+		$i=$nextinputindex;
+
+		$s = $onstep;
+
+		foreach ($input_keys as $ik) {
+
+			$placeholder = null; $labeltext = null; $type = null;
+			if( isset( $input_keydicts[ $ik ]['step'] ) ){ $steps = $input_keydicts[ $ik ]['step']; }
+			if( isset( $input_keydicts[ $ik ]['placeholder'] ) ){ $placeholder = $input_keydicts[ $ik ]['placeholder']; }else{ $placeholder = null; }
+			if( isset( $input_keydicts[ $ik ]['labeltext'] ) ){ $labeltext = $input_keydicts[ $ik ]['labeltext']; }else{ $labeltext = null; }
+			if( isset( $input_keydicts[ $ik ]['type'] ) ){ $type = $input_keydicts[ $ik ]['type']; }else{ $type = null; }
+
+
+			$thekey = $ik;
+
+			if( is_numeric( $ik ) ){ $thekey = $input_keydicts[$ik]; }
+			array_push( $input_onlykeys, $thekey );
+
+			$input_fields = [];
+			if( isset($inputs['c' . $s ] ) ){
+				$input_fields = $inputs['c' . $s ];
+			}
+			if( $steps == $s ){
+				ReusableClasses::setFormInputIndex( $identifier, $i );
+
+				array_push( 
+					$input_fields, 
+					Input::fill( $data, $thekey, $i, $type, $placeholder, $labeltext, $identifier  )
+				);
+				$inputs['c' . $s] = $input_fields;
+
+				$i++;
+			}
+		}
+		return [
+			"input_keys" => $input_keys,
+			"input_keydicts" => $input_keydicts,
+			"input_onlykeys" => $input_onlykeys,
+			"inputs" => $inputs,
+			"steps" => $steps,
+			"onstep" => $onstep
+		];
 	}
 
 
