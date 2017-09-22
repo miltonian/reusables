@@ -365,9 +365,9 @@ class Data {
 		$options = Data::retrieveOptionsWithID( $identifier );
 
 		if( !isset($options['convert_keys'])){ 
-			$options = false; 
+			$convertkeys = false; 
 		}else { 
-			$options = $options['convert_keys']; 
+			$convertkeys = $options['convert_keys']; 
 		}
 
 		$postkeys = array_keys($post);

@@ -60,7 +60,6 @@ namespace Reusables;
 
 
 				$post = Data::convertKeysInTable( $identifier, $post );
-
 				$post['index'] = $i;
 				$postoptions['pre_slug'] = Data::getValue( $tableoptions, 'pre_slug' );
 
