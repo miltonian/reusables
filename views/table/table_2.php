@@ -20,6 +20,12 @@ namespace Reusables;
 	// exit( json_encode( $temp_tablearray ) );
 	unset( $temp_tablearray['data_id'] );
 
+	$cellname = Data::getValue( $tableoptions, 'cellname' );
+	if( $cellname == "" ){
+		// default cell
+		$cellname = "cell_2";
+	}
+
 ?>
 
 <style>
@@ -67,7 +73,7 @@ namespace Reusables;
 
 				Data::addData( $post, $identifier . "_cell_" . $i );
 				Data::addOptions( $postoptions, $identifier . "_cell_" . $i );
-				echo Cell::make( $tableoptions['cellname'], $identifier . "_cell_" . $i );
+				echo Cell::make( $cellname, $identifier . "_cell_" . $i );
 				if($sortable){ ?>
 					</li>
 				<?php } 
