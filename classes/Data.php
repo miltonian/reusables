@@ -405,6 +405,17 @@ class Data {
 		return $linkpath;
 	}
 
+	public static function hasprefix( $input, $match )
+	{
+
+		if( substr( $input, 0, strlen($match) ) === $match ) {
+			return true;
+		}else {
+			return false;
+		}
+
+	}
+
 
 
 }

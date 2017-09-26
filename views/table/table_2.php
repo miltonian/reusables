@@ -72,7 +72,13 @@ namespace Reusables;
 
 				Data::addData( $post, $identifier . "_cell_" . $i );
 				Data::addOptions( $postoptions, $identifier . "_cell_" . $i );
-				echo Cell::make( $cellname, $identifier . "_cell_" . $i );
+				if( Data::hasprefix( $cellname, "custom/" ) ) {
+					$filename = substr( $cellname, strlen( "custom/" ), strlen( $cellname ) );
+					// exit( json_encode( $filename ) );
+				    echo CustomView::make( $filename, $identifier . "_cell_" . $i );
+				}else {
+					echo Cell::make( $cellname, $identifier . "_cell_" . $i );
+				}
 				if($sortable){ ?>
 					</li>
 				<?php } 
