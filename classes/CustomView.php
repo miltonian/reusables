@@ -16,7 +16,9 @@ class CustomView {
 		ReusableClasses::addfile( "custom", $file );
 		$View = View::factory( $custompath . $file );
 		$data = Data::retrieveDataWithID( $identifier );
+		$options = Data::retrieveOptionsWithID( $identifier );
 		$View->set( 'viewdict', $data );
+		$View->set( 'viewoptions', $options );
 		$View->set( 'identifier', $identifier );
 		return $View->render();
 	}
