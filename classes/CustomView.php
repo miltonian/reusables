@@ -16,7 +16,7 @@ class CustomView {
 		ReusableClasses::addfile( "custom", $file );
 		$View = View::factory( $custompath . $file );
 		$data = Data::retrieveDataWithID( $identifier );
-		$View->set( 'customviewdict', $data );
+		$View->set( 'viewdict', $data );
 		$View->set( 'identifier', $identifier );
 		return $View->render();
 	}
@@ -48,7 +48,7 @@ class CustomView {
 		if( $viewtypedict ){
 			return [ "data_id"=>$data_id, $viewtypedict=>$dict, "default_tablename"=>$default_tablename ];
 		}else{
-			return [ "data_id"=>$data_id, "customviewdict"=>$dict, "default_tablename"=>$default_tablename ];
+			return [ "data_id"=>$data_id, "viewdict"=>$dict, "default_tablename"=>$default_tablename ];
 		}
 	}
 
