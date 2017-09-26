@@ -12,13 +12,8 @@ class Views {
 		$data = Data::retrieveDataWithID( $identifier );
 		$options = Data::retrieveOptionsWithID( $identifier );
 
-		if( $viewtype == "postinternal" ){
-			$View->set( 'postdict', $data );
-			$View->set( 'postoptions', $options );
-		}else{
-			$View->set( $viewtype . 'dict', $data );
-			$View->set( $viewtype . 'options', $options );
-		}
+		$View->set( $viewtype . 'viewdict', $data );
+		$View->set( $viewtype . 'viewoptions', $options );
 
 		if( $viewtype == "section" ){
 			$View->set( 'tablenames', $tablenames );

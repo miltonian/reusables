@@ -2,14 +2,14 @@
 
 namespace Reusables;
 
-// exit( json_encode( Data::getValue( $sectiondict['skillsarray'] ) ) );
+// exit( json_encode( Data::getValue( $viewdict['skillsarray'] ) ) );
 
-$skillsarray = Data::getValue( $sectiondict, 'skillsarray' );
+$skillsarray = Data::getValue( $viewdict, 'skillsarray' );
 
 // exit( json_encode( $skillsarray ) );
 
 if(!isset($skillset1array)){ $skillset1array = array(); }
-if(!isset($sectiondict['skillsarray'])){ $sectiondict['skillsarray']=array(); }
+if(!isset($viewdict['skillsarray'])){ $viewdict['skillsarray']=array(); }
 
 $skillindex = 0;
 if(sizeof($skillsarray)>0){
@@ -23,9 +23,9 @@ $score = "75%";
 $skill = ["name"=>$name, "score"=>$score];
 $skillset1array = array($skill, $skill);
 
-if(!isset($sectiondict['preview'])){ $sectiondict['preview'] = 0; }
+if(!isset($viewdict['preview'])){ $viewdict['preview'] = 0; }
 
-// exit( json_encode( Data::getValue( $sectiondict ) ) );
+// exit( json_encode( Data::getValue( $viewdict ) ) );
 
 ?>
 
@@ -34,7 +34,7 @@ if(!isset($sectiondict['preview'])){ $sectiondict['preview'] = 0; }
 
 
 <div class="skillset_1 main <?php echo $identifer ?>">
-	<?php /*if( ((!$GLOBALS['isadmin'] && !$GLOBALS['isuser']) || ($GLOBALS['isadmin'] != $sectiondict['userprofile_userid'] && $GLOBALS['userid'] != $sectiondict['userprofile_userid'])) || $sectiondict['preview']==1 ){*/ ?>
+	<?php /*if( ((!$GLOBALS['isadmin'] && !$GLOBALS['isuser']) || ($GLOBALS['isadmin'] != $viewdict['userprofile_userid'] && $GLOBALS['userid'] != $viewdict['userprofile_userid'])) || $viewdict['preview']==1 ){*/ ?>
 	<h1 class="skillset_1 title">My Month</h1>
 		<?php $i=1; foreach ($skillsarray as $skill) { ?>
 			<?php 
@@ -60,7 +60,7 @@ if(!isset($sectiondict['preview'])){ $sectiondict['preview'] = 0; }
 	<?php /*}else{*/ ?>
 		<!-- <h1 class="title">Skills</h1> -->
 		<?php /*$i=0; 
-		foreach ($sectiondict['skillsarray'] as $skill) { 
+		foreach ($viewdict['skillsarray'] as $skill) { 
 			<div class="wrapper">
 				<input type="text" class="skillname editing" name="name_skillname<?php echo $i ?>" value="<?php echo $skill['fieldname'] ?>">
 				<input type="text" class="skillvalue editing" name="name_skillvalue<?php echo $i ?>" value="<?php echo $skill['fieldvalue'] ?>"><br><br>
@@ -75,9 +75,9 @@ if(!isset($sectiondict['preview'])){ $sectiondict['preview'] = 0; }
 <script>
 
 var skillindex = <?php echo $skillindex ?>;
-var skillcount = <?php echo intval( sizeof($sectiondict['skillsarray']) ) ?>;
+var skillcount = <?php echo intval( sizeof($viewdict['skillsarray']) ) ?>;
 
-<?php if( ((!$GLOBALS['isadmin'] && !$GLOBALS['isuser']) || ($GLOBALS['isadmin'] != $sectiondict['userprofile_userid'] && $GLOBALS['userid'] != $sectiondict['userprofile_userid'])) || $sectiondict['preview']==1 ){}else{ ?>
+<?php if( ((!$GLOBALS['isadmin'] && !$GLOBALS['isuser']) || ($GLOBALS['isadmin'] != $viewdict['userprofile_userid'] && $GLOBALS['userid'] != $viewdict['userprofile_userid'])) || $viewdict['preview']==1 ){}else{ ?>
 if(skillcount<3){
 	for(var i=0;i<3;i++){
 		addskill();

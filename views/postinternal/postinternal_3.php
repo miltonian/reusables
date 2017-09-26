@@ -3,13 +3,13 @@
 namespace Reusables;
 
 	/*
-		$postdict = [
+		$viewdict = [
 				"featured_imagepath"=>"",
 				"html_text"=>""
 			]
 	*/
 	
-	$sharingdict = Data::getValue( $postdict, 'sharingdict' );
+	$sharingdict = Data::getValue( $viewdict, 'sharingdict' );
 
 ?>
 
@@ -20,15 +20,15 @@ namespace Reusables;
 </style>
 
 <div class="postinternal3">
-	<div id="featuredimage" style="background-image: url('<?php echo Data::getValue( $postdict, 'featured_imagepath' ); ?>');" ></div>
+	<div id="featuredimage" style="background-image: url('<?php echo Data::getValue( $viewdict, 'featured_imagepath' ); ?>');" ></div>
 	<?php
 		if( $sharingdict != "" ){
-			Data::addData( Data::getValue( $postdict, 'sharingdict' ), $identifier . "_sharingbtns_1" );
+			Data::addData( Data::getValue( $viewdict, 'sharingdict' ), $identifier . "_sharingbtns_1" );
 			echo Sharing::make( "sharingbtns_1", $identifier . "_sharingbtns_1" );
 		}
 	?>
 	<div class="text-container">
-		<?php echo Data::getValue( $postdict, 'html_text' ) ?>
+		<?php echo Data::getValue( $viewdict, 'html_text' ) ?>
 	</div>
 </div>
 

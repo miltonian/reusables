@@ -15,8 +15,8 @@ namespace Reusables;
 
 
 <script>
-var sliderdict = <?php echo json_encode($sliderdict) ?>;
-var images = sliderdict['images']
+var viewdict = <?php echo json_encode($viewdict) ?>;
+var images = viewdict['images']
 var num_images = images.length
 
 

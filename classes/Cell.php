@@ -15,7 +15,7 @@ class Cell {
 		$options = Data::retrieveOptionsWithID( $identifier );
 
 		$data_id = Data::getDefaultDataID( $data );
-		$fullcelldict = Data::getFullArray( $data );
+		$fullviewdict = Data::getFullArray( $data );
 		if( !isset($options['type'])){ $options['type'] = ""; }
 		if( !isset($options['isfeatured']) ){ $options['isfeatured']=false; }
 		// if( !isset($isadmin) ){ $isadmin=false; }
@@ -36,7 +36,7 @@ class Cell {
 
 		return [
 			"data_id" => $data_id,
-			"fullcelldict" => $fullcelldict,
+			"fullviewdict" => $fullviewdict,
 			"linkpath" => $linkpath,
 			"mediatype" => $mediatype,
 			"cellindex" => $cellindex,

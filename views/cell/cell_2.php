@@ -16,11 +16,11 @@
 		<div style="display: inline-block; width: 100%;">
 			<div>
 				<a href="<?php echo $linkpath ?>">
-					<div class="cell_2 picture" style="<?php echo 'background-image: url('.Data::getValue( $celldict, 'featured_imagepath' ).');'; ?>; <?php if( $mediatype == "video" ){ echo 'padding-bottom: 0;';  } ?>)">
+					<div class="cell_2 picture" style="<?php echo 'background-image: url('.Data::getValue( $viewdict, 'featured_imagepath' ).');'; ?>; <?php if( $mediatype == "video" ){ echo 'padding-bottom: 0;';  } ?>)">
 						<?php if($mediatype == "video"){ ?>
 							<video width="100%" height="auto" autoplay loop>
-							  <source src="<?php echo Data::getValue( $celldict, 'featured_imagepath' ) ?>" type="video/mp4">
-							  <source src="<?php echo Data::getValue( $celldict, 'featured_imagepath' ) ?>" type="video/ogg">
+							  <source src="<?php echo Data::getValue( $viewdict, 'featured_imagepath' ) ?>" type="video/mp4">
+							  <source src="<?php echo Data::getValue( $viewdict, 'featured_imagepath' ) ?>" type="video/ogg">
 							Your browser does not support the video tag.
 							</video>
 						<?php } ?>
@@ -31,7 +31,7 @@
 						<!-- <label class="grey-label">Today</label> -->
 						<br>
 						<a href="<?php echo $linkpath ?>">
-							<label class="cell_2 title" style=""><?php echo Data::getValue( $celldict, 'title' ); ?></label>
+							<label class="cell_2 title" style=""><?php echo Data::getValue( $viewdict, 'title' ); ?></label>
 						</a>
 						<br>
 						<label class="cell_2 grey-label"><?php echo $description ?></label>
@@ -46,18 +46,18 @@
 
 	var thismodalclass = "";
 	<?php if( $celltype == "modal" ){ ?>
-		thismodalclass = new <?php echo $celloptions['modal']['modalclass'] ?>Classes();
-		var dataarray = <?php echo json_encode( $fullcelldict ) ?>;
+		thismodalclass = new <?php echo $viewoptions['modal']['modalclass'] ?>Classes();
+		var dataarray = <?php echo json_encode( $fullviewdict ) ?>;
 	<?php }?>
 
 
 
-	var celldict = <?php echo json_encode($celldict) ?>;
+	var viewdict = <?php echo json_encode($viewdict) ?>;
 
 	$('.<?php echo $identifier ?>').off().click(function(e){
 		// e.preventDefault();
 		// alert( JSON.stringify(thismodalclass ) );
-		Reusable.addAction( celldict, [thismodalclass], 0, dataarray, this );
+		Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this );
 	});
 	
 </script>

@@ -2,25 +2,25 @@
 
 namespace Reusables;
 
-	if( !isset($tableoptions['sortable'])){ 
+	if( !isset($viewoptions['sortable'])){ 
 		$sortable = false; 
 	}else { 
-		$sortable = $tableoptions['sortable']; 
+		$sortable = $viewoptions['sortable']; 
 	}
 // exit( json_encode( $sortable ) );
 
 
-	if( isset($tabledict['value']) ){
-		$tablearray = $tabledict['value'];
+	if( isset($viewdict['value']) ){
+		$tablearray = $viewdict['value'];
 	}else{
-		$tablearray = $tabledict;
+		$tablearray = $viewdict;
 	}
 
 	$temp_tablearray = $tablearray; 
 	// exit( json_encode( $temp_tablearray ) );
 	unset( $temp_tablearray['data_id'] );
 
-	$cellname = Data::getValue( $tableoptions, 'cellname' );
+	$cellname = Data::getValue( $viewoptions, 'cellname' );
 	if( $cellname == "" ){
 		// default cell
 		$cellname = "cell_2";
@@ -52,7 +52,7 @@ namespace Reusables;
 					<?php 
 				}
 
-				if( isset($tabledict['value']) ){
+				if( isset($viewdict['value']) ){
 					$post = Data::formatCellWithDefaultData( $identifier , $i );
 				}else{
 					$post = Data::getValue( $tablearray, $i );
@@ -61,14 +61,14 @@ namespace Reusables;
 
 				$post = Data::convertKeysInTable( $identifier, $post );
 				$post['index'] = $i;
-				$postoptions['pre_slug'] = Data::getValue( $tableoptions, 'pre_slug' );
+				$postoptions['pre_slug'] = Data::getValue( $viewoptions, 'pre_slug' );
 
-				if( isset( $tableoptions['celldict'] ) ) {
-					$post = array_merge( $post, $tableoptions['celldict'] );
+				if( isset( $viewoptions['celldict'] ) ) {
+					$post = array_merge( $post, $viewoptions['celldict'] );
 				}
 
-				if( isset( $tableoptions['slug'] ) ) { $postoptions['slug'] = Data::getValue( $tableoptions, 'slug' ); }
-				if( isset( $tableoptions['actions'] ) ){ $postoptions['actions'] = $tableoptions['actions']; }else{ $postoptions['actions'] = array(); }
+				if( isset( $viewoptions['slug'] ) ) { $postoptions['slug'] = Data::getValue( $viewoptions, 'slug' ); }
+				if( isset( $viewoptions['actions'] ) ){ $postoptions['actions'] = $viewoptions['actions']; }else{ $postoptions['actions'] = array(); }
 
 				Data::addData( $post, $identifier . "_cell_" . $i );
 				Data::addOptions( $postoptions, $identifier . "_cell_" . $i );

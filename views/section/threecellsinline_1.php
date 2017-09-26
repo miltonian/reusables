@@ -8,10 +8,10 @@ namespace Reusables;
 		"cellname"=>""
 	);
 
-	// ReusableClasses::checkRequired( $identifier, $sectiondict, $required );
+	// ReusableClasses::checkRequired( $identifier, $viewdict, $required );
 
-	$cellname = Data::getValue( $sectiondict, 'cellname' );
-	// exit( json_encode( $sectiondict ) );
+	$cellname = Data::getValue( $viewdict, 'cellname' );
+	// exit( json_encode( $viewdict ) );
 	$asdf = Data::formatCellWithDefaultData( $identifier . "_posts", 0 );
 	// exit( json_encode( $asdf['featured_imagepath'] ) );
 	// exit( json_encode( Data::formatCellWithDefaultData( $identifier . "_posts", 0 ) ) );

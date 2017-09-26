@@ -3,23 +3,23 @@ namespace Reusables;
 
 ?>
 
-<button class="<?php echo $identifier ?> normal_1"><?php echo Data::getValue( $buttondict, 'title' ) ?></button>
+<button class="<?php echo $identifier ?> normal_1"><?php echo Data::getValue( $viewdict, 'title' ) ?></button>
 
 <script>
 
 	var thismodalclass = "";
-	<?php if( $buttondict['type'] == "modal" ){ ?>
-		thismodalclass = new <?php echo $buttondict['modal']['modalclass'] ?>Classes();
+	<?php if( $viewdict['type'] == "modal" ){ ?>
+		thismodalclass = new <?php echo $viewdict['modal']['modalclass'] ?>Classes();
 	<?php }?>
 
 
 
-	var buttondict = <?php echo json_encode($buttondict) ?>;
+	var viewdict = <?php echo json_encode($viewdict) ?>;
 	$('.<?php echo $identifier ?>').click(function(e){
 		e.preventDefault();
 
 
-		Reusable.addAction( buttondict, [thismodalclass], 0 );
+		Reusable.addAction( viewdict, [thismodalclass], 0 );
 
 	});
 

@@ -2,19 +2,19 @@
 
 namespace Reusables;
 
-	$funded = floatval( Data::getValue( $sectiondict, 'funded' ) );
-	$goal = floatval( Data::getValue( $sectiondict, 'goal' ) );
+	$funded = floatval( Data::getValue( $viewdict, 'funded' ) );
+	$goal = floatval( Data::getValue( $viewdict, 'goal' ) );
 
 	$percentage_funded = strval(ceil(( floatval($funded) / floatval($goal) ) * 100)) . "%";
 
 	$posttitle = "";
-	if ( isset($sectiondict['post_title']) ) {
-		$posttitle = Data::getValue( $sectiondict, 'post_title' );
+	if ( isset($viewdict['post_title']) ) {
+		$posttitle = Data::getValue( $viewdict, 'post_title' );
 	}
 
 	$actual_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
-	// exit(json_encode($sectiondict));
+	// exit(json_encode($viewdict));
 
 ?>
 
@@ -32,7 +32,7 @@ namespace Reusables;
 			<label class="name">GOAL</label>
 		</div>
 		<div class="funders">
-			<label class="value"><?php echo Data::getValue( $sectiondict, 'funders' ) ?></label>
+			<label class="value"><?php echo Data::getValue( $viewdict, 'funders' ) ?></label>
 			<label class="name">FUNDERS</label>
 		</div>
 	</div>

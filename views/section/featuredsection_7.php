@@ -3,7 +3,7 @@
 namespace Reusables;
 
 	/*
-		$sectiondict = [
+		$viewdict = [
 			"featured_imagepath"=>"",
 			"logo_imagepath"=>"",
 			"title"=>"",
@@ -12,13 +12,13 @@ namespace Reusables;
 		]
 	*/
 
-	$sectiondict = Data::convertKeys( $sectiondict );
-	// exit( json_encode( Data::getValue( $sectiondict, 'desc' ) ) );
+	$viewdict = Data::convertKeys( $viewdict );
+	// exit( json_encode( Data::getValue( $viewdict, 'desc' ) ) );
 
 
-	if( isset( $sectiondict['value'] ) ){ 
-		$data_id = Data::getDefaultDataID( $sectiondict );
-		$sectiondict = Data::formatForDefaultData( $data_id ); 
+	if( isset( $viewdict['value'] ) ){ 
+		$data_id = Data::getDefaultDataID( $viewdict );
+		$viewdict = Data::formatForDefaultData( $data_id ); 
 	}
 ?>
 
@@ -26,10 +26,10 @@ namespace Reusables;
 </style>
 
 <div class="featuredsection_7 <?php echo $identifier ?>">
-	<div class="featuredimage" style="background-image: url('<?php echo Data::getValue( $sectiondict, 'headshot_image' ) ?>');"></div>
+	<div class="featuredimage" style="background-image: url('<?php echo Data::getValue( $viewdict, 'headshot_image' ) ?>');"></div>
 	<div class="content">
-		<h2 id="title"><?php echo Data::getValue( $sectiondict, 'title' ) ?></h2>
-		<p id="desc"><?php echo Data::getValue( $sectiondict, 'desc' ) ?></p>
+		<h2 id="title"><?php echo Data::getValue( $viewdict, 'title' ) ?></h2>
+		<p id="desc"><?php echo Data::getValue( $viewdict, 'desc' ) ?></p>
 	</div>
 </div>
 

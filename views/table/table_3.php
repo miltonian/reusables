@@ -3,21 +3,21 @@
 namespace Reusables;
 
 	/*
-		$tabledict = [
+		$viewdict = [
 			"postarray"=>array()
 		]
 	*/
 
-	if( !isset($tabledict['sortable'])){ 
+	if( !isset($viewdict['sortable'])){ 
 		$sortable = false; 
 	}else { 
-		$sortable = $tabledict['sortable']; 
+		$sortable = $viewdict['sortable']; 
 	}
 
-	if( !isset($tabledict['ads'])){ 
+	if( !isset($viewdict['ads'])){ 
 		$adarray = false; 
 	}else { 
-		$adarray = $tabledict['ads']; 
+		$adarray = $viewdict['ads']; 
 	}
 
 	// exit( json_encode( $convertkeys ) );
@@ -28,19 +28,19 @@ $required = array(
 	"cellname"=>""
 );
 
-$tabledict[$identifier . '_posts' ] = Data::retrieveDataWithID( $identifier . '_posts' );
-// exit( json_encode( $tabledict[$identifier . '_posts' ] ) );
-if( isset($tabledict[ $identifier . '_posts' ]['value']) ){
-	$tablearray = $tabledict[ $identifier . '_posts' ]['value'];
+$viewdict[$identifier . '_posts' ] = Data::retrieveDataWithID( $identifier . '_posts' );
+// exit( json_encode( $viewdict[$identifier . '_posts' ] ) );
+if( isset($viewdict[ $identifier . '_posts' ]['value']) ){
+	$tablearray = $viewdict[ $identifier . '_posts' ]['value'];
 }else{
-	$tablearray = $tabledict[ $identifier . '_posts' ];
+	$tablearray = $viewdict[ $identifier . '_posts' ];
 }
 
 $temp_tablearray = $tablearray; 
 unset( $temp_tablearray['data_id'] );
 
-// ReusableClasses::checkRequired( $identifier, $tabledict, $required );
-// exit( json_encode( $tabledict[$identifier . '_posts'][0] ) );
+// ReusableClasses::checkRequired( $identifier, $viewdict, $required );
+// exit( json_encode( $viewdict[$identifier . '_posts'][0] ) );
 ?>
 
 <style>
@@ -77,12 +77,12 @@ unset( $temp_tablearray['data_id'] );
 								$post = Data::getValue( $adarray, $adindex );
 							}
 
-							$post = Data::convertKeysInTable( $tabledict, $post );
+							$post = Data::convertKeysInTable( $viewdict, $post );
 
 								// exit( json_encode( $post ) );
 							// exit( json_encode( Data::getValue( $post, 'title' ) ) );
 							$post['pre_slug'] = Data::getValue( $adarray, 'pre_slug' );
-							if( isset( $tabledict['celldict'] ) ) {
+							if( isset( $viewdict['celldict'] ) ) {
 								$post = array_merge( $post, $adarray['celldict'] );
 							}
 							if( isset( $adarray['slug'] ) ) { $post['slug'] = Data::getValue( $adarray, 'slug' ); }
@@ -96,7 +96,7 @@ unset( $temp_tablearray['data_id'] );
 
 
 				}
-				if( isset($tabledict[ $identifier . '_posts' ]['value']) ){
+				if( isset($viewdict[ $identifier . '_posts' ]['value']) ){
 					$post = Data::formatCellWithDefaultData( $identifier . '_posts' , $i );
 				}else{
 					$post = Data::getValue( $tablearray, $i );
@@ -118,15 +118,15 @@ unset( $temp_tablearray['data_id'] );
 				}
 					// exit( json_encode( $post ) );
 				// exit( json_encode( Data::getValue( $post, 'title' ) ) );
-				$post['pre_slug'] = Data::getValue( $tabledict, 'pre_slug' );
-				if( isset( $tabledict['celldict'] ) ) {
-					$post = array_merge( $post, $tabledict['celldict'] );
+				$post['pre_slug'] = Data::getValue( $viewdict, 'pre_slug' );
+				if( isset( $viewdict['celldict'] ) ) {
+					$post = array_merge( $post, $viewdict['celldict'] );
 				}
-				if( isset( $tabledict['slug'] ) ) { $post['slug'] = Data::getValue( $tabledict, 'slug' ); }
-				if(isset($tabledict['cellactions'])){ $post['actions'] = $tabledict['cellactions']; }else{ $post['actions'] = array(); }
+				if( isset( $viewdict['slug'] ) ) { $post['slug'] = Data::getValue( $viewdict, 'slug' ); }
+				if(isset($viewdict['cellactions'])){ $post['actions'] = $viewdict['cellactions']; }else{ $post['actions'] = array(); }
 
 				Data::addData( $post, $identifier . "_cell_" . $i );
-				echo Cell::make( $tabledict['cellname'], $identifier . "_cell_" . $i );
+				echo Cell::make( $viewdict['cellname'], $identifier . "_cell_" . $i );
 				if($sortable){ ?>
 					</li>
 				<?php } 

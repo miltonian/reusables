@@ -5,9 +5,9 @@ namespace Reusables;
 	//$sliderarray
 	// exit(json_encode($sliderarray[1]));
 if(!isset($isediting)){$isediting=false;}
-if(!isset($sliderdict['sliderarray'])){$sliderdict['sliderarray'] = array(); }
+if(!isset($viewdict['sliderarray'])){$viewdict['sliderarray'] = array(); }
 
-$sliderarray = $sliderdict['sliderarray'];
+$sliderarray = $viewdict['sliderarray'];
 
 $imagepickerarray = $sliderarray;
 

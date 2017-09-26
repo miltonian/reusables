@@ -12,7 +12,7 @@ namespace Reusables;
 						Structure::make(
 							"main_with_hidden",
 							[
-								"title" => Data::getValue( $sectiondict, 'formtitle' ),
+								"title" => Data::getValue( $viewdict, 'formtitle' ),
 								"c1" => [
 									Section::make( "smartform_1", $identifier )
 								],

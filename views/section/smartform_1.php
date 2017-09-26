@@ -2,31 +2,31 @@
 
 namespace Reusables;
 
-if( !isset( $sectionoptions['ifnone_insert'] ) ){
+if( !isset( $viewoptions['ifnone_insert'] ) ){
 	$ifnone_insert = false;
 }else{
-	$ifnone_insert = $sectionoptions['ifnone_insert'];
+	$ifnone_insert = $viewoptions['ifnone_insert'];
 }
 
-if( !isset( $sectionoptions['formaction'] ) ){
+if( !isset( $viewoptions['formaction'] ) ){
 	$formaction = '/edit_view.php';
 }else{
-	$formaction = $sectionoptions['formaction'];
+	$formaction = $viewoptions['formaction'];
 }
 
-if( isset( $sectiondict['formtitle'] ) ) {
-	unset( $sectiondict['formtitle'] );
+if( isset( $viewdict['formtitle'] ) ) {
+	unset( $viewdict['formtitle'] );
 }
 
-// if( isset( $sectiondict[array_keys($sectiondict)[0]][ 'data_id' ] ) ){
-// 	$original_data_id = $sectiondict[ array_keys( $sectiondict )[ 0 ] ][ 'data_id' ];
+// if( isset( $viewdict[array_keys($viewdict)[0]][ 'data_id' ] ) ){
+// 	$original_data_id = $viewdict[ array_keys( $viewdict )[ 0 ] ][ 'data_id' ];
 // }else{
-// 	$original_data_id = $sectiondict[ 'data_id' ];
+// 	$original_data_id = $viewdict[ 'data_id' ];
 // }
 
 $original_data_id = $identifier;
 
-extract( CustomView::makeFormVars( $sectiondict, "sectiondict" ) );
+extract( CustomView::makeFormVars( $viewdict, "viewdict" ) );
 extract( Input::convertInputKeys( $identifier ) );
 
 ?>
@@ -52,7 +52,7 @@ extract( Input::convertInputKeys( $identifier ) );
 <?php } ?>
 <div class="<?php echo $identifier ?> smartform_1 main">
 	<div class='thecontainer' style='text-align: left; margin-top: 10px; margin-bottom: 0px; text-align: center;'>
-		<input type="hidden" name="goto" value="<?php echo Data::getValue( $sectionoptions, 'goto' ) ?>">
+		<input type="hidden" name="goto" value="<?php echo Data::getValue( $viewoptions, 'goto' ) ?>">
 			<?php 
 
 				echo Structure::make( 
@@ -82,16 +82,16 @@ extract( Input::convertInputKeys( $identifier ) );
 
 	<?php if( $steps == $onstep ) { ?>
 
-		var sectiondict = <?php echo json_encode($sectiondict) ?>;
+		var viewdict = <?php echo json_encode($viewdict) ?>;
 		var input_keys = <?php echo json_encode($input_onlykeys) ?>;
 		var typearray = <?php echo json_encode( ReusableClasses::getTypeArray( $input_onlykeys ) ) ?>;
-		var dataarray = <?php echo json_encode( Data::getFullArray( $sectiondict ) ) ?>;
+		var dataarray = <?php echo json_encode( Data::getFullArray( $viewdict ) ) ?>;
 		var formatteddata = <?php echo json_encode( Data::retrieveDataWithID( $original_data_id ) ) ?>;
 		var identifier = "<?php echo $identifier ?>";
 
 		class <?php echo $identifier ?>Classes {
 			populateview( index=null ){
-				Reusable.setinputvalues( sectiondict, input_keys, identifier, typearray, dataarray, formatteddata, index )
+				Reusable.setinputvalues( viewdict, input_keys, identifier, typearray, dataarray, formatteddata, index )
 
 				<?php if( $steps > 1 ) { ?>
 					$('.main_with_hidden.next').css({'display': 'inline-block'});

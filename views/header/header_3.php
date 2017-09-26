@@ -2,20 +2,20 @@
 
 namespace Reusables;
 
-if( isset($headerdict['editing']) ){ $isediting=1; }else{ $isediting=0; }
+if( isset($viewdict['editing']) ){ $isediting=1; }else{ $isediting=0; }
 
 $buttons = "";
 
-if( isset($headeroptions['buttons']) ){
+if( isset($viewoptions['buttons']) ){
 	$i=0;
-	foreach ($headeroptions['buttons'] as $b) {
+	foreach ($viewoptions['buttons'] as $b) {
 		$buttons .= "<button id='".Data::getValue($b, 'view_id')."' class='header_3 index_" . $i . " " . Data::getValue($b,'classname') . "'>" . $b['text'] . "</button>";
 		$i++;
 	}
 }
 
-$headeroptions = ReusableClasses::convertViewActions( $headeroptions );
-// exit( json_encode( $headeroptions ) );
+$viewoptions = ReusableClasses::convertViewActions( $viewoptions );
+// exit( json_encode( $viewoptions ) );
 
 
 ?>
@@ -26,12 +26,12 @@ $headeroptions = ReusableClasses::convertViewActions( $headeroptions );
 
 <div class="<?php echo $identifier ?> header_3 main">
 	<?php
-		if(isset($headeroptions['buttons'])){
+		if(isset($viewoptions['buttons'])){
 			echo Structure::make(
 				"structure_1", 
 				[
 					"maincolumn" => array( 
-						"<h1 class='header_3' id='title'>" . Data::getValue( $headerdict, 'title' ) . "</h1>"
+						"<h1 class='header_3' id='title'>" . Data::getValue( $viewdict, 'title' ) . "</h1>"
 					),
 					"sidecolumn_right" => array( 
 						$buttons
@@ -40,7 +40,7 @@ $headeroptions = ReusableClasses::convertViewActions( $headeroptions );
 				$identifier . "_header_3"
 			);
 		}else{ ?>
-			<h1 class='header_3' id='title'><?php echo Data::getValue( $headerdict, 'title' ) ?></h1>
+			<h1 class='header_3' id='title'><?php echo Data::getValue( $viewdict, 'title' ) ?></h1>
 		<?php } ?>
 
 	<div class="header_3" id="divider"></div>
@@ -48,12 +48,12 @@ $headeroptions = ReusableClasses::convertViewActions( $headeroptions );
 
 <script>
 
-<?php if( isset( $headeroptions['buttons'] ) ){ ?>
+<?php if( isset( $viewoptions['buttons'] ) ){ ?>
 
-<?php ReusableClasses::getEditingFunctionsJS( $headeroptions ) ?>;
+<?php ReusableClasses::getEditingFunctionsJS( $viewoptions ) ?>;
 
-var headerdict = <?php echo json_encode($headerdict) ?>;
-var headeroptions = <?php echo json_encode($headeroptions) ?>;
+var viewdict = <?php echo json_encode($viewdict) ?>;
+var viewoptions = <?php echo json_encode($viewoptions) ?>;
 var isediting = <?php echo $isediting ?>;
 	$('.header_3 .structure_1 .sidecolumn_right button').click(function(e){
 		e.preventDefault();
@@ -68,7 +68,7 @@ var isediting = <?php echo $isediting ?>;
 		}
 		
 		if(theindex != -1){
-			var buttondict = headeroptions['buttons'][theindex];
+			var buttondict = viewoptions['buttons'][theindex];
 			Reusable.addAction( buttondict, editingfunctions, theindex )
 		}
 	});

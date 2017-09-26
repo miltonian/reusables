@@ -9,26 +9,26 @@ namespace Reusables;
 		"index"=>""
 	);
 
-	ReusableClasses::checkRequired( $identifier, $celldict, $required );
-	// exit(json_encode($celldict));
+	ReusableClasses::checkRequired( $identifier, $viewdict, $required );
+	// exit(json_encode($viewdict));
 
 ?>
 <style>
 </style>
 
-<div class="productcell_2 main <?php echo $identifier ?>" id="<?php echo $celldict['id'] ?>">
+<div class="productcell_2 main <?php echo $identifier ?>" id="<?php echo $viewdict['id'] ?>">
 	<div class="productcell_2 container">
 		<div style="display: inline-block; width: 100%">
 			<div>
-				<div class="productcell_2 picture" style="<?php if($celldict['featured_imagepath']){ echo 'background-image: url('.$celldict['featured_imagepath'].');'; } ?>"></div>
+				<div class="productcell_2 picture" style="<?php if($viewdict['featured_imagepath']){ echo 'background-image: url('.$viewdict['featured_imagepath'].');'; } ?>"></div>
 				<div class="productcell_2 words">
 					<div class="productcell_2 text-container">
 						<label class="productcell_2 grey-label date">Today</label>
 						<br>
-						<label class="productcell_2 title"><?php if(isset($celldict['title'])){echo $celldict['title'];} ?></label>
+						<label class="productcell_2 title"><?php if(isset($viewdict['title'])){echo $viewdict['title'];} ?></label>
 						<br>
-						<label class="productcell_2 grey-label desc"><?php echo strip_tags($celldict['html_text']) ?></label>
-						<label class="productcell_2 grey-label price"><?php echo $celldict['price'] ?></label>
+						<label class="productcell_2 grey-label desc"><?php echo strip_tags($viewdict['html_text']) ?></label>
+						<label class="productcell_2 grey-label price"><?php echo $viewdict['price'] ?></label>
 					</div>
 				</div>
 			</div>

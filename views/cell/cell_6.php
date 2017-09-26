@@ -5,49 +5,49 @@ namespace Reusables;
 	if(!isset($cell6mediatype)){ $cell6mediatype=""; }
 	if(!isset($showdate)){$showdate=false;}
 	if( !isset($isfeatured) ){ $isfeatured=false; }
-	if(!isset($celldict['post_id'])){ $celldict['post_id'] = $celldict['id']; }
+	if(!isset($viewdict['post_id'])){ $viewdict['post_id'] = $viewdict['id']; }
 ?>
 
 <style>
 </style>
 
-<div class="cell_6 main <?php echo $identifier ?> <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($celldict['mediatype']=="youtube" || $celldict['mediatype']=="podcast"){ echo $celldict['mediatype']; } ?>" id="<?php echo $celldict['id'] ?>">
+<div class="cell_6 main <?php echo $identifier ?> <?php if($viewdict['isfeatured']){ echo "featured"; } ?> <?php if($viewdict['mediatype']=="youtube" || $viewdict['mediatype']=="podcast"){ echo $viewdict['mediatype']; } ?>" id="<?php echo $viewdict['id'] ?>">
 	<div class="cell_6 container">
 		<div style="display: inline-block; width: 100%">
 			<div>
-				<?php if($celldict['mediatype']=="youtube"){ ?>
+				<?php if($viewdict['mediatype']=="youtube"){ ?>
 				<?php 
 					//get youtubelink from imagepath
-					$n = strpos($celldict['imagepath'], "?v=");
-					$startpoint = strrpos($celldict['imagepath'], "?v=")+3;
-					$endpoint = strrpos($celldict['imagepath'], "&", $startpoint);
+					$n = strpos($viewdict['imagepath'], "?v=");
+					$startpoint = strrpos($viewdict['imagepath'], "?v=")+3;
+					$endpoint = strrpos($viewdict['imagepath'], "&", $startpoint);
 					$result = "";
 					if($endpoint==false){
-						$startpoint = strrpos($celldict['imagepath'], ".be/")+4;
-						$endpoint = strrpos($celldict['imagepath'], "?list=", $startpoint);
+						$startpoint = strrpos($viewdict['imagepath'], ".be/")+4;
+						$endpoint = strrpos($viewdict['imagepath'], "?list=", $startpoint);
 					}
 					if($endpoint!=false){
-						$result = substr($celldict['imagepath'], $startpoint, ($endpoint-$startpoint));
+						$result = substr($viewdict['imagepath'], $startpoint, ($endpoint-$startpoint));
 					}else{
-						$result = substr($celldict['imagepath'], $n);
+						$result = substr($viewdict['imagepath'], $n);
 					}
 					$cell6image = "https://www.youtube.com/embed/".$result."?controls=0";
 				?>
 					
 					<div class="cell_6 youtubediv" style="position: relative; display: inline-block; width: 100%; height: 44% margin: 0; padding: 0;">
-						<iframe width="100%" height="44%" src="<?php echo $celldict['imagepath'] ?>"></iframe>
+						<iframe width="100%" height="44%" src="<?php echo $viewdict['imagepath'] ?>"></iframe>
 					</div>
 				<?php }else{ ?>
-				<div class="cell_6 picture" style="<?php if($celldict['imagepath']){ echo 'background-image: url('.$celldict['imagepath'].');'; } ?>"></div>
+				<div class="cell_6 picture" style="<?php if($viewdict['imagepath']){ echo 'background-image: url('.$viewdict['imagepath'].');'; } ?>"></div>
 				<div class="cell_6 words">
 					<!-- <div class="text-container"> -->
-						<label class="cell_6 category"><?php echo $celldict['category'] ?></label>
+						<label class="cell_6 category"><?php echo $viewdict['category'] ?></label>
 						<br>
-						<label class="cell_6 title"><?php if(isset($celldict['title'])){echo $celldict['title'];} ?></label>
+						<label class="cell_6 title"><?php if(isset($viewdict['title'])){echo $viewdict['title'];} ?></label>
 						<br>
 						<br>
-						<?php if($celldict['date']!=""){ ?>
-							<label class="cell_6 date"><?php echo $celldict['date'] ?></label>
+						<?php if($viewdict['date']!=""){ ?>
+							<label class="cell_6 date"><?php echo $viewdict['date'] ?></label>
 						<?php } ?>
 					<!-- </div> -->
 				</div>
@@ -122,8 +122,8 @@ namespace Reusables;
 			});
 		}
 
-		addcell(parent, celldict){
-			// console.log( "adding cell "+celldict['id'] );
+		addcell(parent, viewdict){
+			// console.log( "adding cell "+viewdict['id'] );
 
 			var cell = document.createElement('div');
 			var container = document.createElement('div');
@@ -135,25 +135,25 @@ namespace Reusables;
 			var date = document.createElement('label');
 
 			cell.className = '<?php echo $identifier ?>';
-			cell.id = celldict['id'];
+			cell.id = viewdict['id'];
 
 			container.className = 'container';
 
 			$(misc_div).css({'display': 'inline-block', 'width': '100%'});
 
 			picture.className = 'picture';
-			$(picture).css('background-image', 'url('+celldict['featured_imagepath']+')');
+			$(picture).css('background-image', 'url('+viewdict['featured_imagepath']+')');
 
 			words.className = 'words';
 
 			category.className = 'category';
-			$(category).text(celldict['category']);
+			$(category).text(viewdict['category']);
 
 			title.className = 'title';
-			$(title).text(celldict['title']);
+			$(title).text(viewdict['title']);
 
 			date.className = 'date';
-			$(date).text(celldict['datemade']);
+			$(date).text(viewdict['datemade']);
 
 			parent.appendChild(cell);
 			cell.appendChild(container);

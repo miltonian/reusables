@@ -2,9 +2,9 @@
 
 namespace Reusables;
 
-$appstore = Data::getValue( $sharingdict, 'appstore' );
-$googleplay = Data::getValue( $sharingdict, 'googleplay' );
-$otherdevice = Data::getValue( $sharingdict, 'otherdevice' );
+$appstore = Data::getValue( $viewdict, 'appstore' );
+$googleplay = Data::getValue( $viewdict, 'googleplay' );
+$otherdevice = Data::getValue( $viewdict, 'otherdevice' );
 
 ?>
 

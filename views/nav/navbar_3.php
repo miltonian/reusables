@@ -30,7 +30,7 @@ if( !isset($brandname) ){ $brandname = "Brand Name"; }
 					<?php if($brandlogo){ ?>
 						<img src=<?php echo $logoimgthumb ?> width="auto" height="auto">
 					<?php }else{ ?>
-						<h3><?php echo $navdict['brandname'] ?></h3>
+						<h3><?php echo $viewdict['brandname'] ?></h3>
 					<?php } ?>
 					
 				</div>

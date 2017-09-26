@@ -3,14 +3,14 @@
 namespace Reusables;
 
 
-// exit( json_encode( Data::getValue( $menudict['otherusers'] ) ) );
-// exit( json_encode( sizeof( $menudict['otherusers'] ) ) );
+// exit( json_encode( Data::getValue( $viewdict['otherusers'] ) ) );
+// exit( json_encode( sizeof( $viewdict['otherusers'] ) ) );
 
 // $otheruservalues = Data::retrieveDataWithID( "otherusers" )['value'];
 
-$dropdownlist = $menudict['list'];
+$dropdownlist = $viewdict['list'];
 $dropdownlist_keydicts = $dropdownlist;
-// exit( json_encode( $menudict ) );
+// exit( json_encode( $viewdict ) );
 $dropdownlist_keys = array_keys($dropdownlist);
 
 $dropdownlist_onlykeys = [];
@@ -34,7 +34,7 @@ foreach ($dropdownlist_keys as $ik) {
 
 <div class="dropdown_1 <?php echo $identifier ?>">
 	<div class="inner-dropdown">
-		<button onclick="myFunction()" class="inner-dropbtn"><?php echo Data::getValue( $menudict, "title" ) ?></button>
+		<button onclick="myFunction()" class="inner-dropbtn"><?php echo Data::getValue( $viewdict, "title" ) ?></button>
 		<div id="inner-myDropdown" class="inner-dropdown-content">
 		<?php $i=0; ?>
 			<?php foreach ($dropdownlist as $row) { ?>

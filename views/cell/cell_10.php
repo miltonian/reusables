@@ -4,7 +4,7 @@ namespace Reusables;
 
 	// cell for admin side
 
-	// $celldict
+	// $viewdict
 
 $required = array(
 	"actions"=>array("backgroundimage", ""), 
@@ -12,14 +12,14 @@ $required = array(
 	"title"=>"",
 	"index"=>""
 );
-$cellindex = Data::getValue( $celldict, 'index' );
+$cellindex = Data::getValue( $viewdict, 'index' );
 // if($cellindex == 2){ exit("hey!" ); }
 
-// exit( json_encode( Data::retrieveDataWithID( Data::getValue( $celldict, 'data_id' ) ) ) );
+// exit( json_encode( Data::retrieveDataWithID( Data::getValue( $viewdict, 'data_id' ) ) ) );
 
 $celloptions = ReusableClasses::convertViewActions( $celloptions );
 
-// ReusableClasses::checkRequired( $identifier, $celldict, $required );
+// ReusableClasses::checkRequired( $identifier, $viewdict, $required );
 	
 	$cellactionshtml = "";
 	if( isset( $celloptions['actions'] ) ){
@@ -30,8 +30,8 @@ $celloptions = ReusableClasses::convertViewActions( $celloptions );
 			if( $actiontype == "dropdown" ){
 				$cellactionshtml .= "<div class='dropdown_1'>";
 					$cellactionshtml .= "<div class='inner-dropdown'>";
-						$cellactionshtml .= "<button id='" . Data::getValue( $celldict, 'index' ) . "' class='inner-dropbtn cell_10 action actionindex_" . $i . " index_" . $cellindex . "' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
-						$cellactionshtml .= "<div id='inner-myDropdown_" . Data::getValue( $celldict, 'index' ) . "' class='inner-dropdown-content'>";
+						$cellactionshtml .= "<button id='" . Data::getValue( $viewdict, 'index' ) . "' class='inner-dropbtn cell_10 action actionindex_" . $i . " index_" . $cellindex . "' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
+						$cellactionshtml .= "<div id='inner-myDropdown_" . Data::getValue( $viewdict, 'index' ) . "' class='inner-dropdown-content'>";
 							for ($a=0; $a < sizeof( $action['dropdown_array'] ); $a++) {
 								$dropdownarray = $action['dropdown_array'];
 								$cellactionshtml .= "<a href='" . $dropdownarray[$a]['link'] . "'>" . $dropdownarray[$a]['text'] . "</a>";
@@ -40,7 +40,7 @@ $celloptions = ReusableClasses::convertViewActions( $celloptions );
 					$cellactionshtml .= "</div>";
 				$cellactionshtml .= "</div>";
 			}else{
-				$cellactionshtml .= "<button id='" . Data::getValue( $celldict, 'index' ) . "' class='cell_10 action actionindex_" . $i . " index_" . $cellindex . "' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
+				$cellactionshtml .= "<button id='" . Data::getValue( $viewdict, 'index' ) . "' class='cell_10 action actionindex_" . $i . " index_" . $cellindex . "' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
 			}
 
 			$i++;
@@ -56,19 +56,19 @@ $celloptions = ReusableClasses::convertViewActions( $celloptions );
 </style>
 
 <?php 
-	echo "<div class='cell_10 main " . $identifier . " index_" . Data::getValue( $celldict, 'index' ) . "' id=" . Data::getValue( $celldict, 'view_id' ) . " >";
+	echo "<div class='cell_10 main " . $identifier . " index_" . Data::getValue( $viewdict, 'index' ) . "' id=" . Data::getValue( $viewdict, 'view_id' ) . " >";
 		echo Wrapper::wrapper1( 
 			[],
 			array(
 				Structure::make( "three_columns", [
 					"sidecolumn_left"=>array(
-						"<div class='cell_10 featuredimage-div' style='background-image: url(" . Data::getValue( $celldict, 'featured_imagepath' ) . ")'></div>"
+						"<div class='cell_10 featuredimage-div' style='background-image: url(" . Data::getValue( $viewdict, 'featured_imagepath' ) . ")'></div>"
 					),
 					"maincolumn"=>array(
 						"
 						<div class='cell_10 content'>
-							<h4 class='cell_10 ' id='title'>" . Data::getValue( $celldict, 'title' ) . "</h4>
-							<p class='cell_10' id='desc'>" . Data::getValue( $celldict, 'desc' ) . "</p>
+							<h4 class='cell_10 ' id='title'>" . Data::getValue( $viewdict, 'title' ) . "</h4>
+							<p class='cell_10' id='desc'>" . Data::getValue( $viewdict, 'desc' ) . "</p>
 						</div>
 						"
 					),

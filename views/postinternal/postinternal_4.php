@@ -15,12 +15,12 @@ namespace Reusables;
 	<?php 
 		echo Structure::make("structure_1", [
 			"maincolumn"=>array(
-				"<h2 class='postinternal_4' id='title'>" . Data::getValue( $postdict, 'title' ) . "</h2>",
-				"<div class='postinternal_4' id='desc'>" . Data::getValue( $postdict, 'html_text' ) . "</div>"
+				"<h2 class='postinternal_4' id='title'>" . Data::getValue( $viewdict, 'title' ) . "</h2>",
+				"<div class='postinternal_4' id='desc'>" . Data::getValue( $viewdict, 'html_text' ) . "</div>"
 			),
 			"sidecolumn_right"=>array(
 				"<div class='postinternal_4 featured_image_container'>
-					<img class='postinternal_4 featured_image' src='" . Data::getValue( $postdict, 'featured_imagepath' ) . "'>
+					<img class='postinternal_4 featured_image' src='" . Data::getValue( $viewdict, 'featured_imagepath' ) . "'>
 				</div>"
 			)
 		], $identifier . "_structure")

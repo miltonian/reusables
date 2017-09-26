@@ -7,7 +7,7 @@ $required = array(
 	"logo|brandname"=>"",  
 );
 
-ReusableClasses::checkRequired( "navbar_2", $navdict, $required );
+ReusableClasses::checkRequired( "navbar_2", $viewdict, $required );
 
 if(!isset($navtype)){ $navtype=1; }
 
@@ -20,12 +20,12 @@ if(isset($isadmin)){ if($isadmin){ $navbar2categoryfeatured = true; } }
 if(!isset($tagline)){ $tagline=""; }
 
 $menudict = [
-	"pages" => $navdict['pages'],
+	"pages" => $viewdict['pages'],
 ];
 
-$categories = Data::getValue( $navdict, 'categories' );
+$categories = Data::getValue( $viewdict, 'categories' );
 
-// exit( json_encode( $navdict ) );
+// exit( json_encode( $viewdict ) );
 
 Data::addData( $menudict, "menuview1" );
 echo Menu::make( "menuview_1", "menuview1");
@@ -43,10 +43,10 @@ echo Menu::make( "menuview_1", "menuview1");
 			</div>
 			<a href="/">
 				<div class="navbar_2 logo-div">
-					<?php if(isset($navdict['logo'])){ ?>
-						<img src=<?php echo $navdict['logo'] ?> width="auto" height="auto">
+					<?php if(isset($viewdict['logo'])){ ?>
+						<img src=<?php echo $viewdict['logo'] ?> width="auto" height="auto">
 					<?php }else{ ?>
-						<h3><?php echo $navdict['brandname'] ?></h3>
+						<h3><?php echo $viewdict['brandname'] ?></h3>
 					<?php } ?>
 				</div>
 				<h6 class="navbar_2 tagline"><?php echo $tagline ?></h6>

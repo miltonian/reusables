@@ -3,7 +3,7 @@
 namespace Reusables;
 
 	if(!isset($categoriesmodalarray)){ $categoriesmodalarray=array(); }
-	// exit( json_encode( $menudict ) );
+	// exit( json_encode( $viewdict ) );
 ?>
 
 <style>
@@ -16,7 +16,7 @@ namespace Reusables;
 			<button class="close">&#x2715;</button>
 		</div>
 		<ul>
-		<?php foreach ($menudict['pages'] as $p) { ?>
+		<?php foreach ($viewdict['pages'] as $p) { ?>
 			<?php if( isset( $p[ 'buttons' ] )){ ?>
 				<a href="#" class="drop-down"><li><label><?php echo $p['name'] ?></label></li></a>
 				<ul class="tags-drop">

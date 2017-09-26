@@ -4,14 +4,14 @@ namespace Reusables;
 
 if(!isset($isadmin)){ $isadmin=false; }
 $navbuttons = array();
-if(isset($navdict['pages'])){ $navbuttons = $navdict['pages']; }
+if(isset($viewdict['pages'])){ $navbuttons = $viewdict['pages']; }
 
 $required = array(
 	"pages"=>array("link", "name|imagepath|emoji"), 
 	"logo|brandname"=>"",  
 );
 
-// ReusableClasses::checkRequired( "navbar", $navdict, $required );
+// ReusableClasses::checkRequired( "navbar", $viewdict, $required );
 
 ?>
 
@@ -23,10 +23,10 @@ $required = array(
 <div class='navbar main <?php echo $identifier ?> mobilenav' style='background-color: white'>
 	<a href='/'>
 		<!-- <img class='topbarlogo' src='<?php echo $productdict['logo'] ?>'> -->
-		<?php if(isset($navdict['logo'])){ ?>
-			<img class='navbar topbarlogo' src=<?php echo $navdict['logo'] ?> width="auto" height="auto">
+		<?php if(isset($viewdict['logo'])){ ?>
+			<img class='navbar topbarlogo' src=<?php echo $viewdict['logo'] ?> width="auto" height="auto">
 		<?php }else{ ?>
-			<h3><?php echo $navdict['brandname'] ?></h3>
+			<h3><?php echo $viewdict['brandname'] ?></h3>
 		<?php } ?>
 	</a>
 	<img class='navbar dropdown menubtn' src='https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png' style='width: auto; margin-right: 30px;'>
@@ -40,10 +40,10 @@ $required = array(
 <div class='navbar main <?php echo $identifier ?> desktopnav navbar-shadow' style='background-color: white; <?php if($isadmin){ echo "margin-top: 60px"; } ?>'>
 	<a href='/' class='navbar logo-div'>
 		<!-- <img class='topbarlogo' src='<?php echo $productdict['logo'] ?>'> -->
-		<?php if(isset($navdict['logo'])){ ?>
-			<img class='navbar topbarlogo' src=<?php echo $navdict['logo'] ?> width="auto" height="auto">
+		<?php if(isset($viewdict['logo'])){ ?>
+			<img class='navbar topbarlogo' src=<?php echo $viewdict['logo'] ?> width="auto" height="auto">
 		<?php }else{ ?>
-			<h3><?php echo $navdict['brandname'] ?></h3>
+			<h3><?php echo $viewdict['brandname'] ?></h3>
 		<?php } ?>
 	</a>
 	<?php foreach ($navbuttons as $b) { ?>

@@ -3,7 +3,7 @@
 namespace Reusables;
 
 	/*
-		$sectiondict = [
+		$viewdict = [
 			"featured_imagepath"=>"",
 			"logo_imagepath"=>"",
 			"title"=>"",
@@ -12,17 +12,17 @@ namespace Reusables;
 		]
 	*/
 
-	$sectiondict = Data::convertKeys( $sectiondict );
+	$viewdict = Data::convertKeys( $viewdict );
 
-	if( isset( $sectiondict['value'] ) ){ 
-		$data_id = Data::getDefaultDataID( $sectiondict );
-		// exit( json_encode( $sectiondict ) );
-		$sectiondict = Data::formatForDefaultData( $data_id );
+	if( isset( $viewdict['value'] ) ){ 
+		$data_id = Data::getDefaultDataID( $viewdict );
+		// exit( json_encode( $viewdict ) );
+		$viewdict = Data::formatForDefaultData( $data_id );
 		// SHOULD CONTROL DATA WITH ID NOT VAR
 	}
-	if( isset($sectiondict['editing']) ){ $isediting=1; }else{ $isediting=0; }
+	if( isset($viewdict['editing']) ){ $isediting=1; }else{ $isediting=0; }
 	
-	// exit( json_encode( Data::getValue( $sectiondict, 'logo_imagepath' ) ) ) ;
+	// exit( json_encode( Data::getValue( $viewdict, 'logo_imagepath' ) ) ) ;
 
 ?>
 
@@ -34,33 +34,33 @@ namespace Reusables;
 </style>
 
 <div class="featuredsection_6 <?php echo $identifier ?>">
-	<div class="backgroundimage" style="background-image: url('<?php echo Data::getValue( $sectiondict, 'featured_imagepath' ) ?>');">
+	<div class="backgroundimage" style="background-image: url('<?php echo Data::getValue( $viewdict, 'featured_imagepath' ) ?>');">
 		<div class="gradient"></div>
 	</div>
 	<div class="header">
-		<img id="logo" src="<?php echo Data::getValue( $sectiondict, 'logo_imagepath' ) ?>">
-		<h3 id="title"><?php echo Data::getValue( $sectiondict, 'title' ) ?></h3>
+		<img id="logo" src="<?php echo Data::getValue( $viewdict, 'logo_imagepath' ) ?>">
+		<h3 id="title"><?php echo Data::getValue( $viewdict, 'title' ) ?></h3>
 	</div>
 </div>
 
 <script>
 
-var sectiondict = <?php echo json_encode($sectiondict) ?>;
+var viewdict = <?php echo json_encode($viewdict) ?>;
 var isediting = <?php echo $isediting ?>;
 
 $('.featuredsection_6').click(function(e){
 	if(isediting){
 		e.preventDefault();
-		var editingdict = sectiondict['editing'];
+		var editingdict = viewdict['editing'];
 		var type = editingdict['type'];
 
 		if( type == "link" ){
 			window.open(editingdict[type]);
 		}else if( type == "modal" ){
 			// var theclasses = $.extend( { editingdict[type]['modalclass']+Classes; } );
-			<?php if( isset( $sectiondict['editing'] ) ) { ?>
+			<?php if( isset( $viewdict['editing'] ) ) { ?>
 
-				let modalclasses = new <?php echo $sectiondict['editing']['modal']['modalclass'] ?>Classes();
+				let modalclasses = new <?php echo $viewdict['editing']['modal']['modalclass'] ?>Classes();
 				// modalclass.populateview( $(this).id );
 				modalclasses.populateview();
 				$('.modal_background').css({'display': 'inline-block'});

@@ -11,10 +11,10 @@
 </style>
 
 <a href="<?php echo $linkpath ?>">
-<div class="cell_7 main <?php echo $identifier ?> index_<?php echo $cellindex ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo $mediatype; } ?> index_<?php echo $cellindex ?>" style="background-image: url(<?php echo $celldict['featured_imagepath'] ?>)">
+<div class="cell_7 main <?php echo $identifier ?> index_<?php echo $cellindex ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo $mediatype; } ?> index_<?php echo $cellindex ?>" style="background-image: url(<?php echo $viewdict['featured_imagepath'] ?>)">
 		<div class="cell_7 gradient"></div>
-		<label class="cell_7 title mobile"><?php echo Data::getValue( $celldict, 'title' ) ?></label>
-		<label class="cell_7 title desktop"><?php echo Data::getValue( $celldict, 'title' ) ?></label>
+		<label class="cell_7 title mobile"><?php echo Data::getValue( $viewdict, 'title' ) ?></label>
+		<label class="cell_7 title desktop"><?php echo Data::getValue( $viewdict, 'title' ) ?></label>
 		<?php if($celldate!=""){ ?>
 			<label class="cell_7 date"><?php echo $celldate ?></label>
 		<?php } ?>
@@ -25,18 +25,18 @@
 
 	var thismodalclass = "";
 	<?php if( $celltype == "modal" ){ ?>
-		thismodalclass = new <?php echo $celldict['modal']['modalclass'] ?>Classes();
-		var dataarray = <?php echo json_encode( $fullcelldict ) ?>;
+		thismodalclass = new <?php echo $viewdict['modal']['modalclass'] ?>Classes();
+		var dataarray = <?php echo json_encode( $fullviewdict ) ?>;
 	<?php }?>
 
 
 
-	var celldict = <?php echo json_encode($celldict) ?>;
+	var viewdict = <?php echo json_encode($viewdict) ?>;
 
 	$('.<?php echo $identifier ?>').off().click(function(e){
 		// e.preventDefault();
 		// alert( JSON.stringify(thismodalclass ) );
-		Reusable.addAction( celldict, [thismodalclass], 0, dataarray, this );
+		Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this );
 	});
 	
 </script>

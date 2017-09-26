@@ -12,8 +12,8 @@ namespace Reusables;
 </style>
 
 <div class="titledesc_1 main <?php echo $identifier ?>">
-	<h2 class='titledesc_1' id='title'><?php echo Data::getValue( $postdict, 'title' ) ?></h2>
-	<div class='titledesc_1' id='desc'><?php echo Data::getValue( $postdict, 'html_text' ) ?></div>
+	<h2 class='titledesc_1' id='title'><?php echo Data::getValue( $viewdict, 'title' ) ?></h2>
+	<div class='titledesc_1' id='desc'><?php echo Data::getValue( $viewdict, 'html_text' ) ?></div>
 </div>
 
 

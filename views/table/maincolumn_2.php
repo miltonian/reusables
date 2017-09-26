@@ -17,7 +17,7 @@ namespace Reusables;
 		?>
 		<?php
 			$i=0;
-			foreach ($tabledict['postarray'] as $post) {
+			foreach ($viewdict['postarray'] as $post) {
 				$post['index'] = $i;
 				$post['actions'] = [];
 				echo Cell::make( "productcell_2", $post, $identifier . "_cell" );

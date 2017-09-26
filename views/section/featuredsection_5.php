@@ -14,13 +14,13 @@ namespace Reusables;
 		<div style="display: inline-block; width: 100%;">
 			<?php 
 				echo '<div class="post one sortorder_1 featuredsectionid_1" style="position: relative; margin: 0; padding: 0;">';
-					echo Cell::make( "cell_3", $sectiondict['postarray'][0], $identifier . "-leftpost" );
+					echo Cell::make( "cell_3", $viewdict['postarray'][0], $identifier . "-leftpost" );
 				echo '</div>';
 				echo '<div class="post one sortorder_1 featuredsectionid_1" style="position: relative; margin: 0; padding: 0;">';
-					echo Cell::make( "cell_3", $sectiondict['postarray'][1], $identifier . "-midpost" );
+					echo Cell::make( "cell_3", $viewdict['postarray'][1], $identifier . "-midpost" );
 				echo '</div>';
 				echo '<div class="post one sortorder_1 featuredsectionid_1" style="position: relative; margin: 0; padding: 0;">';
-					echo Cell::make( "cell_3", $sectiondict['postarray'][2], $identifier . "-rightpost" );
+					echo Cell::make( "cell_3", $viewdict['postarray'][2], $identifier . "-rightpost" );
 				echo '</div>';
 			?>
 			

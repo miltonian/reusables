@@ -3,7 +3,7 @@
 namespace Reusables;
 
 	if( !isset($identifier) ){ $identifier = ""; }
-	// exit( json_encode( $sharingdict ) );
+	// exit( json_encode( $viewdict ) );
 ?>
 
 <style>
@@ -23,9 +23,9 @@ namespace Reusables;
 
 		var sharelink;
 		if( this.id=="fb" ){
-			sharelink = '<?php echo $sharingdict['facebook'] ?>';
+			sharelink = '<?php echo $viewdict['facebook'] ?>';
 		}else{
-			sharelink = '<?php echo $sharingdict['twitter'] ?>';
+			sharelink = '<?php echo $viewdict['twitter'] ?>';
 		}
 		var left = ($(window).width()/2)-(900/2);
 		var top = ($(window).height()/2)-(600/2);

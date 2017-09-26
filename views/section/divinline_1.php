@@ -2,8 +2,8 @@
 
 namespace Reusables;
 
-$leftdict = $sectiondict['leftdict'];
-$rightdict = $sectiondict['rightdict'];
+$leftdict = $viewdict['leftdict'];
+$rightdict = $viewdict['rightdict'];
 
 // exit( json_encode( ( 100.0 / sizeof( $leftdict['morelinks'] ) ) ) );
 

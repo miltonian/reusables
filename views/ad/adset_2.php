@@ -2,12 +2,12 @@
 
 namespace Reusables;
 
-$adsetlink = Data::getValue( $addict, "link");
-$adsetid = Data::getValue( $addict, "id" );
-$adsetimg = Data::getValue( $addict, "imagepath" );
+$adsetlink = Data::getValue( $viewdict, "link");
+$adsetid = Data::getValue( $viewdict, "id" );
+$adsetimg = Data::getValue( $viewdict, "imagepath" );
 // $adsetimg = "http://experiencenash.com/reusables/uploads/ads/BV-300x600-Ad.png";
 
-// exit( json_encode( $addict ) );
+// exit( json_encode( $viewdict ) );
 
 ?>
 

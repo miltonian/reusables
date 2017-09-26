@@ -3,7 +3,7 @@
 namespace Reusables;
 
 	/*
-		$sectiondict = [
+		$viewdict = [
 
 		];
 	*/
@@ -16,7 +16,7 @@ namespace Reusables;
 
 	<div class="purchase_1 header">
 		<h1 class="purchase_1 title">Thank You For Your Contribution</h1>
-		<label>Only $<?php echo number_format($sectiondict['neededforgoal']) ?> until we reach our goal. Every dollar counts</label>
+		<label>Only $<?php echo number_format($viewdict['neededforgoal']) ?> until we reach our goal. Every dollar counts</label>
 	</div>
 
 	<div class="purchase_1 tf-wrapper">

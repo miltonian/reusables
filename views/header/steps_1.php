@@ -6,9 +6,9 @@ $required = array(
 	"steps"=>[]
 );
 
-// ReusableClasses::checkRequired( $identifier, $headerdict, $required );
+// ReusableClasses::checkRequired( $identifier, $viewdict, $required );
 
-$steps = Data::getValue( $headerdict, 'steps' );
+$steps = Data::getValue( $viewdict, 'steps' );
 if( $steps == "" ){
 	$steps = [];
 }
@@ -17,7 +17,7 @@ if( $steps == "" ){
 ?>
 
 <style>
-	.steps_1.step { width: <?php echo (100 / sizeof($headerdict['steps'])); ?>%; }
+	.steps_1.step { width: <?php echo (100 / sizeof($viewdict['steps'])); ?>%; }
 </style>
 
 <div class="<?php echo $identifier ?> steps_1 main" >

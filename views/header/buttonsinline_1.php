@@ -2,13 +2,13 @@
 
 namespace Reusables;
 
-$userinteractions = $headerdict['userinteractions'];
+$userinteractions = $viewdict['userinteractions'];
 
 $buttons = "";
 
-// if( isset($headerdict['buttons']) ){
+// if( isset($viewdict['buttons']) ){
 // 	$i=0;
-// 	foreach ($headerdict['buttons'] as $b) {
+// 	foreach ($viewdict['buttons'] as $b) {
 // 		$buttons .= "<button class='header_3 index_" . $i . " " . $b['classname'] . "'>" . $b['name'] . "</button>";
 // 		$i++;
 // 	}
@@ -37,9 +37,9 @@ $buttons = "";
 
 <script>
 
-<?php if( isset( $headerdict['buttons'] ) ){ ?>
+<?php if( isset( $viewdict['buttons'] ) ){ ?>
 var editingfunctions = [];
-<?php $i=0; foreach ($headerdict['buttons'] as $hb) { ?>
+<?php $i=0; foreach ($viewdict['buttons'] as $hb) { ?>
 	<?php if( $hb['type'] == "modal" ){ ?>
 		var thismodalclass = new <?php echo $hb['modal']['modalclass'] ?>Classes();
 		editingfunctions.push( thismodalclass );
@@ -49,7 +49,7 @@ var editingfunctions = [];
 	<?php $i++; ?>
 <?php } ?>
 
-var headerdict = <?php echo json_encode($headerdict) ?>;
+var viewdict = <?php echo json_encode($viewdict) ?>;
 
 	$('.buttonsinline_1.action').click(function(e){
 		e.preventDefault();
@@ -64,7 +64,7 @@ var headerdict = <?php echo json_encode($headerdict) ?>;
 		}
 		
 		if(theindex != -1){
-			var buttondict = headerdict['buttons'][theindex];
+			var buttondict = viewdict['buttons'][theindex];
 			var type = buttondict['type'];
 			if( type == "link" ){
 				window.open(buttondict[type]);

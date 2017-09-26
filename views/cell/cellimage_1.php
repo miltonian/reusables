@@ -2,27 +2,27 @@
 
 	namespace Reusables;
 
-$data_id = Data::getDefaultDataID( $celldict );
-	$fullcelldict = Data::getFullArray( $celldict );
-	if(!isset($celldict)){ $cell2mediatype=""; }
-	if( !isset($celldict['type'])){ $celldict['type'] = ""; }
-	if( !isset($celldict['isfeatured']) ){ $celldict['isfeatured']=false; }
+$data_id = Data::getDefaultDataID( $viewdict );
+	$fullviewdict = Data::getFullArray( $viewdict );
+	if(!isset($viewdict)){ $cell2mediatype=""; }
+	if( !isset($viewdict['type'])){ $viewdict['type'] = ""; }
+	if( !isset($viewdict['isfeatured']) ){ $viewdict['isfeatured']=false; }
 	// if( !isset($mediatype) ){ $mediatype="post"; }
 	if( !isset($isadmin) ){ $isadmin=false; }
-	// if(!isset($celldict['id'])){ $celldict['id'] = $celldict['id']; }
+	// if(!isset($viewdict['id'])){ $viewdict['id'] = $viewdict['id']; }
 
 	$linkpath = "";
-	$linkpath .= Data::getValue( $celldict, 'pre_slug' );
-	$linkpath .= Data::getValue( $celldict, 'slug' );
+	$linkpath .= Data::getValue( $viewdict, 'pre_slug' );
+	$linkpath .= Data::getValue( $viewdict, 'slug' );
 
-	if( isset( $celldict['linkpath'] ) ){
-		$linkpath = Data::getValue( $celldict, 'linkpath' );
+	if( isset( $viewdict['linkpath'] ) ){
+		$linkpath = Data::getValue( $viewdict, 'linkpath' );
 	}
 
-	$mediatype = Data::getValue( $celldict, 'mediatype' );
+	$mediatype = Data::getValue( $viewdict, 'mediatype' );
 
-	// echo Data::getValue( $celldict, 'id' )
-	$cellindex = Data::getValue( $celldict, 'index' );
+	// echo Data::getValue( $viewdict, 'id' )
+	$cellindex = Data::getValue( $viewdict, 'index' );
 	// echo json_encode($cellindex);
 	// exit(json_encode($cellindex));
 
@@ -30,14 +30,14 @@ $data_id = Data::getDefaultDataID( $celldict );
 
 ?>
 
-<div class="cellimage_1 main <?php echo $identifier ?> <?php if($celldict['isfeatured']){ echo "featured"; } ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo $mediatype; } ?> index_<?php echo $cellindex ?>" id="<?php echo Data::getValue( $celldict, 'id' ) ?>">
+<div class="cellimage_1 main <?php echo $identifier ?> <?php if($viewdict['isfeatured']){ echo "featured"; } ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo $mediatype; } ?> index_<?php echo $cellindex ?>" id="<?php echo Data::getValue( $viewdict, 'id' ) ?>">
 
 	<div class="cellimage_1 container">
 		<div style="display: inline-block; width: 100%;">
 			<div>
 				<a href="<?php echo $linkpath ?>">
-					<div class="cellimage_1 picture" style="<?php echo 'background-image: url('.Data::getValue( $celldict, 'featured_imagepath' ).');'; ?>">
-						<label class="cellimage_1 title"><?php echo Data::getValue( $celldict, 'title' ) ?></label>
+					<div class="cellimage_1 picture" style="<?php echo 'background-image: url('.Data::getValue( $viewdict, 'featured_imagepath' ).');'; ?>">
+						<label class="cellimage_1 title"><?php echo Data::getValue( $viewdict, 'title' ) ?></label>
 					</div>
 				</a>
 			</div>

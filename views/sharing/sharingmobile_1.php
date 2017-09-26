@@ -1,7 +1,7 @@
 <?php
 	namespace Reusables;
 
-	$buttonsarray = $sharingdict['buttons'];
+	$buttonsarray = $viewdict['buttons'];
 	$keyarray = array_keys($buttonsarray);
 	$width = strval( 100.0 / floatval( sizeof( $buttonsarray ) ) ) . "%";
 ?>

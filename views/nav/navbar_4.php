@@ -4,7 +4,7 @@ namespace Reusables;
 
 if(!isset($isadmin)){ $isadmin=false; }
 $navbuttons = array();
-if(isset($navdict['pages'])){ $navbuttons = $navdict['pages']; }
+if(isset($viewdict['pages'])){ $navbuttons = $viewdict['pages']; }
 
 // exit( json_encode( $navbuttons ) );
 
@@ -13,9 +13,9 @@ $required = array(
 	"logo|brandname"=>"",  
 );
 
-if (!isset($navdict['logolink'])) { $navdict['logolink'] = ""; }
+if (!isset($viewdict['logolink'])) { $viewdict['logolink'] = ""; }
 
-// ReusableClasses::checkRequired( "navbar", $navdict, $required );
+// ReusableClasses::checkRequired( "navbar", $viewdict, $required );
 
 ?>
 
@@ -25,14 +25,14 @@ if (!isset($navdict['logolink'])) { $navdict['logolink'] = ""; }
 
 <div class="navbar_4 <?php echo $identifier ?> all">
 <div class='navbar_4 main <?php echo $identifier ?> mobilenav'>
-	<a class="navbar_4" id="brandlink" href='/<?php echo $navdict['logolink'] ?>'>
-		<?php if(isset($navdict['logo'])){ ?>
-			<img class='navbar_4 topbarlogo' src='<?php echo $navdict['logo'] ?>' width="auto" height="auto">
+	<a class="navbar_4" id="brandlink" href='/<?php echo $viewdict['logolink'] ?>'>
+		<?php if(isset($viewdict['logo'])){ ?>
+			<img class='navbar_4 topbarlogo' src='<?php echo $viewdict['logo'] ?>' width="auto" height="auto">
 		<?php }else{ ?>
-			<h3 class="navbar_4" id="brandname"><?php echo $navdict['brandname'] ?></h3>
+			<h3 class="navbar_4" id="brandname"><?php echo $viewdict['brandname'] ?></h3>
 		<?php } ?>
 	</a>
-	<?php if( sizeof( $navdict['pages'] ) > 0 ){ ?>
+	<?php if( sizeof( $viewdict['pages'] ) > 0 ){ ?>
 		<img class='navbar_4 dropdown menubtn' src='https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png' style='width: auto; margin-right: 30px;'>
 	<?php } ?>
 	<div class='navbar_4 dropdown-content'>
@@ -43,11 +43,11 @@ if (!isset($navdict['logolink'])) { $navdict['logolink'] = ""; }
 </div>
 
 <div class='navbar_4 main <?php echo $identifier ?> desktopnav navbar-shadow' style='<?php if($isadmin){ echo "margin-top: 60px"; } ?>'>
-	<a href='/<?php echo $navdict['logolink'] ?>' class='navbar_4 logo-div'>
-		<?php if(isset($navdict['logo'])){ ?>
-			<img class='navbar_4 topbarlogo' src='<?php echo $navdict['logo'] ?>' width="auto" height="auto">
+	<a href='/<?php echo $viewdict['logolink'] ?>' class='navbar_4 logo-div'>
+		<?php if(isset($viewdict['logo'])){ ?>
+			<img class='navbar_4 topbarlogo' src='<?php echo $viewdict['logo'] ?>' width="auto" height="auto">
 		<?php } ?>
-			<h3><?php echo $navdict['brandname'] ?></h3>
+			<h3><?php echo $viewdict['brandname'] ?></h3>
 
 	</a>
 	<?php

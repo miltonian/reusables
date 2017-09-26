@@ -3,16 +3,16 @@
 namespace Reusables;
 
 if(!isset($GLOBALS['isadmin'])){ $GLOBALS['isadmin']=false; }
-if(!isset($sectiondict['formdesc'])){ $sectiondict['formdesc']=""; }
+if(!isset($viewdict['formdesc'])){ $viewdict['formdesc']=""; }
 
 $optionsarray = array( "Brand Engagement", "Core Partner", "Concert Promotion", "Business Promotion" );
 
 
-// $sectiondict['formdesc'] = $corepartnerdict['page_desc'];
-// $sectiondict['formimg'] = $corepartnerdict['imagepath'];
-if( !isset($sectiondict['formimg']) ){ $sectiondict['formimg'] = 'reusables/uploads/icons/adgoeshere970250.png'; }
+// $viewdict['formdesc'] = $corepartnerdict['page_desc'];
+// $viewdict['formimg'] = $corepartnerdict['imagepath'];
+if( !isset($viewdict['formimg']) ){ $viewdict['formimg'] = 'reusables/uploads/icons/adgoeshere970250.png'; }
 
-// $sectiondict['formdesc'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+// $viewdict['formdesc'] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
 // $exampleimg1 = 'https://theanywherecard.com/entrenash/media/images/exampleimg.jpeg';
 
