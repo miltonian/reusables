@@ -12,8 +12,8 @@ class Views {
 		$data = Data::retrieveDataWithID( $identifier );
 		$options = Data::retrieveOptionsWithID( $identifier );
 
-		$View->set( $viewtype . 'viewdict', $data );
-		$View->set( $viewtype . 'viewoptions', $options );
+		$View->set( 'viewdict', $data );
+		$View->set( 'viewoptions', $options );
 
 		if( $viewtype == "section" ){
 			$View->set( 'tablenames', $tablenames );
