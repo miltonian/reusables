@@ -17,15 +17,15 @@ $cellindex = Data::getValue( $viewdict, 'index' );
 
 // exit( json_encode( Data::retrieveDataWithID( Data::getValue( $viewdict, 'data_id' ) ) ) );
 
-$celloptions = ReusableClasses::convertViewActions( $celloptions );
+$viewoptions = ReusableClasses::convertViewActions( $viewoptions );
 
 // ReusableClasses::checkRequired( $identifier, $viewdict, $required );
 	
 	$cellactionshtml = "";
-	if( isset( $celloptions['actions'] ) ){
+	if( isset( $viewoptions['actions'] ) ){
 		$cellactionshtml .= "<div class='cell_10 actions-div'>";
 		$i=0;
-		foreach ( $celloptions['actions'] as $action ) {
+		foreach ( $viewoptions['actions'] as $action ) {
 			$actiontype = Data::getValue( $action, 'type' );
 			if( $actiontype == "dropdown" ){
 				$cellactionshtml .= "<div class='dropdown_1'>";
@@ -47,7 +47,7 @@ $celloptions = ReusableClasses::convertViewActions( $celloptions );
 		}
 		$cellactionshtml .= "</div>";
 	}else{
-		$celloptions['actions'] = array();
+		$viewoptions['actions'] = array();
 	}
 
 ?>
@@ -85,9 +85,9 @@ $celloptions = ReusableClasses::convertViewActions( $celloptions );
 
 <script>
 
-	var cellactions = <?php echo json_encode( $celloptions['actions'] ) ?>;
+	var cellactions = <?php echo json_encode( $viewoptions['actions'] ) ?>;
 
-	<?php ReusableClasses::getEditingFunctionsJS( $celloptions ) ?>;
+	<?php ReusableClasses::getEditingFunctionsJS( $viewoptions ) ?>;
 	
 
 function cell_10_start(){
