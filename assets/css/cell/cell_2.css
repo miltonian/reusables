@@ -10,6 +10,7 @@
 	.cell_2.words{ position: relative; display: block; margin: 0; padding: 0; width: 100%; height: 130px; background-color: white; }
 
 	.cell_2.text-container{ position: relative; display: inline-block; padding-left: 20px;  padding-right: 20px; width: calc( 100% - 40px); }
+		.cell_2.text-container a { text-decoration: none; }
 	.cell_2 label.title { position: relative; display: inline-block; margin: 0; padding: 0; font-family: 'Slabo 27px', serif; text-transform: uppercase; font-size: 1.0em; position: relative; display: inline-block; margin: 0; padding: 0; line-height: 1.5; }
 
 	.cell_2.grey-label{ position: relative; display: inline-block; font-style: italic; color: grey; font-size: 0.8em; font-weight: 300; top: 0; cursor: auto; overflow: hidden; margin-top: 10px; }
