@@ -26,6 +26,12 @@ class Input {
 		if( !$type ){
 			$type = Input::getInputType( $key );
 		}
+		if( $type == "currency" ) {
+			$type = "textfield";
+			$iscurrency = "1";
+		}else{
+			$iscurrency = false;
+		}
 		Input::setInputType( $key, $type );
 		// echo json_encode( $placeholder );
 		if( !$placeholder ){ $placeholder = ucfirst( $key ); }
@@ -47,7 +53,8 @@ class Input {
 				"field_index"=>$index,
 				"field_table"=>Data::getDefaultTableNameWithID( $dataid ),
 				"field_colname"=>Data::getColName( ["data_id"=>$dataid, "key" => $key] ),
-				"field_conditions"=>Data::getConditions( ["data_id"=>$dataid, "key" => $key] )
+				"field_conditions"=>Data::getConditions( ["data_id"=>$dataid, "key" => $key] ),
+				"is_currency"=>$iscurrency
 			];
 			// exit( json_encode( $inputdict ) );
 
