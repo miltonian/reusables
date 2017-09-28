@@ -6,36 +6,41 @@ namespace Reusables;
 
 	// exit( json_encode(  $viewdict['postarray'] ) );
 
-	$image1 = Data::formatCellWithDefaultData( $identifier . "_posts", 0 );
-	$image2 = Data::formatCellWithDefaultData( $identifier . "_posts", 1 );
-	$image3 = Data::formatCellWithDefaultData( $identifier . "_posts", 2 );
+	// $image1 = Data::formatCellWithDefaultData( $identifier, 0 );
+	// $image2 = Data::formatCellWithDefaultData( $identifier, 1 );
+	// $image3 = Data::formatCellWithDefaultData( $identifier, 2 );
 
-	$image1['pre_slug'] = Data::getValue( $viewdict, 'pre_slug' );
+$image1 = Data::getValue( $viewdict, 0);
+$image2 = Data::getValue( $viewdict, 1);
+$image3 = Data::getValue( $viewdict, 2);
+
+	$image1_options['pre_slug'] = Data::getValue( $viewoptions, 'pre_slug' );
 	if( isset( $image2 ) ){
-		$image2['pre_slug'] = Data::getValue( $viewdict, 'pre_slug' );
+		$image2_options['pre_slug'] = Data::getValue( $viewoptions, 'pre_slug' );
 	}
 	if( isset( $image3 ) ){
-		$image3['pre_slug'] = Data::getValue( $viewdict, 'pre_slug' );
+		$image3_options['pre_slug'] = Data::getValue( $viewoptions, 'pre_slug' );
 	}
 
 	if( isset( $viewdict['convert_keys'] ) ){
-		$image1['convert_keys'] = $viewdict['convert_keys'];
-		$image1 = Data::convertKeys( $image1 );
+		$image1_options['convert_keys'] = $viewoptions['convert_keys'];
+		$image1_options = Data::convertKeys( $image1 );
 		
 		if( isset( $image2 ) ){
-			$image2['convert_keys'] = $viewdict['convert_keys'];
-			$image2 = Data::convertKeys( $image2 );
+			$image2_options['convert_keys'] = $viewoptions['convert_keys'];
+			$image2_options = Data::convertKeys( $image2 );
 		}
 
 		if( isset( $image3 ) ){
-			$image3['convert_keys'] = $viewdict['convert_keys'];
-			$image3 = Data::convertKeys( $image3 );
+			$image3_options['convert_keys'] = $viewoptions['convert_keys'];
+			$image3_options = Data::convertKeys( $image3 );
 		}
 	}
 
 	$image1_link = Data::getValue( $image1, 'link' );
 	$image2_link = Data::getValue( $image2, 'link' );
 	$image3_link = Data::getValue( $image3, 'link' );
+// exit( json_encode( $image1 ) );
 
 ?>
 

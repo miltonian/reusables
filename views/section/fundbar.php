@@ -2,9 +2,11 @@
 
 namespace Reusables;
 
+// raised, goal
+
 $width = ( floatval( Data::getValue( $viewdict, 'raised' ) ) / floatval( Data::getValue( $viewdict, 'goal' ) ) ) * 100;
 
-// exit( json_encode( $viewdict ) );
+// exit( json_encode( $test ) );
 
 ?>
 

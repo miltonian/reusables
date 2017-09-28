@@ -26,10 +26,10 @@ namespace Reusables;
 </style>
 
 <div class="featuredsection_7 <?php echo $identifier ?>">
-	<div class="featuredimage" style="background-image: url('<?php echo Data::getValue( $viewdict, 'headshot_image' ) ?>');"></div>
+	<div class="featuredimage" style="background-image: url('<?php echo Data::getValue( $viewdict, 'imagepath' ) ?>');"></div>
 	<div class="content">
 		<h2 id="title"><?php echo Data::getValue( $viewdict, 'title' ) ?></h2>
-		<p id="desc"><?php echo Data::getValue( $viewdict, 'desc' ) ?></p>
+		<p id="desc"><?php echo Data::getValue( $viewdict, 'html_text' ) ?></p>
 	</div>
 </div>
 

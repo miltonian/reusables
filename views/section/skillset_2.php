@@ -26,6 +26,10 @@ $skillset1array = array($skill, $skill);
 if(!isset($viewdict['preview'])){ $viewdict['preview'] = 0; }
 
 // exit( json_encode( Data::getValue( $viewdict ) ) );
+$sectiontitle = Data::getValue( $viewdict, 'title' );
+if( $sectiontitle == "" ) {
+	$sectiontitle = "Skills";
+}
 
 ?>
 
@@ -35,10 +39,10 @@ if(!isset($viewdict['preview'])){ $viewdict['preview'] = 0; }
 
 <div class="skillset_2 main <?php echo $identifer ?>">
 	<?php /*if( ((!$GLOBALS['isadmin'] && !$GLOBALS['isuser']) || ($GLOBALS['isadmin'] != $viewdict['userprofile_userid'] && $GLOBALS['userid'] != $viewdict['userprofile_userid'])) || $viewdict['preview']==1 ){*/ ?>
-	<h1 class="skillset_2 title">My Month</h1>
+	<h1 class="skillset_2 title"><?php echo $sectiontitle ?></h1>
 		<?php $i=1; foreach ($skillsarray as $skill) { ?>
 			<?php 
-				$name=$skill['custom_key']; $score=$skill['custom_value']; 
+				$name=Data::getValue( $skill, 'custom_key'); $score=Data::getValue( $skill, 'custom_value' ); 
 				if (substr($score, -1) != '%') { $score = $score . "%"; }
 			?>
 			<div class="skillset_2 wrapper">
