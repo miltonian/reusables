@@ -23,7 +23,7 @@ namespace Reusables;
 	$cellname = Data::getValue( $viewoptions, 'cellname' );
 	if( $cellname == "" ){
 		// default cell
-		$cellname = "cell_2";
+		$cellname = "imagetext_full";
 	}
 
 ?>

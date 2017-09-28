@@ -1,8 +1,0 @@
-.cell_4.main { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; }
-	.cell_4.container{ position: relative; display: inline-block; margin: 0; padding: 0; text-align: center; float: left; background-color: white; padding-bottom: 10px; width: 100%; }
-	.cell_4 label { cursor: pointer; }
-		.cell_4 label:hover {text-decoration: underline;}
-	.cell_4.picture{ position: relative; display: block; margin: 0; padding: 0; width: 220px; height: 160px; background-image: url("https://c.tadst.com/gfx/750w/sunrise-sunset-sun-calculator.jpg?1"); /* the root is entrenash */ background-size: cover; background-position: center; cursor: pointer; width: 100%; }
-	.cell_4.words{ position: relative; display: block; margin: 0; padding: 0; width: 220px; height: 17px; margin-top: 10px; overflow: hidden; background-color: white; width: 100%; }
-	.cell_4.text-container{ position: relative; display: inline-block; padding-left: 10px;  padding-right: 10px; }
-	.cell_4.grey-label{ font-style: italic; color: grey; font-size: 0.8em; font-weight: 300; top: 0; }
