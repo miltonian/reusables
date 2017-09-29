@@ -28,12 +28,12 @@ namespace Reusables;
 
 <style>
 <?php if($isediting){ ?>
-	.featuredsection_6 { cursor: pointer; }
-		.featuredsection_6:hover { opacity: 0.8; }
+	.jumbotron_bottomtext { cursor: pointer; }
+		.jumbotron_bottomtext:hover { opacity: 0.8; }
 <?php } ?>
 </style>
 
-<div class="featuredsection_6 <?php echo $identifier ?>">
+<div class="jumbotron_bottomtext <?php echo $identifier ?>">
 	<div class="backgroundimage" style="background-image: url('<?php echo Data::getValue( $viewdict, 'featured_imagepath' ) ?>');">
 		<div class="gradient"></div>
 	</div>
@@ -48,7 +48,7 @@ namespace Reusables;
 var viewdict = <?php echo json_encode($viewdict) ?>;
 var isediting = <?php echo $isediting ?>;
 
-$('.featuredsection_6').click(function(e){
+$('.jumbotron_bottomtext').click(function(e){
 	if(isediting){
 		e.preventDefault();
 		var editingdict = viewdict['editing'];

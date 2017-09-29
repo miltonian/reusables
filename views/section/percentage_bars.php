@@ -37,23 +37,23 @@ if( $sectiontitle == "" ) {
 </style>
 
 
-<div class="skillset_2 main <?php echo $identifer ?>">
+<div class="percentage_bars main <?php echo $identifer ?>">
 	<?php /*if( ((!$GLOBALS['isadmin'] && !$GLOBALS['isuser']) || ($GLOBALS['isadmin'] != $viewdict['userprofile_userid'] && $GLOBALS['userid'] != $viewdict['userprofile_userid'])) || $viewdict['preview']==1 ){*/ ?>
-	<h1 class="skillset_2 title"><?php echo $sectiontitle ?></h1>
+	<h1 class="percentage_bars title"><?php echo $sectiontitle ?></h1>
 		<?php $i=1; foreach ($skillsarray as $skill) { ?>
 			<?php 
 				$name=Data::getValue( $skill, 'custom_key'); $score=Data::getValue( $skill, 'custom_value' ); 
 				if (substr($score, -1) != '%') { $score = $score . "%"; }
 			?>
-			<div class="skillset_2 wrapper">
-				<div class="skillset_2 bar">
-					<div class="skillset_2 fill" style="width: <?php echo $score ?>; background: <?php if($i % 3==0){ echo '#ff533d'; }else if($i % 2==0){ echo '#ab987a'; }else{ echo '#0f1626'; } ?>">
+			<div class="percentage_bars wrapper">
+				<div class="percentage_bars bar">
+					<div class="percentage_bars fill" style="width: <?php echo $score ?>; background: <?php if($i % 3==0){ echo '#ff533d'; }else if($i % 2==0){ echo '#ab987a'; }else{ echo '#0f1626'; } ?>">
 						<label><?php echo $name ?></label>
 						<?php if( floatval( str_replace('%', '', $score) ) >= 80 ){ ?>
 							<label style="float: right;"><?php echo $score ?></label>
 						<?php } ?>
 					</div>
-					<div class="skillset_2 leftover" style="display: inline-block; position: relative; margin: 0; padding: 0; top: 50%; transform: translateY(-50%); width: calc(100% - <?php echo $score ?>);">
+					<div class="percentage_bars leftover" style="display: inline-block; position: relative; margin: 0; padding: 0; top: 50%; transform: translateY(-50%); width: calc(100% - <?php echo $score ?>);">
 					<?php if( floatval( str_replace('%', '', $score) ) < 80 ){ ?>
 						<label style="top: 0; transform: none; text-align: right; width: calc(100% - 20px); padding-right: 20px;"><?php echo $score ?></label>
 					<?php } ?>

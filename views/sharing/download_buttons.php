@@ -8,7 +8,7 @@ $otherdevice = Data::getValue( $viewdict, 'otherdevice' );
 
 ?>
 
-<div class="downloadbtns_1 main <?php echo $identifier ?>">
+<div class="download_buttons main <?php echo $identifier ?>">
 	<?php if( $appstore != "" ){ ?>
 		<a href="<?php echo $appstore ?>"><img src="http://sites.superfanu.com/bbnrewards.com/download/img/appstore.png" class="appstore" alt="Download on the App Store" /></a>
 	<?php } ?>

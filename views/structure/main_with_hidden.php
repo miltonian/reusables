@@ -41,7 +41,7 @@ namespace Reusables;
 
 
 	Data::addData( $mainheaderdict, $identifier . "_main_header" );
-	Data::addData( $step1dict, $identifier . "_steps_1" );
+	Data::addData( $step1dict, $identifier . "_steps" );
 // exit( json_encode( $step1dict['steps'] ) );
 ?>
 
@@ -51,10 +51,10 @@ namespace Reusables;
 <div class="<?php echo $identifier ?> main_with_hidden main">
 	<div class="main_with_hidden header">
 		<button class="main_with_hidden" id="close">&#10006;</button>
-		<?php echo Header::make( "header_5", $identifier . "_main_header" ); ?>
+		<?php echo Header::make( "basic", $identifier . "_main_header" ); ?>
 		<?php 
 			if( $step1dict['steps'] != "" ) {
-				echo Header::make( "steps_1", $identifier . "_steps_1" ); 
+				echo Header::make( "steps", $identifier . "_steps" ); 
 			}
 		?>
 	</div>

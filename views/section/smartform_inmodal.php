@@ -14,7 +14,7 @@ namespace Reusables;
 							[
 								"title" => Data::getValue( $viewdict, 'formtitle' ),
 								"c1" => [
-									Section::make( "smartform_1", $identifier )
+									Section::make( "smartform", $identifier )
 								],
 							],
 							$identifier . "_internalstructure"

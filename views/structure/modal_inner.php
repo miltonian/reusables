@@ -21,7 +21,7 @@ namespace Reusables;
 		<button class="modal_inner" id="close">&#10006;</button>
 		<?php 
 			Data::addData( ["title"=>$structuredict['title']], $identifier . "_modalinner_header" );
-			echo Header::make( "header_5", $identifier . "_modalinner_header" ); 
+			echo Header::make( "basic", $identifier . "_modalinner_header" ); 
 		?>
 		
 	</div>

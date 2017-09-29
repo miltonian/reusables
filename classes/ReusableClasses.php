@@ -110,7 +110,7 @@ class ReusableClasses {
 	{
 		ReusableClasses::startpage( "" );
 		Data::addData(["title"=>"It works!"], "test_header" );
-		echo Header::make( "header_3", "test_header" );
+		echo Header::make( "underline_edit", "test_header" );
 		ReusableClasses::endpage( "", "" );
 	}
 
@@ -334,7 +334,7 @@ class ReusableClasses {
 			"desc"=>"Hamilton High School, Hamilton is a public four-year high school located at 123 Newton Ave in Bicentennial Park, Tennessee, in the United States. It is part of Consolidated High School District 230, which also includes Victor J. Andrew High School and Amos Alonzo Stagg High School. The school is named for first treasurer of the United States of America, Alexander Hamilton.",
 			"html_text"=>"Hamilton High School, Hamilton is a public four-year high school located at 123 Newton Ave in Bicentennial Park, Tennessee, in the United States. It is part of Consolidated High School District 230, which also includes Victor J. Andrew High School and Amos Alonzo Stagg High School. The school is named for first treasurer of the United States of America, Alexander Hamilton.",
 			"postarray"=>$postarray,
-			"children"=>array(["filename"=>"header_3", "viewtype"=>"header", "data"=>[] ], ["filename"=>"table_1", "viewtype"=>"table", "data"=>[] ])
+			"children"=>array(["filename"=>"underline_edit", "viewtype"=>"header", "data"=>[] ], ["filename"=>"table_1", "viewtype"=>"table", "data"=>[] ])
 		);
 		for ($i=0; $i < sizeof($testarray['children']); $i++) { 
 			$testarray['children'][$i]['data'] = $testarray;

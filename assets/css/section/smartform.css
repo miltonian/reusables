@@ -1,9 +1,9 @@
-.smartform_1.main { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; height: 100%; }
-.smartform_1.field-wrapper { display: inline-block; position: relative; margin: 20px; padding: 0; width: calc(50% - 40px); float: left; text-align: left; margin-bottom: 5px; }
-	.smartform_1.field-wrapper label { margin-bottom: 5px; }
-	.smartform_1.field-wrapper input { display: inline-block; position: relative; margin: 0px; padding: 10px; width: 100%; border: 0; border: 1px solid #e0e0e0; border-radius: 5px; background-color: white; float: left; height: 50px; font-weight: 300; font-size: 1.1em; background-color: rgba(255,255,255,0.2); border: 0; background-color: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.2); font-weight: 500; color: white; }
-		.smartform_1.field-wrapper input::placeholder { color: white; font-weight: 300; }
-		.smartform_1 input:focus { outline: none; }
+.smartform.main { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; height: 100%; }
+.smartform.field-wrapper { display: inline-block; position: relative; margin: 20px; padding: 0; width: calc(50% - 40px); float: left; text-align: left; margin-bottom: 5px; }
+	.smartform.field-wrapper label { margin-bottom: 5px; }
+	.smartform.field-wrapper input { display: inline-block; position: relative; margin: 0px; padding: 10px; width: 100%; border: 0; border: 1px solid #e0e0e0; border-radius: 5px; background-color: white; float: left; height: 50px; font-weight: 300; font-size: 1.1em; background-color: rgba(255,255,255,0.2); border: 0; background-color: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.2); font-weight: 500; color: white; }
+		.smartform.field-wrapper input::placeholder { color: white; font-weight: 300; }
+		.smartform input:focus { outline: none; }
 		label.file_image#imglabel { width: calc(30% - 0px); padding-bottom: 27%; float: none; }
-		.smartform_1.custombutton { display: inline-block; position: relative; margin: 0; padding: 20px 0px; color: white; background-color: green; border: 0; -webkit-appearance: none; border-bottom: 3px solid rgba(0,0,0,0.4) font-weight: 500; width: 100%; font-size: 20px; border-radius: 5px; margin-top: 20px; }
-		.smartform_1.main_structure.main { margin: 0; }
+		.smartform.custombutton { display: inline-block; position: relative; margin: 0; padding: 20px 0px; color: white; background-color: green; border: 0; -webkit-appearance: none; border-bottom: 3px solid rgba(0,0,0,0.4) font-weight: 500; width: 100%; font-size: 20px; border-radius: 5px; margin-top: 20px; }
+		.smartform.main_structure.main { margin: 0; }

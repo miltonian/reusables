@@ -39,7 +39,7 @@ echo Menu::make( "menuview_1", "menuview1");
 	<div class="bulky container">
 		<div class="bulky main-content">
 			<div class="bulky socialbtns-container">
-				<?php echo Sharing::make("socialpagesbtns_1", [], "socialpages"); ?>
+				<?php echo Sharing::make("socialpage_circles", [], "socialpages"); ?>
 			</div>
 			<a href="/">
 				<div class="bulky logo-div">
@@ -53,8 +53,8 @@ echo Menu::make( "menuview_1", "menuview1");
 			</a>
 			<div class="bulky search-container" style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%);">
 				<?php 
-					Data::addData( [], $identifier . "_searchbar" );
-					echo Button::make( "searchbar_1", $identifier . "_searchbar" ); 
+					Data::addData( [], $identifier . "_search" );
+					echo Button::make( "search", $identifier . "_search" ); 
 				?>
 			</div>
 		</div>
@@ -62,7 +62,7 @@ echo Menu::make( "menuview_1", "menuview1");
 			<div style="display: inline-block; position: absolute; float: left; margin-left: 8px; left: 8px;">
 				<?php 
 					Data::addData( [], $identifier . "_menubtn");
-					echo Button::make( "menubtn_1", $identifier . "_menubtn" ); 
+					echo Button::make( "hamburger", $identifier . "_menubtn" ); 
 				?>
 			</div>
 

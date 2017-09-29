@@ -34,11 +34,11 @@ extract( Input::convertInputKeys( $identifier ) );
 
 <style>
 	<?php if( $steps > 1 ) { ?>
-		.smartform_1.main_with_hidden.next { display: inline-block; }
-		.smartform_1.main_with_hidden.save { display: none; }
+		.smartform.main_with_hidden.next { display: inline-block; }
+		.smartform.main_with_hidden.save { display: none; }
 	<?php }else{ ?>
-		.smartform_1.main_with_hidden.next { display: none; }
-		.smartform_1.main_with_hidden.save { display: inline-block; }
+		.smartform.main_with_hidden.next { display: none; }
+		.smartform.main_with_hidden.save { display: inline-block; }
 	<?php } ?>
 </style>
 
@@ -50,7 +50,7 @@ extract( Input::convertInputKeys( $identifier ) );
 <?php if( $ifnone_insert ){ ?>
 	<input type='hidden' name='ifnone_insert' value='1' >
 <?php } ?>
-<div class="<?php echo $identifier ?> smartform_1 main">
+<div class="<?php echo $identifier ?> smartform main">
 	<div class='thecontainer' style='text-align: left; margin-top: 10px; margin-bottom: 0px; text-align: center;'>
 		<input type="hidden" name="goto" value="<?php echo Data::getValue( $viewoptions, 'goto' ) ?>">
 			<?php 
@@ -61,16 +61,16 @@ extract( Input::convertInputKeys( $identifier ) );
 						"maincolumn" => $inputs[ 'c' . $onstep ]
 						
 					],
-					"main_structure smartform_1"
+					"main_structure smartform"
 				);
 			
 			?>
-		<!-- <button class="smartform_1 modalinner_1 save custombutton">Save</button> -->
+		<!-- <button class="smartform modalinner_1 save custombutton">Save</button> -->
 		<?php if( $steps > 1 ){ ?>
-			<button class="smartform_1 main_with_hidden next custombutton">Next</button>
-			<button class="smartform_1 main_with_hidden save custombutton">Save</button>
+			<button class="smartform main_with_hidden next custombutton">Next</button>
+			<button class="smartform main_with_hidden save custombutton">Save</button>
 		<?php }else { ?>
-			<button class="smartform_1 main_with_hidden save custombutton">Save</button>
+			<button class="smartform main_with_hidden save custombutton">Save</button>
 		<?php } ?>
 	</div>
 </div>
