@@ -12,7 +12,7 @@ namespace Reusables;
 <?php
 
 echo Structure::make(
-	"structure_1", 
+	"main_withside", 
 	[
 		"maincolumn"=>array(
 			"<img class='informative_2 featuredimage' src='" . $viewdict['featured_imagepath'] . "' >",

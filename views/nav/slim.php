@@ -23,29 +23,29 @@ if (!isset($viewdict['logolink'])) { $viewdict['logolink'] = ""; }
 
 </style>
 
-<div class="navbar_4 <?php echo $identifier ?> all">
-<div class='navbar_4 main <?php echo $identifier ?> mobilenav'>
-	<a class="navbar_4" id="brandlink" href='/<?php echo $viewdict['logolink'] ?>'>
+<div class="slim <?php echo $identifier ?> all">
+<div class='slim main <?php echo $identifier ?> mobilenav'>
+	<a class="slim" id="brandlink" href='/<?php echo $viewdict['logolink'] ?>'>
 		<?php if(isset($viewdict['logo'])){ ?>
-			<img class='navbar_4 topbarlogo' src='<?php echo $viewdict['logo'] ?>' width="auto" height="auto">
+			<img class='slim topbarlogo' src='<?php echo $viewdict['logo'] ?>' width="auto" height="auto">
 		<?php }else{ ?>
-			<h3 class="navbar_4" id="brandname"><?php echo $viewdict['brandname'] ?></h3>
+			<h3 class="slim" id="brandname"><?php echo $viewdict['brandname'] ?></h3>
 		<?php } ?>
 	</a>
 	<?php if( sizeof( $viewdict['pages'] ) > 0 ){ ?>
-		<img class='navbar_4 dropdown menubtn' src='https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png' style='width: auto; margin-right: 30px;'>
+		<img class='slim dropdown menubtn' src='https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png' style='width: auto; margin-right: 30px;'>
 	<?php } ?>
-	<div class='navbar_4 dropdown-content'>
+	<div class='slim dropdown-content'>
 		<?php foreach ($navbuttons as $b) { ?>
 			<a href='<?php echo $b['slug'] ?>'><?php if(isset($b['imagepath'])){ "<img src='".$b['imagepath']."'>"; }else if(isset($b['emoji'])){ echo $b['emoji']; }else{ echo $b['name']; } ?></a>
 		<?php } ?>
 	</div>
 </div>
 
-<div class='navbar_4 main <?php echo $identifier ?> desktopnav navbar-shadow' style='<?php if($isadmin){ echo "margin-top: 60px"; } ?>'>
-	<a href='/<?php echo $viewdict['logolink'] ?>' class='navbar_4 logo-div'>
+<div class='slim main <?php echo $identifier ?> desktopnav navbar-shadow' style='<?php if($isadmin){ echo "margin-top: 60px"; } ?>'>
+	<a href='/<?php echo $viewdict['logolink'] ?>' class='slim logo-div'>
 		<?php if(isset($viewdict['logo'])){ ?>
-			<img class='navbar_4 topbarlogo' src='<?php echo $viewdict['logo'] ?>' width="auto" height="auto">
+			<img class='slim topbarlogo' src='<?php echo $viewdict['logo'] ?>' width="auto" height="auto">
 		<?php } ?>
 			<h3><?php echo $viewdict['brandname'] ?></h3>
 
@@ -57,12 +57,12 @@ if (!isset($viewdict['logolink'])) { $viewdict['logolink'] = ""; }
 		$button = "";
 		foreach ($navbuttons as $b) {
 			// exit( json_encode( $b ) );
-			$button = "<div class='navbar_4 page " . $b['classname'] . " wrapper ";
+			$button = "<div class='slim page " . $b['classname'] . " wrapper ";
 			if(isset($b['buttons'])){
 				$button .= "has_dropdown";
 			}
 			$button .= " '> ";
-			$button .= "<a href='" . $b['slug'] . "' class='navbar_4 topbar-button'>"; 
+			$button .= "<a href='" . $b['slug'] . "' class='slim topbar-button'>"; 
 			if( isset( $b['imagepath'] ) ){ 
 				$button .= "<img src='" . $b['imagepath'] . "'>"; 
 			}if( isset( $b['emoji'] ) ){ 
@@ -72,9 +72,9 @@ if (!isset($viewdict['logolink'])) { $viewdict['logolink'] = ""; }
 			} 
 			$button .= "</a>";
 			if(isset($b['buttons'])){
-				$button .= "<div class='navbar_4 dropdown-content'>";
+				$button .= "<div class='slim dropdown-content'>";
 					foreach ($b['buttons'] as $s) {
-						$button .= "<a class='navbar_4' id='link' href='" . $s['slug'] . "'>";
+						$button .= "<a class='slim' id='link' href='" . $s['slug'] . "'>";
 						if(isset($s['imagepath'])){ 
 							$button .= "<img src='" . $s['imagepath'] . "'>"; 
 						}else if(isset($s['emoji'])){ 
@@ -95,12 +95,12 @@ if (!isset($viewdict['logolink'])) { $viewdict['logolink'] = ""; }
 		}
 
 		echo Structure::make( 
-			"structure_1",
+			"main_withside",
 			[
 				"maincolumn"=>$leftbuttons,
 				"sidecolumn_right"=>$rightbuttons
 			],
-			"navbar_4_structure"
+			"slim_structure"
 		);
 	?>
 	<!-- <?php foreach ($navbuttons as $b) { ?>
@@ -110,31 +110,31 @@ if (!isset($viewdict['logolink'])) { $viewdict['logolink'] = ""; }
 </div>
 
 
-<div class="navbar_4 spacing"></div>
+<div class="slim spacing"></div>
 
 </div>
 
 
 
 <script>
-	$('.navbar_4.mobilenav .navbar_4.dropdown').click(function(){
-		$('.navbar_4.dropdown-content').css('display', 'block');
+	$('.slim.mobilenav .slim.dropdown').click(function(){
+		$('.slim.dropdown-content').css('display', 'block');
 	});
 
-	$('.navbar_4.desktopnav .navbar_4.has_dropdown').click(function(e){
+	$('.slim.desktopnav .slim.has_dropdown').click(function(e){
 		// e.preventDefault();
 	})
-	$('.navbar_4.desktopnav .navbar_4.has_dropdown').mouseenter(function(e){
-		$(this).find('.navbar_4.dropdown-content').css({'display': 'block'});
+	$('.slim.desktopnav .slim.has_dropdown').mouseenter(function(e){
+		$(this).find('.slim.dropdown-content').css({'display': 'block'});
 	});
-	$('.navbar_4.desktopnav .navbar_4.has_dropdown').mouseleave(function(e){
-		$(this).find('.navbar_4.dropdown-content').css({'display': 'none'});
+	$('.slim.desktopnav .slim.has_dropdown').mouseleave(function(e){
+		$(this).find('.slim.dropdown-content').css({'display': 'none'});
 	});
 
 	$(document).ready(function(){
 		window.onscroll = function(ev) {
-			$('.navbar_4.mobilenav .navbar_4.dropdown-content').css('display','none');
-			$('.navbar_4.mobilenav .navbar_4.dropdown').css('background-color', 'transparent');
+			$('.slim.mobilenav .slim.dropdown-content').css('display','none');
+			$('.slim.mobilenav .slim.dropdown').css('background-color', 'transparent');
 		};
 	});
 		

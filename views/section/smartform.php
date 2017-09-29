@@ -56,7 +56,7 @@ extract( Input::convertInputKeys( $identifier ) );
 			<?php 
 
 				echo Structure::make( 
-					"structure_2",
+					"one_column",
 					[
 						"maincolumn" => $inputs[ 'c' . $onstep ]
 						

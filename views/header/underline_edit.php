@@ -9,7 +9,7 @@ $buttons = "";
 if( isset($viewoptions['buttons']) ){
 	$i=0;
 	foreach ($viewoptions['buttons'] as $b) {
-		$buttons .= "<button id='".Data::getValue($b, 'view_id')."' class='header_3 index_" . $i . " " . Data::getValue($b,'classname') . "'>" . $b['text'] . "</button>";
+		$buttons .= "<button id='".Data::getValue($b, 'view_id')."' class='underline_edit index_" . $i . " " . Data::getValue($b,'classname') . "'>" . $b['text'] . "</button>";
 		$i++;
 	}
 }
@@ -24,26 +24,26 @@ $viewoptions = ReusableClasses::convertViewActions( $viewoptions );
 	
 </style>
 
-<div class="<?php echo $identifier ?> header_3 main">
+<div class="<?php echo $identifier ?> underline_edit main">
 	<?php
 		if(isset($viewoptions['buttons'])){
 			echo Structure::make(
-				"structure_1", 
+				"main_withside", 
 				[
 					"maincolumn" => array( 
-						"<h1 class='header_3' id='title'>" . Data::getValue( $viewdict, 'title' ) . "</h1>"
+						"<h1 class='underline_edit' id='title'>" . Data::getValue( $viewdict, 'title' ) . "</h1>"
 					),
 					"sidecolumn_right" => array( 
 						$buttons
 					)
 				],
-				$identifier . "_header_3"
+				$identifier . "_underline_edit"
 			);
 		}else{ ?>
-			<h1 class='header_3' id='title'><?php echo Data::getValue( $viewdict, 'title' ) ?></h1>
+			<h1 class='underline_edit' id='title'><?php echo Data::getValue( $viewdict, 'title' ) ?></h1>
 		<?php } ?>
 
-	<div class="header_3" id="divider"></div>
+	<div class="underline_edit" id="divider"></div>
 </div>
 
 <script>
@@ -55,7 +55,7 @@ $viewoptions = ReusableClasses::convertViewActions( $viewoptions );
 var viewdict = <?php echo json_encode($viewdict) ?>;
 var viewoptions = <?php echo json_encode($viewoptions) ?>;
 var isediting = <?php echo $isediting ?>;
-	$('.header_3 .structure_1 .sidecolumn_right button').click(function(e){
+	$('.underline_edit .main_withside .sidecolumn_right button').click(function(e){
 		e.preventDefault();
 
 		var classes = $(this).attr('class');

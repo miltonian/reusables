@@ -14,8 +14,8 @@ namespace Reusables;
 
 </style>
 
-<div class="<?php echo $identifier ?> structure_1 main">
-	<div class="structure_1 maincolumn">
+<div class="<?php echo $identifier ?> main_withside main">
+	<div class="main_withside maincolumn">
 		<?php 
 			foreach ($structuredict['maincolumn'] as $view) {
 				// $ReusableClasses->$view['viewtype']( $view['filename'], $view['data'] );
@@ -23,7 +23,7 @@ namespace Reusables;
 			}
 		?>
 	</div>
-	<div class="structure_1 sidecolumn_right">
+	<div class="main_withside sidecolumn_right">
 		<?php 
 			foreach ($structuredict['sidecolumn_right'] as $view) {
 				// $ReusableClasses->$view['viewtype']( $view['filename'], $view['data'] );

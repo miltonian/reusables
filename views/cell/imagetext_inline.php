@@ -12,9 +12,9 @@ namespace Reusables;
 <style>
 </style>
 
-<div class="cell_8 main <?php echo $identifier ?> <?php if($isfeatured){ echo "featured"; } ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo Data::getValue( $viewdict, 'mediatype' ); } ?>" id="<?php echo Data::getValue( $viewdict, 'index' ) ?>">
+<div class="imagetext_inline main <?php echo $identifier ?> <?php if($isfeatured){ echo "featured"; } ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo Data::getValue( $viewdict, 'mediatype' ); } ?>" id="<?php echo Data::getValue( $viewdict, 'index' ) ?>">
 		<a href="<?php echo $linkpath; ?>">
-			<div class="cell_8 picture" style="background-color: #333333; <?php if( Data::getValue( $viewdict, 'featured_imagepath' ) ){ echo 'background-image: url('.Data::getValue( $viewdict, 'featured_imagepath' ).');'; } ?>">
+			<div class="imagetext_inline picture" style="background-color: #333333; <?php if( Data::getValue( $viewdict, 'featured_imagepath' ) ){ echo 'background-image: url('.Data::getValue( $viewdict, 'featured_imagepath' ).');'; } ?>">
 				<?php if( $mediatype ){ ?>
 					<video width="100%" height="auto" autoplay loop>
 					  <source src="<?php echo Data::getValue( $viewdict, 'featured_imagepath' ) ?>" type="video/mp4">
@@ -24,13 +24,13 @@ namespace Reusables;
 				<?php } ?>
 			</div>
 		</a>
-		<div class="cell_8 words">
-			<div class="cell_8 text-container">
+		<div class="imagetext_inline words">
+			<div class="imagetext_inline text-container">
 				<a href="<?php echo $linkpath; ?>">
-					<h2 class="cell_8" id="title" style=""><?php if(isset($viewdict['title'])){ echo Data::getValue( $viewdict, 'title' ); } ?></h2>
+					<h2 class="imagetext_inline" id="title" style=""><?php if(isset($viewdict['title'])){ echo Data::getValue( $viewdict, 'title' ); } ?></h2>
 				</a>
 				<br>
-				<label class="cell_8" id="desc"><?php echo implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $viewdict, 'html_text' ))), 0, 10) ); ?>...</label>
+				<label class="imagetext_inline" id="desc"><?php echo implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $viewdict, 'html_text' ))), 0, 10) ); ?>...</label>
 			</div>
 		</div>
 </div>

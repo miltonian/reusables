@@ -1,4 +1,4 @@
-.header_5.main { position: relative; display: inline-block; padding: 20px 40px; margin: 0; width: calc( 100% - 0px ); }
+.header_5.main { position: relative; display: inline-block; padding: 20px 0px; margin: 0; width: calc( 100% - 0px ); }
 	.header_5#title { display: inline-block; position: relative; margin: 0px 0px; padding: 0; width: 100%; color: #333333; text-transform: uppercase; font-size: 25px; font-weight: 400; }
 @media (min-width: 0px) {
 	.header_5#title { text-align: center; }

@@ -30,14 +30,14 @@ $data_id = Data::getDefaultDataID( $viewdict );
 
 ?>
 
-<div class="cellimage_1 main <?php echo $identifier ?> <?php if($viewdict['isfeatured']){ echo "featured"; } ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo $mediatype; } ?> index_<?php echo $cellindex ?>" id="<?php echo Data::getValue( $viewdict, 'id' ) ?>">
+<div class="image_full main <?php echo $identifier ?> <?php if($viewdict['isfeatured']){ echo "featured"; } ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo $mediatype; } ?> index_<?php echo $cellindex ?>" id="<?php echo Data::getValue( $viewdict, 'id' ) ?>">
 
-	<div class="cellimage_1 container">
+	<div class="image_full container">
 		<div style="display: inline-block; width: 100%;">
 			<div>
 				<a href="<?php echo $linkpath ?>">
-					<div class="cellimage_1 picture" style="<?php echo 'background-image: url('.Data::getValue( $viewdict, 'featured_imagepath' ).');'; ?>">
-						<label class="cellimage_1 title"><?php echo Data::getValue( $viewdict, 'title' ) ?></label>
+					<div class="image_full picture" style="<?php echo 'background-image: url('.Data::getValue( $viewdict, 'featured_imagepath' ).');'; ?>">
+						<label class="image_full title"><?php echo Data::getValue( $viewdict, 'title' ) ?></label>
 					</div>
 				</a>
 			</div>

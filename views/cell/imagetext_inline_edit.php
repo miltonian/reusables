@@ -23,14 +23,14 @@ $viewoptions = ReusableClasses::convertViewActions( $viewoptions );
 	
 	$cellactionshtml = "";
 	if( isset( $viewoptions['actions'] ) ){
-		$cellactionshtml .= "<div class='cell_10 actions-div'>";
+		$cellactionshtml .= "<div class='imagetext_inline_edit actions-div'>";
 		$i=0;
 		foreach ( $viewoptions['actions'] as $action ) {
 			$actiontype = Data::getValue( $action, 'type' );
 			if( $actiontype == "dropdown" ){
 				$cellactionshtml .= "<div class='dropdown_1'>";
 					$cellactionshtml .= "<div class='inner-dropdown'>";
-						$cellactionshtml .= "<button id='" . Data::getValue( $viewdict, 'index' ) . "' class='inner-dropbtn cell_10 action actionindex_" . $i . " index_" . $cellindex . "' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
+						$cellactionshtml .= "<button id='" . Data::getValue( $viewdict, 'index' ) . "' class='inner-dropbtn imagetext_inline_edit action actionindex_" . $i . " index_" . $cellindex . "' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
 						$cellactionshtml .= "<div id='inner-myDropdown_" . Data::getValue( $viewdict, 'index' ) . "' class='inner-dropdown-content'>";
 							for ($a=0; $a < sizeof( $action['dropdown_array'] ); $a++) {
 								$dropdownarray = $action['dropdown_array'];
@@ -40,7 +40,7 @@ $viewoptions = ReusableClasses::convertViewActions( $viewoptions );
 					$cellactionshtml .= "</div>";
 				$cellactionshtml .= "</div>";
 			}else{
-				$cellactionshtml .= "<button id='" . Data::getValue( $viewdict, 'index' ) . "' class='cell_10 action actionindex_" . $i . " index_" . $cellindex . "' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
+				$cellactionshtml .= "<button id='" . Data::getValue( $viewdict, 'index' ) . "' class='imagetext_inline_edit action actionindex_" . $i . " index_" . $cellindex . "' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
 			}
 
 			$i++;
@@ -56,19 +56,19 @@ $viewoptions = ReusableClasses::convertViewActions( $viewoptions );
 </style>
 
 <?php 
-	echo "<div class='cell_10 main " . $identifier . " index_" . Data::getValue( $viewdict, 'index' ) . "' id=" . Data::getValue( $viewdict, 'view_id' ) . " >";
+	echo "<div class='imagetext_inline_edit main " . $identifier . " index_" . Data::getValue( $viewdict, 'index' ) . "' id=" . Data::getValue( $viewdict, 'view_id' ) . " >";
 		echo Wrapper::wrapper1( 
 			[],
 			array(
 				Structure::make( "three_columns", [
 					"sidecolumn_left"=>array(
-						"<div class='cell_10 featuredimage-div' style='background-image: url(" . Data::getValue( $viewdict, 'featured_imagepath' ) . ")'></div>"
+						"<div class='imagetext_inline_edit featuredimage-div' style='background-image: url(" . Data::getValue( $viewdict, 'featured_imagepath' ) . ")'></div>"
 					),
 					"maincolumn"=>array(
 						"
-						<div class='cell_10 content'>
-							<h4 class='cell_10 ' id='title'>" . Data::getValue( $viewdict, 'title' ) . "</h4>
-							<p class='cell_10' id='desc'>" . Data::getValue( $viewdict, 'desc' ) . "</p>
+						<div class='imagetext_inline_edit content'>
+							<h4 class='imagetext_inline_edit ' id='title'>" . Data::getValue( $viewdict, 'title' ) . "</h4>
+							<p class='imagetext_inline_edit' id='desc'>" . Data::getValue( $viewdict, 'desc' ) . "</p>
 						</div>
 						"
 					),
@@ -90,10 +90,10 @@ $viewoptions = ReusableClasses::convertViewActions( $viewoptions );
 	<?php ReusableClasses::getEditingFunctionsJS( $viewoptions ) ?>;
 	
 
-function cell_10_start(){
-	cell_10.setupactions( cellactions, editingfunctions );
+function imagetext_inline_edit_start(){
+	imagetext_inline_edit.setupactions( cellactions, editingfunctions );
 	
-	$('.inner-dropbtn.cell_10.action').click(function(){
+	$('.inner-dropbtn.imagetext_inline_edit.action').click(function(){
 		var actionindex = Reusable.getIndexFromClass( "actionindex_")
 		// CHECK AGAIN
 		document.getElementById("inner-myDropdown_"+actionindex).classList.toggle("show");

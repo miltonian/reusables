@@ -1,0 +1,19 @@
+.underline_edit.main { position: relative; display: inline-block; padding: 20px 40px; margin: 0; width: calc( 100% - 80px ); }
+	.underline_edit#title { display: inline-block; position: relative; margin: 0px 0px; padding: 0; width: 100%; }
+	.underline_edit#divider { display: inline-block; position: absolute; padding: 0; margin: 0px; bottom: 0; width: calc( 100% - 80px ); height: 2px; background-color: #333333; left: 40px; }
+@media (min-width: 0px) {
+	.underline_edit#title { text-align: center; }
+}
+@media (min-width: 768px) {
+	.underline_edit#title { text-align: left; }
+}
+
+.underline_edit .structure_1.sidecolumn_right button { display: inline-block; position: relative; margin: 0; padding: 10px 15px; font-size: 15px; float: right; top: 50%; transform: translateY(-50%); -webkit-appearance: none; border: 1px solid rgba(0,0,0,0.3); border-bottom-width: 3px; border-radius: 5px; background-color: blue; color: white; cursor: pointer; }
+	@media (min-width: 0px) {
+		.underline_edit .structure_1.maincolumn { width: calc(100% - 20px); }
+		.underline_edit .structure_1.sidecolumn_right { width: calc(100% - 20px); text-align: center; }
+	}
+	@media (min-width: 768px) {
+		.underline_edit .structure_1.maincolumn { width: calc(50% - 20px); }
+		.underline_edit .structure_1.sidecolumn_right { width: calc(50% - 20px); text-align: right; height: 37px; }
+	}

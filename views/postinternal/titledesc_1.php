@@ -6,8 +6,8 @@ namespace Reusables;
 
 <style>
 	.<?php echo $identifier ?>_structure.main { padding: 60px; padding-left: 150px; padding-right: 150px; width: calc(100% - 300px); }
-		.<?php echo $identifier ?>_structure .structure_1.maincolumn { width: 65%; }
-		.<?php echo $identifier ?>_structure .structure_1.sidecolumn_right { width: calc(35% - 20px); }
+		.<?php echo $identifier ?>_structure .main_withside.maincolumn { width: 65%; }
+		.<?php echo $identifier ?>_structure .main_withside.sidecolumn_right { width: calc(35% - 20px); }
 		
 </style>
 

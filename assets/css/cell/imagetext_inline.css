@@ -1,17 +1,17 @@
-.cell_8.main { display: inline-block; position: relative; margin: 0; padding: 20px 5px; width: calc(100% - 10px); }
-	.cell_8.picture { display: inline-block; position: relative; margin: 0; padding: 0; border: 0; border-radius: 5px; background-size: cover; background-position: center; background-repeat: no-repeat; float: left; height: 0; cursor: pointer; }
-	.cell_8.words { display: inline-block; position: relative; margin: 0; padding: 0px 20px; }
-		.cell_8.words a {text-decoration: none;}
-		.cell_8.words #title { margin: 0; padding: 0; text-decoration: none; color: #333333; }
-			.cell_8.words #title:hover { cursor: pointer; text-decoration: underline; }
+.imagetext_inline.main { display: inline-block; position: relative; margin: 0; padding: 20px 5px; width: calc(100% - 10px); }
+	.imagetext_inline.picture { display: inline-block; position: relative; margin: 0; padding: 0; border: 0; border-radius: 5px; background-size: cover; background-position: center; background-repeat: no-repeat; float: left; height: 0; cursor: pointer; }
+	.imagetext_inline.words { display: inline-block; position: relative; margin: 0; padding: 0px 20px; }
+		.imagetext_inline.words a {text-decoration: none;}
+		.imagetext_inline.words #title { margin: 0; padding: 0; text-decoration: none; color: #333333; }
+			.imagetext_inline.words #title:hover { cursor: pointer; text-decoration: underline; }
 
 @media (min-width: 0px) {
-		.cell_8.picture { width: 90%; padding-bottom: 80%; float: none; }
-		.cell_8.words { width: calc( 90% - 40px); text-align: center; float: none; }
+		.imagetext_inline.picture { width: 90%; padding-bottom: 80%; float: none; }
+		.imagetext_inline.words { width: calc( 90% - 40px); text-align: center; float: none; }
 }
 @media (min-width: 768px) {
-		.cell_8.picture { width: 35%; padding-bottom: 27%; float: left; }
-		.cell_8.words { width: calc( 65% - 40px); text-align: left; float: left; }
+		.imagetext_inline.picture { width: 35%; padding-bottom: 27%; float: left; }
+		.imagetext_inline.words { width: calc( 65% - 40px); text-align: left; float: left; }
 }
 
-.cell_2.hide { display: none; }
+/*.cell_2.hide { display: none; }*/

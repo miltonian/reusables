@@ -1,13 +1,13 @@
-class cell_10_classes {
+class imagetext_inline_edit_classes {
 
 	setupactions( cellactions, editingfunctions )
 	{
 
-		$('.cell_10 button#select').off().click(function(e){
+		$('.imagetext_inline_edit button#select').off().click(function(e){
 			e.preventDefault();
 		});
 
-		$('.cell_10 button.action').off().click(function(e){
+		$('.imagetext_inline_edit button.action').off().click(function(e){
 			e.preventDefault();
 			var theindex = Reusable.getIndexFromClass( "actionindex_", this )
 			if(theindex != -1){

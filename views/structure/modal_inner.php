@@ -16,17 +16,17 @@ namespace Reusables;
 <style>
 </style>
 
-<div class="<?php echo $identifier ?> modalinner_1 main">
-	<div class="modalinner_1 header">
-		<button class="modalinner_1" id="close">&#10006;</button>
+<div class="<?php echo $identifier ?> modal_inner main">
+	<div class="modal_inner header">
+		<button class="modal_inner" id="close">&#10006;</button>
 		<?php 
 			Data::addData( ["title"=>$structuredict['title']], $identifier . "_modalinner_header" );
 			echo Header::make( "header_5", $identifier . "_modalinner_header" ); 
 		?>
 		
 	</div>
-	<div class="modalinner_1 body">
-		<div class="modalinner_1 column">
+	<div class="modal_inner body">
+		<div class="modal_inner column">
 			<?php 
 				foreach ($structuredict['first'] as $view) {
 					echo $view;

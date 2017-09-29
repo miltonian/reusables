@@ -7,7 +7,7 @@ $required = array(
 	"logo|brandname"=>"",  
 );
 
-ReusableClasses::checkRequired( "navbar_2", $viewdict, $required );
+ReusableClasses::checkRequired( "bulky", $viewdict, $required );
 
 if(!isset($navtype)){ $navtype=1; }
 
@@ -35,30 +35,30 @@ echo Menu::make( "menuview_1", "menuview1");
 <style>
 </style>
 
-<div class="navbar_2 main <?php echo $identifier ?>" style="<?php if($isadmin){ echo "margin-top: 60px"; } ?>">
-	<div class="navbar_2 container">
-		<div class="navbar_2 main-content">
-			<div class="navbar_2 socialbtns-container">
+<div class="bulky main <?php echo $identifier ?>" style="<?php if($isadmin){ echo "margin-top: 60px"; } ?>">
+	<div class="bulky container">
+		<div class="bulky main-content">
+			<div class="bulky socialbtns-container">
 				<?php echo Sharing::make("socialpagesbtns_1", [], "socialpages"); ?>
 			</div>
 			<a href="/">
-				<div class="navbar_2 logo-div">
+				<div class="bulky logo-div">
 					<?php if(isset($viewdict['logo'])){ ?>
 						<img src=<?php echo $viewdict['logo'] ?> width="auto" height="auto">
 					<?php }else{ ?>
 						<h3><?php echo $viewdict['brandname'] ?></h3>
 					<?php } ?>
 				</div>
-				<h6 class="navbar_2 tagline"><?php echo $tagline ?></h6>
+				<h6 class="bulky tagline"><?php echo $tagline ?></h6>
 			</a>
-			<div class="navbar_2 search-container" style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%);">
+			<div class="bulky search-container" style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%);">
 				<?php 
 					Data::addData( [], $identifier . "_searchbar" );
 					echo Button::make( "searchbar_1", $identifier . "_searchbar" ); 
 				?>
 			</div>
 		</div>
-		<div class="navbar_2 subnav">
+		<div class="bulky subnav">
 			<div style="display: inline-block; position: absolute; float: left; margin-left: 8px; left: 8px;">
 				<?php 
 					Data::addData( [], $identifier . "_menubtn");
@@ -67,11 +67,11 @@ echo Menu::make( "menuview_1", "menuview1");
 			</div>
 
 			<?php if( $categories != "" ){ ?>
-				<div class='navbar_2 categories-wrapper'>
+				<div class='bulky categories-wrapper'>
 				<?php foreach ($categories as $c) { ?>
 					<a href="<?php echo '/'.$c['id'] . '/' . preg_replace('/\PL/u', '', $c['name']); ?>" 
 						id="<?php echo $c['id'] ?>" 
-						class="navbar_2 category category-btn 1 sortorder_1 featuredsectionid_<?php echo $featuredsectionid ?>"><?php echo $c['name'] ?></a>
+						class="bulky category category-btn 1 sortorder_1 featuredsectionid_<?php echo $featuredsectionid ?>"><?php echo $c['name'] ?></a>
 				<?php } ?>
 
 				</div>
@@ -79,7 +79,7 @@ echo Menu::make( "menuview_1", "menuview1");
 
 			<?php if(isset($celldict['categories'][0]['name'])){ ?>
 				<?php if($navtype==1){ ?>
-					<div class="navbar_2 categories-wrapper">
+					<div class="bulky categories-wrapper">
 						<a href="
 							<?php 
 								if($isadmin){ 
@@ -95,7 +95,7 @@ echo Menu::make( "menuview_1", "menuview1");
 							?>
 						" 
 						class="
-							navbar_2 
+							bulky 
 							category 
 							category-btn 
 							1 
@@ -104,24 +104,24 @@ echo Menu::make( "menuview_1", "menuview1");
 						">
 							<?php echo $navbar2categories[0]['name'] ?>
 						</a>
-						<a href="<?php if($isadmin){ echo '#'; }else{ echo '/category/c/'.$navbar2categories[1]['id'] . '/' . preg_replace('/\PL/u', '', $navbar2categories[1]['name']); } ?>" id="<?php echo $navbar2categories[1]['id'] ?>" class="navbar_2 category category-btn 2 sortorder_2 featuredsectionid_<?php echo $featuredsectionid ?>"><?php echo $navbar2categories[1]['name'] ?></a>
-						<a href="<?php if($isadmin){ echo '#'; }else{ echo '/category/c/'.$navbar2categories[2]['id'] . '/' . preg_replace('/\PL/u', '', $navbar2categories[2]['name']); } ?>" id="<?php echo $navbar2categories[2]['id'] ?>" class="navbar_2 category category-btn 3 sortorder_3 featuredsectionid_<?php echo $featuredsectionid ?>"><?php echo $navbar2categories[2]['name'] ?></a>
-						<?php if(isset($navbar2categories[3]['name'])){ ?><a href="<?php if($isadmin){ echo '#'; }else{ echo '/category/c/'.$navbar2categories[3]['id'] . '/' . preg_replace('/\PL/u', '', $navbar2categories[3]['name']); } ?>" id="<?php echo $navbar2categories[3]['id'] ?>" class="navbar_2 category category-btn 4 sortorder_4 featuredsectionid_<?php echo $featuredsectionid ?>"><?php echo $navbar2categories[3]['name'] ?></a><?php } ?>
-						<?php if(isset($navbar2categories[4]['name'])){ ?><a href="<?php if($isadmin){ echo '#'; }else{ echo '/category/c/'.$navbar2categories[4]['id'] . '/' . preg_replace('/\PL/u', '', $navbar2categories[4]['name']); } ?>" id="<?php echo $navbar2categories[4]['id'] ?>" class="navbar_2 category category-btn 5 sortorder_5 featuredsectionid_<?php echo $featuredsectionid ?>"><?php echo $navbar2categories[4]['name'] ?></a><?php } ?>
+						<a href="<?php if($isadmin){ echo '#'; }else{ echo '/category/c/'.$navbar2categories[1]['id'] . '/' . preg_replace('/\PL/u', '', $navbar2categories[1]['name']); } ?>" id="<?php echo $navbar2categories[1]['id'] ?>" class="bulky category category-btn 2 sortorder_2 featuredsectionid_<?php echo $featuredsectionid ?>"><?php echo $navbar2categories[1]['name'] ?></a>
+						<a href="<?php if($isadmin){ echo '#'; }else{ echo '/category/c/'.$navbar2categories[2]['id'] . '/' . preg_replace('/\PL/u', '', $navbar2categories[2]['name']); } ?>" id="<?php echo $navbar2categories[2]['id'] ?>" class="bulky category category-btn 3 sortorder_3 featuredsectionid_<?php echo $featuredsectionid ?>"><?php echo $navbar2categories[2]['name'] ?></a>
+						<?php if(isset($navbar2categories[3]['name'])){ ?><a href="<?php if($isadmin){ echo '#'; }else{ echo '/category/c/'.$navbar2categories[3]['id'] . '/' . preg_replace('/\PL/u', '', $navbar2categories[3]['name']); } ?>" id="<?php echo $navbar2categories[3]['id'] ?>" class="bulky category category-btn 4 sortorder_4 featuredsectionid_<?php echo $featuredsectionid ?>"><?php echo $navbar2categories[3]['name'] ?></a><?php } ?>
+						<?php if(isset($navbar2categories[4]['name'])){ ?><a href="<?php if($isadmin){ echo '#'; }else{ echo '/category/c/'.$navbar2categories[4]['id'] . '/' . preg_replace('/\PL/u', '', $navbar2categories[4]['name']); } ?>" id="<?php echo $navbar2categories[4]['id'] ?>" class="bulky category category-btn 5 sortorder_5 featuredsectionid_<?php echo $featuredsectionid ?>"><?php echo $navbar2categories[4]['name'] ?></a><?php } ?>
 					</div>
 				<?php }else if($navtype==2){ ?>
 					<!-- this is for main categories -->
-					<div class="navbar_2 categories-wrapper">
-						<a href="<?php if($isadmin){ echo '#'; }else{ echo '/category/mc/'.$navbar2categories[0]['id'] . '/' . preg_replace('/\PL/u', '', $navbar2categories[0]['name']); } ?>" id="<?php echo $navbar2categories[0]['id'] ?>" class="navbar_2 category category-btn 1 sortorder_1 featuredsectionid_<?php echo $featuredsectionid ?>"><?php echo $navbar2categories[0]['name'] ?></a>
-						<a href="<?php if($isadmin){ echo '#'; }else{ echo '/category/mc/'.$navbar2categories[1]['id'] . '/' . preg_replace('/\PL/u', '', $navbar2categories[1]['name']); } ?>" id="<?php echo $navbar2categories[1]['id'] ?>" class="navbar_2 category category-btn 2 sortorder_2 featuredsectionid_<?php echo $featuredsectionid ?>"><?php echo $navbar2categories[1]['name'] ?></a>
-						<a href="<?php if($isadmin){ echo '#'; }else{ echo '/category/mc/'.$navbar2categories[2]['id'] . '/' . preg_replace('/\PL/u', '', $navbar2categories[2]['name']); } ?>" id="<?php echo $navbar2categories[2]['id'] ?>" class="navbar_2 category category-btn 3 sortorder_3 featuredsectionid_<?php echo $featuredsectionid ?>"><?php echo $navbar2categories[2]['name'] ?></a>
-						<?php if(isset($navbar2categories[3]['name'])){ ?><a href="<?php if($isadmin){ echo '#'; }else{ echo '/category/mc/'.$navbar2categories[3]['id'] . '/' . preg_replace('/\PL/u', '', $navbar2categories[3]['name']); } ?>" id="<?php echo $navbar2categories[3]['id'] ?>" class="navbar_2 category category-btn 4 sortorder_4 featuredsectionid_<?php echo $featuredsectionid ?>"><?php echo $navbar2categories[3]['name'] ?></a><?php } ?>
-						<?php if(isset($navbar2categories[4]['name'])){ ?><a href="<?php if($isadmin){ echo '#'; }else{ echo '/category/mc/'.$navbar2categories[4]['id'] . '/' . preg_replace('/\PL/u', '', $navbar2categories[4]['name']); } ?>" id="<?php echo $navbar2categories[4]['id'] ?>" class="navbar_2 category category-btn 5 sortorder_5 featuredsectionid_<?php echo $featuredsectionid ?>"><?php echo $navbar2categories[4]['name'] ?></a><?php } ?>
+					<div class="bulky categories-wrapper">
+						<a href="<?php if($isadmin){ echo '#'; }else{ echo '/category/mc/'.$navbar2categories[0]['id'] . '/' . preg_replace('/\PL/u', '', $navbar2categories[0]['name']); } ?>" id="<?php echo $navbar2categories[0]['id'] ?>" class="bulky category category-btn 1 sortorder_1 featuredsectionid_<?php echo $featuredsectionid ?>"><?php echo $navbar2categories[0]['name'] ?></a>
+						<a href="<?php if($isadmin){ echo '#'; }else{ echo '/category/mc/'.$navbar2categories[1]['id'] . '/' . preg_replace('/\PL/u', '', $navbar2categories[1]['name']); } ?>" id="<?php echo $navbar2categories[1]['id'] ?>" class="bulky category category-btn 2 sortorder_2 featuredsectionid_<?php echo $featuredsectionid ?>"><?php echo $navbar2categories[1]['name'] ?></a>
+						<a href="<?php if($isadmin){ echo '#'; }else{ echo '/category/mc/'.$navbar2categories[2]['id'] . '/' . preg_replace('/\PL/u', '', $navbar2categories[2]['name']); } ?>" id="<?php echo $navbar2categories[2]['id'] ?>" class="bulky category category-btn 3 sortorder_3 featuredsectionid_<?php echo $featuredsectionid ?>"><?php echo $navbar2categories[2]['name'] ?></a>
+						<?php if(isset($navbar2categories[3]['name'])){ ?><a href="<?php if($isadmin){ echo '#'; }else{ echo '/category/mc/'.$navbar2categories[3]['id'] . '/' . preg_replace('/\PL/u', '', $navbar2categories[3]['name']); } ?>" id="<?php echo $navbar2categories[3]['id'] ?>" class="bulky category category-btn 4 sortorder_4 featuredsectionid_<?php echo $featuredsectionid ?>"><?php echo $navbar2categories[3]['name'] ?></a><?php } ?>
+						<?php if(isset($navbar2categories[4]['name'])){ ?><a href="<?php if($isadmin){ echo '#'; }else{ echo '/category/mc/'.$navbar2categories[4]['id'] . '/' . preg_replace('/\PL/u', '', $navbar2categories[4]['name']); } ?>" id="<?php echo $navbar2categories[4]['id'] ?>" class="bulky category category-btn 5 sortorder_5 featuredsectionid_<?php echo $featuredsectionid ?>"><?php echo $navbar2categories[4]['name'] ?></a><?php } ?>
 					</div>
 				<?php } ?>
 			<?php } ?>
 			<div style="display: inline-block; position: absolute; float: right; margin-right: 8px; right: 8px; top: 50%; transform: translateY(-50%);">
-				<button class="navbar_2 subscribe-btn" id="mailchimp-subscribe-button">Subscribe</button>
+				<button class="bulky subscribe-btn" id="mailchimp-subscribe-button">Subscribe</button>
 			</div>
 		</div>
 	</div>

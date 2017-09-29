@@ -7,7 +7,7 @@ namespace Reusables;
 <style>
 </style>
 
-<div class="<?php echo $identifier ?> searchbar_1">
+<div class="<?php echo $identifier ?> search">
 	<form action="/search" method="get">
 		<input type="text" name="s" placeholder="Search">
 	</form>

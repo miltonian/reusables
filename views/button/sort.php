@@ -3,9 +3,13 @@ namespace Reusables;
 
 ?>
 
-<!-- <button class="<?php echo $identifier ?> sort_1"><?php echo Data::getValue( $viewdict, 'title' ) ?></button> -->
+<!-- <button class="<?php echo $identifier ?> sort"><?php echo Data::getValue( $viewdict, 'title' ) ?></button> -->
 <?php
-	Data::addData( $viewdict['dropdown_array'], $identifier . "_dropdown" );
+	$dropdownarray = Data::getValue( $viewdict, 'dropdown_array' );
+	if( $dropdownarray == "" ) {
+		$dropdownarray = [];
+	}
+	Data::addData( $dropdownarray, $identifier . "_dropdown" );
 	echo Menu::make( "dropdown_1", $identifier . "_dropdown" );
 ?>
 

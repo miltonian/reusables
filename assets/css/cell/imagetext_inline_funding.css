@@ -1,40 +1,40 @@
-.cell_fundraiser_1.main { display: inline-block; position: relative; margin: 0; padding: 20px 5px; width: calc(100% - 10px);  }
-	.cell_fundraiser_1.picture { display: inline-block; position: relative; margin: 0; padding: 0; border: 0; border-radius: 5px; background-size: cover; background-position: center; background-repeat: no-repeat; float: left; height: 0; cursor: pointer; }
-	.cell_fundraiser_1.words { display: inline-block; position: relative; margin: 0; padding: 0px 20px; }
-		.cell_fundraiser_1.words a {text-decoration: none;}
-		.cell_fundraiser_1.words #title { margin: 0; padding: 0; text-decoration: none; color: #333333; }
-			.cell_fundraiser_1.words #title:hover { cursor: pointer; text-decoration: underline; }
+.imagetext_inline_funding.main { display: inline-block; position: relative; margin: 0; padding: 20px 5px; width: calc(100% - 10px);  }
+	.imagetext_inline_funding.picture { display: inline-block; position: relative; margin: 0; padding: 0; border: 0; border-radius: 5px; background-size: cover; background-position: center; background-repeat: no-repeat; float: left; height: 0; cursor: pointer; }
+	.imagetext_inline_funding.words { display: inline-block; position: relative; margin: 0; padding: 0px 20px; }
+		.imagetext_inline_funding.words a {text-decoration: none;}
+		.imagetext_inline_funding.words #title { margin: 0; padding: 0; text-decoration: none; color: #333333; }
+			.imagetext_inline_funding.words #title:hover { cursor: pointer; text-decoration: underline; }
 
 .campaigns_table_cell.picture { width: 100%; }
 
-.cell_fundraiser_1.words a { text-decoration: underline; }
+.imagetext_inline_funding.words a { text-decoration: underline; }
 
-.cell_fundraiser_1#titlelink { text-decoration: none; }
+.imagetext_inline_funding#titlelink { text-decoration: none; }
 
-.cell_fundraiser_1#title { font-weight: 500; overflow: hidden; max-height: 66px; }
+.imagetext_inline_funding#title { font-weight: 500; overflow: hidden; max-height: 66px; }
 
-.cell_fundraiser_1#desc { font-weight: 300 }
+.imagetext_inline_funding#desc { font-weight: 300 }
 
 
 	
 
 
 @media (min-width: 0px) {
-	.cell_fundraiser_1.text-container { height: calc(180px); }
-	.cell_fundraiser_1.main { max-height: auto; }
-		.cell_fundraiser_1.picture { width: 90%; padding-bottom: 80%; float: none; }
-		.cell_fundraiser_1.words { width: calc( 100% - 0px); text-align: left; float: none; margin-top: 20px; }
-		.cell_fundraiser_1.picture_container { position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; height: 100%; max-height: calc(320px - 40px); float: none; }
-	.cell_fundraiser_1.picture { position: relative; display: inline-block; margin: 0; padding: 0; height: 100%; max-height: 100%; width: 100%; }
-	.cell_fundraiser_1.words #title { margin-bottom: 0; }
+	.imagetext_inline_funding.text-container { height: calc(180px); }
+	.imagetext_inline_funding.main { max-height: auto; }
+		.imagetext_inline_funding.picture { width: 90%; padding-bottom: 80%; float: none; }
+		.imagetext_inline_funding.words { width: calc( 100% - 0px); text-align: left; float: none; margin-top: 20px; }
+		.imagetext_inline_funding.picture_container { position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; height: 100%; max-height: calc(320px - 40px); float: none; }
+	.imagetext_inline_funding.picture { position: relative; display: inline-block; margin: 0; padding: 0; height: 100%; max-height: 100%; width: 100%; }
+	.imagetext_inline_funding.words #title { margin-bottom: 0; }
 }
 @media (min-width: 768px) {
-	.cell_fundraiser_1.text-container { height: calc(320px - 40px); }
-		.cell_fundraiser_1.picture { width: 100%; padding-bottom: 27%; float: left; }
-		.cell_fundraiser_1.words { width: calc( 61% - 0px); text-align: left; float: left; margin-top: 0; }
-	.cell_fundraiser_1.picture_container { position: relative; display: inline-block; margin: 0; padding: 0; width: 39%; max-height: calc(320px - 40px); height: 100%; float: left; }
-	.cell_fundraiser_1.picture { position: relative; display: inline-block; margin: 0; padding: 0; height: 100%; max-height: 100%; width: 100%; }
-	.cell_fundraiser_1.words #title { margin-bottom: 15px; }
+	.imagetext_inline_funding.text-container { height: calc(320px - 40px); }
+		.imagetext_inline_funding.picture { width: 100%; padding-bottom: 27%; float: left; }
+		.imagetext_inline_funding.words { width: calc( 61% - 0px); text-align: left; float: left; margin-top: 0; }
+	.imagetext_inline_funding.picture_container { position: relative; display: inline-block; margin: 0; padding: 0; width: 39%; max-height: calc(320px - 40px); height: 100%; float: left; }
+	.imagetext_inline_funding.picture { position: relative; display: inline-block; margin: 0; padding: 0; height: 100%; max-height: 100%; width: 100%; }
+	.imagetext_inline_funding.words #title { margin-bottom: 15px; }
 }
 
 .cell_2.hide { display: none; }

@@ -1,7 +1,7 @@
-.structure_2.main { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; }
-	.structure_2.maincolumn { display: inline-block; position: relative; margin: 10px; margin-right: 5px; padding: 0px; float: left; }
+.one_column.main { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; }
+	.one_column.maincolumn { display: inline-block; position: relative; margin: 10px; margin-right: 5px; padding: 0px; float: left; }
 @media (min-width: 0px) {
-	.structure_2.maincolumn { width: calc(100% - 20px); }
+	.one_column.maincolumn { width: calc(100% - 20px); }
 }
 @media (min-width: 768px) {
 }

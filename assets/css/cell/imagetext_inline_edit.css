@@ -1,11 +1,11 @@
-.cell_10.main { display: inline-block; position: relative; margin: 0; padding: 5px; width: calc(100% - 5px); text-align: left; }
-	.cell_10.featuredimage-div { display: block; position: relative; margin: 0; padding: 0; border: 0; border-radius: 5px; width: 100%; padding-bottom: 100%; background-size: cover; background-position: center; background-repeat: no-repeat; }
-	.cell_10.actions-div button { display: inline-block; position: relative; margin: 0; padding: 0; border-radius: 50%; border: 0px solid #e0e0e0; -webkit-appearance: none; background-color: white; width: 40px; height: 40px; cursor: pointer; background-size: 60%; background-position: center; background-repeat: no-repeat; float: left; }
-		.cell_10.actions-div button:hover { background-color: rgba(0,0,5,0.1); }
-		h4.cell_10#title { margin-bottom: 5px; }
+.imagetext_inline_edit.main { display: inline-block; position: relative; margin: 0; padding: 5px; width: calc(100% - 5px); text-align: left; }
+	.imagetext_inline_edit.featuredimage-div { display: block; position: relative; margin: 0; padding: 0; border: 0; border-radius: 5px; width: 100%; padding-bottom: 100%; background-size: cover; background-position: center; background-repeat: no-repeat; }
+	.imagetext_inline_edit.actions-div button { display: inline-block; position: relative; margin: 0; padding: 0; border-radius: 50%; border: 0px solid #e0e0e0; -webkit-appearance: none; background-color: white; width: 40px; height: 40px; cursor: pointer; background-size: 60%; background-position: center; background-repeat: no-repeat; float: left; }
+		.imagetext_inline_edit.actions-div button:hover { background-color: rgba(0,0,5,0.1); }
+		h4.imagetext_inline_edit#title { margin-bottom: 5px; }
 
-		.cell_10 .three_columns.sidecolumn_right { text-align: right }
-		.cell_10.actions-div { display: inline-block; }
+		.imagetext_inline_edit .three_columns.sidecolumn_right { text-align: right }
+		.imagetext_inline_edit.actions-div { display: inline-block; }
 
 
 

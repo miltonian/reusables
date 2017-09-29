@@ -3,13 +3,13 @@ $(document).ready(function(){
 	navbarshowing=false;
 });
 
-	class navbar_4_classes {
+	class slim_classes {
 
-		navbar_4_start(){
+		slim_start(){
 			
 		}
 		showonscroll(){
-			$('.navbar_4.desktopnav.main').css({'top': '-100px'});
+			$('.slim.desktopnav.main').css({'top': '-100px'});
 				$(window).scroll(function(){
 					var top1;
 					var top2;
@@ -33,7 +33,7 @@ $(document).ready(function(){
 					}
 					if(changenav==true){
 						changenav=false;
-						$('.navbar_4.desktopnav.main').stop().animate({
+						$('.slim.desktopnav.main').stop().animate({
 					       		'top': top1
 				       			}, 300);
 					}

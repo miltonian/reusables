@@ -45,12 +45,12 @@ namespace Reusables;
 </style>
 
 
-<div class="sidecell_1 main <?php echo $identifier ?> index_<?php echo $cellindex ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo $mediatype; } ?> index_<?php echo $cellindex ?>">
-	<div class="sidecell_1 leftdiv">
-		<a href="<?php echo $linkpath ?>"><div class="sidecell_1 image" style="background-image: url('<?php echo Data::getValue( $viewdict, 'featured_imagepath' ) ?>');"></div></a>
+<div class="imagetext_inline_small main <?php echo $identifier ?> index_<?php echo $cellindex ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo $mediatype; } ?> index_<?php echo $cellindex ?>">
+	<div class="imagetext_inline_small leftdiv">
+		<a href="<?php echo $linkpath ?>"><div class="imagetext_inline_small image" style="background-image: url('<?php echo Data::getValue( $viewdict, 'featured_imagepath' ) ?>');"></div></a>
 	</div>
-	<div class="sidecell_1 rightdiv">
-		<a href="<?php echo $linkpath ?>"><label class="sidecell_1 title"><?php echo Data::getValue( $viewdict, 'title') ?></label></a>
+	<div class="imagetext_inline_small rightdiv">
+		<a href="<?php echo $linkpath ?>"><label class="imagetext_inline_small title"><?php echo Data::getValue( $viewdict, 'title') ?></label></a>
 	</div>
 </div>
 
