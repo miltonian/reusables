@@ -10,7 +10,7 @@ namespace Reusables;
 		$dropdownarray = [];
 	}
 	Data::addData( $dropdownarray, $identifier . "_dropdown" );
-	echo Menu::make( "dropdown_1", $identifier . "_dropdown" );
+	echo Menu::make( "dropdown", $identifier . "_dropdown" );
 ?>
 
 <script>
@@ -20,7 +20,7 @@ var dropdown_list = <?php echo json_encode( $viewdict['dropdown_array']['list'] 
 var tableclass = <?php echo json_encode( $viewdict['table_class'] ) ?>;
 var sortkey = '<?php echo $viewdict['sort_key'] ?>';
 
-$('.<?php echo $identifier ?>_dropdown.dropdown_1 .inner-dropdown-content a').click(function(e){
+$('.<?php echo $identifier ?>_dropdown.dropdown .inner-dropdown-content a').click(function(e){
 	e.preventDefault();
 
 	var sortvalue = dropdown_list[this.id]

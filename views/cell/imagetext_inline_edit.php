@@ -28,7 +28,7 @@ $viewoptions = ReusableClasses::convertViewActions( $viewoptions );
 		foreach ( $viewoptions['actions'] as $action ) {
 			$actiontype = Data::getValue( $action, 'type' );
 			if( $actiontype == "dropdown" ){
-				$cellactionshtml .= "<div class='dropdown_1'>";
+				$cellactionshtml .= "<div class='dropdown'>";
 					$cellactionshtml .= "<div class='inner-dropdown'>";
 						$cellactionshtml .= "<button id='" . Data::getValue( $viewdict, 'index' ) . "' class='inner-dropbtn imagetext_inline_edit action actionindex_" . $i . " index_" . $cellindex . "' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
 						$cellactionshtml .= "<div id='inner-myDropdown_" . Data::getValue( $viewdict, 'index' ) . "' class='inner-dropdown-content'>";

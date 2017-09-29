@@ -9,7 +9,7 @@ namespace Reusables;
 <style>
 </style>
 
-<div class="sharingbtns_1 <?php echo $identifier ?>">
+<div class="social_3d <?php echo $identifier ?>">
 	<div style="position: relative; display: inline-block; width: 100%; text-align: left; margin-top: 10px;">
 		<a href="#" class="sharingbuttons" id="fb"><img src="/vendor/miltonian/reusables/images/icons/facebook-256-2.png"><p>Share on Facebook</p></a>
 		<a href="#" class="sharingbuttons" id="twitter"><img src="/vendor/miltonian/reusables/images/icons/twitter-512.gif" /><p>Share on Twitter</p></a>
@@ -18,7 +18,7 @@ namespace Reusables;
 
 <script>
 
-	$('.sharingbtns_1 .sharingbuttons').click(function(e){
+	$('.social_3d .sharingbuttons').click(function(e){
 		e.preventDefault();
 
 		var sharelink;

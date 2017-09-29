@@ -1,0 +1,14 @@
+.social_circles { position: relative; display: inline-block; margin: 0; padding: 0; margin-left: 20px; float: left; }
+	.social_circles .social-icon { position: relative; display: inline-block; margin: 0px 5px; padding: 0; height: 40px; width: 40px; border-radius: 50%; border: 1px solid #cecece; background-color: white; float: left; cursor: pointer; -webkit-filter: grayscale(100%);  filter: grayscale(100%); background-size: 60%; background-position: center; background-repeat: no-repeat; }
+	.social_circles .social-icon:hover { -webkit-filter: grayscale(0%); filter: grayscale(0%); }
+	.social_circles .social-icon.facebook {background-image: url('/reusables/uploads/icons/facebook-icon.png');}
+	.social_circles .social-icon.twitter {background-image: url('/reusables/uploads/icons/twitter-icon.png');}
+	.social_circles .social-icon.instagram {background-image: url('/reusables/uploads/icons/insta-icon.png');}
+	.social_circles .social-icon.pinterest {background-image: url('/reusables/uploads/icons/pinterest-icon.png');}
+		.social_circles .social-icon.facebook:hover {border: 2px solid #3b5998}
+		.social_circles .social-icon.twitter:hover {border: 2px solid #4099FF}
+		.social_circles .social-icon.instagram:hover {border: 2px solid #8a3ab9}
+		.social_circles .social-icon.pinterest:hover {border: 2px solid #cb2027}
+
+.social_circles .sharea {position: relative; display: inline-block; margin: 0; padding: 0; width: 40px; padding: 0px 10px; height: 65px;}
+	.social_circles .sharea label {position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; text-decoration: none; color: #555555; font-weight: 300;text-align: center; font-size: 0.8em; margin: 5px 5px; position: absolute; left: 0; bottom: 0;}

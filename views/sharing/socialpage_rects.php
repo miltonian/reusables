@@ -15,7 +15,7 @@ $linkedin_white = "https://theanywherecard.com/social_images/linkedin-image.png"
 
 
 
-<div class="<?php echo $identifier ?> socialpagesbtns_1">
+<div class="<?php echo $identifier ?> socialpage_rects">
 	<a href="<?php echo $facebookpagelink ?>" target="_blank"><button class="social-icon facebook"></button></a>
 	<a href="<?php echo $twitterpagelink ?>" target="_blank"><button class="social-icon twitter"></button></a>
 	<a href="<?php echo $instagrampagelink ?>" target="_blank"><button class="social-icon instagram"></button></a>

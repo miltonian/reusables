@@ -32,7 +32,7 @@ foreach ($dropdownlist_keys as $ik) {
 
 </style>
 
-<div class="dropdown_1 <?php echo $identifier ?>">
+<div class="dropdown <?php echo $identifier ?>">
 	<div class="inner-dropdown">
 		<button onclick="myFunction()" class="inner-dropbtn"><?php echo Data::getValue( $viewdict, "title" ) ?></button>
 		<div id="inner-myDropdown" class="inner-dropdown-content">

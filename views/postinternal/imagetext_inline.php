@@ -11,16 +11,16 @@ namespace Reusables;
 		
 </style>
 
-<div class="postinternal_4 main <?php echo $identifier ?>">
+<div class="imagetext_inline main <?php echo $identifier ?>">
 	<?php 
 		echo Structure::make("main_withside", [
 			"maincolumn"=>array(
-				"<h2 class='postinternal_4' id='title'>" . Data::getValue( $viewdict, 'title' ) . "</h2>",
-				"<div class='postinternal_4' id='desc'>" . Data::getValue( $viewdict, 'html_text' ) . "</div>"
+				"<h2 class='imagetext_inline' id='title'>" . Data::getValue( $viewdict, 'title' ) . "</h2>",
+				"<div class='imagetext_inline' id='desc'>" . Data::getValue( $viewdict, 'html_text' ) . "</div>"
 			),
 			"sidecolumn_right"=>array(
-				"<div class='postinternal_4 featured_image_container'>
-					<img class='postinternal_4 featured_image' src='" . Data::getValue( $viewdict, 'featured_imagepath' ) . "'>
+				"<div class='imagetext_inline featured_image_container'>
+					<img class='imagetext_inline featured_image' src='" . Data::getValue( $viewdict, 'featured_imagepath' ) . "'>
 				</div>"
 			)
 		], $identifier . "_structure")
