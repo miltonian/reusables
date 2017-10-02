@@ -10,7 +10,7 @@ namespace Reusables;
 	// if(!isset($viewdict['post_id'])){ $viewdict['post_id'] = $viewdict['id']; }
 
 	$linkpath = "";
-	$linkpath .= Data::getValue( $viewdict, 'pre_slug' );
+	$linkpath .= Data::getValue( $viewoptions, 'pre_slug' );
 	$linkpath .= Data::getValue( $viewdict, 'slug' );
 
 	$mediatype = Data::getValue( $viewdict, 'mediatype' );
@@ -47,7 +47,7 @@ namespace Reusables;
 				</a>
 				<label class="imagetext_inline_funding" id="desc"><?php echo implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $viewdict, 'html_text' ))), 0, 20) ); ?>... <a href="<?php echo $linkpath ?>">Learn More</a></label>
 				<?php Data::addData( $viewdict, $identifier . "_bargraph" ); ?>
-				<?php echo Section::make( "bargraph_1", $identifier . "_bargraph") ?>
+				<?php echo Section::make( "fundbar", $identifier . "_bargraph") ?>
 			</div>
 		</div>
 </div>

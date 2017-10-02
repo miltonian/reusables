@@ -12,7 +12,6 @@ namespace Reusables;
 		]
 	*/
 
-	$viewdict = Data::convertKeys( $viewdict );
 	// exit( json_encode( Data::getValue( $viewdict, 'desc' ) ) );
 
 
@@ -20,6 +19,8 @@ namespace Reusables;
 		$data_id = Data::getDefaultDataID( $viewdict );
 		$viewdict = Data::formatForDefaultData( $data_id ); 
 	}
+	$viewdict = Data::convertKeys( $viewdict );
+	// exit( json_encode( Data::getValue( $viewdict, 'imagepath' ) ) );
 ?>
 
 <style>

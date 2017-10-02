@@ -22,7 +22,7 @@ namespace Reusables;
 	// if(!isset($viewdict['id'])){ $viewdict['id'] = $viewdict['id']; }
 
 	$linkpath = "";
-	$linkpath .= Data::getValue( $viewdict, 'pre_slug' );
+	$linkpath .= Data::getValue( $viewoptions, 'pre_slug' );
 	$linkpath .= Data::getValue( $viewdict, 'slug' );
 
 	$mediatype = Data::getValue( $viewdict, 'mediatype' );
@@ -64,7 +64,7 @@ namespace Reusables;
 						<br>
 						<label class="imagetext_full_funding grey-label"><?php echo implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $viewdict, 'html_text' ))), 0, 10) ); ?>...</label>
 						<?php Data::addData( $viewdict, $identifier . "_bargraph" ); ?>
-						<?php echo Section::make( "bargraph_1", $identifier . "_bargraph") ?>
+						<?php echo Section::make( "fundbar", $identifier . "_bargraph") ?>
 					</div>
 				</div>
 			</div>
