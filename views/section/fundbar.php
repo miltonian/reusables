@@ -15,10 +15,10 @@ $width = ( floatval( Data::getValue( $viewdict, 'raised' ) ) / floatval( Data::g
 </style>
 
 
-<div class="viewtype_section bargraph_1 funding_container <?php echo $identifier ?>" >
-	<label class="bargraph_1" id="fund_goal" ><span class="bargraph_1" id="raised" >$<?php echo number_format( Data::getValue( $viewdict, 'raised' ) ) ?></span> / $<?php echo number_format( Data::getValue( $viewdict, 'goal' ) ) ?></label>
-	<div class="bargraph_1" id="bar" >
-		<div class="bargraph_1" id="fill" style="width: <?php echo $width ?>%;">
+<div class="viewtype_section fundbar funding_container <?php echo $identifier ?>" >
+	<label class="fundbar" id="fund_goal" ><span class="fundbar" id="raised" >$<?php echo number_format( Data::getValue( $viewdict, 'raised' ) ) ?></span> / $<?php echo number_format( Data::getValue( $viewdict, 'goal' ) ) ?></label>
+	<div class="fundbar" id="bar" >
+		<div class="fundbar" id="fill" style="width: <?php echo $width ?>%;">
 			
 		</div>
 	</div>

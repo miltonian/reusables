@@ -1,0 +1,16 @@
+.sharing_mobile_bottom.main { position: fixed; display: inline-block; margin: 0; padding: 0; width: 100%; height: 60px; left: 0; bottom: 0; }
+	.sharing_mobile_bottom.facebook { background-color: #3b5998; }
+	.sharing_mobile_bottom.twitter { background-color: #55ACEE; }
+	.sharing_mobile_bottom a { display: inline-block; position: relative; height: 100%; float: left; }
+	.sharing_mobile_bottom.facebook img { content:url("/vendor/miltonian/reusables/images/icons/facebook-256-2.png"); display: inline-block; position: relative; margin: 0; padding: 0; height: 50%; top: 50%; transform: translateY(-50%); }
+	.sharing_mobile_bottom.twitter img { content:url("/vendor/miltonian/reusables/images/icons/twitter-512.gif"); display: inline-block; position: relative; margin: 0; padding: 0; height: 50%; top: 50%; transform: translateY(-50%); }
+.sharing_mobile_bottom.button { color: white; }
+.sharing_mobile_bottom#text { position: relative; display: inline-block; margin: 0; padding: 0; top: 50%; transform: translateY(-50%); }
+
+@media( min-width: 0px ) {
+	.sharing_mobile_bottom.main { display: inline-block; }
+}
+
+@media( min-width: 768px ) {
+	.sharing_mobile_bottom.main { display: none; }
+}
