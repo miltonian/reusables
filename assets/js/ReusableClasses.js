@@ -146,13 +146,24 @@ var editingorder = false;
 
 		}
 
-		addAction( button, editingfunctions, index, dataarray=null, view=null )
+		addAction( button, editingfunctions, index, dataarray=null, view=null, e )
 		{
 			// index is the button's index, not the cell's
 			var type = button['type'];
 			if( type == "link" ){
-				window.open(button[type]);
+				// var pre_slug = button[type]
+				// var slug = dataarray['slug']
+				// var linkpath = ""
+				// if( typeof pre_slug !== 'undefined' ) {
+				// 	linkpath += pre_slug
+				// }
+				// if( typeof slug !== 'undefined' ) {
+				// 	linkpath += slug
+				// }
+				// alert( JSON.stringify( linkpath ) )
+				// window.open( linkpath );
 			}else if( type == "modal" ){
+				e.preventDefault();
 				var cellindex = null;
 				if( view ){ 
 					// theid=view.id 
@@ -164,7 +175,7 @@ var editingorder = false;
 				$('.modal_background').css({'display': 'inline-block'});
 				$('.' + button[type]['parentclass']).css({'display': 'inline-block'});
 			}else if( type == "dropdown" ){
-				
+				e.preventDefault();
 			}
 		}
 

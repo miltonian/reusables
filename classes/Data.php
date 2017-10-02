@@ -170,13 +170,22 @@ class Data {
 		return $tablenames[$allkeys[0]];
 	}
 
-	public static function getValue( $dict, $key )
+	public static function getValue( $dict, $key=-1 )
 	{
 		if( !is_array( $dict ) ){
 			$dict = Data::retrieveDataWithID( $dict );
 		}
 
-		if( isset($dict[ $key ]) ){
+		if( $key == -1 ){
+			$allkeys = array_keys($dict);
+			$thevalue = [];
+			foreach ($allkeys as $key) {
+				$keyvalue = Data::getValue( $dict, $key );
+				$thevalue[$key] = $keyvalue;
+			}
+			return $thevalue;
+			
+		}else if( isset($dict[ $key ]) ){
 			$pair = $dict[ $key ];
 		}else{
 			if( isset( $dict['value'][ $key ] )  ){
@@ -264,6 +273,7 @@ class Data {
 // echo "<script>alert( JSON.stringify( " . json_encode( $viewdict ) . " ) );</script>";
 		if( isset( $viewdict['data_id'] ) ){
 			$dataid = $viewdict['data_id'];
+
 
 			if( $dataid ){
 				if ($dataid != null) {

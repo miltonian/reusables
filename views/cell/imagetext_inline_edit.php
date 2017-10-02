@@ -6,6 +6,8 @@ namespace Reusables;
 
 	// $viewdict
 
+// exit( json_encode( Data::getValue( $identifier ) ) );
+
 $required = array(
 	"actions"=>array("backgroundimage", ""), 
 	"featured_imagepath"=>"",  
@@ -27,7 +29,10 @@ $viewoptions = ReusableClasses::convertViewActions( $viewoptions );
 		$i=0;
 		foreach ( $viewoptions['actions'] as $action ) {
 			$actiontype = Data::getValue( $action, 'type' );
-			if( $actiontype == "dropdown" ){
+			if( $actiontype == "link" ) {
+				$linkpath = Data::getValue( $action, 'link' ) . Data::getValue( $viewdict, 'slug' );
+				$cellactionshtml .= "<a href='" . $linkpath . "' target='_blank'><button id='" . Data::getValue( $viewdict, 'index' ) . "' class='imagetext_inline_edit action actionindex_" . $i . " index_" . $cellindex . "' style='background-image: url(" . $action['backgroundimage'] . ");'></button></a>";
+			}else if( $actiontype == "dropdown" ){
 				$cellactionshtml .= "<div class='dropdown'>";
 					$cellactionshtml .= "<div class='inner-dropdown'>";
 						$cellactionshtml .= "<button id='" . Data::getValue( $viewdict, 'index' ) . "' class='inner-dropbtn imagetext_inline_edit action actionindex_" . $i . " index_" . $cellindex . "' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
@@ -87,18 +92,19 @@ $viewoptions = ReusableClasses::convertViewActions( $viewoptions );
 
 	var cellactions = <?php echo json_encode( $viewoptions['actions'] ) ?>;
 
-	<?php ReusableClasses::getEditingFunctionsJS( $viewoptions ) ?>;
-	
+	var viewdict = <?php echo json_encode( Data::getValue( $identifier ) ) ?>;
 
-function imagetext_inline_edit_start(){
-	imagetext_inline_edit.setupactions( cellactions, editingfunctions );
-	
-	$('.inner-dropbtn.imagetext_inline_edit.action').click(function(){
-		var actionindex = Reusable.getIndexFromClass( "actionindex_")
-		// CHECK AGAIN
-		document.getElementById("inner-myDropdown_"+actionindex).classList.toggle("show");
-	});
-}
+	<?php ReusableClasses::getEditingFunctionsJS( $viewoptions ) ?>;
+
+	function imagetext_inline_edit_start() {
+		imagetext_inline_edit.setupactions( cellactions, editingfunctions, viewdict );
+		
+		$('.inner-dropbtn.imagetext_inline_edit.action').click(function(){
+			var actionindex = Reusable.getIndexFromClass( "actionindex_")
+			// CHECK AGAIN
+			document.getElementById("inner-myDropdown_"+actionindex).classList.toggle("show");
+		});
+	}
 
 	function dropdownaction(e) {
 		// e.preventDefault();
