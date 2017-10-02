@@ -53,9 +53,9 @@ class Data {
 			$cell[$k] = [ "data_id"=>$data_id, "key"=>$k, "index"=>$index ];
 		}
 		$cell['index'] = $index;
-		
+		// exit( json_encode( $cell ) );
 		$cell = Data::convertKeys( $cell );
-
+		// exit( json_encode( Data::getValue( $cell, 'slug' ) ) );
 		return $cell;
 	}
 
@@ -321,21 +321,35 @@ class Data {
 		return $returningdict;
 	}
 
-	public static function convertKeys( $dict )
+	public static function convertKeys( $data, $identifier=null )
 	{
-		$convertkeys = Data::getValue( $dict, 'convert_keys' );
+		$testing=false;
+		if( !$identifier ) {
+			$identifier = Data::getDefaultDataID( $data );
+		}else{
+			$testing=true;
+		}
+		if( $testing ) {
+			exit( json_encode( $data ) );
+		}
+		// exit( json_encode( $identifier ) );
+		// $data = Data::retrieveDataWithID( $identifier );
+		$options = Data::retrieveOptionsWithID( $identifier );
+// exit( json_encode( $data ) );
+		$convertkeys = Data::getValue( $options, 'convert_keys' );
 		if( $convertkeys == "" ){
-			return $dict;
+			return $data;
 		}
 		if( !isset( $convertkeys ) ){ 
 			$convertkeys = false; 
 		}else { 
 			$convertkeys = $convertkeys; 
 		}
-		$convertdict = $dict;
-		if( isset( $dict['value'] ) ){
-			$convertdict = $dict['value'];
+		$convertdict = $data;
+		if( isset( $data['value'] ) ){
+			$convertdict = $data['value'];
 		}
+		
 		$sectionkeys = array_keys( $convertdict );
 
 		foreach ( $sectionkeys as $k ) {
@@ -351,12 +365,13 @@ class Data {
 			}
 		}
 
-		if( isset( $dict['value'] ) ){
-			$dict['value'] = $convertdict;
+		if( isset( $data['value'] ) ){
+			$data['value'] = $convertdict;
 		}else{
-			$dict = $convertdict;
+			$data = $convertdict;
 		}
-		return $dict;
+		
+		return $data;
 	}
 
 	public static function convertKeysInTable( $identifier, $post )

@@ -29,6 +29,7 @@
 				<div class="imagetext_full words">
 					<div class="imagetext_full text-container">
 						<!-- <label class="grey-label">Today</label> -->
+						<label class="imagetext_full category"><?php echo Data::getValue( $viewdict, 'category' ) ?></label>
 						<br>
 						<a href="<?php echo $linkpath ?>">
 							<label class="imagetext_full title" style=""><?php echo Data::getValue( $viewdict, 'title' ); ?></label>

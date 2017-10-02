@@ -1,5 +1,5 @@
 .slim.main { position: fixed; margin: 0; height: 60px; width: calc(100% - 50px); padding: 0; z-index: 1; box-shadow: 0px 0px 15px rgba(0,0,0,0.2); padding-right: 50px; background-color: white }
-	.slim_structure.main_withside.main { width: calc(100% - 150px); }
+	.slim_structure.main_withside.main { width: calc(100% - 150px); width: calc(100% - 200px); }
 	.slim_structure .main_withside.maincolumn { height: 100%; text-align: left; }
 	.slim_structure .main_withside.sidecolumn_right { height: 100%; text-align: right; }
 	.slim.mobilenav { margin: 0; height: 200px; width: 100%; padding: 0; background-color: white; z-index: 3; left: 0; height: 200px; height: 100px; text-align: left; }

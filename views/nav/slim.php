@@ -25,11 +25,11 @@ if (!isset($viewdict['logolink'])) { $viewdict['logolink'] = ""; }
 
 <div class="slim <?php echo $identifier ?> all">
 <div class='slim main <?php echo $identifier ?> mobilenav'>
-	<a class="slim" id="brandlink" href='/<?php echo $viewdict['logolink'] ?>'>
+	<a class="slim" id="brandlink" href='/<?php echo  Data::getValue( $viewdict, 'logolink' ) ?>'>
 		<?php if(isset($viewdict['logo'])){ ?>
-			<img class='slim topbarlogo' src='<?php echo $viewdict['logo'] ?>' width="auto" height="auto">
+			<img class='slim topbarlogo' src='<?php echo  Data::getValue( $viewdict, 'logo' ) ?>' width="auto" height="auto">
 		<?php }else{ ?>
-			<h3 class="slim" id="brandname"><?php echo $viewdict['brandname'] ?></h3>
+			<h3 class="slim" id="brandname"><?php echo Data::getValue( $viewdict, 'brandname' ) ?></h3>
 		<?php } ?>
 	</a>
 	<?php if( sizeof( $viewdict['pages'] ) > 0 ){ ?>
@@ -45,9 +45,9 @@ if (!isset($viewdict['logolink'])) { $viewdict['logolink'] = ""; }
 <div class='slim main <?php echo $identifier ?> desktopnav navbar-shadow' style='<?php if($isadmin){ echo "margin-top: 60px"; } ?>'>
 	<a href='/<?php echo $viewdict['logolink'] ?>' class='slim logo-div'>
 		<?php if(isset($viewdict['logo'])){ ?>
-			<img class='slim topbarlogo' src='<?php echo $viewdict['logo'] ?>' width="auto" height="auto">
+			<img class='slim topbarlogo' src='<?php echo  Data::getValue( $viewdict, 'logo' ) ?>' width="auto" height="auto">
 		<?php } ?>
-			<h3><?php echo $viewdict['brandname'] ?></h3>
+			<h3><?php echo  Data::getValue( $viewdict, 'brandname' ) ?></h3>
 
 	</a>
 	<?php
