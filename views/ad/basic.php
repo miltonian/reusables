@@ -16,7 +16,7 @@ $adsetimg = Data::getValue( $viewdict, "imagepath" );
 </style>
 
 
-<div class="<?php echo $identifier ?> basic" style='position: relative; display: inline-block; width: 100%; padding: 10px 0px; text-align: center;'>
+<div class="viewtype_ad <?php echo $identifier ?> basic" style='position: relative; display: inline-block; width: 100%; padding: 10px 0px; text-align: center;'>
 	<?php if($adsetlink!=""){ ?><a href="/reusables/functions/adclicked.php?ad_id=<?php echo $adsetid ?>" ><?php } ?>
 	<img src=<?php echo $adsetimg ?> style='position: relative; display: inline-block; width: 100%;'>
 	<?php if($adsetlink!=""){ echo '</a>'; } ?>

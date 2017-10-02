@@ -20,7 +20,7 @@ if( $steps == "" ){
 	.steps.step { width: <?php echo (100 / sizeof($viewdict['steps'])); ?>%; }
 </style>
 
-<div class="<?php echo $identifier ?> steps main" >
+<div class="viewtype_header <?php echo $identifier ?> steps main" >
 	<?php $i=0; ?>
 	<?php foreach ( $steps as $s) { ?>
 		<div class="steps step">

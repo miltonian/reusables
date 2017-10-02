@@ -6,7 +6,7 @@ namespace Reusables;
 
 
 
-<div class="ios_screenshot_3 main <?php echo $identifier ?>">
+<div class="viewtype_section ios_screenshot_3 main <?php echo $identifier ?>">
 	
 	<div class="ios_screenshot_3 iphone">
 		<div class="ios_screenshot_3 picture three" style="background-image: url(<?php echo $viewdict['images'][3]['url'] ?>);"></div>

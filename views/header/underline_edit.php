@@ -24,7 +24,7 @@ $viewoptions = ReusableClasses::convertViewActions( $viewoptions );
 	
 </style>
 
-<div class="<?php echo $identifier ?> underline_edit main">
+<div class="viewtype_header <?php echo $identifier ?> underline_edit main">
 	<?php
 		if(isset($viewoptions['buttons'])){
 			echo Structure::make(

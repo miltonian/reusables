@@ -23,7 +23,7 @@ if( $right_morelinks == "" ) {
 			.divinline_1.right .divinline_1.inner { width: <?php echo ( 100.0 / sizeof( $rightdict['morelinks'] ) ) ?>%; }
 </style>
 
-<div class="divinline_1 main <?php echo $identifier ?>">
+<div class="viewtype_section divinline_1 main <?php echo $identifier ?>">
 	<div class="divinline_1 wrapper">
 		<a href="<?php echo Data::getValue( $leftdict, 'link' ) ?>" >
 			<div class="divinline_1 left cells <?php echo Data::getValue( $leftdict, 'more' ) ?>" style="background-color: <?php echo Data::getValue( $leftdict, 'backgroundcolor' ) ?>; background-image: url('<?php echo Data::getValue( $leftdict, 'imagepath' ) ?>');">

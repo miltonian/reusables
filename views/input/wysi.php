@@ -27,7 +27,7 @@ if( !isset($viewdict['field_conditions'] ) ){
 .wysi img { max-width: 100%; }
 </style>
 
-<div class="<?php echo $identifier ?> wysi">
+<div class="viewtype_input <?php echo $identifier ?> wysi">
 	<label style="margin-bottom: 0px; font-weight: 700; font-size: 11px"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
 	<!-- <input type="text" class="field_value" placeholder="<?php /*echo $viewdict['placeholder']*/ ?>" value="<?php /*echo $viewdict['field_value']*/ ?>" name="fieldarray[<?php /*echo $viewdict['field_index']*/ ?>][field_value]"> -->
 	<textarea class="field_value" name='fieldarray[<?php echo Data::getValue( $viewdict, 'field_index' ) ?>][field_value]' id='fieldarray[<?php echo Data::getValue( $viewdict, 'field_index' ) ?>][field_value]' rows='10' cols='80'>

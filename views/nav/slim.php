@@ -23,7 +23,7 @@ if (!isset($viewdict['logolink'])) { $viewdict['logolink'] = ""; }
 
 </style>
 
-<div class="slim <?php echo $identifier ?> all">
+<div class="viewtype_nav slim <?php echo $identifier ?> all">
 <div class='slim main <?php echo $identifier ?> mobilenav'>
 	<a class="slim" id="brandlink" href='/<?php echo  Data::getValue( $viewdict, 'logolink' ) ?>'>
 		<?php if(isset($viewdict['logo'])){ ?>

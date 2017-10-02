@@ -44,7 +44,7 @@ namespace Reusables;
 <style>
 </style>
 
-<div class="<?php echo $identifier ?>">
+<div class="viewtype_table <?php echo $identifier ?>">
 	<div class="table">
 		<?php 
 			for ( $i=0; $i < sizeof($temp_tablearray ); $i++) { 

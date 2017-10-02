@@ -48,7 +48,7 @@ namespace Reusables;
 <style>
 </style>
 
-<div class="<?php echo $identifier ?> main_with_hidden main">
+<div class="viewtype_structure <?php echo $identifier ?> main_with_hidden main">
 	<div class="main_with_hidden header">
 		<button class="main_with_hidden" id="close">&#10006;</button>
 		<?php echo Header::make( "basic", $identifier . "_main_header" ); ?>

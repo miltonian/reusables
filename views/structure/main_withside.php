@@ -14,7 +14,7 @@ namespace Reusables;
 
 </style>
 
-<div class="<?php echo $identifier ?> main_withside main">
+<div class="viewtype_structure <?php echo $identifier ?> main_withside main">
 	<div class="main_withside maincolumn">
 		<?php 
 			foreach ($structuredict['maincolumn'] as $view) {

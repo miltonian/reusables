@@ -11,7 +11,7 @@ namespace Reusables;
 <style>
 </style>
 
-<div class="<?php echo $identifier ?> sidemenu_1">
+<div class="viewtype_menu <?php echo $identifier ?> sidemenu_1">
 <?php for($i=0;$i<sizeof($sidemenuarray);$i++){ ?>
 	<div class="button">
 		<label>Test Button</label>

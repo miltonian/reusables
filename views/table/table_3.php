@@ -53,7 +53,7 @@ unset( $temp_tablearray['data_id'] );
 <?php } ?>
 </style>
 
-<div class="<?php echo $identifier ?> table_3">
+<div class="viewtype_table <?php echo $identifier ?> table_3">
 	<div class="table">
 <?php if($sortable){ ?>
 	<ul id="sortable">

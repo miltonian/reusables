@@ -11,7 +11,7 @@ namespace Reusables;
 </style>
 
 
-<div class="<?php echo $identifier ?> featuredsection_4">
+<div class="viewtype_section <?php echo $identifier ?> featuredsection_4">
 	<div style="display:inline-block; width: 100%;">
 		<div style="display: inline-block; width: 100%;">
 			<div class="graylabel" style="position: absolute; display: inline-block; width: 100%; text-align: center; left: 0; z-index: 1;">

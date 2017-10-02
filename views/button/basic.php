@@ -3,7 +3,7 @@ namespace Reusables;
 
 ?>
 
-<button class="<?php echo $identifier ?> basic"><?php echo Data::getValue( $viewdict, 'title' ) ?></button>
+<button class="viewtype_button <?php echo $identifier ?> basic"><?php echo Data::getValue( $viewdict, 'title' ) ?></button>
 
 <script>
 

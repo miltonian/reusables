@@ -17,7 +17,7 @@
 </style>
 
 
-<div class="<?php echo $identifier ?> copybutton_1 main">
+<div class="viewtype_input <?php echo $identifier ?> copybutton_1 main">
 	<label class="copybutton_1 title" style="margin-bottom: -5px; font-weight: 700; font-size: 11px"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
 	<label type="text" class="copybutton_1 field_value" value="<?php echo Data::getValue( $viewdict, 'field_value') ?>" ></label>
 	<button class="copybutton_1 copy"><?php echo $buttontext ?></button>

@@ -16,7 +16,7 @@ $imagepickerarray = $galleryarray;
 
 <?php include $docroot.'/reusables/views/imagepicker_1.php'; ?>
 
-<div class="gallery_1 <?php echo $identifier ?> <?php if($isediting){ echo 'editing'; } ?>">
+<div class="viewtype_gallery gallery_1 <?php echo $identifier ?> <?php if($isediting){ echo 'editing'; } ?>">
 	<div class="backgroundimage" style="background-image: url('<?php echo $shortcuts->changeURLForTesting($galleryarray[0]['imagepath']) ?>');"></div>
 	<div class="image left" id="one" style="background-image: url('<?php echo $shortcuts->changeURLForTesting($galleryarray[sizeof($galleryarray)-1]['imagepath']) ?>');"></div>
 	<div class="image mid" id="two" style="background-image: url('<?php echo $shortcuts->changeURLForTesting($galleryarray[0]['imagepath']) ?>');"></div>

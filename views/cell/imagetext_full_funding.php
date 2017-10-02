@@ -39,7 +39,7 @@ namespace Reusables;
 
 
 
-<div id="<?php echo $cellindex ?>" class="imagetext_full_funding main <?php echo $identifier ?> <?php if($viewdict['isfeatured']){ echo "featured"; } ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo $mediatype; } ?> index_<?php echo $cellindex ?>" >
+<div id="<?php echo $cellindex ?>" class="viewtype_cell imagetext_full_funding main <?php echo $identifier ?> <?php if($viewdict['isfeatured']){ echo "featured"; } ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo $mediatype; } ?> index_<?php echo $cellindex ?>" >
 	<div class="imagetext_full_funding container">
 		<div style="display: inline-block; width: 100%;">
 			<div>

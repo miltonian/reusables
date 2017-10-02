@@ -12,7 +12,7 @@ namespace Reusables;
 <style>
 </style>
 
-<div class="purchase_full main <?php echo $identifier ?>">
+<div class="viewtype_section purchase_full main <?php echo $identifier ?>">
 
 	<div class="purchase_full header">
 		<h1 class="purchase_full title">Thank You For Your Contribution</h1>

@@ -26,7 +26,7 @@ namespace Reusables;
 <style>
 </style>
 
-<div class="featuredsection_7 <?php echo $identifier ?>">
+<div class="viewtype_section featuredsection_7 <?php echo $identifier ?>">
 	<div class="featuredimage" style="background-image: url('<?php echo Data::getValue( $viewdict, 'imagepath' ) ?>');"></div>
 	<div class="content">
 		<h2 id="title"><?php echo Data::getValue( $viewdict, 'title' ) ?></h2>

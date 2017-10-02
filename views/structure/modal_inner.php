@@ -16,7 +16,7 @@ namespace Reusables;
 <style>
 </style>
 
-<div class="<?php echo $identifier ?> modal_inner main">
+<div class="viewtype_structure <?php echo $identifier ?> modal_inner main">
 	<div class="modal_inner header">
 		<button class="modal_inner" id="close">&#10006;</button>
 		<?php 

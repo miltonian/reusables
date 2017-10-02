@@ -7,7 +7,7 @@ namespace Reusables;
 <style>
 </style>
 
-<div class="<?php echo $identifier ?> search">
+<div class="viewtype_button <?php echo $identifier ?> search">
 	<form action="/search" method="get">
 		<input type="text" name="s" placeholder="Search">
 	</form>

@@ -50,7 +50,7 @@ extract( Input::convertInputKeys( $identifier ) );
 <?php if( $ifnone_insert ){ ?>
 	<input type='hidden' name='ifnone_insert' value='1' >
 <?php } ?>
-<div class="<?php echo $identifier ?> smartform main">
+<div class="viewtype_section <?php echo $identifier ?> smartform main">
 	<div class='thecontainer' style='text-align: left; margin-top: 10px; margin-bottom: 0px; text-align: center;'>
 		<input type="hidden" name="goto" value="<?php echo Data::getValue( $viewoptions, 'goto' ) ?>">
 			<?php 

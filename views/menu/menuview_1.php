@@ -9,7 +9,7 @@ namespace Reusables;
 <style>
 </style>
 
-<div class="<?php echo $identifier ?> menuview_1">
+<div class="viewtype_menu <?php echo $identifier ?> menuview_1">
 	<div class="container">
 		<div class="header">
 			<label>menu</label>

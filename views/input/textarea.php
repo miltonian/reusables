@@ -30,7 +30,7 @@ if( !isset($viewdict['field_conditions'] ) ){
 <style>
 </style>
 
-<div class="<?php echo $identifier ?> textarea">
+<div class="viewtype_input <?php echo $identifier ?> textarea">
 	<label style="margin-bottom: -5px; font-weight: 700; font-size: 11px"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
 	<textarea class="field_value" name="fieldarray[<?php echo Data::getValue( $viewdict,'field_index') ?>][field_value]"><?php echo Data::getValue( $viewdict, 'field_value') ?></textarea>
 	<input type="hidden" class="field_type" name="fieldarray[<?php echo Data::getValue( $viewdict,'field_index') ?>][field_type]" value="text" style="visibility: hidden; z-index: -1;">

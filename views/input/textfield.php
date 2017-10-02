@@ -32,7 +32,7 @@ $is_currency = Data::getValue( $viewdict, "is_currency" );
 	.<?php echo $identifier ?> .field_value.input_withaddon { border-top-left-radius: 0; border-bottom-left-radius: 0; width: calc( 100% - 30px); }
 </style>
 
-<div class="<?php echo $identifier ?> textfield">
+<div class="viewtype_input <?php echo $identifier ?> textfield">
 	<label style="margin-bottom: -5px; font-weight: 700; font-size: 11px"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
 	<?php if( $is_currency != "" ){ ?>
 		<span class="input_groupaddon">$</span>

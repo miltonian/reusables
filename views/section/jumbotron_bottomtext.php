@@ -33,7 +33,7 @@ namespace Reusables;
 <?php } ?>
 </style>
 
-<div class="jumbotron_bottomtext <?php echo $identifier ?>">
+<div class="viewtype_section jumbotron_bottomtext <?php echo $identifier ?>">
 	<div class="backgroundimage" style="background-image: url('<?php echo Data::getValue( $viewdict, 'featured_imagepath' ) ?>');">
 		<div class="gradient"></div>
 	</div>

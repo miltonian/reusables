@@ -25,7 +25,7 @@ namespace Reusables;
 
 </style>
 
-<div class="<?php echo $identifier ?> fieldwrapper main" style="width: calc(<?php echo $size ?> - 40px);">
+<div class="viewtype_structure <?php echo $identifier ?> fieldwrapper main" style="width: calc(<?php echo $size ?> - 40px);">
 	<?php foreach($structuredict['maincolumn'] as $view){
 		echo $view;
 	} ?>

@@ -11,7 +11,7 @@
 
 
 
-<div class="imagetext_full main <?php echo $identifier ?> index_<?php echo $cellindex ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo $mediatype; } ?> index_<?php echo $cellindex ?>" >
+<div class="viewtype_cell imagetext_full main <?php echo $identifier ?> index_<?php echo $cellindex ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo $mediatype; } ?> index_<?php echo $cellindex ?>" >
 	<div class="imagetext_full container">
 		<div style="display: inline-block; width: 100%;">
 			<div>

@@ -23,7 +23,7 @@ if( !isset($viewdict['field_conditions'] ) ){
 <style>
 </style>
 
-<div class="<?php echo $identifier ?> file_image">
+<div class="viewtype_input <?php echo $identifier ?> file_image">
 	<label style="margin-bottom: -5px; font-weight: 700; font-size: 11px"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
 	<label class="file_image" id='imglabel' for='<?php echo $identifier ?>_field_value' style="background-image: url('<?php echo Data::getValue( $viewdict,'background-image') ?>');"></label>
 	<input type="file" class="field_value" id="<?php echo $identifier ?>_field_value" value="<?php echo Data::getValue( $viewdict,'field_value') ?>" name="fieldimage[<?php echo Data::getValue( $viewdict,'field_index') ?>][field_value]" style="visibility: hidden; z-index: -1;">

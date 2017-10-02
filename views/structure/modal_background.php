@@ -13,7 +13,7 @@ namespace Reusables;
 
 </style>
 
-<div class="<?php echo $identifier ?> modal_background main">
+<div class="viewtype_structure <?php echo $identifier ?> modal_background main">
 	<div class="modal_background overlay"></div>
 	<div class="modal_background maincolumn">
 		<?php 

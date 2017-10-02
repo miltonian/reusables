@@ -15,7 +15,7 @@ $linkedin_white = "https://theanywherecard.com/social_images/linkedin-image.png"
 
 
 
-<div class="<?php echo $identifier ?> socialpage_circles">
+<div class="viewtype_sharing <?php echo $identifier ?> socialpage_circles">
 	<a href="<?php echo Data::getValue( $viewdict, 'facebook' ) ?>" target="_blank"><button class="social-icon facebook"></button></a>
 	<a href="<?php echo Data::getValue( $viewdict, 'twitter' ) ?>" target="_blank"><button class="social-icon twitter"></button></a>
 	<a href="<?php echo Data::getValue( $viewdict, 'instagram' ) ?>" target="_blank"><button class="social-icon instagram"></button></a>

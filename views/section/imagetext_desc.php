@@ -23,7 +23,7 @@ echo Structure::make(
 			"<div class='imagetext_desc desc' >" . $viewdict['html_text'] . "</div>"
 		)
 	],
-	"<?php echo $identifier ?> imagetext_desc main"
+	"<?php echo $identifier ?> imagetext_desc main viewtype_section"
 );
 
 ?>

@@ -15,7 +15,7 @@ if( $categories == "" ) {
 
 
 
-<div class="headerwithcat main <?php echo $identifier ?>" >
+<div class="viewtype_header headerwithcat main <?php echo $identifier ?>" >
 	<h4 class="headerwithcat title"><?php echo Data::getValue( $viewdict, 'title' ) ?></h4>
 	<div class="headerwithcat categories_wrapper">
 		<div class="headerwithcat categoriesinner_wrapper">

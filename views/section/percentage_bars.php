@@ -37,7 +37,7 @@ if( $sectiontitle == "" ) {
 </style>
 
 
-<div class="percentage_bars main <?php echo $identifer ?>">
+<div class="viewtype_section percentage_bars main <?php echo $identifer ?>">
 	<?php /*if( ((!$GLOBALS['isadmin'] && !$GLOBALS['isuser']) || ($GLOBALS['isadmin'] != $viewdict['userprofile_userid'] && $GLOBALS['userid'] != $viewdict['userprofile_userid'])) || $viewdict['preview']==1 ){*/ ?>
 	<h1 class="percentage_bars title"><?php echo $sectiontitle ?></h1>
 		<?php $i=1; foreach ($skillsarray as $skill) { ?>

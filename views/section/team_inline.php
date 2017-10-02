@@ -18,7 +18,7 @@ if( $teamarray == "" ) {
 <style>
 </style>
 
-<div class="<?php echo $identifier ?> team_inline main">
+<div class="viewtype_section <?php echo $identifier ?> team_inline main">
 	<div class="team_inline thecontainer">
 		<?php for ($i=0; $i < sizeof($teamarray); $i++) { ?>
 		<?php $teamdict = $teamarray[$i]; ?>

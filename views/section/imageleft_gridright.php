@@ -41,7 +41,7 @@ foreach ($images as $im) {
 ?>
 
 
-<div class="imageleft_gridright main <?php echo $identifier ?>">
+<div class="viewtype_section imageleft_gridright main <?php echo $identifier ?>">
 	<div class="imageleft_gridright left post" style="background-image: url('<?php echo Data::getValue( $images[0], 'featured_imagepath' ) ?>'">
 		<a class="imageleft_gridright link one" href="<?php echo Data::getValue( $viewoptions, 'pre_slug' ) ?><?php echo Data::getValue( $images[0], 'slug' ) ?>">
 			<div class="imageleft_gridright gradient">

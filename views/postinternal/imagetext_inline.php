@@ -11,7 +11,7 @@ namespace Reusables;
 		
 </style>
 
-<div class="imagetext_inline main <?php echo $identifier ?>">
+<div class="viewtype_postinternal imagetext_inline main <?php echo $identifier ?>">
 	<?php 
 		echo Structure::make("main_withside", [
 			"maincolumn"=>array(

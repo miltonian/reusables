@@ -38,7 +38,7 @@ namespace Reusables;
 <?php } ?>
 </style>
 
-<div class="<?php echo $identifier ?> table_2">
+<div class="viewtype_table <?php echo $identifier ?> table_2">
 	<div class="table" style="background-color: transparent;">
 <?php if($sortable){ ?>
 	<ul id="sortable" style="background-color: transparent;">

@@ -35,7 +35,7 @@ echo Menu::make( "menuview_1", "menuview1");
 <style>
 </style>
 
-<div class="bulky main <?php echo $identifier ?>" style="<?php if($isadmin){ echo "margin-top: 60px"; } ?>">
+<div class="viewtype_nav  bulky main <?php echo $identifier ?>" style="<?php if($isadmin){ echo "margin-top: 60px"; } ?>">
 	<div class="bulky container">
 		<div class="bulky main-content">
 			<div class="bulky socialbtns-container">

@@ -16,7 +16,7 @@ namespace Reusables;
 <style>
 </style>
 
-<div class="<?php echo $identifier ?> section_8 main">
+<div class="viewtype_section <?php echo $identifier ?> section_8 main">
 	<div class="section_8 wrapper">
 		<div class="section_8 left" style="background-image: url('<?php echo Data::getValue($viewdict, 'left_imagepath') ?>');"></div>
 		<div class="section_8 right" style="background-image: url('<?php echo Data::getValue($viewdict, 'right_imagepath') ?>');"></div>

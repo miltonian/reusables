@@ -16,7 +16,7 @@
 
 
 
-<div class="category_and_text main <?php echo $identifier ?> index_<?php echo $cellindex ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo $mediatype; } ?> index_<?php echo $cellindex ?>" >
+<div class="viewtype_cell category_and_text main <?php echo $identifier ?> index_<?php echo $cellindex ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo $mediatype; } ?> index_<?php echo $cellindex ?>" >
 	<div class="category_and_text category"><?php echo $category ?></div>
 	<h3 class="category_and_text title"><?php echo Data::getValue( $viewdict, 'title' ) ?></h3>
 	<label class="category_and_text thedate"><?php echo Data::getValue( $viewdict, 'celldate' ) ?></label>

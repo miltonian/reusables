@@ -19,7 +19,7 @@ namespace Reusables;
 		.imagetext_full .text-container { display: inline-block; position: relative; margin: 50px 0px; padding: 0; text-align: left; }
 </style>
 
-<div class="imagetext_full">
+<div class="viewtype_postinternal imagetext_full">
 	<div id="featuredimage" style="background-image: url('<?php echo Data::getValue( $viewdict, 'featured_imagepath' ); ?>');" ></div>
 	<?php
 		if( $sharingdict != "" ){

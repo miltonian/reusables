@@ -7,7 +7,7 @@ namespace Reusables;
 <style>
 </style>
 
-<div class="<?php echo $identifier ?> hamburger">
+<div class="viewtype_button <?php echo $identifier ?> hamburger">
 	<div class="btn-container">
 		<div class="bar-single 1"></div>
 		<div class="bar-single 2"></div>

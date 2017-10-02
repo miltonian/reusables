@@ -48,7 +48,7 @@ $image3 = Data::getValue( $viewdict, 2);
 </style>
 
 
-<div class="<?php echo $identifier ?> inline_images main">
+<div class="viewtype_section <?php echo $identifier ?> inline_images main">
 	<div style="display:inline-block; width: 100%;">
 		<div style="display: inline-block; width: 100%;">
 			<?php 

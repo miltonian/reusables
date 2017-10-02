@@ -8,7 +8,7 @@ namespace Reusables;
 </style>
 
 
-<div class="slider_blink main <?php echo $identifier ?>">
+<div class="viewtype_slider slider_blink main <?php echo $identifier ?>">
 	<div class="slider_blink two image"></div>
 	<div class="slider_blink one image"></div>
 </div>

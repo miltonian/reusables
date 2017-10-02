@@ -15,7 +15,7 @@ namespace Reusables;
 <style>
 </style>
 
-<div class="<?php echo $identifier ?> three_columns main">
+<div class="viewtype_structure <?php echo $identifier ?> three_columns main">
 	<div class="three_columns sidecolumn_left">
 		<?php 
 			foreach ($structuredict['sidecolumn_left'] as $view) {

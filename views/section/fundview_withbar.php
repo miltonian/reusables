@@ -21,7 +21,7 @@ namespace Reusables;
 <style>
 </style>
 
-<div class="<?php echo $identifier ?> fundview_1">
+<div class="viewtype_section <?php echo $identifier ?> fundview_1">
 	<label class="header"><span><?php echo $percentage_funded ?></span> FUNDED</label>
 	<div class="bar">
 		<div class="inner" style="width: <?php echo $percentage_funded ?>"></div>

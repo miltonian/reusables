@@ -12,7 +12,7 @@ namespace Reusables;
 <style>
 </style>
 
-<div class="<?php echo $identifier ?> wrapper_1 main">
+<div class="viewtype_wrapper <?php echo $identifier ?> wrapper_1 main">
 	<?php
 
 		foreach ($children as $child) {

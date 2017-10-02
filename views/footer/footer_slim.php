@@ -8,7 +8,7 @@ namespace Reusables;
 </style>
 
 
-<div class="<?php echo $identifier ?> footer_slim">
+<div class="viewtype_footer <?php echo $identifier ?> footer_slim">
 	<div class="inner">
 		<p id="businessname"><?php echo Data::getValue( $viewdict, 'name' ) ?></p>
 		<div class="social-container">
