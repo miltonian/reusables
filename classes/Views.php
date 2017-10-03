@@ -11,6 +11,7 @@ class Views {
 		$View = View::factory( 'reusables/views/' . $viewtype . '/' . $file );
 		$data = Data::retrieveDataWithID( $identifier );
 		$options = Data::retrieveOptionsWithID( $identifier );
+		$options = ReusableClasses::convertViewActions( $options );
 
 		$View->set( 'viewdict', $data );
 		$View->set( 'viewoptions', $options );

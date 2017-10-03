@@ -2,6 +2,8 @@
 
 namespace Reusables;
 
+// $viewoptions = ReusableClasses::convertViewActions( $viewoptions );
+
 if( isset($viewdict['editing']) ){ $isediting=1; }else{ $isediting=0; }
 
 $buttons = "";
@@ -14,7 +16,6 @@ if( isset($viewoptions['buttons']) ){
 	}
 }
 
-$viewoptions = ReusableClasses::convertViewActions( $viewoptions );
 // exit( json_encode( $viewoptions ) );
 
 

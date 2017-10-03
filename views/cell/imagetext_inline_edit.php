@@ -21,6 +21,12 @@ $cellindex = Data::getValue( $viewdict, 'index' );
 
 $viewoptions = ReusableClasses::convertViewActions( $viewoptions );
 
+?>
+<script>
+	var viewdict = <?php echo json_encode( Data::getValue( $identifier ) ) ?>;
+</script>
+<?php
+
 // ReusableClasses::checkRequired( $identifier, $viewdict, $required );
 	
 	$cellactionshtml = "";
@@ -37,13 +43,24 @@ $viewoptions = ReusableClasses::convertViewActions( $viewoptions );
 					$cellactionshtml .= "<div class='inner-dropdown'>";
 						$cellactionshtml .= "<button class='inner-dropbtn imagetext_inline_edit action actionindex_" . $i . " index_" . $cellindex . "' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
 						$cellactionshtml .= "<div id='inner-myDropdown_" . Data::getValue( $viewdict, 'index' ) . "' class='inner-dropdown-content'>";
-							for ($a=0; $a < sizeof( $action['dropdown_array'] ); $a++) {
-								$dropdownarray = $action['dropdown_array'];
-								$cellactionshtml .= "<a href='" . $dropdownarray[$a]['link'] . "'>" . $dropdownarray[$a]['text'] . "</a>";
+							for ($a=0; $a < sizeof( $action['actions'] ); $a++) {
+								$dropdownarray = $action['actions'];
+								$linkpath = Data::getValue( $dropdownarray[$a], 'link' );
+								// if( $linkpath == "" ){ $linkpath = "#"; }
+								$cellactionshtml .= "<a class='dropdown_action cellactionindex_" . $i . " dropdownindex_" . $a . " index_" . $cellindex . "' href='" . $linkpath . "'><img class='dropdownimg' src='" . Data::getValue( $dropdownarray[$a], 'imagepath' ) . "'><label class='dropdownlabel'>" . $dropdownarray[$a]['text'] . "</label></a>";
+								// exit( json_encode( $action['actions'] ) );
+								echo "<script>";
+									ReusableClasses::getDropdownFunctionsJS( $dropdownarray );
+								echo "</script>";
+								// script
+								// echo "<script> alert( JSON.stringify( $('.inner-dropbtn.imagetext_inline_edit.action.actionindex_" . $i . " index_" . $cellindex . " .dropdown_action.actionindex_" . $i . "') ) ) </script>";
+								// $cellactionshtml .= "<script> Reusable.addAction( $('.inner-dropbtn.imagetext_inline_edit.action.actionindex_" . $i . " index_" . $cellindex . " .dropdown_action.actionindex_" . $i . "'), dropdownfunctions, " . $i . ", " . json_encode( $dropdownarray ) . ", null, null ) </script>";
 							}
 						$cellactionshtml .= "</div>";
 					$cellactionshtml .= "</div>";
 				$cellactionshtml .= "</div>";
+
+				
 
 				// Data::addData( ["list" => $action['dropdown_array']], $identifier . "dropdown" );
 				// Menu::make( "dropdown", $identifier . "dropdown" );
@@ -81,7 +98,8 @@ $viewoptions = ReusableClasses::convertViewActions( $viewoptions );
 						"
 					),
 					"sidecolumn_right"=>array(
-						$cellactionshtml
+						$cellactionshtml,
+						"<img class='imagetext_inline_edit drag_icon' src='/vendor/miltonian/reusables/images/icons/drag_reorder_gray-2.png'>"
 					),
 				], $identifier."-structure")
 			),
@@ -95,9 +113,11 @@ $viewoptions = ReusableClasses::convertViewActions( $viewoptions );
 
 	var cellactions = <?php echo json_encode( $viewoptions['actions'] ) ?>;
 
-	var viewdict = <?php echo json_encode( Data::getValue( $identifier ) ) ?>;
+	
 
-	<?php ReusableClasses::getEditingFunctionsJS( $viewoptions ) ?>;
+	<?php 
+		ReusableClasses::getEditingFunctionsJS( $viewoptions ) 
+	?>;
 
 	function imagetext_inline_edit_start() {
 		imagetext_inline_edit.setupactions( cellactions, editingfunctions, viewdict );

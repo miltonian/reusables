@@ -197,9 +197,27 @@ class ReusableClasses {
 			}
 			$i++;
 		}
-
-		
 	}
+
+	public static function getDropdownFunctionsJS( $dict )
+	{
+		$action_key = ReusableClasses::getViewActionKey( $dict );
+		if( $action_key == '' ){ return []; }
+		
+		echo "var dropdownfunctions = [];";
+		$i=0;
+		foreach ( $dict[$action_key] as $ca ) {
+			$ca_type = Data::getValue( $ca, 'type' );
+			if( $ca_type == "modal" ){
+				echo "var thismodalclass = new " . $ca['modal']['modalclass'] . "Classes();
+				dropdownfunctions.push( thismodalclass );";
+			}else{
+				echo 'dropdownfunctions.push( "nothing" );';
+			}
+			$i++;
+		}
+	}
+
 
 	public static function convertViewActions( $dict )
 	{
