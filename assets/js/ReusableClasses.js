@@ -182,16 +182,18 @@ var editingorder = false;
 		getIndexFromClass( prefix, view )
 		{
 			let classesstring = $(view).attr( 'class' )
+			// alert(JSON.stringify(view))
 			var classes = classesstring.split(" ")
 			for (var i = 0; i < classes.length ; i++) {
+				// alert(JSON.stringify(classes[i]))
 				if( classes[i].startsWith(prefix) ){
 					var theindex = classes[i].split("_")[1]
 					// alert( "index is: " + theindex )
 				}
 			}
 			return theindex
+			
 		}
-
 
 
 		readthisURL(input, previewobj, newwidth, newheight) {
