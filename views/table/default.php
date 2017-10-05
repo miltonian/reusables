@@ -20,12 +20,6 @@ namespace Reusables;
 	// exit( json_encode( $temp_tablearray ) );
 	unset( $temp_tablearray['data_id'] );
 
-	$cellname = Data::getValue( $viewoptions, 'cellname' );
-	if( $cellname == "" ){
-		// default cell
-		$cellname = "imagetext_full";
-	}
-
 ?>
 
 <style>
@@ -72,6 +66,15 @@ namespace Reusables;
 
 				Data::addData( $post, $identifier . "_cell_" . $i );
 				Data::addOptions( $postoptions, $identifier . "_cell_" . $i );
+				if( isset( $post['cellname'] ) ) {
+					$cellname = Data::getValue( $post, 'cellname' );
+				}else { 
+					$cellname = Data::getValue( $viewoptions, 'cellname' );
+					if( $cellname == "" ){
+						// default cell
+						$cellname = "imagetext_full";
+					}
+				}
 				if( Data::hasprefix( $cellname, "custom/" ) ) {
 					$filename = substr( $cellname, strlen( "custom/" ), strlen( $cellname ) );
 					// exit( json_encode( $filename ) );
