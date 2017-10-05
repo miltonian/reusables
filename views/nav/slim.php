@@ -61,7 +61,7 @@ if (!isset($viewdict['logolink'])) { $viewdict['logolink'] = ""; }
 			if(isset($b['buttons'])){
 				$button .= "has_dropdown";
 			}
-			$button .= " '> ";
+			$button .= " ' style='float: " . $b['position'] . ";'> ";
 			$button .= "<a href='" . $b['slug'] . "' class='slim topbar-button'>"; 
 			if( isset( $b['imagepath'] ) ){ 
 				$button .= "<img src='" . $b['imagepath'] . "'>"; 
@@ -94,14 +94,23 @@ if (!isset($viewdict['logolink'])) { $viewdict['logolink'] = ""; }
 			}
 		}
 
-		echo Structure::make( 
-			"main_withside",
-			[
-				"maincolumn"=>$leftbuttons,
-				"sidecolumn_right"=>$rightbuttons
-			],
-			"slim_structure"
-		);
+		// echo $leftbuttons;
+		// echo $rightbuttons;
+		foreach ($leftbuttons as $b) {
+			echo $b;
+		}
+		$rightbuttons = array_reverse( $rightbuttons );
+		foreach ($rightbuttons as $b) {
+			echo $b;
+		}
+		// echo Structure::make( 
+		// 	"main_withside",
+		// 	[
+		// 		"maincolumn"=>$leftbuttons,
+		// 		"sidecolumn_right"=>$rightbuttons
+		// 	],
+		// 	"slim_structure"
+		// );
 	?>
 	<!-- <?php foreach ($navbuttons as $b) { ?>
 

@@ -28,13 +28,13 @@ Reusables\Data::addData( $headerdict, "page_header" );
 Reusables\Data::addData( $tablearray, "table" );
 
 // this is for the table's reusable view
-Reusables\Data::addOption( "cell_2", "cellname", "table" );
+Reusables\Data::addOption( "imagetext_full", "cellname", "table" );
 
 Reusables\ReusableClasses::startpage( __FILE__ );
 
 
-	echo Reusables\Header::make( "header_3", "page_header" );
-	echo Reusables\Table::make( "table_2", "table" );
+	echo Reusables\Header::make( "underline_edit", "page_header" );
+	echo Reusables\Table::make( "default", "table" );
 
 
 Reusables\ReusableClasses::endpage( "", __FILE__ );

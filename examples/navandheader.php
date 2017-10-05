@@ -17,8 +17,8 @@ Reusables\Data::addData( $headerdict, "main_header" );
 Reusables\ReusableClasses::startpage( __FILE__ );
 
 
-	echo Reusables\Nav::make( "navbar_4", "navbar" );
-	echo Reusables\Header::make( "header_3", "main_header" );
+	echo Reusables\Nav::make( "slim", "navbar" );
+	echo Reusables\Header::make( "underline_edit", "main_header" );
 
 
 Reusables\ReusableClasses::endpage( "", __FILE__ );
