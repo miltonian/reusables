@@ -183,19 +183,32 @@ class ReusableClasses {
 	public static function getEditingFunctionsJS( $dict )
 	{
 		$action_key = ReusableClasses::getViewActionKey( $dict );
-		if( $action_key == '' ){ return []; }
+		// if( $action_key == '' ){ return []; }
+		$multiple = false;
+		if( $action_key == '' ){ $actiondict = $dict; }else{ $actiondict = $dict[$action_key]; $multiple = true; }
 
 		echo "var editingfunctions = [];";
-		$i=0;
-		foreach ( $dict[$action_key] as $ca ) {
-			$ca_type = Data::getValue( $ca, 'type' );
+		if( $multiple ) {
+			$i=0;
+			foreach ( $actiondict as $ca ) {
+				$ca_type = Data::getValue( $ca, 'type' );
+				if( $ca_type == "modal" ){
+					echo "var thismodalclass = new " . $ca['modal']['modalclass'] . "Classes();
+					editingfunctions.push( thismodalclass );";
+				}else{
+					echo 'editingfunctions.push( "nothing" );';
+				}
+				$i++;
+			}
+		}else{
+
+			$ca_type = Data::getValue( $actiondict, 'type' );
 			if( $ca_type == "modal" ){
-				echo "var thismodalclass = new " . $ca['modal']['modalclass'] . "Classes();
+				echo "var thismodalclass = new " . $actiondict['modal']['modalclass'] . "Classes();
 				editingfunctions.push( thismodalclass );";
 			}else{
 				echo 'editingfunctions.push( "nothing" );';
 			}
-			$i++;
 		}
 	}
 
@@ -221,23 +234,44 @@ class ReusableClasses {
 
 	public static function convertViewActions( $dict )
 	{
-		$action_key = ReusableClasses::getViewActionKey( $dict );
-		if( $action_key == '' ){ return []; }
-		$i=0;
-		foreach ($dict[$action_key] as $action) {
-			if( isset( $action['modal'] ) ){
-				$dict[$action_key][$i]['type'] = "modal";
-				$actionmodal = Data::getValue( $action, 'modal' );
-				if( !is_array( $actionmodal ) && $actionmodal != "" ){
-					$new_actionmodal = [
-						"parentclass" => $actionmodal . "_wrapper", 
-						"modalclass" => $actionmodal
-					];
-					$dict[$action_key][$i]['modal'] = $new_actionmodal;
-				}
-			}
-			$i++;
+		if( $dict == null ) {
+			return [];
 		}
+		$action_key = ReusableClasses::getViewActionKey( $dict );
+		$multiple = false;
+		if( $action_key == '' ){ $actiondict = $dict; }else{ $actiondict = $dict[$action_key]; $multiple = true; }
+		if( $multiple ) {
+			$i=0;
+			foreach ($actiondict as $action) {
+				// exit( json_encode( $action ) );
+				if( isset( $action['modal'] ) ){
+					$actiondict[$i]['type'] = "modal";
+					$actionmodal = Data::getValue( $action, 'modal' );
+					if( !is_array( $actionmodal ) && $actionmodal != "" ){
+						$new_actionmodal = [
+							"parentclass" => $actionmodal . "_wrapper", 
+							"modalclass" => $actionmodal
+						];
+						$actiondict[$i]['modal'] = $new_actionmodal;
+					}
+				}
+				$i++;
+			}
+		}else {
+				if( isset( $actiondict['modal'] ) ){
+					$actiondict['type'] = "modal";
+					$actionmodal = Data::getValue( $actiondict, 'modal' );
+					if( !is_array( $actionmodal ) && $actionmodal != "" ){
+						$new_actionmodal = [
+							"parentclass" => $actionmodal . "_wrapper", 
+							"modalclass" => $actionmodal
+						];
+						$actiondict['modal'] = $new_actionmodal;
+					}
+				}
+		}
+
+		if( $action_key == '' ){ $dict = $actiondict; }else{ $dict[$action_key] = $actiondict; }
 
 		return $dict;
 	}
@@ -252,6 +286,12 @@ class ReusableClasses {
 		}
 
 		return $action_key;
+	}
+
+	public static function autoMakeView( $viewtype, $viewname, $identifier ) {
+
+		echo call_user_func_array("Reusables\\".$viewtype . "::make", [ $viewname, $identifier  ] );
+
 	}
 
 

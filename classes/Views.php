@@ -15,7 +15,6 @@ class Views {
 
 		$View->set( 'viewdict', $data );
 		$View->set( 'viewoptions', $options );
-
 		if( $viewtype == "section" ){
 			$View->set( 'tablenames', $tablenames );
 		}

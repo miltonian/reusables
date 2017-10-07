@@ -91,6 +91,13 @@ extract( Input::convertInputKeys( $identifier ) );
 
 		class <?php echo $identifier ?>Classes {
 			populateview( index=null ){
+				var viewdict = <?php echo json_encode($viewdict) ?>;
+				var input_keys = <?php echo json_encode($input_onlykeys) ?>;
+				var typearray = <?php echo json_encode( ReusableClasses::getTypeArray( $input_onlykeys ) ) ?>;
+				var dataarray = <?php echo json_encode( Data::getFullArray( $viewdict ) ) ?>;
+				var formatteddata = <?php echo json_encode( Data::retrieveDataWithID( $original_data_id ) ) ?>;
+				var identifier = "<?php echo $identifier ?>";
+				
 				Reusable.setinputvalues( viewdict, input_keys, identifier, typearray, dataarray, formatteddata, index )
 
 				<?php if( $steps > 1 ) { ?>

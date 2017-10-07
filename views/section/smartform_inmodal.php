@@ -2,6 +2,14 @@
 
 namespace Reusables;
 
+?>
+
+<style>
+	.<?php echo $identifier ?>_wrapper.main { max-width: 700px; max-height: 600px; top: 50%; transform: translateY(-50%); }
+</style>
+
+<?php
+
 	echo Structure::make(
 		"modal_background",
 		[

@@ -32,7 +32,7 @@ class Cell {
 		$celldate = Data::getValue( $data, 'date' );
 
 		$celltype = Data::getValue( $options, 'type' );
-
+// exit( json_encode( $celltype ) );
 
 		return [
 			"data_id" => $data_id,

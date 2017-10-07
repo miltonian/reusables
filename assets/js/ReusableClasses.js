@@ -12,8 +12,8 @@ var editingorder = false;
 			var thisdict = [];
 				var thisdictvalue = [];
 				thisdict = dataarray[data_id];
-				if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
 
+				if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
 			$('.' + identifier + ' .' + inputclass + ' input.field_value').val( thisdictvalue[key] );
 				$('.' + identifier + ' .' + inputclass + ' input.tablename').val( thisdict['db_info']['tablenames'][key] );
 				$('.' + identifier + ' .' + inputclass + ' input.col_name').val( db_key );
@@ -146,10 +146,17 @@ var editingorder = false;
 
 		}
 
-		addAction( button, editingfunctions, index, dataarray=null, view=null, e )
+		addAction( button, editingfunctions, index, dataarray=null, view=null, e, viewoptions=null )
 		{
+
 			// index is the button's index, not the cell's
 			var type = button['type'];
+			if( viewoptions ) {
+				if( typeof viewoptions['type'] !== 'undefined' ) {
+					type = viewoptions['type']
+				}
+			}
+
 			if( type == "link" ){
 				// var pre_slug = button[type]
 				// var slug = dataarray['slug']
@@ -173,7 +180,15 @@ var editingorder = false;
 				}
 				editingfunctions[index].populateview( cellindex );
 				$('.modal_background').css({'display': 'inline-block'});
-				$('.' + button[type]['parentclass']).css({'display': 'inline-block'});
+				if( viewoptions ) {
+					if( typeof viewoptions['type'] !== 'undefined' ) {
+						$('.' + viewoptions[type]['parentclass']).css({'display': 'inline-block'});
+					}else{
+						$('.' + button[type]['parentclass']).css({'display': 'inline-block'});
+					}
+				}else{
+					$('.' + button[type]['parentclass']).css({'display': 'inline-block'});
+				}
 			}else if( type == "dropdown" ){
 				e.preventDefault();
 			}

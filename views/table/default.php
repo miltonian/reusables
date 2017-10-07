@@ -2,13 +2,13 @@
 
 namespace Reusables;
 
+// exit( json_encode( $viewoptions ) );
 	if( !isset($viewoptions['sortable'])){ 
 		$sortable = false; 
 	}else { 
 		$sortable = $viewoptions['sortable']; 
 	}
 // exit( json_encode( $sortable ) );
-
 
 	if( isset($viewdict['value']) ){
 		$tablearray = $viewdict['value'];
@@ -56,14 +56,16 @@ namespace Reusables;
 				$post = Data::convertKeysInTable( $identifier, $post );
 				$post['index'] = $i;
 				$postoptions['pre_slug'] = Data::getValue( $viewoptions, 'pre_slug' );
-
+				$postoptions['type'] = Data::getValue( $viewoptions, 'type' );
+				$postoptions['modal'] = Data::getValue( $viewoptions, 'modal' );
+				// exit( json_encode( Data::getValue( $viewdict ) ) );
 				if( isset( $viewoptions['celldict'] ) ) {
 					$post = array_merge( $post, $viewoptions['celldict'] );
 				}
 
 				if( isset( $viewoptions['slug'] ) ) { $postoptions['slug'] = Data::getValue( $viewoptions, 'slug' ); }
-				if( isset( $viewoptions['actions'] ) ){ $postoptions['actions'] = $viewoptions['actions']; }else{ $postoptions['actions'] = array(); }
-
+				if( isset( $viewoptions['actions'] ) ){ $postoptions['actions'] = $viewoptions['actions']; }else{ /* $postoptions['actions'] = array(); */ }
+// exit(json_encode( $postoptions ) );
 				Data::addData( $post, $identifier . "_cell_" . $i );
 				Data::addOptions( $postoptions, $identifier . "_cell_" . $i );
 				if( isset( $post['cellname'] ) ) {
