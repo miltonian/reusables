@@ -182,6 +182,7 @@ class ReusableClasses {
 
 	public static function getEditingFunctionsJS( $dict )
 	{
+
 		$action_key = ReusableClasses::getViewActionKey( $dict );
 		// if( $action_key == '' ){ return []; }
 		$multiple = false;
@@ -193,19 +194,26 @@ class ReusableClasses {
 			foreach ( $actiondict as $ca ) {
 				$ca_type = Data::getValue( $ca, 'type' );
 				if( $ca_type == "modal" ){
-					echo "var thismodalclass = new " . $ca['modal']['modalclass'] . "Classes();
-					editingfunctions.push( thismodalclass );";
+					if( isset( $ca_type[ 'modal' ] ) ) {
+						echo "var thismodalclass = new " . $ca['modal']['modalclass'] . "Classes();
+						editingfunctions.push( thismodalclass );";
+					} else{
+						echo 'editingfunctions.push( "nothing" );';
+					}
 				}else{
 					echo 'editingfunctions.push( "nothing" );';
 				}
 				$i++;
 			}
 		}else{
-
 			$ca_type = Data::getValue( $actiondict, 'type' );
 			if( $ca_type == "modal" ){
-				echo "var thismodalclass = new " . $actiondict['modal']['modalclass'] . "Classes();
-				editingfunctions.push( thismodalclass );";
+				if( isset( $ca_type[ 'modal' ] ) ) {
+					echo "var thismodalclass = new " . $actiondict['modal']['modalclass'] . "Classes();
+					editingfunctions.push( thismodalclass );";
+				} else{
+					echo 'editingfunctions.push( "nothing" );';
+				}
 			}else{
 				echo 'editingfunctions.push( "nothing" );';
 			}

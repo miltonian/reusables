@@ -27,6 +27,7 @@
 
 	var thismodalclass = "";
 	var celltype = <?php echo json_encode( $celltype) ?>;
+
 	<?php if( $celltype == "modal" ){ ?>
 		thismodalclass = new <?php echo $viewoptions['modal']['modalclass'] ?>Classes();
 		var dataarray = <?php echo json_encode( $fullviewdict ) ?>;
@@ -41,7 +42,10 @@
 
 	$('.<?php echo $identifier ?>').off().click(function(e){
 		e.preventDefault();
-		// alert( JSON.stringify( celltype ) )
+
+		if( typeof dataarray === 'undefined' ) {
+			dataarray = []
+		}
 		Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );
 	});
 	
