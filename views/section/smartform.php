@@ -44,7 +44,7 @@ extract( Input::convertInputKeys( $identifier ) );
 
 
 <?php if( $onstep==1 ){ ?>
-	<form class='theform' method='post' action='<?php echo $formaction ?>' enctype='multipart/form-data'>
+	<form class='<?php echo $identifier ?>_theform' method='post' action='<?php echo $formaction ?>' enctype='multipart/form-data'>
 <?php } ?>
 
 <?php if( $ifnone_insert ){ ?>
@@ -97,7 +97,6 @@ extract( Input::convertInputKeys( $identifier ) );
 				var dataarray = <?php echo json_encode( Data::getFullArray( $viewdict ) ) ?>;
 				var formatteddata = <?php echo json_encode( Data::retrieveDataWithID( $original_data_id ) ) ?>;
 				var identifier = "<?php echo $identifier ?>";
-				
 				Reusable.setinputvalues( viewdict, input_keys, identifier, typearray, dataarray, formatteddata, index )
 
 				<?php if( $steps > 1 ) { ?>

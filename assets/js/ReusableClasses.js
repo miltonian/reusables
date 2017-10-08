@@ -202,7 +202,8 @@ var editingorder = false;
 			for (var i = 0; i < classes.length ; i++) {
 				// alert(JSON.stringify(classes[i]))
 				if( classes[i].startsWith(prefix) ){
-					var theindex = classes[i].split("_")[1]
+					var foundclass = classes[i].split("_")
+					var theindex = foundclass[((foundclass.length)-1)]
 					// alert( "index is: " + theindex )
 				}
 			}

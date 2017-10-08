@@ -27,9 +27,7 @@ $lastinsertid = false;
 if(isset($_POST[ 'fieldarray' ])){ $fieldarray = $_POST[ 'fieldarray' ]; $containsp=true; }
 if(isset($_POST[ 'fieldimage' ])){ $fieldimages = $_POST[ 'fieldimage' ]; $containsp=true; }
 if(!$containsp){ exit("missing parameters"); }
-
 // exit( json_encode( $fieldarray ) );
-
 if( isset($fieldimages ) ) {
 	$filesarray = array();
 	$indexes = array_keys( $_FILES['fieldimage']['name']);
@@ -84,7 +82,7 @@ if( isset($fieldimages ) ) {
 			$values = $conditionvalues;
 			$type = "select";
 			// $result = $MainClasses->querySQL( $query, $values, $type );
-// exit("1");
+
 			// exit( json_encode( $query ) );
 			$result = Reusables\CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
 			if($result[0] == 0){
@@ -96,7 +94,7 @@ if( isset($fieldimages ) ) {
 				$type = "update";
 				// exit(json_encode($query));
 				// $result = $MainClasses->querySQL( $query, $values, $type );
-// exit("2");
+
 				// exit( json_encode( array( $query, $values, $type ) ) );
 				$result = Reusables\CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
 			}
@@ -180,7 +178,7 @@ if (isset($fieldarray)) {
 		// exit( json_encode( array( $query, $values, $type ) ) );
 		$result = Reusables\CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
 
-		// exit(json_encode($conditionvalues));
+		// exit(json_encode($result));
 		if($result[0] == 0){
 
 		}else{
