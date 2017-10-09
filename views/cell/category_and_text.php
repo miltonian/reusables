@@ -36,17 +36,19 @@
 	var viewdict = <?php echo json_encode($viewdict) ?>;
 	var viewoptions = <?php echo json_encode( $viewoptions ) ?>;
 
-	<?php 
-		ReusableClasses::getEditingFunctionsJS( $viewoptions ) 
-	?>;
 
 	$('.<?php echo $identifier ?>').off().click(function(e){
-		e.preventDefault();
-
-		if( typeof dataarray === 'undefined' ) {
-			dataarray = []
+		if( celltype == "modal" || celltype == "dropdown" ) {
+			e.preventDefault();
+			if( typeof dataarray === 'undefined' ) {
+				dataarray = []
+			}
+			<?php 
+				ReusableClasses::getEditingFunctionsJS( $viewoptions ) 
+			?>;
+			Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );
 		}
-		Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );
+
 	});
 	
 </script>
