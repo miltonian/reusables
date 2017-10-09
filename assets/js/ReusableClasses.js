@@ -189,7 +189,9 @@ var editingorder = false;
 					var cellindex = Reusable.getIndexFromClass( "index_", view )
 					// alert( JSON.stringify( "testing: "+cellindex ) );
 				}
-				editingfunctions[index].populateview( cellindex );
+				if( editingfunctions[index] != "" ) {
+					editingfunctions[index].populateview( cellindex );
+				}
 
 				$('.' + identifier + '_modalbackground').css({'display': 'inline-block'});
 				if( viewoptions ) {
