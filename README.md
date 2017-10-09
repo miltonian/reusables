@@ -315,6 +315,28 @@ MAKE CUSTOM CHANGES TO REUSABLE VIEW
 	### Then make your changes!
 
 
+ADD PICKER FORM
+	#### This is used to change featured content. E.g. switching a featured article with another article on the homepage
+	* add data to view that holds the content you want to change
+	```
+	Reusables\Data::addData( $featuredcontent, "featured_section" );
+	```
+	* add data to picker form that holds the content you want to replace with
+	```
+	Reusables\Data::addData( $featuredcontent, "featured_section_form" );
+	```
+	* add option to tell the view that holds the content to open a modal when clicked
+	```
+	Reusables\Data::addOption( "modal", "type", "featured_section" );
+	Reusables\Data::addOption( "featured_section_form", "modal", "featured_section" );
+	```
+	* add views
+	```
+	echo Reusables\Section::make( "picker_form_inmodal", "featured_section_form" );
+	echo Reusables\Table::make( "default", "featured_section" );
+	```
+
+
 
 
 
