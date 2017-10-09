@@ -109,12 +109,12 @@ if( $cellname == "" ) {
 			e.preventDefault()
 			var theindex = Reusable.getIndexFromClass( 'featured_section_form_cell_', this )
 			$('.<?php echo $identifier ?>_theform .field_value').val( tablearray[theindex]['id'] )
+			identifier = "<?php echo $identifier ?>";
 // alert(JSON.stringify( $('.<?php echo $identifier ?>_theform .field_value.index_'+theindex).val() ))
 
 			for (var i = 0; i < formatteddata['db_info']['conditions'].length; i++) {
 
 					var conditions = formatteddata['db_info']['conditions'];
-					
 					if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
 						conditions[i]['value'] = key; 
 					}else{
@@ -122,6 +122,7 @@ if( $cellname == "" ) {
 						conditions[i]['value'] = formatteddata['value'][index_clickedfirst][conditions[i]['key']]; 
 
 					}
+
 
 					$( '.' + identifier + '_theform' + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
 					$( '.' + identifier + '_theform' + ' input.conditionvalue_' + i ).val( conditions[i]['value'] );

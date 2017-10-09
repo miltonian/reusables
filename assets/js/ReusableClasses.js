@@ -150,10 +150,21 @@ var editingorder = false;
 		{
 
 			// index is the button's index, not the cell's
+			
+			var identifier = ""
 			var type = button['type'];
+			if( typeof type === 'undefined' ) {
+				if( type == 'modal' ) {
+					identifier = button['modal']['modalclass']
+				}
+				
+			}
 			if( viewoptions ) {
 				if( typeof viewoptions['type'] !== 'undefined' ) {
 					type = viewoptions['type']
+					if( type == 'modal' ) {
+						identifier = viewoptions['modal']['modalclass']
+					}
 				}
 			}
 
@@ -179,15 +190,16 @@ var editingorder = false;
 					// alert( JSON.stringify( "testing: "+cellindex ) );
 				}
 				editingfunctions[index].populateview( cellindex );
-				$('.modal_background').css({'display': 'inline-block'});
+
+				$('.' + identifier + '_modalbackground').css({'display': 'inline-block'});
 				if( viewoptions ) {
 					if( typeof viewoptions['type'] !== 'undefined' ) {
-						$('.' + viewoptions[type]['parentclass']).css({'display': 'inline-block'});
+						$('.' + identifier + '_modalbackground .' + viewoptions[type]['parentclass']).css({'display': 'inline-block'});
 					}else{
-						$('.' + button[type]['parentclass']).css({'display': 'inline-block'});
+						$('.' + identifier + '_modalbackground .' + button[type]['parentclass']).css({'display': 'inline-block'});
 					}
 				}else{
-					$('.' + button[type]['parentclass']).css({'display': 'inline-block'});
+					$('.' + identifier + '_modalbackground .' + ' .' + button[type]['parentclass']).css({'display': 'inline-block'});
 				}
 			}else if( type == "dropdown" ){
 				e.preventDefault();

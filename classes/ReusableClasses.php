@@ -187,7 +187,6 @@ class ReusableClasses {
 		// if( $action_key == '' ){ return []; }
 		$multiple = false;
 		if( $action_key == '' ){ $actiondict = $dict; }else{ $actiondict = $dict[$action_key]; $multiple = true; }
-
 		echo "var editingfunctions = [];";
 		if( $multiple ) {
 			$i=0;
@@ -208,7 +207,7 @@ class ReusableClasses {
 		}else{
 			$ca_type = Data::getValue( $actiondict, 'type' );
 			if( $ca_type == "modal" ){
-				if( isset( $ca_type[ 'modal' ] ) ) {
+				if( isset( $actiondict[ 'modal' ] ) ) {
 					echo "var thismodalclass = new " . $actiondict['modal']['modalclass'] . "Classes();
 					editingfunctions.push( thismodalclass );";
 				} else{
@@ -248,6 +247,7 @@ class ReusableClasses {
 		$action_key = ReusableClasses::getViewActionKey( $dict );
 		$multiple = false;
 		if( $action_key == '' ){ $actiondict = $dict; }else{ $actiondict = $dict[$action_key]; $multiple = true; }
+		
 		if( $multiple ) {
 			$i=0;
 			foreach ($actiondict as $action) {

@@ -154,4 +154,10 @@ namespace Reusables;
 			}
 		});
 <?php } ?>
+
+	class <?php echo $identifier ?>Classes {
+		populateview( index=null ){
+			
+		}
+	}
 </script>

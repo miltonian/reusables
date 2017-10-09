@@ -142,11 +142,6 @@ if( isset($fieldimages ) ) {
 }
 
 
-
-
-
-
-
 if (isset($fieldarray)) {
 	$indexes = array_keys( $fieldarray );
 	$didfind = false;

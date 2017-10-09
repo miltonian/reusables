@@ -12,7 +12,7 @@ class Views {
 		$data = Data::retrieveDataWithID( $identifier );
 		$options = Data::retrieveOptionsWithID( $identifier );
 		$options = ReusableClasses::convertViewActions( $options );
-
+		
 		$View->set( 'viewdict', $data );
 		$View->set( 'viewoptions', $options );
 		if( $viewtype == "section" ){

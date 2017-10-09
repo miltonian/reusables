@@ -62,7 +62,7 @@ namespace Reusables;
 	
 	<?php for ($i=0; $i < sizeof($columns); $i++) { ?>
 
-		<div class="main_with_hidden column c<?php echo ($i+1) ?>" id="<?php echo $i+1 ?>">
+		<div class="main_with_hidden column c<?php echo ($i+1) ?>" id="main_with_hidden_<?php echo $i+1 ?>">
 			<?php 
 				foreach ($columns[$i] as $view) {
 					echo $view;
@@ -78,13 +78,14 @@ namespace Reusables;
 <script>
 	var columncount = <?php echo sizeof($columns) ?>;
 	var currentcolumn = 1;
+
 	$('.<?php echo $identifier ?> #close').click(function(){
 
 		$('.main_with_hidden .column').css({'position': 'absolute'});
 		$('.main_with_hidden .column').animate({'left': '100%'});
 
-		$('.main_with_hidden .column#1').css({'position': 'relative'});
-		$('.main_with_hidden .column#1').animate({'left': '0'});
+		$('.main_with_hidden .column#main_with_hidden_1').css({'position': 'relative'});
+		$('.main_with_hidden .column#main_with_hidden_1').animate({'left': '0'}, 0);
 		currentcolumn = 1;
 
 		$('.<?php echo $identifier ?>').parent().css('display', 'none');
@@ -96,11 +97,11 @@ namespace Reusables;
 	});
 	$('.main_with_hidden.next').click( function(e){
 		e.preventDefault();
-		$('.main_with_hidden .column#' + currentcolumn).css({'position': 'absolute'});
-		$('.main_with_hidden .column#' + currentcolumn).animate({'left': '-100%'});
+		$('.main_with_hidden .column#main_with_hidden_' + currentcolumn).css({'position': 'absolute'});
+		$('.main_with_hidden .column#main_with_hidden_' + currentcolumn).animate({'left': '-100%'});
 
-		$('.main_with_hidden .column#' + (currentcolumn+1) ).css({'position': 'relative'});
-		$('.main_with_hidden .column#' + (currentcolumn+1) ).animate({'left': '0'});
+		$('.main_with_hidden .column#main_with_hidden_' + (currentcolumn+1) ).css({'position': 'relative'});
+		$('.main_with_hidden .column#main_with_hidden_' + (currentcolumn+1) ).animate({'left': '0'});
 		currentcolumn++;
 		// alert( "currentcolumn: " + currentcolumn + ", columncount: " + columncount )
 		if( currentcolumn == columncount ){
@@ -112,16 +113,16 @@ namespace Reusables;
 	function gotostep( tostep ) {
 
 		if( tostep != currentcolumn ){
-			$('.main_with_hidden .column#' + currentcolumn).css({'position': 'absolute'});
+			$('.main_with_hidden .column#main_with_hidden_' + currentcolumn).css({'position': 'absolute'});
 
 			if( tostep > currentcolumn ){
-				$('.main_with_hidden .column#' + currentcolumn).animate({'left': '-100%'});
+				$('.main_with_hidden .column#main_with_hidden_' + currentcolumn).animate({'left': '-100%'});
 			}else{
-				$('.main_with_hidden .column#' + currentcolumn).animate({'left': '100%'});
+				$('.main_with_hidden .column#main_with_hidden_' + currentcolumn).animate({'left': '100%'});
 			}
 
-			$('.main_with_hidden .column#' + (tostep) ).css({'position': 'relative'});
-			$('.main_with_hidden .column#' + (tostep) ).animate({'left': '0'});
+			$('.main_with_hidden .column#main_with_hidden_' + (tostep) ).css({'position': 'relative'});
+			$('.main_with_hidden .column#main_with_hidden_' + (tostep) ).animate({'left': '0'});
 			currentcolumn = tostep;
 
 			if( currentcolumn == columncount ){

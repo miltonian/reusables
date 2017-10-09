@@ -58,16 +58,26 @@
 	var viewdict = <?php echo json_encode($viewdict) ?>;
 	var viewoptions = <?php echo json_encode( $viewoptions ) ?>;
 
-	<?php 
-		ReusableClasses::getEditingFunctionsJS( $viewoptions ) 
-	?>;
+
 
 	$('.<?php echo $identifier ?>').off().click(function(e){
 		e.preventDefault();
 
+		<?php if( $celltype == "modal" ){ ?>
+			thismodalclass = new <?php echo $viewoptions['modal']['modalclass'] ?>Classes();
+			dataarray = <?php echo json_encode( $fullviewdict ) ?>;
+		<?php }else{ ?>
+			dataarray = []
+		<?php } ?>
+	<?php 
+		ReusableClasses::getEditingFunctionsJS( $viewoptions ) 
+	?>;
+
 		if( typeof dataarray === 'undefined' ) {
 			dataarray = []
 		}
+		var viewdict = <?php echo json_encode($viewdict) ?>;
+		var viewoptions = <?php echo json_encode( $viewoptions ) ?>;
 		Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );
 	});
 	

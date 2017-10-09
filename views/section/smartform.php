@@ -100,11 +100,11 @@ extract( Input::convertInputKeys( $identifier ) );
 				Reusable.setinputvalues( viewdict, input_keys, identifier, typearray, dataarray, formatteddata, index )
 
 				<?php if( $steps > 1 ) { ?>
-					$('.main_with_hidden.next').css({'display': 'inline-block'});
-					$('.main_with_hidden.save').css({'display': 'none'});
+					$('.<?php echo $identifier ?> .main_with_hidden.next').css({'display': 'inline-block'});
+					$('.<?php echo $identifier ?> .main_with_hidden.save').css({'display': 'none'});
 				<?php } else { ?>
-					$('.main_with_hidden.save').css({'display': 'inline-block'});
-					$('.main_with_hidden.next').css({'display': 'none'});
+					$('.<?php echo $identifier ?> .main_with_hidden.save').css({'display': 'inline-block'});
+					$('.<?php echo $identifier ?> .main_with_hidden.next').css({'display': 'none'});
 				<?php } ?>
 			}
 		}
