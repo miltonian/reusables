@@ -44,3 +44,11 @@ $data_id = Data::getDefaultDataID( $viewdict );
 		</div>
 	</div>
 </div>
+
+<script>
+
+	<?php
+		ReusableClasses::addEditingToCell( $identifier, $fullviewdict, $celltype );
+	?>;
+	
+</script>

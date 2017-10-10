@@ -219,6 +219,46 @@ class ReusableClasses {
 		}
 	}
 
+	public static function addEditingToCell( $identifier, $fullviewdict, $celltype )
+	{
+		$viewdict = Data::retrieveDataWithID( $identifier );
+		$viewoptions = Data::retrieveOptionsWithID( $identifier );
+
+		echo 'var thismodalclass = "";';
+		echo 'var celltype = ' . json_encode( $celltype ) . ';';
+
+		if( $celltype == "modal" ){
+			echo 'thismodalclass = new ' . $viewoptions['modal']['modalclass'] . 'Classes();';
+			echo 'var dataarray = ' . json_encode( $fullviewdict ) . ';';
+		}
+
+		echo 'var viewdict = ' . json_encode($viewdict) . ';
+		var viewoptions = ' . json_encode( $viewoptions ) . ';
+		$(".' . $identifier . '").off().click(function(e){ 
+			var celltype = ' . json_encode( $celltype) . ';
+			if( celltype == "modal" || celltype == "dropdown" ) { 
+				e.preventDefault();
+				if( typeof dataarray === "undefined" ) { 
+					dataarray = []
+				}
+				Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );
+			}';
+
+			
+			
+			ReusableClasses::getEditingFunctionsJS( $viewoptions ) ;
+
+
+			echo 'if( typeof dataarray === "undefined" ) {
+				dataarray = []
+			}
+			var viewdict = ' . json_encode($viewdict) . ';';
+			echo 'var viewoptions = ' . json_encode( $viewoptions ) . ';
+			Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );';
+		echo '});';
+
+	}
+
 	public static function getDropdownFunctionsJS( $dict )
 	{
 		$action_key = ReusableClasses::getViewActionKey( $dict );

@@ -54,28 +54,8 @@ namespace Reusables;
 
 <script>
 
-	var thismodalclass = "";
-	var celltype = <?php echo json_encode( $celltype) ?>;
-
-	<?php if( $celltype == "modal" ){ ?>
-		thismodalclass = new <?php echo $viewoptions['modal']['modalclass'] ?>Classes();
-		var dataarray = <?php echo json_encode( $fullviewdict ) ?>;
-	<?php }?>
-
-	var viewdict = <?php echo json_encode($viewdict) ?>;
-	var viewoptions = <?php echo json_encode( $viewoptions ) ?>;
-
-	<?php 
-		ReusableClasses::getEditingFunctionsJS( $viewoptions ) 
+	<?php
+		ReusableClasses::addEditingToCell( $identifier, $fullviewdict, $celltype );
 	?>;
-
-	$('.<?php echo $identifier ?>').off().click(function(e){
-		e.preventDefault();
-
-		if( typeof dataarray === 'undefined' ) {
-			dataarray = []
-		}
-		Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );
-	});
-
+	
 </script>

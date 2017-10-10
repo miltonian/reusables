@@ -56,5 +56,9 @@ namespace Reusables;
 
 
 <script>
+
+	<?php
+		ReusableClasses::addEditingToCell( $identifier, $fullviewdict, $celltype );
+	?>;
 	
 </script>

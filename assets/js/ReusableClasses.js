@@ -152,8 +152,9 @@ var editingorder = false;
 			// index is the button's index, not the cell's
 			
 			var identifier = ""
-			var type = button['type'];
+			var type = "";
 			if( typeof type === 'undefined' ) {
+				type = button['type']
 				if( type == 'modal' ) {
 					identifier = button['modal']['modalclass']
 				}
