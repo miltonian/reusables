@@ -118,8 +118,7 @@ $optiontype = Data::getValue( $viewoptions, 'type' );
 		var viewdict = <?php echo json_encode($viewdict) ?>;
 		var viewoptions = <?php echo  json_encode( $viewoptions ) ?>;
 		Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );
-
-
+		
 	});
 
 </script>

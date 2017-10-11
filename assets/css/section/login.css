@@ -1,0 +1,6 @@
+
+.login.main { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; text-align: center; }
+	.login.thecontainer { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; max-width: 700px; }
+		.login.username { display: inline-block; position: relative; text-align: left; margin: 5px; padding: 20px; width: 100%; color: #333; font-weight: 300; font-size: 20px; background-color: white; border: 0; border: 1px solid #d9d9d9; border-radius: 5px; }
+		.login.password { display: inline-block; position: relative; text-align: left; margin: 5px; padding: 20px; width: 100%; color: #333; font-weight: 300; font-size: 20px; background-color: white; border: 0; border: 1px solid #d9d9d9; border-radius: 5px; }
+		.login.submit { display: inline-block; position: relative; margin: 5px; padding: 25px; color: #fff; font-weight: 500; font-size: 20px; background-color: green; border: 0; border-bottom: 5px solid rgba(0, 0, 0, 0.3); border-radius: 5px; width: 100% }

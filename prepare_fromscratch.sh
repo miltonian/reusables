@@ -122,11 +122,19 @@ require_once( 'db_pdo.php' );
 class DBClasses {
 
 	public \$PDO; // PHP Data Object
+	private \$cryptKey;
 
 	public function __construct() 
 	{
+		\$this->cryptKey = \"Rxp45dn142etvQk9e17Oo3nx2xJKfkZs\";
 		\$odp = new db_pdo();
 		\$this->PDO = \$odp->PDO_Return();
+	}
+
+	private function encryptIt( \$password )
+	{
+		\$encoded = base64_encode( mcrypt_encrypt( MCRYPT_RIJNDAEL_256, md5( \$this->cryptKey ), \$password, MCRYPT_MODE_CBC, md5( md5( \$this->cryptKey ) ) ) );
+		return( str_replace( '/', '', \$encoded ) ); 
 	}
 
 	public static function example()
@@ -137,6 +145,14 @@ class DBClasses {
 		\$type = 'select';
 		\$result = \$DBClasses->nonstatic_querySQL( \$query, \$values, \$type );
 
+		return \$result;
+	}
+
+	public static function checkLogin( \$query, \$username, \$password )
+	{
+		\$DBClasses = new DBClasses();
+		\$encryptedPass = \$DBClasses->encryptIt( \$password );
+		\$result = \$DBClasses->nonstatic_querySQL( \$query, [ \$username, \$encryptedPass ], 'select' );
 		return \$result;
 	}
 
@@ -190,6 +206,12 @@ class DBClasses {
 			}
 			return( array( 0, \$returnvalue ) );
 		}
+	}
+
+	private function decryptIt( \$password )
+	{
+		\$decoded = rtrim( mcrypt_decrypt( MCRYPT_RIJNDAEL_256, md5( \$this->cryptKey ), base64_decode( \$password ), MCRYPT_MODE_CBC, md5( md5( \$this->cryptKey ) ) ), \"\\0\");
+		return( \$decoded );
 	}
 
 	public function __destruct()
@@ -513,6 +535,11 @@ require 'routing/AltoRouter.php';
 	require 'vendor/miltonian/reusables/functions/edit_view.php';
 }, \"\");
 
+\$router->map( 'POST', '/functions/login', function() {
+	global \$router, \$match;
+	require 'vendor/miltonian/reusables/functions/login.php';
+}, \"\");
+
 \$router->map( 'GET', '/makereusablezip', function() {
 	global \$router, \$match;
 	require 'vendor/miltonian/custom/functions/makereusablezip.php';
@@ -521,6 +548,16 @@ require 'routing/AltoRouter.php';
 \$router->map( 'POST', '/custom/edit_view', function() {
 	global \$router, \$match;
 	require 'vendor/miltonian/custom/functions/edit_view.php';
+}, \"\");
+
+\$router->map( 'GET', '/login', function() {
+	global \$router, \$match;
+	require 'views/login.php';
+}, \"\");
+
+\$router->map( 'GET', '/logout', function() {
+	global \$router, \$match;
+	require 'views/logout.php';
 }, \"\");
 
 \$router->map( 'GET', '/', function() {
