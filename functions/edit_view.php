@@ -226,7 +226,11 @@ if (isset($fieldarray)) {
 }
 
 if( isset( $_POST['goto'] ) ){
-	header( 'Location: ' . $_POST['goto'] );
+	if( $_POST['goto'] == "" ) {
+		header( 'Location: /' );
+	}else{
+		header( 'Location: ' . $_POST['goto'] );
+	}
 }else{
 	header( 'Location: /' );
 }
