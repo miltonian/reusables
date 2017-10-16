@@ -19,13 +19,22 @@ if( !isset($viewdict['formimg']) ){ $viewdict['formimg'] = 'reusables/uploads/ic
 $examplebigad = 'https://theanywherecard.com/entrenash/post/media/images/bigad.png';
 $examplepostimg = 'https://theanywherecard.com/entrenash/post/media/images/examplepostimg.png';
 
+$linkpath = Data::getValue( $viewoptions, "action" );
+if( $linkpath == "" ) {
+	$linkpath = "/functions/registeruser";
+}
+
+$title = Data::getValue( $viewdict, "title" );
+if( $title == "" ) {
+	$title = "Register";
+}
+
 ?>
 
 
 <style>
 
-.register_basic {
-	 position: relative; display: inline-block; background: transparent; margin: 0; padding: 0; width: 60%;  min-height: 100px; border-radius: 6px; border: 0; /*background-color: rgba(245,245,250,1);*/ background-color: rgba(0,0,0,0.5); text-align: center; margin-bottom: 50px; }
+
 
 .formtitle { display: inline-block; position: relative;  color: #333333; margin: 0; padding: 0; margin-top: 20px; margin-bottom: 20px; margin-left: 30px; float: left; font-weight: 600; }
 
@@ -75,36 +84,25 @@ $examplepostimg = 'https://theanywherecard.com/entrenash/post/media/images/examp
 
 </style>
 
-		<!-- <div class='reusablepopbackground'>
-			<div class='reusablepopview'>
-				<button class=reusablepopclosebutton></button>
-				<p class='reusablepoptitle'>title</p>
-				<p class='reusablepopdesc'>desc</p>
-			</div>
-		</div> -->
-		
-		<div class=firstdiv style='font-family: Muli, sans-serif; position: relative; display: inline-block; margin: 0; margin-top: 0px; padding: 0; width: 100%; max-width: 1200px;  text-align: center; top: 50%; transform: translateY(-50%);'>
+		<div class="register_basic main">
 			
-			<div class=firstmaincontent style='position: relative; display: inline-block; max-width: 1200px; width: 100%; text-align: center;'>
+			<div class="register_basic formcontainer" >
 				
-				<form class='register_basic' method='post' action='registeruser.php'>
-					<div class='container' style='text-align: left; margin-top: 10px; margin-bottom: 30px; text-align: center;'>
-					<h2 style="width: calc(100% - 0px); padding: 0px 0px; text-align: center; color: white; font-weight: 400;">Register</h2>
-						<div class="field-wrapper">
-							<!-- <label>First name:</label><br> -->
+				<form class='register_basic theform' method='POST' action='<?php echo $linkpath ?>'>
+					<div class='register_basic thecontainer'>
+					<h2 class="register_basic title"><?php echo $title ?></h2>
+						<div class="register_basic field-wrapper">
 							<input type="text" name="first_name" placeholder="First Name" id="first_name">
 						</div>
 
-						<div class="field-wrapper">
-							<!-- <label>Last name:</label><br> -->
+						<div class="register_basic field-wrapper">
 							<input type="text" name="last_name" placeholder="Last Name" id="last_name">
 						</div>
 
-						<div class="field-wrapper" style="width: calc(100% - 40px);">
-							<!-- <label>Email:</label><br> -->
+						<div class="register_basic field-wrapper" style="width: calc(100% - 40px);">
 							<input type="text" name="email" placeholder="Email" id="email">
 						</div>
-					<input type='submit' class='custombutton' style='background-color: #ff5719; width: 170px; margin-top: 10px; margin-bottom: 10px; cursor: pointer;'>
+					<input type='submit' class='register_basic custombutton'>
 					</div>
 				</form>
 				
@@ -114,10 +112,7 @@ $examplepostimg = 'https://theanywherecard.com/entrenash/post/media/images/examp
 		</div>
 
 <script>
-	$('#formimg').change(function(){
-		ReusableGlobalFunctionsClass.readthisURL(this, $('#formlabel'), null, null);
-		// alert($('#featuredpostimg').val());
-	});
+	
 </script>
 	
 	

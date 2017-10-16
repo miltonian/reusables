@@ -133,24 +133,36 @@ if( isset($fieldimages ) ) {
 				// exit( json_encode( $query ) );
 				$result = Reusables\CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
 				$lastinsertid = $result[1];
+				for ( $i=0; $i < sizeof($fieldarray); $i++ ) {
+					$fieldarray[$i]['field_conditions'] = [ ["key"=>"id", "value"=>$lastinsertid ] ];
+				}
 				// exit( json_encode( $lastinsertid ) );
 			}
 		}
 	}
 
-
 }
 
-
 if (isset($fieldarray)) {
+	// exit("1");
 	$indexes = array_keys( $fieldarray );
 	$didfind = false;
 	foreach ($fieldarray as $f) {
-		$fieldvalue = $f['field_value'];
-		$tablename = $f['tablename'];
-		$colname = $f['col_name'];
+		$fieldvalue = "";
+		$tablename = "";
+		$colname = "";
+		if( isset( $f['field_value'] ) ) {
+			$fieldvalue = $f['field_value'];
+		}
+		if( isset( $f['tablename'] ) ) {
+			$tablename = $f['tablename'];
+		}
+		if( isset( $f['col_name'] ) ) {
+			$colname = $f['col_name'];
+		}
 		// $rowid = $f['row_id'];
 		$conditions = $f['field_conditions'];
+		// exit( json_encode( $conditions ) );
 		$whereclause = "";
 		$conditionvalues = [];
 		// exit( "lastinsertid: " . json_encode( $lastinsertid ) );
@@ -191,10 +203,10 @@ if (isset($fieldarray)) {
 			// exit( json_encode( array( $query, $values, $type ) ) );
 			$result = Reusables\CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
 		}
-			
-		
+	
 	}
 	if( !$didfind ){
+		// exit( json_encode( $_POST['ifnone_insert'] ) );
 		if( isset( $_POST['ifnone_insert'] ) ){
 			if( $_POST['ifnone_insert'] == "1" ){ 
 				$query = "INSERT INTO " . $tablename . " ( ";// . $colname . " = ? " . $whereclause;
@@ -208,22 +220,26 @@ if (isset($fieldarray)) {
 						$query .= ", " . $fieldarray[ $indexes[$i] ]['col_name'];
 						$questionmarks .= ", ?";
 					}else{
-						$query .= $conditions[$i]['key'];
+						// exit(json_encode($i));
+						// $query .= $conditions[$i]['key'];
+						$query .= $fieldarray[ $indexes[$i] ]['col_name'];
 						$questionmarks .= "?";
 					}
 					array_push( $insertconditionvalues, $fieldarray[ $indexes[$i] ]['field_value'] );
 				}
+
 				$query .= " ) VALUES ( " . $questionmarks . ")";
 				$values = $insertconditionvalues;
 				$type = "insert";
 				// $result = $MainClasses->querySQL( $query, $values, $type );
 				// exit( "6" );
-				// exit( json_encode( $query ) );
+				// exit( json_encode( array( $query, $insertconditionvalues ) ) );
 				$result = Reusables\CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
 			}
 		}
 	}
 }
+
 
 if( isset( $_POST['goto'] ) ){
 	if( $_POST['goto'] == "" ) {
