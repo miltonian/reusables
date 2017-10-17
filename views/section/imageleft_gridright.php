@@ -37,7 +37,13 @@ foreach ($images as $im) {
 	$linkpath = Data::getValue( $viewoptions, 'pre_slug' ) . Data::getValue( $viewdict, 'slug' );
 }
 
-$fullviewdict = Data::getFullArray( $viewdict )[$identifier]['value'];
+$fullarray = Data::getFullArray( $viewdict );
+if( isset( $viewdict[$identifier]['value'] ) ) {
+	$fullviewdict = Data::getFullArray( $viewdict )[$identifier]['value'];
+}else{
+	$fullviewdict = $viewdict;
+}
+
 $optiontype = Data::getValue( $viewoptions, 'type' );
 // exit( json_encode( $fullviewdict ) );
 

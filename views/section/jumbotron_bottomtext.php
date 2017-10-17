@@ -29,7 +29,12 @@ namespace Reusables;
 		$linkpath = "#";
 	}
 	$optiontype = Data::getValue( $viewoptions, 'type' );
+	$fullarray = Data::getFullArray( $viewdict );
+if( isset( $viewdict[$identifier]['value'] ) ) {
 	$fullviewdict = Data::getFullArray( $viewdict )[$identifier]['value'];
+}else{
+	$fullviewdict = $viewdict;
+}
 // exit( json_encode( "aiwljkefnds,cl akjdsmncx alsjdkfbcxailwkejsfdb,fmn" ) );
 
 ?>

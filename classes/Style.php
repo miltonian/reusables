@@ -8,8 +8,8 @@ class Style {
 
 	public static function addcss( $parent_dir, $file )
 	{
-		if ( !isset( self::$allcss[ $file ] ) ) {
-			self::$allcss[ $file ] = true;
+		if ( !isset( self::$allcss[$parent_dir][ $file ] ) ) {
+			self::$allcss[$parent_dir][ $file ] = true;
 			// exit( json_encode( PROJECT_ROOT ) );
 			// echo "<link rel=stylesheet href='/vendor/miltonian/reusables/assets/css/" . $parent_dir . "/" . $file . ".css' type='text/css'>";
 			if( $parent_dir == "custom" ){
@@ -37,8 +37,8 @@ class Style {
 
 	public static function slider_2( $identifier )
 	{
-		if(!isset(self::$allcss[ $identifier ])){
-			self::$allcss[ $identifier ] = "
+		if(!isset(self::$allcss['slider'][ $identifier ])){
+			self::$allcss['slider'][ $identifier ] = "
 			<style>
 				.".$identifier." { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: black; width: calc(100% - 40px); padding: 0 20px; margin: 0; overflow: hidden; }
 					.".$identifier." .backgroundimage { position: absolute; display: inline-block; margin: 0; padding: 0; top: -10%; left: -10%; width: 120%; height: 120%; background-position: center; background-size: cover; filter:blur(15px); }
@@ -86,7 +86,7 @@ class Style {
 				}
 			</style>
 			";
-			return self::$allcss[ $identifier ];
+			return self::$allcss['slider'][ $identifier ];
 		}
 	}
 
