@@ -1,0 +1,9 @@
+.request_form.main { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; text-align: center; }
+	.request_form.thecontainer { display: inline-block; position: relative; margin: 0; padding: 0px; width: calc( 100% - 200px ); height: 400px; background-color: rgba(0,0,0,0.6); text-align: center; }
+	.request_form.inner { display: inline-block; position: relative; padding: 0; margin: 50px; height: calc(100% - 100px); width: calc(100% - 100px ); text-align: left; }
+	.request_form.content_container { display: inline-block; position: relative; margin: 0; padding: 0; text-align: left; }
+	.request_form.title { display: inline-block; position: relative; margin: 0; padding: 10px 0; font-weight: 300; font-size: 40px; width: 100%; color: white; }
+	.request_form.subtitle { display: inline-block; position: relative; margin: 0; padding: 0; padding-bottom: 30px; font-weight: 300; font-size: 20px; width: 100%; color: white; }
+	.request_form.input { display: inline-block; position: relative; margin: 0; margin-right: 10px; padding: 10px; height: 50px; border: 0; width: 200px; border-radius: 5px; background-color: white; font-size: 15px; }
+	.request_form select.input { width: 400px; }
+	.request_form.submit_button { display: inline-block; position: relative; margin: 0; padding: 0; height: 55px; width: 100px; border: 0; border-radius: 5px; background-color: blue; color: white; font-size: 15px; font-weight: 600; }
