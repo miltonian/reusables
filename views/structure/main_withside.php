@@ -17,17 +17,19 @@ namespace Reusables;
 <div class="viewtype_structure <?php echo $identifier ?> main_withside main">
 	<div class="main_withside maincolumn">
 		<?php 
-			foreach ($structuredict['maincolumn'] as $view) {
-				// $ReusableClasses->$view['viewtype']( $view['filename'], $view['data'] );
-				echo $view;
+			if( isset( $structuredict['maincolumn'] ) ) {
+				foreach ($structuredict['maincolumn'] as $view) {
+					echo $view;
+				}
 			}
 		?>
 	</div>
 	<div class="main_withside sidecolumn_right">
 		<?php 
-			foreach ($structuredict['sidecolumn_right'] as $view) {
-				// $ReusableClasses->$view['viewtype']( $view['filename'], $view['data'] );
-				echo $view;
+			if( isset( $structuredict['sidecolumn_right'] ) ) {
+				foreach ($structuredict['sidecolumn_right'] as $view) {
+					echo $view;
+				}
 			}
 		?>
 	</div>

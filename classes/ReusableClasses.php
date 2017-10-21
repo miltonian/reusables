@@ -342,6 +342,23 @@ class ReusableClasses {
 
 	}
 
+	public static function autoMakeStructure( $viewname, $innerviews, $identifier ) {
+
+		$viewtype = "Structure";
+		$containerviews = [];
+		$i=0;
+		foreach ($innerviews as $v) {
+			if( !isset( $containerviews[ $v['container_key'] ] ) ) {
+				$containerviews[ $v['container_key'] ] = [];
+			}
+			$view = call_user_func_array("Reusables\\".$v['viewtype'] . "::make", [ $v['viewname'], $identifier . "_" . $i  ] );
+			array_push( $containerviews[ $v['container_key'] ], $view );
+			$i++;
+		}
+		echo call_user_func_array("Reusables\\".$viewtype . "::make", [ $viewname, $containerviews, $identifier  ] );
+
+	}
+
 
 
 
