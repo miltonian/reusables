@@ -101,7 +101,6 @@ $optiontype = Data::getValue( $viewoptions, 'type' );
 
 	var viewdict = <?php echo json_encode($viewdict) ?>;
 	var viewoptions = <?php echo json_encode( $viewoptions ) ?>;
-
 	$('.<?php echo $identifier ?> .imageleft_gridright.link').off().click(function(e){ 
 		<?php $arrayindex = 1; ?>
 

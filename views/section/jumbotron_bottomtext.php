@@ -53,11 +53,11 @@ if( isset( $viewdict[$identifier]['value'] ) ) {
 </style>
 
 <div class="viewtype_section jumbotron_bottomtext <?php echo $identifier ?> main">
-		<div class="backgroundimage" style="background-image: url('<?php echo Data::getValue( $viewdict, 'featured_imagepath' ) ?>');">
+		<div class="backgroundimage" style="background-image: url('<?php echo Data::getValue( $viewdict, 'imagepath' ) ?>');">
 			<div class="gradient"></div>
 		</div>
 		<div class="header">
-			<img id="logo" src="<?php echo Data::getValue( $viewdict, 'logo_imagepath' ) ?>">
+			<img id="logo" src="<?php echo Data::getValue( $viewdict, 'logo' ) ?>">
 			<h3 id="title"><?php echo Data::getValue( $viewdict, 'title' ) ?></h3>
 		</div>
 	<a class="jumbotron_bottomtext link" href="<?php echo $linkpath ?>"></a>

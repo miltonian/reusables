@@ -88,8 +88,8 @@ var editingorder = false;
 			var thisdictvalue = [];
 			thisdict = dataarray[data_id];
 			if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
-			
-			CKEDITOR.instances['fieldarray[' + fieldindex + '][field_value]'].setData( thisdictvalue[key] ); 
+			var name = 'fieldarray_' + inputclass + '[' + fieldindex + '][field_value]'
+			CKEDITOR.instances[name].setData( thisdictvalue[key] ); 
 
 			$('.' + identifier + ' .' + inputclass + ' input.tablename').val(thisdict['db_info']['tablenames'][key]);
 			$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);

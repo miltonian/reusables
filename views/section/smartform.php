@@ -2,6 +2,7 @@
 
 namespace Reusables;
 
+
 if( !isset( $viewoptions['ifnone_insert'] ) ){
 	$ifnone_insert = false;
 }else{
@@ -29,6 +30,7 @@ $original_data_id = $identifier;
 extract( CustomView::makeFormVars( $viewdict, "viewdict" ) );
 extract( Input::convertInputKeys( $identifier ) );
 
+// exit( json_encode( $viewdict ) );
 ?>
 
 
@@ -79,7 +81,6 @@ extract( Input::convertInputKeys( $identifier ) );
 <?php } ?>
 
 <script>
-
 	<?php if( $steps == $onstep ) { ?>
 
 		var viewdict = <?php echo json_encode($viewdict) ?>;
@@ -98,6 +99,7 @@ extract( Input::convertInputKeys( $identifier ) );
 				var formatteddata = <?php echo json_encode( Data::retrieveDataWithID( $original_data_id ) ) ?>;
 				var identifier = "<?php echo $identifier ?>";
 				Reusable.setinputvalues( viewdict, input_keys, identifier, typearray, dataarray, formatteddata, index )
+// alert(JSON.stringify(viewdict))
 
 				<?php if( $steps > 1 ) { ?>
 					$('.<?php echo $identifier ?> .main_with_hidden.next').css({'display': 'inline-block'});
@@ -116,6 +118,6 @@ extract( Input::convertInputKeys( $identifier ) );
 
 	<?php } ?>
 
-
+// alert()
 </script>
 	
