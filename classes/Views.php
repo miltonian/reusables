@@ -5,6 +5,8 @@ namespace Reusables;
 
 class Views {
 
+	protected static $viewidentifiers = [];
+
 	public static function setDefaultViewInfo( $file, $identifier, $viewtype, $tablenames=[] )
 	{
 		ReusableClasses::addfile( $viewtype, $file );
@@ -20,7 +22,20 @@ class Views {
 		}
 
 		$View->set( 'identifier', $identifier );
+
+		array_push( self::$viewidentifiers, $identifier );
+
 		return $View->render();
+	}
+
+	public static function addView( $identifier )
+	{
+		array_push(Views::$viewidentifiers, $identifier);
+	}
+
+	public static function getViewIdentifiers()
+	{
+		return self::$viewidentifiers;
 	}
 
 }

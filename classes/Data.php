@@ -79,6 +79,8 @@ class Data {
 			exit( "Duplicate data id: '" . $identifier . "' entries. " );
 		}
 
+		Views::addView( $identifier );
+
 	}
 
 	public static function setKeyValue( $pair, $identifier )
@@ -271,9 +273,28 @@ class Data {
 		// 	}
 		// }
 // echo "<script>alert( JSON.stringify( " . json_encode( $viewdict ) . " ) );</script>";
-		if( isset( $viewdict['data_id'] ) ){
-			$dataid = $viewdict['data_id'];
+		// if( $viewdict['data_id'] != "admin_insertview_view_id_button_3" ) {
+			
+		// }
+		$dataid = false;
+		if( isset( $viewdict['index'] ) ) {
+			// echo " <script> alert( JSON.stringify( " . json_encode( $viewdict['index'] ) . " ) ) </script> ";
+			if( isset( $viewdict['index'] ) ) {
+				$dataid = $viewdict[$allkeys[0]]['data_id'];
+			}else{
+				if( isset( $viewdict['data_id'] ) ) {
+					$dataid = $viewdict['data_id'];
+				}
+			}
+		}else{
+			if( isset( $viewdict['data_id'] ) ) {
+				$dataid = $viewdict['data_id'];
+			}
+		}
 
+		if( $dataid ){
+			// $dataid = $viewdict['data_id'];
+			
 
 			if( $dataid ){
 				if ($dataid != null) {

@@ -4,7 +4,8 @@
 
 	extract( Cell::prepareCell( $identifier ) );
 
-	// exit( json_encode( $celltype ) );
+
+	// exit( json_encode( $fullviewdict ) );
 
 ?>
 

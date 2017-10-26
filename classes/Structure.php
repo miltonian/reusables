@@ -10,6 +10,7 @@ class Structure {
 		$View = View::factory( 'reusables/views/structure/' . $file );
 		$View->set( 'structuredict', $data );
 		$View->set( 'identifier', $identifier );
+
 		return $View->render();
 	}
 

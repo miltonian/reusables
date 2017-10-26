@@ -10,6 +10,7 @@ class Wrapper {
 		$View->set( 'wrapperdict', $data );
 		$View->set( 'children', $children );
 		$View->set( 'identifier', $identifier );
+
 		return $View->render();
 	}
 
@@ -20,6 +21,7 @@ class Wrapper {
 		$View->set( 'wrapperdict', $data );
 		$View->set( 'children', $children );
 		$View->set( 'identifier', $identifier );
+		
 		return $View->render();
 	}
 

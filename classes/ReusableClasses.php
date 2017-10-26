@@ -223,18 +223,30 @@ class ReusableClasses {
 	{
 		$viewdict = Data::retrieveDataWithID( $identifier );
 		$viewoptions = Data::retrieveOptionsWithID( $identifier );
+		// exit( json_encode( $fullviewdict ) );
 
 		echo 'var thismodalclass = "";';
 		echo 'var celltype = ' . json_encode( $celltype ) . ';';
 
-		if( $celltype == "modal" ){
+		if( $celltype == "modal" ) {
 			echo 'thismodalclass = new ' . $viewoptions['modal']['modalclass'] . 'Classes();';
+			echo 'var dataarray = ' . json_encode( $fullviewdict ) . ';';
+		}else if( $celltype == "attached" ) {
 			echo 'var dataarray = ' . json_encode( $fullviewdict ) . ';';
 		}
 
 		echo 'var viewdict = ' . json_encode($viewdict) . ';
 		var viewoptions = ' . json_encode( $viewoptions ) . ';
-		$(".' . $identifier . '").off().click(function(e){ 
+		$(".' . $identifier . '").off().click(function(e){ ';
+		echo 'var viewdict = ' . json_encode($viewdict) . ';
+		var viewoptions = ' . json_encode( $viewoptions ) . ';';
+			if( $celltype == "modal" ) {
+				echo 'thismodalclass = new ' . $viewoptions['modal']['modalclass'] . 'Classes();';
+				echo 'var dataarray = ' . json_encode( $fullviewdict ) . ';';
+			}else if( $celltype == "attached" ) {
+				echo 'var dataarray = ' . json_encode( $fullviewdict ) . ';';
+			}
+			echo '
 			var celltype = ' . json_encode( $celltype) . ';
 			if( celltype == "modal" || celltype == "dropdown" ) { 
 				e.preventDefault();
@@ -242,19 +254,26 @@ class ReusableClasses {
 					dataarray = []
 				}
 				Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );
+			}else if( celltype == "attached" ){
+				e.preventDefault();
+				dataarray = ' . json_encode( $fullviewdict ) . ';
+				if( typeof dataarray === "undefined" ) { 
+					dataarray = []
+				}
+				var firstkey = ' . json_encode( array_keys($viewdict)[0] ) . ';
+				var theindex = parseInt( viewdict[firstkey]["index"] )
+				Reusable.addAction( viewdict, [], theindex, dataarray, this, e, viewoptions );
 			}';
-
-			
 			
 			ReusableClasses::getEditingFunctionsJS( $viewoptions ) ;
 
 
-			echo 'if( typeof dataarray === "undefined" ) {
-				dataarray = []
-			}
-			var viewdict = ' . json_encode($viewdict) . ';';
-			echo 'var viewoptions = ' . json_encode( $viewoptions ) . ';
-			Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );';
+			// echo 'if( typeof dataarray === "undefined" ) {
+			// 	dataarray = []
+			// }
+			// var viewdict = ' . json_encode($viewdict) . ';';
+			// echo 'var viewoptions = ' . json_encode( $viewoptions ) . ';
+			// Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );';
 		echo '});';
 
 	}
@@ -358,6 +377,28 @@ class ReusableClasses {
 		echo call_user_func_array("Reusables\\".$viewtype . "::make", [ $viewname, $containerviews, $identifier  ] );
 
 	}
+
+	public static function analyzeViews()
+	{
+		$views = Views::getViewIdentifiers();
+
+		foreach ($views as $v) {
+			$data = Data::retrieveDataWithID( $v );
+			$options = Data::retrieveOptionsWithID( $v );
+			// exit( json_encode( $data ) );
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

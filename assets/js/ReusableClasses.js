@@ -206,6 +206,22 @@ var editingorder = false;
 				}
 			}else if( type == "dropdown" ){
 				e.preventDefault();
+			}else if( type == "attached" ){
+				e.preventDefault();
+
+				if( viewoptions ) {
+					if( typeof viewoptions['type'] !== 'undefined' ) {
+						var datakey = ""
+						$.each(dataarray, function(key, value) {
+						      datakey = key
+						});
+
+
+						$( viewoptions['attached']['classname'] ).val( dataarray[datakey]['value'][index][viewoptions['attached']['key']] )
+						$(view).parent().parent().parent().parent().parent().parent().parent().parent().css({'display': 'none'})
+						// alert(JSON.stringify('.viewtype_structure.'+datakey+'_modalbackground.modal_background.main'))
+					}
+				}
 			}
 		}
 

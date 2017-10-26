@@ -26,11 +26,14 @@ class Input {
 		if( !$type ){
 			$type = Input::getInputType( $key );
 		}
+		$iscurrency = false;
+		$isbutton = false;
 		if( $type == "currency" ) {
 			$type = "textfield";
 			$iscurrency = "1";
-		}else{
-			$iscurrency = false;
+		}else if( $type == "button" ) {
+			$type = "textfield";
+			$isbutton = "1";
 		}
 		Input::setInputType( $key, $type );
 		// echo json_encode( $placeholder );
@@ -54,7 +57,8 @@ class Input {
 				"field_table"=>Data::getDefaultTableNameWithID( $dataid ),
 				"field_colname"=>Data::getColName( ["data_id"=>$dataid, "key" => $key] ),
 				"field_conditions"=>Data::getConditions( ["data_id"=>$dataid, "key" => $key] ),
-				"is_currency"=>$iscurrency
+				"is_currency"=>$iscurrency,
+				"is_button"=>$isbutton
 			];
 			// exit( json_encode( $inputdict ) );
 
@@ -83,6 +87,14 @@ class Input {
 
 		// echo $index . ", ";
 		// ReusableClasses::setFormInputIndex( $parentclass, $index );
+		if( $isbutton == "1" ) {
+			$buttondata = Data::retrieveDataWithID( $stuff . $key . "_button_" . $index );
+			$buttonoptions = Data::retrieveOptionsWithID( $stuff . $key . "_button_" . $index );
+			if( !$buttondata || !$buttonoptions ) {
+				exit( "You need to add Data and Options to identifier: \"" . $stuff . $key . "_button_" . $index . "\"" );
+			}
+			return [ Input::make( $type, $stuff . $key . "_input_" . $index ), Button::make( "basic", $stuff . $key . "_button_" . $index ) ];
+		}
 		return Input::make( 
 			$type, 
 			$stuff . $key . "_input_" . $index
@@ -184,9 +196,17 @@ class Input {
 			if( $steps == $s ){
 				ReusableClasses::setFormInputIndex( $identifier, $i );
 
+				$theinput = Input::fill( $data, $thekey, $i, $type, $placeholder, $labeltext, $identifier  );
+				if( sizeof( $theinput ) == 2 ) {
+					array_push( 
+						$input_fields, 
+						$theinput[0]
+					);
+					$theinput = $theinput[1];
+				}
 				array_push( 
 					$input_fields, 
-					Input::fill( $data, $thekey, $i, $type, $placeholder, $labeltext, $identifier  )
+					$theinput
 				);
 				$inputs['c' . $s] = $input_fields;
 

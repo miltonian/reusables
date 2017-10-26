@@ -11,6 +11,7 @@ class Template {
 		$data = Data::retrieveDataWithID( $identifier );
 		$View->set( 'templatedict', $data );
 		$View->set( 'identifier', $identifier );
+		
 		return $View->render();
 	}
 
