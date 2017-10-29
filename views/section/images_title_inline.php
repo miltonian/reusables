@@ -5,6 +5,13 @@ namespace Reusables;
 // images => imagepath
 // needs 3 images
 
+
+	Views::setParams( 
+		[ ["imagepath", "text"] ], 
+		[],
+		$identifier
+	);
+
 ?>
 
 <style>

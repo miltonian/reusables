@@ -4,6 +4,14 @@
 	$buttonsarray = $viewdict['buttons'];
 	$keyarray = array_keys($buttonsarray);
 	$width = strval( 100.0 / floatval( sizeof( $buttonsarray ) ) ) . "%";
+
+
+	Views::setParams( 
+		[ "buttons"=>["link", "img", "text"] ], 
+		[],
+		$identifier
+	);
+
 ?>
 
 <style>

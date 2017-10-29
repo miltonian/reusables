@@ -9,6 +9,14 @@ $adsetimg = Data::getValue( $viewdict, "imagepath" );
 
 // exit( json_encode( $viewdict ) );
 
+
+Views::setParams( 
+	["link", "id", "imagepath"], 
+	[],
+	$identifier
+);
+
+
 ?>
 
 <style>

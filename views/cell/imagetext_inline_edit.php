@@ -21,6 +21,12 @@ $cellindex = Data::getValue( $viewdict, 'index' );
 
 $viewoptions = ReusableClasses::convertViewActions( $viewoptions );
 
+	Views::setParams( 
+		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "index", "description", "celldate", "celltype", "slug", "actions" ], 
+		[],
+		$identifier
+	);
+
 ?>
 <script>
 	var viewdict = <?php echo json_encode( Data::getValue( $identifier ) ) ?>;

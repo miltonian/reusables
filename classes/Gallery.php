@@ -4,9 +4,14 @@ namespace Reusables;
 
 class Gallery {
 
+	public static function set( $file, $identifier )
+	{
+		Views::setDefaultViewInfo( $file, $identifier, "gallery" );
+	}
+
 	public static function make( $file, $identifier )
 	{
-		return Views::setDefaultViewInfo( $file, $identifier, "gallery" );
+		return Views::makeView( $file, $identifier, "gallery" );
 	}
 
 	// public static function make( $file, $identifier )

@@ -4,9 +4,14 @@ namespace Reusables;
 
 class Footer {
 
+	public static function set( $file, $identifier )
+	{
+		Views::setDefaultViewInfo( $file, $identifier, "footer" );
+	}
+
 	public static function make( $file, $identifier )
 	{
-		return Views::setDefaultViewInfo( $file, $identifier, "footer" );
+		return Views::makeView( $file, $identifier, "footer" );
 	}
 
 	// public static function make( $file, $identifier )

@@ -6,6 +6,12 @@ $appstore = Data::getValue( $viewdict, 'appstore' );
 $googleplay = Data::getValue( $viewdict, 'googleplay' );
 $otherdevice = Data::getValue( $viewdict, 'otherdevice' );
 
+	Views::setParams( 
+		[ "appstore", "googleplay", "otherdevice" ], 
+		[],
+		$identifier
+	);
+
 ?>
 
 <div class="viewtype_sharing download_buttons main <?php echo $identifier ?>">

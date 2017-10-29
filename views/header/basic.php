@@ -2,6 +2,13 @@
 
 namespace Reusables;
 // exit( json_encode( $viewdict ) );
+
+
+	Views::setParams( 
+		[ "title" ],
+		[],
+		$identifier
+	);
 ?>
 
 <style>

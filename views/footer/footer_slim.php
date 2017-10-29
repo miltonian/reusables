@@ -2,6 +2,14 @@
 
 namespace Reusables;
 
+
+
+	Views::setParams( 
+		[ "name", "fblink", "twitterlink", "instalink" ],
+		[],
+		$identifier
+	);
+
 ?>
 
 <style>

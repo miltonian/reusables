@@ -4,6 +4,14 @@ namespace Reusables;
 
 	if( !isset($identifier) ){ $identifier = ""; }
 	// exit( json_encode( $viewdict ) );
+
+
+	Views::setParams( 
+		[ "facebook", "twitter" ], 
+		[],
+		$identifier
+	);
+
 ?>
 
 <style>

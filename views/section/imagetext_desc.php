@@ -2,6 +2,12 @@
 
 namespace Reusables;
 
+	Views::setParams( 
+		[ "featured_imagepath", "title", "subtitle", "html_text" ], 
+		[],
+		$identifier
+	);
+
 ?>
 
 <style>

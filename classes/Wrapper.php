@@ -4,25 +4,46 @@ namespace Reusables;
 
 class Wrapper {
 
-	public static function make( $data, $children, $identifier )
-	{
-		$View = View::factory( 'reusables/views/wrapper/' . $file );
-		$View->set( 'wrapperdict', $data );
-		$View->set( 'children', $children );
-		$View->set( 'identifier', $identifier );
+	// public static function make( $data, $children, $identifier )
+	// {
+	// 	$View = View::factory( 'reusables/views/wrapper/' . $file );
+	// 	$View->set( 'wrapperdict', $data );
+	// 	$View->set( 'children', $children );
+	// 	$View->set( 'identifier', $identifier );
 
-		return $View->render();
+	// 	return $View->render();
+
+	// 	Data::addData( $data, $identifier );
+	// 	Views::setDefaultViewInfo( $file , $identifier, "wrapper" );
+	// }
+
+	public static function setwrapper1( $data, $children, $identifier )
+	{
+		// ReusableClasses::addfile( "wrapper", "wrapper_1" );
+		// $View = View::factory( 'reusables/views/wrapper/wrapper_1' );
+		// $View->set( 'wrapperdict', $data );
+		// $View->set( 'children', $children );
+		// $View->set( 'identifier', $identifier );
+		
+		// return $View->render();
+
+		Data::addData( $data, $identifier );
+		Views::setDefaultViewInfo( 'wrapper_1' , $identifier, "wrapper", [], $children );
 	}
 
 	public static function wrapper1( $data, $children, $identifier )
 	{
-		ReusableClasses::addfile( "wrapper", "wrapper_1" );
-		$View = View::factory( 'reusables/views/wrapper/wrapper_1' );
-		$View->set( 'wrapperdict', $data );
-		$View->set( 'children', $children );
-		$View->set( 'identifier', $identifier );
+		// ReusableClasses::addfile( "wrapper", "wrapper_1" );
+		// $View = View::factory( 'reusables/views/wrapper/wrapper_1' );
+		// $View->set( 'wrapperdict', $data );
+		// $View->set( 'children', $children );
+		// $View->set( 'identifier', $identifier );
 		
-		return $View->render();
+		// return $View->render();
+
+		Data::addData( $data, $identifier );
+		return Views::makeView( 'wrapper_1', $identifier, 'wrapper', [], $children );
+
 	}
 
 }

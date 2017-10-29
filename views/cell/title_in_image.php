@@ -4,6 +4,13 @@
 
 	extract( Cell::prepareCell( $identifier ) );
 
+
+	Views::setParams( 
+		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "cellindex", "description", "celldate", "celltype", "slug", "title" ], 
+		[],
+		$identifier
+	);
+
 ?>
 
 

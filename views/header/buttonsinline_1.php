@@ -15,6 +15,13 @@ $buttons = "";
 // }
 
 
+	Views::setParams( 
+		[], 
+		[],
+		$identifier
+	);
+
+
 ?>
 
 <div class="buttonsinline_1" style='display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; max-width: 150px; margin-top: 25px;'>

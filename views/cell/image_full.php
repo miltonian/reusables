@@ -27,7 +27,12 @@ $data_id = Data::getDefaultDataID( $viewdict );
 	// exit(json_encode($cellindex));
 
 
-
+	Views::setParams( 
+		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "cellindex", "description", "celldate", "celltype", "id", "featured_imagepath", "title", "slug" ],
+		[],
+		$identifier
+	);
+	
 ?>
 
 <div class="viewtype_cell image_full main <?php echo $identifier ?> <?php if($viewdict['isfeatured']){ echo "featured"; } ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo $mediatype; } ?> index_<?php echo $cellindex ?>" id="<?php echo Data::getValue( $viewdict, 'id' ) ?>">

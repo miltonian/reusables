@@ -53,9 +53,10 @@ class ReusableClasses {
 		ob_start();
 	}
 
-
 	public static function endpage( $parent_dir, $page, $endbody=true, $addjquery=true, $addeditor=true )
 	{
+		Views::makeViews();
+
 		if( $endbody ){
 			echo "</body>";
 		}
@@ -82,9 +83,12 @@ class ReusableClasses {
 			}
 		}
 		// echo "<link rel='stylesheet' type='text/css' href='/vendor/miltonian/custom/css/pages/" . basename($page, '.php') . ".css'>";
-		echo $output;
 
+		echo $output;
 		ReusableClasses::addjs();
+
+		Views::cleararrays();
+
 	}
 
 	public static function addReusableJS( $addjquery )
@@ -357,7 +361,7 @@ class ReusableClasses {
 
 	public static function autoMakeView( $viewtype, $viewname, $identifier ) {
 
-		echo call_user_func_array("Reusables\\".$viewtype . "::make", [ $viewname, $identifier  ] );
+		call_user_func_array("Reusables\\".$viewtype . "::set", [ $viewname, $identifier  ] );
 
 	}
 
@@ -374,19 +378,8 @@ class ReusableClasses {
 			array_push( $containerviews[ $v['container_key'] ], $view );
 			$i++;
 		}
-		echo call_user_func_array("Reusables\\".$viewtype . "::make", [ $viewname, $containerviews, $identifier  ] );
+		call_user_func_array("Reusables\\".$viewtype . "::set", [ $viewname, $containerviews, $identifier  ] );
 
-	}
-
-	public static function analyzeViews()
-	{
-		$views = Views::getViewIdentifiers();
-
-		foreach ($views as $v) {
-			$data = Data::retrieveDataWithID( $v );
-			$options = Data::retrieveOptionsWithID( $v );
-			// exit( json_encode( $data ) );
-		}
 	}
 
 

@@ -4,9 +4,14 @@ namespace Reusables;
 
 class Cell {
 
+	public static function set( $file, $identifier )
+	{
+		Views::setDefaultViewInfo( $file, $identifier, "cell" );
+	}
+
 	public static function make( $file, $identifier )
 	{
-		return Views::setDefaultViewInfo( $file, $identifier, "cell" );
+		return Views::makeView( $file, $identifier, "cell" );
 	}
 
 	public static function prepareCell( $identifier )

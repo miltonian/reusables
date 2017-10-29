@@ -4,9 +4,14 @@ namespace Reusables;
 
 class Modal {
 
+	public static function set( $file, $identifier )
+	{
+		Views::setDefaultViewInfo( $file, $identifier, "modal" );
+	}
+
 	public static function make( $file, $identifier )
 	{
-		return Views::setDefaultViewInfo( $file, $identifier, "modal" );
+		return Views::makeView( $file, $identifier, "modal" );
 	}
 
 	// public static function make( $file, $identifier )

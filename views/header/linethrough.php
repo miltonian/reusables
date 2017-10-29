@@ -6,7 +6,14 @@ $required = array(
 	"title" => ""
 );
 
-ReusableClasses::checkRequired( $identifier, $viewdict, $required );
+// ReusableClasses::checkRequired( $identifier, $viewdict, $required );
+
+
+	Views::setParams( 
+		[ "title" ],
+		[],
+		$identifier
+	);
 
 ?>
 

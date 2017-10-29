@@ -11,6 +11,13 @@ namespace Reusables;
 	
 	$sharingdict = Data::getValue( $viewdict, 'sharingdict' );
 
+
+	Views::setParams( 
+		[ "sharingdict", "featured_imagepath", "html_text", "sharingdict" ], 
+		[],
+		$identifier
+	);
+
 ?>
 
 <style>

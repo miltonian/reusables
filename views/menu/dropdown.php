@@ -26,6 +26,12 @@ foreach ($dropdownlist_keys as $ik) {
 
 // exit( json_encode( $dropdownlist_keydicts ) );
 
+	Views::setParams( 
+		[ "title", "list"=["pre_slug", "slug"] ], 
+		[],
+		$identifier
+	);
+
 ?>
 
 <style>

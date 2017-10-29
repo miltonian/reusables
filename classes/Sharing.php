@@ -5,9 +5,14 @@ namespace Reusables;
 class Sharing {
 
 	
+	public static function set( $file, $identifier )
+	{
+		Views::setDefaultViewInfo( $file, $identifier, "sharing" );
+	}
+
 	public static function make( $file, $identifier )
 	{
-		return Views::setDefaultViewInfo( $file, $identifier, "sharing" );
+		return Views::makeView( $file, $identifier, "sharing" );
 	}
 
 	// public static function make( $file, $identifier )

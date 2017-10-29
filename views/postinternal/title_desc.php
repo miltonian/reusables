@@ -2,6 +2,14 @@
 
 namespace Reusables;
 
+
+
+	Views::setDataParams( 
+		[ "title", "html_text" ], 
+		[],
+		$identifier
+	);
+
 ?>
 
 <style>

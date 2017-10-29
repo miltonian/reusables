@@ -2,10 +2,18 @@
 
 	namespace Reusables;
 
+	Views::setParams( 
+		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "cellindex", "description", "celldate", "celltype", "featured_imagepath", "title", "slug" ],
+		[],
+		$identifier
+	);
+
+	$viewdict = Data::convertKeysInTable( $identifier, $viewdict );
+	
+
+
 	extract( Cell::prepareCell( $identifier ) );
 
-
-	// exit( json_encode( $fullviewdict ) );
 
 ?>
 

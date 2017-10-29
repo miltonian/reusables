@@ -5,6 +5,14 @@ namespace Reusables;
 $subtitles = Data::getValue( $viewdict, 'subtitles' );
 if( $subtitles == "" ) { $subtitles = []; }
 
+
+
+	Views::setParams( 
+		[ "title", "subtitles"=>[] ], 
+		[],
+		$identifier
+	);
+
 ?>
 
 <style>

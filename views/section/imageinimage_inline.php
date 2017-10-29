@@ -16,6 +16,13 @@ if( $right_morelinks == "" ) {
 	$right_morelinks = [];
 }
 
+
+	Views::setParams( 
+		[ "leftdict"=>["more", "link", "imagepath"], "rightdict"=>["more", "link", "imagepath"] ], 
+		[],
+		$identifier
+	);
+
 ?>
 
 <style>

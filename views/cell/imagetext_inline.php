@@ -7,6 +7,14 @@ namespace Reusables;
 	
 	extract( Cell::prepareCell( $identifier ) );
 
+
+
+	Views::setParams( 
+		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "cellindex", "description", "celldate", "celltype", "slug", "index", "featured_imagepath", "title", "html_text" ],
+		[],
+		$identifier
+	);
+
 ?>
 
 <style>

@@ -14,6 +14,13 @@ if( $steps == "" ){
 }
 
 
+	Views::setParams( 
+		[ "steps"=>["title", "subtitle"] ], 
+		[],
+		$identifier
+	);
+
+
 ?>
 
 <style>

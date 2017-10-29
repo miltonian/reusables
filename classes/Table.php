@@ -4,9 +4,14 @@ namespace Reusables;
 
 class Table {
 
+	public static function set( $file, $identifier )
+	{
+		Views::setDefaultViewInfo( $file, $identifier, "table" );
+	}
+
 	public static function make( $file, $identifier )
 	{
-		return Views::setDefaultViewInfo( $file, $identifier, "table" );
+		return Views::makeView( $file, $identifier, "table" );
 	}
 
 	// public static function make( $file, $identifier )

@@ -4,9 +4,14 @@ namespace Reusables;
 
 class Slider {
 
+	public static function set( $file, $identifier )
+	{
+		Views::setDefaultViewInfo( $file, $identifier, "slider" );
+	}
+
 	public static function make( $file, $identifier )
 	{
-		return Views::setDefaultViewInfo( $file, $identifier, "slider" );
+		return Views::makeView( $file, $identifier, "slider" );
 	}
 
 	// public static function make( $file, $identifier )

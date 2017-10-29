@@ -4,9 +4,14 @@ namespace Reusables;
 
 class Section {
 
+	public static function set( $file, $identifier )
+	{
+		Views::setDefaultViewInfo( $file, $identifier, "section" );
+	}
+
 	public static function make( $file, $identifier )
 	{
-		return Views::setDefaultViewInfo( $file, $identifier, "section" );
+		return Views::makeView( $file, $identifier, "section" );
 	}
 
 	// public static function make( $file, $identifier, $tablenames=[] )

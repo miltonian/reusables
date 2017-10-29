@@ -2,11 +2,11 @@
 
 namespace Reusables;
 
-	/*
-		$viewdict = [
-
-		];
-	*/
+	Views::setParams( 
+		[ "neededforgoal" ], 
+		[],
+		$identifier
+	);
 ?>
 
 <style>

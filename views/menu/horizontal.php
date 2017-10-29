@@ -22,6 +22,12 @@ foreach ($menubuttons as $b) {
 
 $fullviewdict = Data::getFullArray( $viewdict );
 
+	Views::setParams( 
+		[ "buttons"=>["imagepath", "emoji", "name", "classname", "position", "slug"] ], 
+		[],
+		$identifier
+	);
+
 ?>
 
 <style>
@@ -49,7 +55,7 @@ $fullviewdict = Data::getFullArray( $viewdict );
 		$i=0;
 		foreach ($menubuttons as $b) {
 			
-			$button = "<div class='horizontal button " . $b['classname'] . " wrapper index_" . $i . " ";
+			$button = "<div class='horizontal button " . $b['classname'] . " wrapper buttonindex_" . $i . " ";
 			if(isset($b['buttons'])){
 				$button .= "has_dropdown";
 			}
@@ -127,7 +133,7 @@ $fullviewdict = Data::getFullArray( $viewdict );
 				ReusableClasses::getEditingFunctionsJS( $menubuttons[$i] ) 
 			?>;
 
-			$('.horizontal.main.<?php echo $identifier ?> .horizontal.button.<?php echo $menubuttons[$i]['classname'] ?>.wrapper.index_<?php echo $i ?>').off().click(function(e){
+			$('.horizontal.main.<?php echo $identifier ?> .horizontal.button.<?php echo $menubuttons[$i]['classname'] ?>.wrapper.buttonindex_<?php echo $i ?>').off().click(function(e){
 				e.preventDefault();
 
 				if( typeof dataarray === 'undefined' ) {

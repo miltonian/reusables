@@ -29,6 +29,13 @@ if( $title == "" ) {
 	$title = "Register";
 }
 
+
+	Views::setParams( 
+		[ "title", "formimg", "slug" ], 
+		[],
+		$identifier
+	);
+
 ?>
 
 

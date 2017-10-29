@@ -4,9 +4,14 @@ namespace Reusables;
 
 class Ad {
 
+	public static function set( $file, $identifier )
+	{
+		Views::setDefaultViewInfo( $file, $identifier, "ad" );
+	}
+
 	public static function make( $file, $identifier )
 	{
-		return Views::setDefaultViewInfo( $file, $identifier, "ad" );
+		return Views::makeView( $file, $identifier, "ad" );
 	}
 
 

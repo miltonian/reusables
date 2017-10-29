@@ -9,6 +9,13 @@ if(!isset($galleryarray)){$galleryarray = array(); }
 
 $imagepickerarray = $galleryarray;
 
+
+	Views::setParams( 
+		[ ["imagepath"] ],
+		[],
+		$identifier
+	);
+
 ?>
 
 <style>

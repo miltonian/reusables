@@ -9,6 +9,12 @@
 		$category = "Category";
 	}
 
+	Views::setParams( 
+		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "cellindex", "description", "celldate", "celltype", "title", "html_text", "slug" ],
+		[],
+		$identifier
+	);
+
 ?>
 
 <style>

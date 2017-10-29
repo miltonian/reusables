@@ -14,6 +14,7 @@ var editingorder = false;
 				thisdict = dataarray[data_id];
 
 				if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
+				
 			$('.' + identifier + ' .' + inputclass + ' input.field_value').val( thisdictvalue[key] );
 				$('.' + identifier + ' .' + inputclass + ' input.tablename').val( thisdict['db_info']['tablenames'][key] );
 				$('.' + identifier + ' .' + inputclass + ' input.col_name').val( db_key );

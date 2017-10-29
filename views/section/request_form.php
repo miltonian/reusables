@@ -11,6 +11,13 @@ $inputarray = Data::getValue( $viewdict, "inputs" );
 
 if( $inputarray == "" ) { $inputarray = []; }
 
+
+	Views::setParams( 
+		[ "title", "subtitle", "form_action", "inputs"=>["placeholder", "name", "type", "options"=>["value", "title"]] ], 
+		[],
+		$identifier
+	);
+
 ?>
 
 <div class="viewtype_section request_form main <?php echo $identifier ?>" >

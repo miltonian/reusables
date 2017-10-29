@@ -17,6 +17,12 @@ if (!isset($viewdict['logolink'])) { $viewdict['logolink'] = ""; }
 
 // ReusableClasses::checkRequired( "navbar", $viewdict, $required );
 
+Views::setParams( 
+	["logolink", "logo", "brandname", "pages"=>["slug", "imagepath", "emoji", "name"]], 
+	["type", "modal", "attached", "link"],
+	$identifier
+);
+
 ?>
 
 <style>
@@ -25,9 +31,9 @@ if (!isset($viewdict['logolink'])) { $viewdict['logolink'] = ""; }
 
 <div class="viewtype_nav slim <?php echo $identifier ?> all">
 <div class='slim main <?php echo $identifier ?> mobilenav'>
-	<a class="slim" id="brandlink" href='/<?php echo  Data::getValue( $viewdict, 'logolink' ) ?>'>
+	<a class="slim" id="brandlink" href='/<?php echo Data::getValue( $viewdict, 'logolink' ) ?>'>
 		<?php if(isset($viewdict['logo'])){ ?>
-			<img class='slim topbarlogo' src='<?php echo  Data::getValue( $viewdict, 'logo' ) ?>' width="auto" height="auto">
+			<img class='slim topbarlogo' src='<?php echo Data::getValue( $viewdict, 'logo' ) ?>' width="auto" height="auto">
 		<?php }else{ ?>
 			<h3 class="slim" id="brandname"><?php echo Data::getValue( $viewdict, 'brandname' ) ?></h3>
 		<?php } ?>

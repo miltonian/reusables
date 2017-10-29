@@ -1,5 +1,13 @@
 <?php
 	namespace Reusables;
+
+
+	Views::setParams( 
+		[],
+		[],
+		$identifier
+	);
+	
 ?>
 
 <div class="viewtype_header <?php echo $identifier ?> banner main">

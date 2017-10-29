@@ -6,9 +6,14 @@ class Input {
 
 	protected static $inputtypes = [];
 
+	public static function set( $file, $identifier )
+	{
+		Views::setDefaultViewInfo( $file, $identifier, "input" );
+	}
+
 	public static function make( $file, $identifier )
 	{
-		return Views::setDefaultViewInfo( $file, $identifier, "input" );
+		return Views::makeView( $file, $identifier, "input" );
 	}
 
 	// public static function make( $file, $identifier )

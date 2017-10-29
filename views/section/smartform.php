@@ -2,7 +2,6 @@
 
 namespace Reusables;
 
-
 if( !isset( $viewoptions['ifnone_insert'] ) ){
 	$ifnone_insert = false;
 }else{
@@ -30,7 +29,6 @@ $original_data_id = $identifier;
 extract( CustomView::makeFormVars( $viewdict, "viewdict" ) );
 extract( Input::convertInputKeys( $identifier ) );
 
-// exit( json_encode( $viewdict ) );
 ?>
 
 
@@ -63,7 +61,7 @@ extract( Input::convertInputKeys( $identifier ) );
 						"maincolumn" => $inputs[ 'c' . $onstep ]
 						
 					],
-					"main_structure smartform"
+					$identifier . "_onstep_" . $onstep . "_main_structure smartform"
 				);
 			
 			?>
@@ -81,6 +79,7 @@ extract( Input::convertInputKeys( $identifier ) );
 <?php } ?>
 
 <script>
+
 	<?php if( $steps == $onstep ) { ?>
 
 		var viewdict = <?php echo json_encode($viewdict) ?>;
@@ -92,6 +91,8 @@ extract( Input::convertInputKeys( $identifier ) );
 
 		class <?php echo $identifier ?>Classes {
 			populateview( index=null ){
+				console.log( JSON.stringify( index ) )
+
 				var viewdict = <?php echo json_encode($viewdict) ?>;
 				var input_keys = <?php echo json_encode($input_onlykeys) ?>;
 				var typearray = <?php echo json_encode( ReusableClasses::getTypeArray( $input_onlykeys ) ) ?>;

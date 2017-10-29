@@ -15,6 +15,13 @@ if( $received_placeholder != "" ){ $placeholder = $received_placeholder; }
 if( $received_input_name != "" ){ $input_name = $received_input_name; }
 if( $received_action != "" ){ $action = $received_action; }
 
+
+	Views::setParams( 
+		[ "placeholder", "input_name", "action" ], 
+		[],
+		$identifier
+	);
+
 ?>
 
 

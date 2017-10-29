@@ -4,14 +4,20 @@ namespace Reusables;
 
 class Structure {
 
+	public static function set( $file, $data, $identifier )
+	{
+		
+		Data::addData( $data, $identifier );
+		Views::setDefaultViewInfo( $file , $identifier, "structure" );
+
+	}
+
 	public static function make( $file, $data, $identifier )
 	{
-		ReusableClasses::addfile( "structure", $file );
-		$View = View::factory( 'reusables/views/structure/' . $file );
-		$View->set( 'structuredict', $data );
-		$View->set( 'identifier', $identifier );
+		
+		Data::addData( $data, $identifier );
+		return Views::makeView( $file, $identifier, "structure" );
 
-		return $View->render();
 	}
 
 }

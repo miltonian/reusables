@@ -25,6 +25,12 @@ if( isset( $viewdict[$identifier]['value'] ) ) {
 	$fullviewdict = $viewdict;
 }
 
+Views::setParams( 
+	["slug", "title" ], 
+	[],
+	$identifier
+);
+
 ?>
 
 <button class="viewtype_button <?php echo $identifier ?> basic"><?php echo Data::getValue( $viewdict, 'title' ) ?></button>

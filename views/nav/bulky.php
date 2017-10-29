@@ -7,7 +7,7 @@ $required = array(
 	"logo|brandname"=>"",  
 );
 
-ReusableClasses::checkRequired( "bulky", $viewdict, $required );
+// ReusableClasses::checkRequired( "bulky", $viewdict, $required );
 
 if(!isset($navtype)){ $navtype=1; }
 
@@ -29,6 +29,14 @@ $categories = Data::getValue( $viewdict, 'categories' );
 
 Data::addData( $menudict, "menuview1" );
 echo Menu::make( "menuview_1", "menuview1");
+
+
+
+Views::setParams( 
+	["socialpages", "logo", "brandname", "pages", "categories"=>["id", "name"] ], 
+	[],
+	$identifier
+);
 
 ?>
 

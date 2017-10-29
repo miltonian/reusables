@@ -16,10 +16,6 @@ namespace Reusables;
 
 	if( isset( $viewdict['value'] ) ){ 
 		$data_id = $identifier;
-		// exit( json_encode( $viewdict ) );
-		// $viewdict = Data::formatForDefaultData( $data_id );
-	// exit( json_encode( Data::getValue( $viewdict, 'featured_imagepath' ) ) );
-		// SHOULD CONTROL DATA WITH ID NOT VAR
 	}
 	if( isset($viewdict['editing']) ){ $isediting=1; }else{ $isediting=0; }
 	
@@ -35,7 +31,13 @@ if( isset( $viewdict[$identifier]['value'] ) ) {
 }else{
 	$fullviewdict = $viewdict;
 }
-// exit( json_encode( "aiwljkefnds,cl akjdsmncx alsjdkfbcxailwkejsfdb,fmn" ) );
+
+
+	Views::setParams( 
+		[ "imagepath", "logo", "title", "slug" ], 
+		[],
+		$identifier
+	);
 
 ?>
 

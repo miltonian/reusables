@@ -2,6 +2,12 @@
 
 namespace Reusables;
 
+	Views::setParams( 
+		[ "imagepath" ], 
+		[],
+		$identifier
+	);
+
 ?>
 
 

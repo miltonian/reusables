@@ -4,9 +4,15 @@ namespace Reusables;
 
 class Button {
 	
+	public static function set( $file, $identifier )
+	{
+		Views::setDefaultViewInfo( $file, $identifier, "button" );
+	}
+
 	public static function make( $file, $identifier )
 	{
-		return Views::setDefaultViewInfo( $file, $identifier, "button" );
+
+		return Views::makeView( $file, $identifier, "button" );
 	}
 
 	// public static function make( $file, $identifier )

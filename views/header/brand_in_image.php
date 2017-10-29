@@ -8,6 +8,13 @@ $viewdict = Data::convertKeys( $viewdict );
 		$data_id = Data::getDefaultDataID( $viewdict );
 		$viewdict = Data::formatForDefaultData( $data_id ); 
 	}
+
+
+	Views::setParams( 
+		[ "backgroundcolor", "featured_imagepath", "logolink", "logo_imagepath" ], 
+		[],
+		$identifier
+	);
 ?>
 
 <style>

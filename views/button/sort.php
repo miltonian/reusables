@@ -1,5 +1,13 @@
 <?php
+
 namespace Reusables;
+
+
+Views::setParams( 
+	["table_array", "dropdown_array"=>["list"], "table_class", "sort_key"],
+	[],
+	$identifier
+);
 
 ?>
 

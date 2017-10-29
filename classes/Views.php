@@ -6,26 +6,89 @@ namespace Reusables;
 class Views {
 
 	protected static $viewidentifiers = [];
+	protected static $viewparams = [];
 
-	public static function setDefaultViewInfo( $file, $identifier, $viewtype, $tablenames=[] )
+	protected static $bufferedviews = [];
+
+	protected static $analyze = false;
+
+	public static function setDefaultViewInfo( $file, $identifier, $viewtype, $tablenames=[], $children=[] )
 	{
-		ReusableClasses::addfile( $viewtype, $file );
-		$View = View::factory( 'reusables/views/' . $viewtype . '/' . $file );
-		$data = Data::retrieveDataWithID( $identifier );
-		$options = Data::retrieveOptionsWithID( $identifier );
-		$options = ReusableClasses::convertViewActions( $options );
-		
-		$View->set( 'viewdict', $data );
-		$View->set( 'viewoptions', $options );
-		if( $viewtype == "section" ){
-			$View->set( 'tablenames', $tablenames );
-		}
+		$dict = [
+			"file"=>$file,
+			"identifier"=>$identifier,
+			"viewtype"=>$viewtype,
+			"tablenames"=>$tablenames,
+			"children"=>$children
+		];
+		array_push( self::$bufferedviews, $dict );
+	}
 
-		$View->set( 'identifier', $identifier );
+	public static function makeView( $file, $identifier, $viewtype, $tablenames=[], $children=[] )
+	{
+		if( $viewtype == "wrapper" ) {
+
+			ReusableClasses::addfile( "wrapper", "wrapper_1" );
+			$View = View::factory( 'reusables/views/wrapper/wrapper_1' );
+			$data = Data::retrieveDataWithID( $identifier );
+			$View->set( 'wrapperdict', $data );
+			$View->set( 'children', $children );
+			$View->set( 'identifier', $identifier );
+
+			// return $View->render();
+		}else if( $viewtype == "structure" ) {
+
+			ReusableClasses::addfile( "structure", $file );
+			$View = View::factory( 'reusables/views/structure/' . $file );
+			$data = Data::retrieveDataWithID( $identifier );
+			$View->set( 'structuredict', $data );
+			$View->set( 'identifier', $identifier );
+
+			// echo $View->render();
+		}else{
+			// if( $identifier == "admin_insertview" ) {
+			// 	exit( json_encode( $file ) );
+			// }
+			ReusableClasses::addfile( $viewtype, $file );
+			$View = View::factory( 'reusables/views/' . $viewtype . '/' . $file );
+			$data = Data::retrieveDataWithID( $identifier );
+			$options = Data::retrieveOptionsWithID( $identifier );
+			$options = ReusableClasses::convertViewActions( $options );
+			
+			$View->set( 'viewdict', $data );
+			$View->set( 'viewoptions', $options );
+			if( $viewtype == "section" ){
+				$View->set( 'tablenames', $tablenames );
+			}
+
+			$View->set( 'identifier', $identifier );
+
+		}
 
 		array_push( self::$viewidentifiers, $identifier );
 
 		return $View->render();
+
+	}
+
+	public static function makeViews()
+	{
+		// exit( json_encode( self::$bufferedviews ) );
+		foreach (self::$bufferedviews as $dict) {
+			$file = $dict["file"];
+			$identifier = $dict["identifier"];
+			$viewtype = $dict["viewtype"];
+			$tablenames = $dict["tablenames"];
+			$children = $dict["children"];
+// echo ( json_encode( $identifier ) );
+			
+
+			echo Views::makeView( $file, $identifier, $viewtype, $tablenames, $children=[] );
+
+			// return $View->render();
+			// echo $View->render();
+		}
+		// exit();
 	}
 
 	public static function addView( $identifier )
@@ -36,6 +99,91 @@ class Views {
 	public static function getViewIdentifiers()
 	{
 		return self::$viewidentifiers;
+	}
+
+	public static function setParams( $dataparams, $optionparams, $identifier, $numofrows=0 )
+	{
+
+		self::$viewparams[$identifier]['data'] = $dataparams;
+		self::$viewparams[$identifier]['options'] = $optionparams;
+		self::$viewparams[$identifier]['numofrows'] = $numofrows;
+		Views::analyzeView( $identifier );
+
+	}
+	
+	public static function getDataParams( $identifier )
+	{
+		if( !isset( self::$viewparams[$identifier]['data'] ) ) {
+			return [];
+		}
+
+		return self::$viewparams[$identifier]['data'];
+	}
+
+	public static function getOptionParams( $identifier )
+	{
+		if( !isset( self::$viewparams[$identifier]['options'] ) ) {
+			return [];
+		}
+
+		return self::$viewparams[$identifier]['options'];
+	}
+
+	public static function cleararrays()
+	{
+		self::$viewidentifiers = null;
+		self::$viewparams = null;
+		self::$bufferedviews = null;
+
+		self::$viewidentifiers = [];
+		self::$viewparams = [];
+		self::$bufferedviews = [];
+	}
+
+	public static function analyze( $turnOn = false )
+	{
+		self::$analyze = $turnOn;
+	}
+
+	public static function analyzeView( $identifier )
+	{
+		if( self::$analyze ) {
+				$data = Data::retrieveDataWithID( $identifier );
+				$options = Data::retrieveOptionsWithID( $identifier );
+				$dataparams = Views::getDataParams( $identifier );
+
+				if( $data && $dataparams ) {
+					// ready to start analyzing
+					if( isset( $data['value'] ) ) {
+						$data = $data['value'];
+					}
+					if( isset( $data['imagepath'] ) && !isset( $data['featured_imagepath'] ) ) {
+						if( !is_int( array_search('imagepath', $dataparams) ) && is_int( array_search('featured_imagepath', $dataparams) ) ) {
+							// suggest convert keys [imagepath=>featured_imagepath]
+							// exit( json_encode( $options ) );
+							Data::addOption( ["imagepath"=>"featured_imagepath"], "convert_keys", $identifier );
+						}
+					}else if( !isset( $data['imagepath'] ) && isset( $data['featured_imagepath'] ) ) {
+						if( is_int( array_search('imagepath', $dataparams) ) && !is_int( array_search('featured_imagepath', $dataparams) ) ) {
+							// suggest convert keys [featured_imagepath=>imagepath]
+
+						}
+					}else if( isset( $data[0]['imagepath'] ) && !isset( $data[0]['featured_imagepath'] ) ) {
+						if( !is_int( array_search('imagepath', $dataparams[0]) ) && is_int( array_search('featured_imagepath', $dataparams[0]) ) ) {
+							// suggest convert keys [imagepath=>featured_imagepath]
+							// exit( json_encode( $identifier ) );
+							Data::addOption( ["imagepath"=>"featured_imagepath"], "convert_keys", $identifier );
+						}
+					}else if( !isset( $data[0]['imagepath'] ) && isset( $data[0]['featured_imagepath'] ) ) {
+						if( is_int( array_search('imagepath', $dataparams[0]) ) && !is_int( array_search('featured_imagepath', $dataparams[0]) ) ) {
+							// suggest convert keys [featured_imagepath=>imagepath]
+
+						}
+					}
+
+				}
+
+		}
 	}
 
 }

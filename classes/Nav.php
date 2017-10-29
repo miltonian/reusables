@@ -4,9 +4,14 @@ namespace Reusables;
 
 class Nav {
 
+	public static function set( $file, $identifier )
+	{
+		Views::setDefaultViewInfo( $file, $identifier, "nav" );
+	}
+
 	public static function make( $file, $identifier )
 	{
-		return Views::setDefaultViewInfo( $file, $identifier, "nav" );
+		return Views::makeView( $file, $identifier, "nav" );
 	}
 
 	// public static function make( $file, $identifier )

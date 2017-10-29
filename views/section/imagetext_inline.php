@@ -20,7 +20,13 @@ namespace Reusables;
 		$viewdict = Data::formatForDefaultData( $data_id ); 
 	}
 	$viewdict = Data::convertKeys( $viewdict );
-	// exit( json_encode( Data::getValue( $viewdict, 'imagepath' ) ) );
+	
+
+	Views::setParams( 
+		[ "imagepath", "title", "html_text" ], 
+		[],
+		$identifier
+	);
 ?>
 
 <style>

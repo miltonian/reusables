@@ -13,6 +13,13 @@ if( $teamarray == "" ) {
 	$teamarray = [];
 }
 
+
+	Views::setParams( 
+		[ "teamarray"=>["imagepath", "name", "title", "email", "html_text"] ], 
+		[],
+		$identifier
+	);
+
 ?>
 
 <style>

@@ -2,12 +2,14 @@
 
 namespace Reusables;
 
-// exit( json_encode( $viewdict ) );
+	Views::setParams( 
+		[ ["featured_imagepath", "slug", "title"] ], 
+		[],
+		$identifier,
+		4
+	);
 
-// exit( json_encode( $viewdictvalue ) );
-// $viewdict = Data::convertKeysInTable( $identifier, $viewdict );
 
-// exit( json_encode( $viewdict ) );
 if( isset($viewdict['value']) ){
 	$images = $viewdict['value'];
 }else{
@@ -34,7 +36,7 @@ foreach ($images as $im) {
 	if( isset( $viewoptions['pre_slug'] ) ) {
 		$preslug = Data::getValue( $viewoptions, 'pre_slug' );
 	}
-	$linkpath = Data::getValue( $viewoptions, 'pre_slug' ) . Data::getValue( $viewdict, 'slug' );
+	$linkpath = Data::getValue( $viewoptions, 'pre_slug' ) . Data::getValue( $im, 'slug' );
 }
 
 $fullarray = Data::getFullArray( $viewdict );

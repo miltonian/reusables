@@ -7,6 +7,13 @@ if( $categories == "" ) {
 	$categories = [];
 }
 
+
+	Views::setParams( 
+		[ "categories", "title", "categories"=>["link", "name"] ], 
+		[],
+		$identifier
+	);
+
 ?>
 
 <style>

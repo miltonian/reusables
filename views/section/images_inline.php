@@ -42,6 +42,13 @@ $image3 = Data::getValue( $viewdict, 2);
 	$image3_link = Data::getValue( $image3, 'link' );
 // exit( json_encode( $image1 ) );
 
+
+	Views::setParams( 
+		[ ["link", "pre_slug", "imagepath", "title"] ], 
+		[],
+		$identifier
+	);
+
 ?>
 
 <style>

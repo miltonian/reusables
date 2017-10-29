@@ -32,6 +32,12 @@ namespace Reusables;
 	// echo json_encode($cellindex);
 	// exit(json_encode($cellindex));
 
+	Views::setParams( 
+		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "cellindex", "description", "celldate", "celltype", "slug", "featured_imagepath", "title", "html_text" ],
+		[],
+		$identifier
+	);
+
 ?>
 
 <style>

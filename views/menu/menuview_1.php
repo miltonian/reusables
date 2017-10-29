@@ -4,6 +4,12 @@ namespace Reusables;
 
 	if(!isset($categoriesmodalarray)){ $categoriesmodalarray=array(); }
 	// exit( json_encode( $viewdict ) );
+
+	Views::setParams( 
+		[ "pages"=>["name", "slug"] ], 
+		[],
+		$identifier
+	);
 ?>
 
 <style>

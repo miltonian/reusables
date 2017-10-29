@@ -16,8 +16,14 @@ if( isset($viewoptions['buttons']) ){
 	}
 }
 
-// exit( json_encode( $viewoptions ) );
 
+
+
+	Views::setParams( 
+		[ "buttons"=>["view_id", "classname", "text"], "title" ], 
+		[],
+		$identifier
+	);
 
 ?>
 

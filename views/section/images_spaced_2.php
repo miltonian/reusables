@@ -14,6 +14,13 @@ namespace Reusables;
 		$left_linkpath = Data::getValue( $viewdict, "left_link" );
 		$right_linkpath = Data::getValue( $viewdict, "right_link" );
 
+
+	Views::setParams( 
+		[ "left_link", "left_imagepath", "right_link", "right_imagepath" ], 
+		[],
+		$identifier
+	);
+
 ?>
 
 <style>

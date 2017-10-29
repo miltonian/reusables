@@ -20,7 +20,11 @@ namespace Reusables;
 	// exit( json_encode( $viewdict['needed'] ) );
 	// exit( json_encode( Data::getValue( $viewdict, 'needed' ) ) );
 
-	// exit( json_encode( $viewdict['html_text'] ) );
+	Views::setParams( 
+		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "index", "description", "celldate", "celltype", "slug" ], 
+		[],
+		$identifier
+	);
 
 ?>
 

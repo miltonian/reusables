@@ -6,6 +6,13 @@ $twittericon_white = "https://theanywherecard.com/social_images/twitter_social_b
 $facebookicon_white = "https://theanywherecard.com/social_images/facebook-256.png";
 $linkedin_white = "https://theanywherecard.com/social_images/linkedin-image.png";
 
+
+	Views::setParams( 
+		[ "facebook", "twitter", "instagram" ], 
+		[],
+		$identifier
+	);
+
 ?>
 
 <style>

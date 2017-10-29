@@ -12,6 +12,8 @@ namespace Reusables;
 
 	$columns = array();
 	$allkeys = array_keys($structuredict);
+	$columncount=0;
+	
 
 	foreach ($allkeys as $k) {
 
@@ -22,6 +24,7 @@ namespace Reusables;
 		array_push($columns, $structuredict[$k]);
 		
 	}
+
 	// exit(json_encode(sizeof($columns)));
 
 	// ReusableClasses::checkRequired( "main_with_hidden", $structuredict, $required );
@@ -43,6 +46,7 @@ namespace Reusables;
 	Data::addData( $mainheaderdict, $identifier . "_main_header" );
 	Data::addData( $step1dict, $identifier . "_steps" );
 // exit( json_encode( $step1dict['steps'] ) );
+
 ?>
 
 <style>
@@ -60,23 +64,30 @@ namespace Reusables;
 	</div>
 	<div class="main_with_hidden body">
 	
-	<?php for ($i=0; $i < sizeof($columns); $i++) { ?>
+	<?php for ($i=0; $i < sizeof($columns); $i++) { 
+		if( isset( $columns[$i] ) ) {
+			if( !is_string( $columns[$i] ) ) { 
+				$columncount++;
+				?>
 
-		<div class="main_with_hidden column c<?php echo ($i+1) ?>" id="main_with_hidden_<?php echo $i+1 ?>">
-			<?php 
-				foreach ($columns[$i] as $view) {
-					echo $view;
-				}
-			?>
-		</div>
+				<div class="main_with_hidden column c<?php echo ($i+1) ?>" id="main_with_hidden_<?php echo $i+1 ?>">
+					<?php 
+						foreach ($columns[$i] as $view) {
+							echo $view;
+						}		
+					?>
+				</div>
 
-	<?php } ?>
+			<?php
+			}
+		}
+	} ?>
 
 	</div>
 </div>
 
 <script>
-	var columncount = <?php echo sizeof($columns) ?>;
+	var columncount = <?php echo $columncount ?>;
 	var currentcolumn = 1;
 
 	$('.<?php echo $identifier ?> #close').click(function(){
@@ -91,8 +102,13 @@ namespace Reusables;
 		$('.<?php echo $identifier ?>').parent().css('display', 'none');
 		$('.<?php echo $identifier ?>').parent().parent().parent().css('display', 'none');
 
-		$('.main_with_hidden.next').css({'display': 'inline-block'});
-		$('.main_with_hidden.save').css({'display': 'none'});
+		if( columncount > 1 ) {
+			$('.main_with_hidden.next').css({'display': 'inline-block'});
+			$('.main_with_hidden.save').css({'display': 'none'});
+		}else{
+			$('.main_with_hidden.next').css({'display': 'none'});
+			$('.main_with_hidden.save').css({'display': 'inline-block'});
+		}
 
 	});
 	$('.main_with_hidden.next').click( function(e){

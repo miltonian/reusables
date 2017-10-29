@@ -2,6 +2,13 @@
 
 namespace Reusables;
 
+
+	Views::setParams( 
+		[ "title", "link", "buttontext" ], 
+		[],
+		$identifier
+	);
+
 ?>
 
 <div class="viewtype_section text_and_button <?php echo $identifier ?> main">

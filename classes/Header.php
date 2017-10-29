@@ -5,9 +5,14 @@ namespace Reusables;
 class Header {
 
 
+	public static function set( $file, $identifier )
+	{
+		Views::setDefaultViewInfo( $file, $identifier, "header" );
+	}
+
 	public static function make( $file, $identifier )
 	{
-		return Views::setDefaultViewInfo( $file, $identifier, "header" );
+		return Views::makeView( $file, $identifier, "header" );
 	}
 	// public static function make( $file, $identifier )
 	// {
