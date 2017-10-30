@@ -157,33 +157,88 @@ class Views {
 					if( isset( $data['value'] ) ) {
 						$data = $data['value'];
 					}
-					if( isset( $data['imagepath'] ) && !isset( $data['featured_imagepath'] ) ) {
-						if( !is_int( array_search('imagepath', $dataparams) ) && is_int( array_search('featured_imagepath', $dataparams) ) ) {
-							// suggest convert keys [imagepath=>featured_imagepath]
-							// exit( json_encode( $options ) );
-							Data::addOption( ["imagepath"=>"featured_imagepath"], "convert_keys", $identifier );
-						}
-					}else if( !isset( $data['imagepath'] ) && isset( $data['featured_imagepath'] ) ) {
-						if( is_int( array_search('imagepath', $dataparams) ) && !is_int( array_search('featured_imagepath', $dataparams) ) ) {
-							// suggest convert keys [featured_imagepath=>imagepath]
+					// if( isset( $data['imagepath'] ) && !isset( $data['featured_imagepath'] ) ) {
+					// 	if( !is_int( array_search('imagepath', $dataparams) ) && is_int( array_search('featured_imagepath', $dataparams) ) ) {
+					// 		// suggest convert keys [imagepath=>featured_imagepath]
+					// 		// exit( json_encode( $options ) );
+					// 		Data::addOption( ["imagepath"=>"featured_imagepath"], "convert_keys", $identifier );
+					// 	}
+					// }else if( !isset( $data['imagepath'] ) && isset( $data['featured_imagepath'] ) ) {
+					// 	if( is_int( array_search('imagepath', $dataparams) ) && !is_int( array_search('featured_imagepath', $dataparams) ) ) {
+					// 		// suggest convert keys [featured_imagepath=>imagepath]
 
-						}
-					}else if( isset( $data[0]['imagepath'] ) && !isset( $data[0]['featured_imagepath'] ) ) {
-						if( !is_int( array_search('imagepath', $dataparams[0]) ) && is_int( array_search('featured_imagepath', $dataparams[0]) ) ) {
-							// suggest convert keys [imagepath=>featured_imagepath]
-							// exit( json_encode( $identifier ) );
-							Data::addOption( ["imagepath"=>"featured_imagepath"], "convert_keys", $identifier );
-						}
-					}else if( !isset( $data[0]['imagepath'] ) && isset( $data[0]['featured_imagepath'] ) ) {
-						if( is_int( array_search('imagepath', $dataparams[0]) ) && !is_int( array_search('featured_imagepath', $dataparams[0]) ) ) {
-							// suggest convert keys [featured_imagepath=>imagepath]
+					// 	}
+					// }else if( isset( $data[0]['imagepath'] ) && !isset( $data[0]['featured_imagepath'] ) ) {
+					// 	if( !is_int( array_search('imagepath', $dataparams[0]) ) && is_int( array_search('featured_imagepath', $dataparams[0]) ) ) {
+					// 		// suggest convert keys [imagepath=>featured_imagepath]
+					// 		// exit( json_encode( $identifier ) );
+					// 		Data::addOption( ["imagepath"=>"featured_imagepath"], "convert_keys", $identifier );
+					// 	}
+					// }else if( !isset( $data[0]['imagepath'] ) && isset( $data[0]['featured_imagepath'] ) ) {
+					// 	if( is_int( array_search('imagepath', $dataparams[0]) ) && !is_int( array_search('featured_imagepath', $dataparams[0]) ) ) {
+					// 		// suggest convert keys [featured_imagepath=>imagepath]
 
-						}
-					}
+					// 	}
+					// }
+
+					Views::deduct( $data, $dataparams, "featured_imagepath", "imagepath", $identifier );
+					Views::deduct( $data, $dataparams, "name", "title", $identifier );
 
 				}
 
 		}
+	}
+
+	public static function deduct( $data, $dataparams, $datakey, $paramkey, $identifier )
+	{
+		if( isset( $data[$paramkey] ) && !isset( $data[$datakey] ) ) {
+			if( !is_int( array_search($paramkey, $dataparams) ) && is_int( array_search($datakey, $dataparams) ) ) {
+				// suggest convert keys [imagepath=>featured_imagepath]
+				// exit( json_encode( $options ) );
+				Data::addOption( [$paramkey=>$datakey], "convert_keys", $identifier );
+			}
+		}else if( !isset( $data[$paramkey] ) && isset( $data[$datakey] ) ) {
+			if( is_int( array_search($paramkey, $dataparams) ) && !is_int( array_search($datakey, $dataparams) ) ) {
+				// suggest convert keys [featured_imagepath=>imagepath]
+				Data::addOption( [$datakey=>$paramkey], "convert_keys", $identifier );
+			}
+		}else if( isset( $data[0][$paramkey] ) && !isset( $data[0][$datakey] ) ) {
+			if( !is_int( array_search($paramkey, $dataparams[0]) ) && is_int( array_search($datakey, $dataparams[0]) ) ) {
+				// suggest convert keys [imagepath=>featured_imagepath]
+				// exit( json_encode( $identifier ) );
+				Data::addOption( [$paramkey=>$datakey], "convert_keys", $identifier );
+			}
+		}else if( !isset( $data[0][$paramkey] ) && isset( $data[0][$datakey] ) ) {
+			if( is_int( array_search($paramkey, $dataparams[0]) ) && !is_int( array_search($datakey, $dataparams[0]) ) ) {
+				// suggest convert keys [featured_imagepath=>imagepath]
+				Data::addOption( [$datakey=>$paramkey], "convert_keys", $identifier );
+			}
+		}
+
+		// if( isset( $data[$paramkey] ) && !isset( $data[$datakey] ) ) {
+		// 	if( !is_int( array_search($paramkey, $dataparams) ) && is_int( array_search($datakey, $dataparams) ) ) {
+		// 		// suggest convert keys [imagepath=>featured_imagepath]
+		// 		// exit("1");
+		// 		Data::addOption( [$datakey=>$paramkey], "convert_keys", $identifier );
+		// 	}
+		// }else if( !isset( $data[$paramkey] ) && isset( $data[$datakey] ) ) {
+		// 	if( is_int( array_search($paramkey, $dataparams) ) && !is_int( array_search($datakey, $dataparams) ) ) {
+		// 		// suggest convert keys [featured_imagepath=>imagepath]
+		// 		Data::addOption( [$datakey=>$paramkey], "convert_keys", $identifier );
+		// 		// exit("2");
+		// 	}
+		// }else if( isset( $data[0][$paramkey] ) && !isset( $data[0][$datakey] ) ) {
+		// 	if( !is_int( array_search($paramkey, $dataparams[0]) ) && is_int( array_search($datakey, $dataparams[0]) ) ) {
+		// 		// suggest convert keys [imagepath=>featured_imagepath]
+		// 		Data::addOption( [$datakey=>$paramkey], "convert_keys", $identifier );
+		// 		// exit("3");
+		// 	}
+		// }else if( !isset( $data[0][$paramkey] ) && isset( $data[0][$datakey] ) ) {
+		// 	if( is_int( array_search($paramkey, $dataparams[0]) ) && !is_int( array_search($datakey, $dataparams[0]) ) ) {
+		// 		// suggest convert keys [featured_imagepath=>imagepath]
+		// 		// exit("4");
+		// 	}
+		// }
 	}
 
 }

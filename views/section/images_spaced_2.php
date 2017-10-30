@@ -2,6 +2,11 @@
 
 namespace Reusables;
 
+	Views::setParams( 
+		[ ["slug", "imagepath"] ], 
+		[],
+		$identifier
+	);
 	/*
 		$viewdict = [
 			"left_imagepath"=>"",
@@ -11,15 +16,14 @@ namespace Reusables;
 
 		// exit( json_encode( Data::getValue($viewdict['left_imagepath']) ) );
 
-		$left_linkpath = Data::getValue( $viewdict, "left_link" );
-		$right_linkpath = Data::getValue( $viewdict, "right_link" );
+		// $left_linkpath = Data::getValue( $viewdict, "left_link" );
+		// $right_linkpath = Data::getValue( $viewdict, "right_link" );
 
-
-	Views::setParams( 
-		[ "left_link", "left_imagepath", "right_link", "right_imagepath" ], 
-		[],
-		$identifier
-	);
+$leftarray = Data::getValue( $viewdict, 0 );
+$rightarray = Data::getValue( $viewdict, 1 );
+// exit( json_encode( $leftarray ) );
+$left_linkpath = Data::getValue( $leftarray, 'slug' );
+$right_linkpath = Data::getValue( $rightarray, 'slug' );
 
 ?>
 
@@ -31,14 +35,14 @@ namespace Reusables;
 		<?php if( $left_linkpath != "" ) { ?>
 			<a href="<?php echo $left_linkpath ?>" >
 		<?php } ?>
-		<div class="section_8 left" style="background-image: url('<?php echo Data::getValue($viewdict, 'left_imagepath') ?>');"></div>
+		<div class="section_8 left" style="background-image: url('<?php echo Data::getValue($leftarray, 'imagepath') ?>');"></div>
 		<?php if( $left_linkpath != "" ) { ?>
 			</a>
 		<?php } ?>
 		<?php if( $right_linkpath != "" ) { ?>
 			<a href="<?php echo $right_linkpath ?>">
 		<?php } ?>
-		<div class="section_8 right" style="background-image: url('<?php echo Data::getValue($viewdict, 'right_imagepath') ?>');"></div>
+		<div class="section_8 right" style="background-image: url('<?php echo Data::getValue($rightarray, 'imagepath') ?>');"></div>
 		<?php if( $right_linkpath != "" ) { ?>
 			</a>
 		<?php } ?>

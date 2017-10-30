@@ -2,36 +2,17 @@
 
 	namespace Reusables;
 
-$data_id = Data::getDefaultDataID( $viewdict );
-	$fullviewdict = Data::getFullArray( $viewdict );
-	if(!isset($viewdict)){ $cell2mediatype=""; }
-	if( !isset($viewdict['type'])){ $viewdict['type'] = ""; }
-	if( !isset($viewdict['isfeatured']) ){ $viewdict['isfeatured']=false; }
-	// if( !isset($mediatype) ){ $mediatype="post"; }
-	if( !isset($isadmin) ){ $isadmin=false; }
-	// if(!isset($viewdict['id'])){ $viewdict['id'] = $viewdict['id']; }
-
-	$linkpath = "";
-	$linkpath .= Data::getValue( $viewdict, 'pre_slug' );
-	$linkpath .= Data::getValue( $viewdict, 'slug' );
-
-	if( isset( $viewdict['linkpath'] ) ){
-		$linkpath = Data::getValue( $viewdict, 'linkpath' );
-	}
-
-	$mediatype = Data::getValue( $viewdict, 'mediatype' );
-
-	// echo Data::getValue( $viewdict, 'id' )
-	$cellindex = Data::getValue( $viewdict, 'index' );
-	// echo json_encode($cellindex);
-	// exit(json_encode($cellindex));
-
-
 	Views::setParams( 
-		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "cellindex", "description", "celldate", "celltype", "id", "featured_imagepath", "title", "slug" ],
+		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "cellindex", "description", "celldate", "celltype", "featured_imagepath", "title", "slug" ],
 		[],
 		$identifier
 	);
+
+	$viewdict = Data::convertKeysInTable( $identifier, $viewdict );
+	
+
+
+	extract( Cell::prepareCell( $identifier ) );
 	
 ?>
 

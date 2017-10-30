@@ -4,21 +4,28 @@
 
 namespace Reusables;
 
+	Views::setParams( 
+		[ ["imagepath", "name", "title", "email", "html_text"] ], 
+		[],
+		$identifier
+	);
+
 $exampledesc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
 $exampleemail = "example@email.com";
 
-$teamarray = Data::getValue( $viewdict, 'teamarray' );
+$teamarray = Data::getValue( $viewdict );
+
 if( $teamarray == "" ) {
 	$teamarray = [];
 }
 
+$arraysize = sizeof($teamarray);
+if(	isset($teamarray['value']) ) {
+	$arraysize = sizeof( $teamarray['value'] );
+}
 
-	Views::setParams( 
-		[ "teamarray"=>["imagepath", "name", "title", "email", "html_text"] ], 
-		[],
-		$identifier
-	);
+
 
 ?>
 
@@ -27,8 +34,8 @@ if( $teamarray == "" ) {
 
 <div class="viewtype_section <?php echo $identifier ?> team_inline main">
 	<div class="team_inline thecontainer">
-		<?php for ($i=0; $i < sizeof($teamarray); $i++) { ?>
-		<?php $teamdict = $teamarray[$i]; ?>
+		<?php for ($i=0; $i < $arraysize; $i++) { ?>
+		<?php $teamdict = Data::getValue( $teamarray, $i); ?>
 			<div class="team_inline person index_<?php echo $i ?>">
 				<img class="team_inline image" src="<?php echo Data::getValue( $teamdict, 'imagepath' ) ?>" />
 				<h3 class="team_inline name"><?php echo Data::getValue( $teamdict, 'name' ) ?></h3>

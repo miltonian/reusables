@@ -28,6 +28,7 @@ if( $received_action != "" ){ $action = $received_action; }
 <div class="viewtype_section <?php echo $identifier ?> login main">
 	<div class="login thecontainer">
 		<form class="login form" method="POST" enctype="multipart/form-data" action="<?php echo $action ?>">
+			<input type="hidden" name="goto" value="<?php echo Data::getValue( $viewoptions, 'goto' ) ?>">
 			<input class="login username" type="text" placeholder="<?php echo $placeholder ?>" name="<?php echo $input_name ?>" >
 			<input class="login password" type="password" placeholder="Password" name="password" >
 			<?php if( isset( $viewoptions['tablename'] ) ) { ?>
