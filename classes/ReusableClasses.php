@@ -239,6 +239,7 @@ class ReusableClasses {
 			echo 'var dataarray = ' . json_encode( $fullviewdict ) . ';';
 		}
 
+
 		echo 'var viewdict = ' . json_encode($viewdict) . ';
 		var viewoptions = ' . json_encode( $viewoptions ) . ';
 		$(".' . $identifier . '").off().click(function(e){ ';
@@ -382,7 +383,42 @@ class ReusableClasses {
 
 	}
 
+	public static function setUpEditingForSection( $viewdict, $viewoptions, $identifier )
+	{
 
+		$fullarray = Data::getFullArray( $viewdict );
+		if( isset( $viewdict[$identifier]['value'] ) ) {
+			$fullviewdict = Data::getFullArray( $viewdict )[$identifier]['value'];
+		}else{
+			$fullviewdict = $viewdict;
+		}
+
+		$optiontype = Data::getValue( $viewoptions, 'type' );
+
+		echo "var viewdict = " . json_encode( $viewdict ) . ";
+		var viewoptions = " . json_encode( $viewoptions ) . ";
+
+		var thismodalclass = '';
+
+		var type = " . json_encode( $optiontype ) . ";";
+
+		if( $optiontype == "modal" ){ 
+			echo "thismodalclass = new " . $viewoptions['modal']['modalclass'] . "Classes();
+			var dataarray = " . json_encode( $fullviewdict ) . ";";
+		}
+		echo "
+		var optiontype = " . json_encode($optiontype) . ";
+
+		if( optiontype == 'modal' || optiontype == 'dropdown' ) { 
+			e.preventDefault();
+			if( typeof dataarray === 'undefined' ) { 
+				dataarray = []
+			}
+			Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );
+		}";
+
+		ReusableClasses::getEditingFunctionsJS( $viewoptions ) ;
+	}
 
 
 
@@ -614,6 +650,15 @@ class ReusableClasses {
 
 	public static function toValueAndDBInfo( $result, $conditions, $default_table, $customcolname=null )
 	{
+		if( sizeof( $result ) == 0 ) {
+			return $result;
+		}
+		if( isset( $result[0] ) ) {
+			if( $result[0] == 0 ) {
+				return $result;
+			}
+		}
+
 		$tablenames = [];
 		$colnames = [];
 		$thisdict = [];

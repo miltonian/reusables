@@ -5,7 +5,7 @@
 namespace Reusables;
 
 	Views::setParams( 
-		[ ["imagepath", "name", "title", "email", "html_text"] ], 
+		[ ["imagepath", "name", "title", "email", "html_text", "slug"] ], 
 		[],
 		$identifier
 	);
@@ -26,7 +26,6 @@ if(	isset($teamarray['value']) ) {
 }
 
 
-
 ?>
 
 <style>
@@ -37,11 +36,13 @@ if(	isset($teamarray['value']) ) {
 		<?php for ($i=0; $i < $arraysize; $i++) { ?>
 		<?php $teamdict = Data::getValue( $teamarray, $i); ?>
 			<div class="team_inline person index_<?php echo $i ?>">
-				<img class="team_inline image" src="<?php echo Data::getValue( $teamdict, 'imagepath' ) ?>" />
-				<h3 class="team_inline name"><?php echo Data::getValue( $teamdict, 'name' ) ?></h3>
-				<h5 class="team_inline title"><?php echo Data::getValue( $teamdict, 'title' ) ?></h5>
-				<p class="team_inline email"><?php echo Data::getValue( $teamdict, 'email' ) ?></p>
-				<p class="team_inline desc"><?php echo Data::getValue( $teamdict, 'html_text' ) ?></p>
+				<a class="team_inline link index_<?php echo $i ?>" href="<?php echo Data::getValue( $viewoptions, 'pre_slug' ) ?><?php echo Data::getValue( $viewdict, 'slug' ) ?>">
+					<img class="team_inline image" src="<?php echo Data::getValue( $teamdict, 'imagepath' ) ?>" />
+					<h3 class="team_inline name"><?php echo Data::getValue( $teamdict, 'name' ) ?></h3>
+					<h5 class="team_inline title"><?php echo Data::getValue( $teamdict, 'title' ) ?></h5>
+					<p class="team_inline email"><?php echo Data::getValue( $teamdict, 'email' ) ?></p>
+					<p class="team_inline desc"><?php echo Data::getValue( $teamdict, 'html_text' ) ?></p>
+				</a>
 			</div>
 		<?php } ?>
 	</div>
@@ -49,4 +50,20 @@ if(	isset($teamarray['value']) ) {
 
 
 <script>
+	
+
+	$('.<?php echo $identifier ?> .team_inline.link').off().click(function(e){ 
+
+		<?php
+			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+		?>
+
+		// if( typeof dataarray === "undefined" ) {
+		// 	dataarray = []
+		// }
+		// var viewdict = <?php /* echo json_encode($viewdict)*/ ?>;
+		// var viewoptions = <?php /* echo  json_encode( $viewoptions )*/ ?>;
+		// Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );
+		
+	});
 </script>

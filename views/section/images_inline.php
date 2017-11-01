@@ -2,6 +2,12 @@
 
 namespace Reusables;
 
+	Views::setParams( 
+		[ ["link", "pre_slug", "imagepath", "title"] ], 
+		[],
+		$identifier
+	);
+
 	//3 cells inline (cell3)
 
 	// exit( json_encode(  $viewdict['postarray'] ) );
@@ -43,59 +49,50 @@ $image3 = Data::getValue( $viewdict, 2);
 // exit( json_encode( $image1 ) );
 
 
-	Views::setParams( 
-		[ ["link", "pre_slug", "imagepath", "title"] ], 
-		[],
-		$identifier
-	);
 
 ?>
-
-<style>
-</style>
-
 
 <div class="viewtype_section <?php echo $identifier ?> inline_images main">
 	<div style="display:inline-block; width: 100%;">
 		<div style="display: inline-block; width: 100%;">
 			<?php 
-				if( $image1_link != "" ){
-					echo "<a href=" . Data::getValue( $image1, 'pre_slug' ) . $image1_link . ">";
-				}
+
+					echo "<a class='inline_images link index_0' href=" . Data::getValue( $image1, 'pre_slug' ) . $image1_link . ">";
+
 					echo '<div class="inline_images post one sortorder_1 featuredsectionid_1" style="position: relative; margin: 0;">';
 						echo "<div class='inline_images image' style='background-image: url(" . Data::getValue($image1, 'imagepath') .");' >
 							<label class='inline_images title'>" . Data::getValue( $image1, 'title' ) . "</label>
 						</div>";
 					echo '</div>';
-				if( $image1_link != "" ){
+
 					echo "</a>";
-				}
+
 				if(isset($image2)){
-					if( $image2_link != "" ){
-						echo "<a href=" . Data::getValue( $image2, 'pre_slug' ) . $image2_link . ">";
-					}
+
+						echo "<a class='inline_images link index_1' href=" . Data::getValue( $image2, 'pre_slug' ) . $image2_link . ">";
+
 					echo '<div class="inline_images post one sortorder_1 featuredsectionid_1" style="position: relative; margin: 0;">';
 						echo "<div class='inline_images image' style='background-image: url(" . Data::getValue($image2, 'imagepath') . ");'>
 							<label class='inline_images title'>" . Data::getValue( $image2, 'title' ) . "</label>
 						</div>";
 					echo '</div>';
-					if( $image2_link != "" ){
+
 						echo "</a>";
-					}
+
 				}
 				
 				if(isset($image3)){
-					if( $image3_link != "" ){
-						echo "<a href=" . Data::getValue( $image3, 'pre_slug' ) . $image3_link . ">";
-					}
+
+						echo "<a class='inline_images link index_2' href=" . Data::getValue( $image3, 'pre_slug' ) . $image3_link . ">";
+
 					echo '<div class="inline_images post one sortorder_1 featuredsectionid_1" style="position: relative; margin: 0;">';
 						echo "<div class='inline_images image' style='background-image: url(" . Data::getValue($image3, 'imagepath') . ");'>
 							<label class='inline_images title'>" . Data::getValue( $image3, 'title' ) . "</label>
 						</div>";
 					echo '</div>';
-					if( $image3_link != "" ){
+
 						echo "</a>";
-					}
+
 				}
 			?>
 			
@@ -104,5 +101,11 @@ $image3 = Data::getValue( $viewdict, 2);
 </div>
 
 <script>
-	
+
+	$('.<?php echo $identifier ?> .inline_images.link').click(function(e){
+		<?php
+			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+		?>
+	})
+
 </script>

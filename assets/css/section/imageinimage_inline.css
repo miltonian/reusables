@@ -1,5 +1,5 @@
-.divinline_1.main { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; text-align: center; }
-	.divinline_1.wrapper{ display: inline-block; position: relative; margin: 0; padding: 0; }
-		.divinline_1.cells { display: inline-block; position: relative; margin: 0; padding: 0; width: 585px; max-width: 50%; height: 350px; float: left; cursor: pointer; overflow: hidden; }
+.imageinimage_inline.main { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; text-align: center; }
+	.imageinimage_inline.wrapper{ display: inline-block; position: relative; margin: 0; padding: 0; }
+		.imageinimage_inline.cells { display: inline-block; position: relative; margin: 0; padding: 0; width: 585px; max-width: 50%; height: 350px; float: left; cursor: pointer; overflow: hidden; }
 
-			.divinline_1.inner { display: inline-block; position: relative; margin: 0; padding: 0; float: left; height: 70%; background-position: center; background-size: 50% auto; background-repeat: no-repeat; top: 100%; }
+			.imageinimage_inline.inner { display: inline-block; position: relative; margin: 0; padding: 0; float: left; height: 70%; background-position: center; background-size: 50% auto; background-repeat: no-repeat; top: 100%; }

@@ -192,26 +192,34 @@ class Views {
 	public static function deduct( $data, $dataparams, $datakey, $paramkey, $identifier )
 	{
 		if( isset( $data[$paramkey] ) && !isset( $data[$datakey] ) ) {
-			if( !is_int( array_search($paramkey, $dataparams) ) && is_int( array_search($datakey, $dataparams) ) ) {
-				// suggest convert keys [imagepath=>featured_imagepath]
-				// exit( json_encode( $options ) );
-				Data::addOption( [$paramkey=>$datakey], "convert_keys", $identifier );
+			if( isset( $dataparams ) ) {
+				if( !is_int( array_search($paramkey, $dataparams) ) && is_int( array_search($datakey, $dataparams) ) ) {
+					// suggest convert keys [imagepath=>featured_imagepath]
+					// exit( json_encode( $options ) );
+					Data::addOption( [$paramkey=>$datakey], "convert_keys", $identifier );
+				}
 			}
 		}else if( !isset( $data[$paramkey] ) && isset( $data[$datakey] ) ) {
-			if( is_int( array_search($paramkey, $dataparams) ) && !is_int( array_search($datakey, $dataparams) ) ) {
-				// suggest convert keys [featured_imagepath=>imagepath]
-				Data::addOption( [$datakey=>$paramkey], "convert_keys", $identifier );
+			if( isset( $dataparams ) ) {
+				if( is_int( array_search($paramkey, $dataparams) ) && !is_int( array_search($datakey, $dataparams) ) ) {
+					// suggest convert keys [featured_imagepath=>imagepath]
+					Data::addOption( [$datakey=>$paramkey], "convert_keys", $identifier );
+				}
 			}
 		}else if( isset( $data[0][$paramkey] ) && !isset( $data[0][$datakey] ) ) {
-			if( !is_int( array_search($paramkey, $dataparams[0]) ) && is_int( array_search($datakey, $dataparams[0]) ) ) {
-				// suggest convert keys [imagepath=>featured_imagepath]
-				// exit( json_encode( $identifier ) );
-				Data::addOption( [$paramkey=>$datakey], "convert_keys", $identifier );
+			if( isset( $dataparams[0] ) ) {
+				if( !is_int( array_search($paramkey, $dataparams[0]) ) && is_int( array_search($datakey, $dataparams[0]) ) ) {
+					// suggest convert keys [imagepath=>featured_imagepath]
+					// exit( json_encode( $identifier ) );
+					Data::addOption( [$paramkey=>$datakey], "convert_keys", $identifier );
+				}
 			}
 		}else if( !isset( $data[0][$paramkey] ) && isset( $data[0][$datakey] ) ) {
-			if( is_int( array_search($paramkey, $dataparams[0]) ) && !is_int( array_search($datakey, $dataparams[0]) ) ) {
-				// suggest convert keys [featured_imagepath=>imagepath]
-				Data::addOption( [$datakey=>$paramkey], "convert_keys", $identifier );
+			if( isset( $dataparams[0] ) ) {
+				if( is_int( array_search($paramkey, $dataparams[0]) ) && !is_int( array_search($datakey, $dataparams[0]) ) ) {
+					// suggest convert keys [featured_imagepath=>imagepath]
+					Data::addOption( [$datakey=>$paramkey], "convert_keys", $identifier );
+				}
 			}
 		}
 
