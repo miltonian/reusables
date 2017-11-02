@@ -87,6 +87,14 @@ class ReusableClasses {
 		echo $output;
 		ReusableClasses::addjs();
 
+		echo "
+			<script> 
+				if( typeof Reusable === 'undefined' ) {
+					var Reusable = new ReusableClasses();
+				}
+			</script>
+		";
+
 		Views::cleararrays();
 
 	}
@@ -386,6 +394,8 @@ class ReusableClasses {
 	public static function setUpEditingForSection( $viewdict, $viewoptions, $identifier )
 	{
 
+		echo " if( Reusable.isEditing() ) { ";
+
 		$fullarray = Data::getFullArray( $viewdict );
 		if( isset( $viewdict[$identifier]['value'] ) ) {
 			$fullviewdict = Data::getFullArray( $viewdict )[$identifier]['value'];
@@ -418,6 +428,8 @@ class ReusableClasses {
 		}";
 
 		ReusableClasses::getEditingFunctionsJS( $viewoptions ) ;
+
+		echo " } ";
 	}
 
 

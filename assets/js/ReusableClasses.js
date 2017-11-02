@@ -1,6 +1,7 @@
 if ( typeof ReusableClasses !== 'function' )
 {
 var editingorder = false;
+var editingon = false
 	class ReusableClasses {
 
 		testing(){
@@ -403,6 +404,13 @@ var editingorder = false;
 		}
 
 		
+		switchEditing( turnOn ) {
+			editingon = turnOn
+		}
+
+		isEditing() {
+			return editingon
+		}	
 
 
 

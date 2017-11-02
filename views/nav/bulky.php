@@ -2,59 +2,49 @@
 
 namespace Reusables;
 
-$required = array(
-	"pages"=>array("link", "name|imagepath|emoji"), 
-	"logo|brandname"=>"",  
+Views::setParams( 
+	["socialpages", "logo", "brandname", "pages"=>[], "categories"=>["id", "name"] ], 
+	[],
+	$identifier
 );
 
-// ReusableClasses::checkRequired( "bulky", $viewdict, $required );
-
 if(!isset($navtype)){ $navtype=1; }
-
 if(!isset($isadmin)){ $isadmin=false; }
-
 if(!isset($navbar2categoryfeatured)){ $navbar2categoryfeatured=false; }
-
 if(isset($isadmin)){ if($isadmin){ $navbar2categoryfeatured = true; } }
-
 if(!isset($tagline)){ $tagline=""; }
 
-$menudict = [
-	"pages" => $viewdict['pages'],
-];
+$pages = Data::getValue($viewdict, 'pages' );
+if( $pages == "" ) {
+	$pages = [];
+}
+$menudict = [ "pages" => $pages ];
 
 $categories = Data::getValue( $viewdict, 'categories' );
-
-// exit( json_encode( $viewdict ) );
 
 Data::addData( $menudict, "menuview1" );
 echo Menu::make( "menuview_1", "menuview1");
 
 
 
-Views::setParams( 
-	["socialpages", "logo", "brandname", "pages", "categories"=>["id", "name"] ], 
-	[],
-	$identifier
-);
 
 ?>
 
 <style>
 </style>
 
-<div class="viewtype_nav  bulky main <?php echo $identifier ?>" style="<?php if($isadmin){ echo "margin-top: 60px"; } ?>">
+<div class="viewtype_nav  bulky main <?php echo $identifier ?>" >
 	<div class="bulky container">
 		<div class="bulky main-content">
 			<div class="bulky socialbtns-container">
-				<?php echo Sharing::make("socialpage_circles", [], "socialpages"); ?>
+				<?php echo Sharing::make("socialpage_circles", "socialpages"); ?>
 			</div>
 			<a href="/">
 				<div class="bulky logo-div">
 					<?php if(isset($viewdict['logo'])){ ?>
-						<img src=<?php echo $viewdict['logo'] ?> width="auto" height="auto">
+						<img src=<?php echo Data::getValue( $viewdict, 'logo' ) ?> width="auto" height="auto">
 					<?php }else{ ?>
-						<h3><?php echo $viewdict['brandname'] ?></h3>
+						<h3><?php echo Data::getValue( $viewdict,'brandname' ) ?></h3>
 					<?php } ?>
 				</div>
 				<h6 class="bulky tagline"><?php echo $tagline ?></h6>

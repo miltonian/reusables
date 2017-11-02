@@ -2,13 +2,13 @@
 
 namespace Reusables;
 
-
-
-	Views::setDataParams( 
+	Views::setParams( 
 		[ "title", "html_text" ], 
 		[],
 		$identifier
 	);
+
+	$viewdict = Data::convertKeys( $viewdict );
 
 ?>
 
@@ -19,12 +19,16 @@ namespace Reusables;
 		
 </style>
 
-<div class="viewtype_postinternal title_desc main <?php echo $identifier ?>">
+<div class="viewtype_postinternal title_desc main <?php echo $identifier ?> clicktoedit">
 	<h2 class='title_desc' id='title'><?php echo Data::getValue( $viewdict, 'title' ) ?></h2>
 	<div class='title_desc' id='desc'><?php echo Data::getValue( $viewdict, 'html_text' ) ?></div>
 </div>
 
 
 <script>
-	
+	$('.title_desc.clicktoedit').click(function(e){
+		<?php
+			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+		?>
+	})
 </script>

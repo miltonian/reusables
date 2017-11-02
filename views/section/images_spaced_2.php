@@ -42,9 +42,11 @@ $right_linkpath = Data::getValue( $rightarray, 'slug' );
 </div>
 
 <script>
-	$('.section_8.clicktoedit').click(function(e){
-		<?php
-			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
-		?>
-	})
+
+		$('.section_8.clicktoedit').click(function(e){
+			<?php
+				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+			?>
+		})
+
 </script>

@@ -102,10 +102,12 @@ $image3 = Data::getValue( $viewdict, 2);
 
 <script>
 
-	$('.inline_images.clicktoedit').click(function(e){
-		<?php
-			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
-		?>
-	})
+
+		$('.inline_images.clicktoedit').click(function(e){
+			<?php
+				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+			?>
+		})
+
 
 </script>

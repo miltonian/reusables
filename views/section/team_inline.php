@@ -52,18 +52,19 @@ if(	isset($teamarray['value']) ) {
 <script>
 	
 
-	$('.team_inline.clicktoedit').off().click(function(e){ 
+		$('.team_inline.clicktoedit').off().click(function(e){ 
 
-		<?php
-			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
-		?>
+			<?php
+				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+			?>
 
-		// if( typeof dataarray === "undefined" ) {
-		// 	dataarray = []
-		// }
-		// var viewdict = <?php /* echo json_encode($viewdict)*/ ?>;
-		// var viewoptions = <?php /* echo  json_encode( $viewoptions )*/ ?>;
-		// Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );
-		
-	});
+			// if( typeof dataarray === "undefined" ) {
+			// 	dataarray = []
+			// }
+			// var viewdict = <?php /* echo json_encode($viewdict)*/ ?>;
+			// var viewoptions = <?php /* echo  json_encode( $viewoptions )*/ ?>;
+			// Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );
+			
+		});
+
 </script>

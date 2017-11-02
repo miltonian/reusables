@@ -66,10 +66,11 @@ namespace Reusables;
 
 <script>
 
-	$('.jumbotron_bottomtext.clicktoedit').click(function(e){
-		<?php
-			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
-		?>
-	})
+		$('.jumbotron_bottomtext.clicktoedit').click(function(e){
+			<?php
+				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+			?>
+		})
+
 
 </script>

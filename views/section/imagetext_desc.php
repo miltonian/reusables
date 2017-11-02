@@ -39,9 +39,11 @@ namespace Reusables;
 </div>
 
 <script>
-	$('.imagetext_desc.clicktoedit').click(function(e){
-		<?php
-			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
-		?>
-	})
+
+		$('.imagetext_desc.clicktoedit').click(function(e){
+			<?php
+				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+			?>
+		})
+
 </script>

@@ -62,10 +62,12 @@ if( $right_morelinks == "" ) {
 		$(this).find('.inner').animate({'top': '100%'}, 300)
 	});
 
+	
 	$('.imageinimage_inline.clicktoedit').click(function(e){
 		<?php
 			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
 		?>
 	})
+	
 
 </script>

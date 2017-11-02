@@ -8,15 +8,18 @@ namespace Reusables;
 				"html_text"=>""
 			]
 	*/
-	
-	$sharingdict = Data::getValue( $viewdict, 'sharingdict' );
-
 
 	Views::setParams( 
 		[ "sharingdict", "featured_imagepath", "html_text", "sharingdict" ], 
 		[],
 		$identifier
 	);
+
+	$viewdict = Data::convertKeys( $viewdict );
+	
+	$sharingdict = Data::getValue( $viewdict, 'sharingdict' );
+
+
 
 ?>
 
@@ -26,7 +29,7 @@ namespace Reusables;
 		.imagetext_full .text-container { display: inline-block; position: relative; margin: 50px 0px; padding: 0; text-align: left; }
 </style>
 
-<div class="viewtype_postinternal imagetext_full">
+<div class="viewtype_postinternal imagetext_full clicktoedit" >
 	<div id="featuredimage" style="background-image: url('<?php echo Data::getValue( $viewdict, 'featured_imagepath' ); ?>');" ></div>
 	<?php
 		if( $sharingdict != "" ){
@@ -40,4 +43,11 @@ namespace Reusables;
 </div>
 
 <script>
+
+		$('.imagetext_full.clicktoedit').click(function(e){
+			<?php
+				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+			?>
+		})
+
 </script>

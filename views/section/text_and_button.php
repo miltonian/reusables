@@ -21,9 +21,11 @@ namespace Reusables;
 </div>
 
 <script>
-	$('.text_and_button.clicktoedit').off().click(function(e){ 
-		<?php
-			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
-		?>		
-	});
+
+		$('.text_and_button.clicktoedit').off().click(function(e){ 
+			<?php
+				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+			?>		
+		});
+
 </script>

@@ -23,9 +23,11 @@ namespace Reusables;
 </div>
 
 <script>
-	$('.ios_screenshot_1.clicktoedit').click(function(e){
-		<?php
-			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
-		?>
-	})
+
+		$('.ios_screenshot_1.clicktoedit').click(function(e){
+			<?php
+				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+			?>
+		})
+
 </script>

@@ -88,11 +88,12 @@ $optiontype = Data::getValue( $viewoptions, 'type' );
 </div>
 
 <script>
-	
-	$('.imageleft_gridright.clicktoedit').click(function(e){
-		<?php
-			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
-		?>
-	})
+
+		$('.imageleft_gridright.clicktoedit').click(function(e){
+			<?php
+				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+			?>
+		})
+
 
 </script>

@@ -8,6 +8,8 @@ namespace Reusables;
 		$identifier
 	);
 
+	$viewdict = Data::convertKeys( $viewdict );
+
 ?>
 
 <style>
@@ -17,7 +19,7 @@ namespace Reusables;
 		
 </style>
 
-<div class="viewtype_postinternal imagetext_inline main <?php echo $identifier ?>">
+<div class="viewtype_postinternal imagetext_inline main <?php echo $identifier ?> clicktoedit">
 	<?php 
 		echo Structure::make("main_withside", [
 			"maincolumn"=>array(
@@ -35,5 +37,11 @@ namespace Reusables;
 
 
 <script>
-	
+
+		$('.imagetext_inline.clicktoedit').click(function(e){
+			<?php
+				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+			?>
+		})
+
 </script>
