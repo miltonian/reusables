@@ -57,7 +57,7 @@ $image3 = Data::getValue( $viewdict, 2);
 		<div style="display: inline-block; width: 100%;">
 			<?php 
 
-					echo "<a class='inline_images link index_0' href=" . Data::getValue( $image1, 'pre_slug' ) . $image1_link . ">";
+					echo "<a class='inline_images link clicktoedit index_0' href=" . Data::getValue( $image1, 'pre_slug' ) . $image1_link . ">";
 
 					echo '<div class="inline_images post one sortorder_1 featuredsectionid_1" style="position: relative; margin: 0;">';
 						echo "<div class='inline_images image' style='background-image: url(" . Data::getValue($image1, 'imagepath') .");' >
@@ -69,7 +69,7 @@ $image3 = Data::getValue( $viewdict, 2);
 
 				if(isset($image2)){
 
-						echo "<a class='inline_images link index_1' href=" . Data::getValue( $image2, 'pre_slug' ) . $image2_link . ">";
+						echo "<a class='inline_images link clicktoedit index_1' href=" . Data::getValue( $image2, 'pre_slug' ) . $image2_link . ">";
 
 					echo '<div class="inline_images post one sortorder_1 featuredsectionid_1" style="position: relative; margin: 0;">';
 						echo "<div class='inline_images image' style='background-image: url(" . Data::getValue($image2, 'imagepath') . ");'>
@@ -83,7 +83,7 @@ $image3 = Data::getValue( $viewdict, 2);
 				
 				if(isset($image3)){
 
-						echo "<a class='inline_images link index_2' href=" . Data::getValue( $image3, 'pre_slug' ) . $image3_link . ">";
+						echo "<a class='inline_images link clicktoedit index_2' href=" . Data::getValue( $image3, 'pre_slug' ) . $image3_link . ">";
 
 					echo '<div class="inline_images post one sortorder_1 featuredsectionid_1" style="position: relative; margin: 0;">';
 						echo "<div class='inline_images image' style='background-image: url(" . Data::getValue($image3, 'imagepath') . ");'>
@@ -102,7 +102,7 @@ $image3 = Data::getValue( $viewdict, 2);
 
 <script>
 
-	$('.<?php echo $identifier ?> .inline_images.link').click(function(e){
+	$('.inline_images.clicktoedit').click(function(e){
 		<?php
 			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
 		?>

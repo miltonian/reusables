@@ -11,9 +11,11 @@ namespace Reusables;
 			"desc"=>""
 		]
 	*/
-
-	// exit( json_encode( Data::getValue( $viewdict, 'desc' ) ) );
-
+	Views::setParams( 
+		[ "imagepath", "title", "html_text" ], 
+		[],
+		$identifier
+	);
 
 	if( isset( $viewdict['value'] ) ){ 
 		$data_id = Data::getDefaultDataID( $viewdict );
@@ -22,23 +24,23 @@ namespace Reusables;
 	$viewdict = Data::convertKeys( $viewdict );
 	
 
-	Views::setParams( 
-		[ "imagepath", "title", "html_text" ], 
-		[],
-		$identifier
-	);
 ?>
 
 <style>
 </style>
 
-<div class="viewtype_section featuredsection_7 <?php echo $identifier ?>">
-	<div class="featuredimage" style="background-image: url('<?php echo Data::getValue( $viewdict, 'imagepath' ) ?>');"></div>
-	<div class="content">
-		<h2 id="title"><?php echo Data::getValue( $viewdict, 'title' ) ?></h2>
-		<p id="desc"><?php echo Data::getValue( $viewdict, 'html_text' ) ?></p>
+<div class="viewtype_section imagetext_inline <?php echo $identifier ?> main clicktoedit">
+	<div class="imagetext_inline featuredimage" style="background-image: url('<?php echo Data::getValue( $viewdict, 'imagepath' ) ?>');"></div>
+	<div class="imagetext_inline thecontent">
+		<h2 class="imagetext_inline" id="title"><?php echo Data::getValue( $viewdict, 'title' ) ?></h2>
+		<p class="imagetext_inline" id="desc"><?php echo Data::getValue( $viewdict, 'html_text' ) ?></p>
 	</div>
 </div>
 
 <script>
+	$('.imagetext_inline.clicktoedit').click(function(e){
+		<?php
+			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+		?>
+	})
 </script>

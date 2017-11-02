@@ -11,6 +11,11 @@ namespace Reusables;
 			"desc"=>""
 		]
 	*/
+	Views::setParams( 
+		[ "imagepath", "logo", "title", "slug" ], 
+		[],
+		$identifier
+	);
 
 	$viewdict = Data::convertKeys( $viewdict );
 
@@ -26,18 +31,14 @@ namespace Reusables;
 	}
 	$optiontype = Data::getValue( $viewoptions, 'type' );
 	$fullarray = Data::getFullArray( $viewdict );
-if( isset( $viewdict[$identifier]['value'] ) ) {
-	$fullviewdict = Data::getFullArray( $viewdict )[$identifier]['value'];
-}else{
-	$fullviewdict = $viewdict;
-}
+	
+	if( isset( $viewdict[$identifier]['value'] ) ) {
+		$fullviewdict = Data::getFullArray( $viewdict )[$identifier]['value'];
+	}else{
+		$fullviewdict = $viewdict;
+	}
 
 
-	Views::setParams( 
-		[ "imagepath", "logo", "title", "slug" ], 
-		[],
-		$identifier
-	);
 
 ?>
 
@@ -46,15 +47,13 @@ if( isset( $viewdict[$identifier]['value'] ) ) {
 		.jumbotron_bottomtext { cursor: pointer; }
 			.jumbotron_bottomtext:hover { opacity: 0.8; }
 	<?php } ?>
-
 		.jumbotron_bottomtext.link { position: absolute; display: inline-block; margin: 0; padding: 0; width: 100%; height: 100%; }
 	<?php if( $linkpath == "" && $optiontype == "") { ?>
 		/*.jumbotron_bottomtext.link { display: none; }*/
 	<?php } ?>
-
 </style>
 
-<div class="viewtype_section jumbotron_bottomtext <?php echo $identifier ?> main">
+<div class="viewtype_section jumbotron_bottomtext <?php echo $identifier ?> main clicktoedit">
 		<div class="backgroundimage" style="background-image: url('<?php echo Data::getValue( $viewdict, 'imagepath' ) ?>');">
 			<div class="gradient"></div>
 		</div>
@@ -63,51 +62,14 @@ if( isset( $viewdict[$identifier]['value'] ) ) {
 			<h3 id="title"><?php echo Data::getValue( $viewdict, 'title' ) ?></h3>
 		</div>
 	<a class="jumbotron_bottomtext link" href="<?php echo $linkpath ?>"></a>
-	
 </div>
 
 <script>
 
-var viewdict = <?php echo json_encode($viewdict) ?>;
-var isediting = <?php echo $isediting ?>;
-
-var viewdict = <?php echo json_encode( $viewdict ) ?>;
-	var viewoptions = <?php echo json_encode( $viewoptions ) ?>;
-
-	var thismodalclass = "";
-	<?php $celltype = "" ?>
-	var type = <?php echo json_encode( $optiontype ) ?>;
-
-	<?php if( $celltype == "modal" ){ ?>
-		thismodalclass = new <?php echo $viewoptions['modal']['modalclass'] ?>Classes();
-		var dataarray = <?php echo json_encode( $fullviewdict ) ?>;
-	<?php } ?>
-
-	var viewdict = <?php echo json_encode($viewdict) ?>;
-	var viewoptions = <?php echo json_encode( $viewoptions ) ?>;
-
-	$('.<?php echo $identifier ?> .jumbotron_bottomtext.link').off().click(function(e){ 
-
-		var optiontype = <?php echo json_encode($optiontype) ?>;
-		if( optiontype == "modal" || optiontype == "dropdown" ) { 
-			e.preventDefault();
-			if( typeof dataarray === "undefined" ) { 
-				dataarray = []
-			}
-			Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );
-		}
-
-		<?php 
-			ReusableClasses::getEditingFunctionsJS( $viewoptions ) ;
+	$('.jumbotron_bottomtext.clicktoedit').click(function(e){
+		<?php
+			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
 		?>
-
-		if( typeof dataarray === "undefined" ) {
-			dataarray = []
-		}
-		var viewdict = <?php echo json_encode($viewdict) ?>;
-		var viewoptions = <?php echo  json_encode( $viewoptions ) ?>;
-		Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );
-		
-	});
+	})
 
 </script>

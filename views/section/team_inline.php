@@ -36,7 +36,7 @@ if(	isset($teamarray['value']) ) {
 		<?php for ($i=0; $i < $arraysize; $i++) { ?>
 		<?php $teamdict = Data::getValue( $teamarray, $i); ?>
 			<div class="team_inline person index_<?php echo $i ?>">
-				<a class="team_inline link index_<?php echo $i ?>" href="<?php echo Data::getValue( $viewoptions, 'pre_slug' ) ?><?php echo Data::getValue( $viewdict, 'slug' ) ?>">
+				<a class="team_inline link clicktoedit index_<?php echo $i ?>" href="<?php echo Data::getValue( $viewoptions, 'pre_slug' ) ?><?php echo Data::getValue( $viewdict, 'slug' ) ?>">
 					<img class="team_inline image" src="<?php echo Data::getValue( $teamdict, 'imagepath' ) ?>" />
 					<h3 class="team_inline name"><?php echo Data::getValue( $teamdict, 'name' ) ?></h3>
 					<h5 class="team_inline title"><?php echo Data::getValue( $teamdict, 'title' ) ?></h5>
@@ -52,7 +52,7 @@ if(	isset($teamarray['value']) ) {
 <script>
 	
 
-	$('.<?php echo $identifier ?> .team_inline.link').off().click(function(e){ 
+	$('.team_inline.clicktoedit').off().click(function(e){ 
 
 		<?php
 			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );

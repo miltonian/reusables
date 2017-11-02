@@ -32,17 +32,17 @@ $right_linkpath = Data::getValue( $rightarray, 'slug' );
 
 <div class="viewtype_section <?php echo $identifier ?> section_8 main">
 	<div class="section_8 wrapper">
-		<a class="section_8 link index_0" href="<?php echo $left_linkpath ?>" >
+		<a class="section_8 link clicktoedit index_0" href="<?php echo $left_linkpath ?>" >
 			<div class="section_8 left" style="background-image: url('<?php echo Data::getValue($leftarray, 'imagepath') ?>');"></div>
 		</a>
-		<a class="section_8 link index_1" href="<?php echo $right_linkpath ?>">
+		<a class="section_8 link clicktoedit index_1" href="<?php echo $right_linkpath ?>">
 			<div class="section_8 right" style="background-image: url('<?php echo Data::getValue($rightarray, 'imagepath') ?>');"></div>
 		</a>
 	</div>
 </div>
 
 <script>
-	$('.<?php echo $identifier ?> .section_8.link').click(function(e){
+	$('.section_8.clicktoedit').click(function(e){
 		<?php
 			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
 		?>
