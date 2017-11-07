@@ -83,6 +83,24 @@ class Data {
 
 	}
 
+	public static function overwriteData( $data, $identifier )
+	{
+		if( !is_array( $data ) ){
+			$data = Data::retrieveDataWithID( $data );
+		}
+		
+		// if ( !isset( self::$alldata[ $identifier ] ) ) {
+			$data['data_id'] = $identifier;
+			self::$alldata[ $identifier ] = $data;
+
+		// }else{
+		// 	exit( "Duplicate data id: '" . $identifier . "' entries. " );
+		// }
+
+		Views::addView( $identifier );
+
+	}
+
 	public static function setKeyValue( $pair, $identifier )
 	{
 		if( !isset( self::$alldata[ $identifier ] ) ) {

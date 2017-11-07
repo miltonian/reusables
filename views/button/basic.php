@@ -1,5 +1,12 @@
 <?php
+
 namespace Reusables;
+
+Views::setParams( 
+	["link", "title" ], 
+	[],
+	$identifier
+);
 
 $viewdict = Data::convertKeys( $viewdict );
 
@@ -25,23 +32,25 @@ if( isset( $viewdict[$identifier]['value'] ) ) {
 	$fullviewdict = $viewdict;
 }
 
-Views::setParams( 
-	["slug", "title" ], 
-	[],
-	$identifier
-);
 
 ?>
 
-<button class="viewtype_button <?php echo $identifier ?> basic"><?php echo Data::getValue( $viewdict, 'title' ) ?></button>
+<div class="viewtype_button <?php echo $identifier ?> basic main">
+	<a class="basic link" href="<?php echo Data::getValue( $viewdict, 'link' ) ?>">
+		<button class="basic button"><?php echo Data::getValue( $viewdict, 'title' ) ?></button>
+	</a>
+</div>
+
+
+
 
 <script>
 
-	
-var viewdict = <?php echo json_encode($viewdict) ?>;
+	$('.<?php echo $identifier ?> .basic.button').click(function(e){
+
 var isediting = <?php echo $isediting ?>;
 
-var viewdict = <?php echo json_encode( $viewdict ) ?>;
+	var viewdict = <?php echo json_encode( $viewdict ) ?>;
 	var viewoptions = <?php echo json_encode( $viewoptions ) ?>;
 
 	var thismodalclass = "";
@@ -57,8 +66,6 @@ var viewdict = <?php echo json_encode( $viewdict ) ?>;
 	var viewoptions = <?php echo json_encode( $viewoptions ) ?>;
 
 	var viewdict = <?php echo json_encode($viewdict) ?>;
-
-	$('.<?php echo $identifier ?>').click(function(e){
 
 		var optiontype = <?php echo json_encode($optiontype) ?>;
 		if( optiontype == "modal" || optiontype == "dropdown" ) { 
