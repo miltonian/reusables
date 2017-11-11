@@ -213,19 +213,27 @@ if (isset($fieldarray)) {
 				$questionmarks = "";
 				$insertconditionvalues = [];
 				for ($i=0; $i < sizeof($indexes); $i++) { 
-					if( $fieldarray[ $indexes[$i] ]['col_name'] == 'id' ){
+					$arrayorimages = $fieldarray;
+					if( !isset( $fieldarray[ $indexes[$i] ]['col_name'] ) ) {
+						if( !isset( $fieldimages[ $indexes[$i] ]['col_name'] ) ) {
+							continue;
+						}else{
+							$arrayorimages = $fieldimages;
+						}
+					}
+					if( $arrayorimages[ $indexes[$i] ]['col_name'] == 'id' ){
 						continue;
 					}
 					if( sizeof($insertconditionvalues) > 0 ){
-						$query .= ", " . $fieldarray[ $indexes[$i] ]['col_name'];
+						$query .= ", " . $arrayorimages[ $indexes[$i] ]['col_name'];
 						$questionmarks .= ", ?";
 					}else{
 						// exit(json_encode($i));
 						// $query .= $conditions[$i]['key'];
-						$query .= $fieldarray[ $indexes[$i] ]['col_name'];
+						$query .= $arrayorimages[ $indexes[$i] ]['col_name'];
 						$questionmarks .= "?";
 					}
-					array_push( $insertconditionvalues, $fieldarray[ $indexes[$i] ]['field_value'] );
+					array_push( $insertconditionvalues, $arrayorimages[ $indexes[$i] ]['field_value'] );
 				}
 
 				$query .= " ) VALUES ( " . $questionmarks . ")";

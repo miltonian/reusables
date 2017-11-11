@@ -233,6 +233,7 @@ class ReusableClasses {
 
 	public static function addEditingToCell( $identifier, $fullviewdict, $celltype )
 	{
+		
 		$viewdict = Data::retrieveDataWithID( $identifier );
 		$viewoptions = Data::retrieveOptionsWithID( $identifier );
 		// exit( json_encode( $fullviewdict ) );
@@ -251,6 +252,7 @@ class ReusableClasses {
 		echo 'var viewdict = ' . json_encode($viewdict) . ';
 		var viewoptions = ' . json_encode( $viewoptions ) . ';
 		$(".' . $identifier . '").off().click(function(e){ ';
+		echo " if( Reusable.isEditing() ) { ";
 		echo 'var viewdict = ' . json_encode($viewdict) . ';
 		var viewoptions = ' . json_encode( $viewoptions ) . ';';
 			if( $celltype == "modal" ) {
@@ -287,7 +289,9 @@ class ReusableClasses {
 			// var viewdict = ' . json_encode($viewdict) . ';';
 			// echo 'var viewoptions = ' . json_encode( $viewoptions ) . ';
 			// Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );';
+		echo '}';
 		echo '});';
+
 
 	}
 
@@ -393,7 +397,6 @@ class ReusableClasses {
 
 	public static function setUpEditingForSection( $viewdict, $viewoptions, $identifier )
 	{
-
 		echo " if( Reusable.isEditing() ) { ";
 
 		$fullarray = Data::getFullArray( $viewdict );
@@ -411,7 +414,7 @@ class ReusableClasses {
 		var thismodalclass = '';
 
 		var type = " . json_encode( $optiontype ) . ";";
-
+		echo "console.log( JSON.stringify( ".json_encode( $optiontype )." ) );";
 		if( $optiontype == "modal" ){ 
 			echo "thismodalclass = new " . $viewoptions['modal']['modalclass'] . "Classes();
 			var dataarray = " . json_encode( $fullviewdict ) . ";";
