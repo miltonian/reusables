@@ -43,6 +43,7 @@ extract( Input::convertInputKeys( $identifier ) );
 </style>
 
 
+
 <?php if( $onstep==1 ){ ?>
 	<form class='<?php echo $identifier ?>_theform' method='post' action='<?php echo $formaction ?>' enctype='multipart/form-data'>
 <?php } ?>
@@ -52,6 +53,7 @@ extract( Input::convertInputKeys( $identifier ) );
 <?php } ?>
 <div class="viewtype_section <?php echo $identifier ?> smartform main">
 	<div class='thecontainer' style='text-align: left; margin-top: 10px; margin-bottom: 0px; text-align: center;'>
+		<label class="smartform titlelabel"><?php echo Data::getValue( $viewoptions, 'title' ) ?></label>
 		<input type="hidden" name="goto" value="<?php echo Data::getValue( $viewoptions, 'goto' ) ?>">
 			<?php 
 

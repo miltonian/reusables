@@ -26,7 +26,7 @@ class Input {
 	// 	return $View->render();
 	// }
 
-	public static function fill( $dict, $key, $index, $type=null, $placeholder=null, $labeltext=null, $parentclass=null )
+	public static function fill( $dict, $key, $index, $type=null, $placeholder=null, $labeltext=null, $parentclass=null, $selectoptions="" )
 	{
 		if( !$type ){
 			$type = Input::getInputType( $key );
@@ -62,6 +62,7 @@ class Input {
 				"field_table"=>Data::getDefaultTableNameWithID( $dataid ),
 				"field_colname"=>Data::getColName( ["data_id"=>$dataid, "key" => $key] ),
 				"field_conditions"=>Data::getConditions( ["data_id"=>$dataid, "key" => $key] ),
+				"options"=>$selectoptions,
 				"is_currency"=>$iscurrency,
 				"is_button"=>$isbutton
 			];
@@ -187,6 +188,7 @@ class Input {
 			if( isset( $input_keydicts[ $ik ]['placeholder'] ) ){ $placeholder = $input_keydicts[ $ik ]['placeholder']; }else{ $placeholder = null; }
 			if( isset( $input_keydicts[ $ik ]['labeltext'] ) ){ $labeltext = $input_keydicts[ $ik ]['labeltext']; }else{ $labeltext = null; }
 			if( isset( $input_keydicts[ $ik ]['type'] ) ){ $type = $input_keydicts[ $ik ]['type']; }else{ $type = null; }
+			if( isset( $input_keydicts[ $ik ]['options'] ) ){ $selectoptions = $input_keydicts[ $ik ]['options']; }else{ $selectoptions = ""; }
 
 
 			$thekey = $ik;
@@ -201,7 +203,7 @@ class Input {
 			if( $steps == $s ){
 				ReusableClasses::setFormInputIndex( $identifier, $i );
 
-				$theinput = Input::fill( $data, $thekey, $i, $type, $placeholder, $labeltext, $identifier  );
+				$theinput = Input::fill( $data, $thekey, $i, $type, $placeholder, $labeltext, $identifier, $selectoptions  );
 				if( sizeof( $theinput ) == 2 ) {
 					array_push( 
 						$input_fields, 

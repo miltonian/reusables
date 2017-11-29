@@ -7,3 +7,4 @@
 		label.file_image#imglabel { width: calc(30% - 0px); padding-bottom: 27%; float: none; }
 		.smartform.custombutton { display: inline-block; position: relative; margin: 0; padding: 20px 0px; color: white; background-color: green; border: 0; -webkit-appearance: none; border-bottom: 3px solid rgba(0,0,0,0.4) font-weight: 500; width: 100%; font-size: 20px; border-radius: 5px; margin-top: 20px; }
 		.smartform.main_structure.main { margin: 0; }
+		label.smartform.titlelabel { width: 100%; display: inline-block; }
