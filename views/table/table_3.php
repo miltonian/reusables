@@ -89,7 +89,7 @@ unset( $temp_tablearray['data_id'] );
 							if(isset($adarray['cellactions'])){ $post['actions'] = $adarray['cellactions']; }else{ $post['actions'] = array(); }
 
 							Data::addData( $post, $identifier . "_ad_" . $adindex );
-							echo Ad::make( "adset_2", $identifier . "_ad_" . $adindex );
+							echo Ad::make( "basic", $identifier . "_ad_" . $adindex );
 							if($sortable){ ?>
 								</li>
 							<?php } 

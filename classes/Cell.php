@@ -29,7 +29,18 @@ class Cell {
 		$mediatype = Data::getValue( $data, 'mediatype' );
 		$cellindex = Data::getValue( $data, 'index' );
 
-		$description = implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $data, 'html_text' ))), 0, 10) ) . "...";
+		$isfulldesc = false;
+		if( isset( $options['fulldesc'] ) ) {
+			if( $options['fulldesc'] ) {
+				$isfulldesc = true;
+			}
+		}
+
+		if( !$isfulldesc ) {
+			$description = implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $data, 'html_text' ))), 0, 10) ) . "...";
+		}else{
+			$description = Data::getValue( $data, 'html_text' );
+		}
 		if( $description == "..." ){
 			$description = "";
 		}
