@@ -5,9 +5,14 @@ namespace Reusables;
 
 class Form {
 
-	public static function makeInsertOnly( $data, $tablename, $identifier )
+	public static function makeInsertOnly( $tablename, $identifier )
 	{
 		// data needs to be from 'DESCRIBE tablename' SQL query
+
+		$query = 'DESCRIBE ' . $tablename;
+		$values = [];
+		$type = 'select';
+		$data = CustomData::call( "DBClasses", "querySQL", [$query, $values, $type] )[1];
 
 		$converteddata = [];
 		foreach ($data as $r) {
