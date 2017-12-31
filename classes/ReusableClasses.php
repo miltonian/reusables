@@ -99,6 +99,17 @@ class ReusableClasses {
 
 	}
 
+	public static function addEditing( $editing=false )
+	{
+		if( $editing ) {
+			echo "
+				Reusable.switchEditing(true)
+				$('div.horizontal.main.adminbar.desktopnav.navbar-shadow').css({'background-color': '#FFF8E0'})
+				$('.horizontal.button.edit_switch.wrapper.buttonindex_1  .horizontal.topbar-button label').html('Edit: <b style=\"color: green\">On</b>/Off');
+			";
+		}
+	}
+
 	public static function addReusableJS( $addjquery )
 	{
 		echo "

@@ -53,7 +53,7 @@ function return_gen_config() {
 
 	\$CONFIG = array();
 	// General Configuration Settings: ---------------- //
-		\$CONFIG[ 'domain' ] = 'theanywherecard.com';
+		\$CONFIG[ 'domain' ] = '';
 	// ------------------------------------------------ //
 
 	return( \$CONFIG );
@@ -581,10 +581,217 @@ if( \$match && is_callable( \$match['target'] ) ) {
 }" > index.php;
 
 cd views
+
+touch login.php
+touch logout.php
+
+echo "<?php
+
+
+Reusables\Data::addData( [\"title\"=>\"Login\"], \"loginheader\" );
+
+Reusables\Data::addOption( \"Email\", \"placeholder\", \"loginview\" );
+Reusables\Data::addOption( \"admins\", \"tablename\", \"loginview\" );
+Reusables\Data::addOption( \"email\", \"username_col\", \"loginview\" );
+
+
+Reusables\ReusableClasses::startpage( __FILE__ );
+
+echo Reusables\Wrapper::wrapper1(
+	[],
+	[
+		Reusables\Header::make( \"basic\", \"loginheader\" ),
+		Reusables\Section::make( \"login\", \"loginview\" )
+	],
+	\"main_wrapper\"
+);
+
+
+Reusables\ReusableClasses::endpage( \"\", __FILE__ );" > login.php;
+
+echo "<?php
+
+session_start();
+\$_SESSION = [];
+session_destroy();
+
+header('Location: /' );" > logout.php;
+
+cd ../
+
+cd structure
+touch header.php
+
+echo "<?php
+
+session_start();
+
+\$loggedin = false;
+if( isset( \$_SESSION['login'][0] ) ) {
+	if( \$_SESSION['login'][0] == 1 ) {
+		\$loggedin = true;
+	}
+}
+
+\$editing = false;
+if( isset( \$_GET['e'] ) ){ if( \$_GET['e']==1 && \$loggedin ){ \$editing=true; } }
+
+\$editinglink = \"?e=1\";
+if( \$editing ) {
+	\$editinglink = \"?e=0\";
+}
+\$adminbardict = [
+	\"buttons\" => [
+		// [ \"name\" => \"Articles\", \"classname\"=> \"admin_articles_button\", \"slug\"=>\"#\", \"position\"=>\"right\", \"type\"=>\"modal\", \"modal\"=>\"admin_articles\" ],
+		[ \"name\" => \"New Post\", \"classname\"=> \"admin_newpost_button\", \"slug\"=>\"\", \"position\"=>\"right\", \"type\"=>\"modal\", \"modal\"=>\"newpost_modal\" ],
+		[ \"name\" => \"Edit: On/<b>Off</b>\", \"classname\"=> \"edit_switch\", \"slug\"=>\$editinglink, \"position\"=>\"right\" ],
+	]
+];
+
+\$allpostsarray = Reusables\CustomData::call( \"Posts\", \"getPosts\", [20] );
+
+Reusables\Data::addData( \$allpostsarray, \"allposts_modal\" );
+
+Reusables\Form::makeInsertOnly( \"posts\", \"newpost_modal\" );
+	Reusables\Data::addOption( [\"title\", \"featured_imagepath\"=>[\"labeltext\"=>\"Featured Image\"], \"html_text\"=>[\"labeltext\"=>\"Post Text\", \"type\"=>\"wysi\"]], \"input_keys\", \"newpost_modal\" );
+
+
+Reusables\Data::addData( \$adminbardict, \"adminbar\" );
+
+Reusables\ReusableClasses::startpage( __FILE__ );
+
+	if( \$loggedin ) {
+
+		echo Reusables\Section::make( \"smartform_inmodal\", \"newpost_modal\" );
+		
+		echo Reusables\Menu::make( \"horizontal\", \"adminbar\" );
+
+
+	}
+
+Reusables\ReusableClasses::endpage( \"\", __FILE__ );" > header.php
+
+cd ../
+
+cd vendor/miltonian/custom/data/
+touch Posts.php
+
+echo "<?php
+
+require_once 'DBClasses.php';
+
+class Posts {
+
+	public static function getFeaturedContent( \$featuredid )
+	{
+		\$query = 'SELECT * FROM featured_content WHERE featured_id=?';
+		\$values = [ \$featuredid ];
+		\$type = 'select';
+		\$result = DBClasses::querySQL( \$query, \$values, \$type )[1];
+
+		\$conditions = [[ \"key\"=>\"id\", \"value\"=>\"\" ]];
+		\$returningdict = Reusables\ReusableClasses::toValueAndDBInfo( \$result, \$conditions, \"featured_content\" );
+
+		return \$returningdict;
+	}
+
+	public static function getFeaturedPosts( \$featuredid )
+	{
+		\$query = 'SELECT * FROM featured_content INNER JOIN posts ON featured_content.post_id=posts.id WHERE featured_id=?';
+		\$values = [ \$featuredid ];
+		\$type = 'select';
+		\$result = DBClasses::querySQL( \$query, \$values, \$type )[1];
+
+		\$conditions = [[ \"key\"=>\"id\", \"value\"=>\"\" ]];
+		\$returningdict = Reusables\ReusableClasses::toValueAndDBInfo( \$result, \$conditions, \"featured_content\" );
+
+		return \$returningdict;
+	}
+
+	public static function getPost( \$post_id )
+	{
+		\$query = 'SELECT * FROM posts WHERE id=?';
+		\$values = [ \$post_id ];
+		\$type = 'select';
+		\$result = DBClasses::querySQL( \$query, \$values, \$type )[1][0];
+
+		\$conditions = [[ \"key\"=>\"id\", \"value\"=>\"\" ]];
+		\$returningdict = Reusables\ReusableClasses::toValueAndDBInfo( \$result, \$conditions, \"posts\" );
+
+		return \$returningdict;
+	}
+
+	public static function getPosts( \$thelimit )
+	{
+		\$query = 'SELECT * FROM posts WHERE was_deleted=0 ORDER BY id DESC LIMIT ?';
+		\$values = [ intval(\$thelimit) ];
+		\$type = 'select';
+		\$result = DBClasses::querySQL( \$query, \$values, \$type )[1];
+
+		\$conditions = [[ \"key\"=>\"id\", \"value\"=>\"\" ]];
+		\$returningdict = Reusables\ReusableClasses::toValueAndDBInfo( \$result, \$conditions, \"posts\" );
+
+		return \$returningdict;
+	}
+
+	public static function getPostsForBrand( \$brand_id, \$thelimit )
+	{
+		\$query = 'SELECT * FROM posts WHERE brand=? AND was_deleted=0 ORDER BY id DESC LIMIT ?';
+		\$values = [ \$brand_id, intval(\$thelimit) ];
+		\$type = 'select';
+		\$result = DBClasses::querySQL( \$query, \$values, \$type )[1];
+
+		\$conditions = [[ \"key\"=>\"id\", \"value\"=>\"\" ]];
+		\$returningdict = Reusables\ReusableClasses::toValueAndDBInfo( \$result, \$conditions, \"posts\" );
+
+		return \$returningdict;
+	}
+
+	public static function getPodcasts( \$thelimit )
+	{
+		\$query = 'SELECT * FROM posts WHERE type=\"podcast\" AND was_deleted=0 ORDER BY id DESC LIMIT ?';
+		\$values = [ intval(\$thelimit) ];
+		\$type = 'select';
+		\$result = DBClasses::querySQL( \$query, \$values, \$type )[1];
+
+		\$conditions = [[ \"key\"=>\"id\", \"value\"=>\"\" ]];
+		\$returningdict = Reusables\ReusableClasses::toValueAndDBInfo( \$result, \$conditions, \"posts\" );
+
+		return \$returningdict;
+	}
+
+	public static function getTempAds()
+	{
+		\$query = 'SELECT * FROM tempads';
+		\$values = [];
+		\$type = 'select';
+		\$result = DBClasses::querySQL( \$query, \$values, \$type )[1];
+
+		\$conditions = [[ \"key\"=>\"id\", \"value\"=>\"\" ]];
+		\$returningdict = Reusables\ReusableClasses::toValueAndDBInfo( \$result, \$conditions, \"tempads\" );
+
+		return \$returningdict;
+	}
+
+}" > Posts.php
+
+cd ../../../../
+
+cd views
 touch home.php
 echo "<?php 
 
+require_once( BASE_DIR . '/structure/header.php' );
+
 echo Reusables\ReusableClasses::testReusables();
+
+
+?>
+
+
+<script>
+	<?php Reusables\ReusableClasses::addEditing(\$editing); ?>
+</script>
 
 " > home.php
 
