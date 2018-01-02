@@ -143,9 +143,9 @@ if( isset($fieldimages ) ) {
 							// }
 							// echo $i;
 							if( $sizeofarraystoinsert == 0 ) {
-								insertimage( $indexes, $fieldarray, $fieldimages, $tablename, $i, 1 );
+								$fieldarray = insertimage( $indexes, $fieldarray, $fieldimages, $tablename, $i, 1 );
 							}else{
-								insertimage( $indexes, $fieldarray, $fieldimages, $tablename, $i, $sizeofarraystoinsert );
+								$fieldarray = insertimage( $indexes, $fieldarray, $fieldimages, $tablename, $i, $sizeofarraystoinsert );
 							}
 
 							if( ($i+$sizeofarraystoinsert-1) > $i ) {
@@ -153,10 +153,10 @@ if( isset($fieldimages ) ) {
 							}
 						}
 					}else{
-						insertimage( $indexes, $fieldarray, $fieldimages, $tablename );
+						$fieldarray = insertimage( $indexes, $fieldarray, $fieldimages, $tablename );
 					}
 				}else{
-					insertimage( $indexes, $fieldarray, $fieldimages, $tablename );
+					$fieldarray = insertimage( $indexes, $fieldarray, $fieldimages, $tablename );
 				}
 
 			}
@@ -393,5 +393,6 @@ function insertimage( $indexes, $fieldarray, $fieldimages, $tablename, $starting
 	for ( $i=0; $i < sizeof($fieldarray); $i++ ) {
 		$fieldarray[$i]['field_conditions'] = [ ["key"=>"id", "value"=>$lastinsertid ] ];
 	}
+	return $fieldarray;
 	// exit( json_encode( $lastinsertid ) );
 }
