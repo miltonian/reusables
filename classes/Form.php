@@ -73,11 +73,14 @@ class Form {
 		$customparam_i = 0;
 		$all_input_keys = [];
 		$inputs = [];
+		// exit( json_encode( $featured_content_id ) );
 		foreach ($customparam_keyvalues as $input) {
 			$input_keys = [];
 			$inputdict = [];
 			foreach ($input as $dict) {
 				$inputdict[ $dict['key_string'] ] = $dict['value_string'];
+				$inputdict['type'] = $dict['type_string'];
+				// exit( json_encode( $inputdict['type'] ) );
 			}
 			// exit( json_encode( $returningdict['value'] ) );
 			// exit( json_encode( $input[0] ) );
@@ -86,6 +89,7 @@ class Form {
 				"labeltext"=>Data::getValue($inputdict, "labeltext"),
 				"placeholder"=>Data::getValue($inputdict, "placeholder"),
 				"field_value"=>Data::getValue($inputdict, "value"),
+				"type"=>Data::getValue($inputdict, "type"),
 			];
 
 			$input_keys["user_id"] = ["type"=>"hidden", "field_value"=>$user_id];
@@ -96,11 +100,11 @@ class Form {
 
 			// array_push( $inputs, $returningdict['value'] );
 			$customparam_i++;
+
 		}
 		// $returningdict['value'] = $inputs;
 		// exit( json_encode( $returningdict ) );
 		// exit( json_encode( $customparam_keyvalues ) );
-
 		// done new
 
 		Data::addData( $returningdict, $identifier );

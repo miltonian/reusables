@@ -16,6 +16,10 @@ if( !isset($viewdict['field_conditions'] ) ){
 	$viewdict['field_conditions'] = [];
 }else if( $viewdict['field_conditions'] == "" ){
 	$viewdict['field_conditions'] = [];
+}else if( sizeof($viewdict['field_conditions']) == 1 ) {
+	if( sizeof($viewdict['field_conditions'][0]) == 0 ) {
+		$viewdict['field_conditions'] = [];
+	}
 }
 
 ?>

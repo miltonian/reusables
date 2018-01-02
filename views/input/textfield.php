@@ -21,11 +21,18 @@ if( !isset($viewdict['field_conditions'] ) ){
 	$viewdict['field_conditions'] = [];
 }else if( $viewdict['field_conditions'] == "" ){
 	$viewdict['field_conditions'] = [];
+}else if( sizeof($viewdict['field_conditions']) == 1 ) {
+	if( sizeof($viewdict['field_conditions'][0]) == 0 ) {
+		$viewdict['field_conditions'] = [];
+	}
 }
 
 $is_currency = Data::getValue( $viewdict, "is_currency" );
 $is_hidden = Data::getValue( $viewdict, "is_hidden" );
 
+if($identifier == "template_form_value_string_input_0"){
+	// exit( json_encode( sizeof( $viewdict['field_conditions']) ) );
+}
 
 ?>
 
@@ -51,10 +58,12 @@ $is_hidden = Data::getValue( $viewdict, "is_hidden" );
 	<input type="hidden" class="tablename" value="<?php echo Data::getValue( $viewdict, 'field_table') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][tablename]">
 	<input type="hidden" class="col_name" value="<?php echo Data::getValue( $viewdict, 'field_colname') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][col_name]">
 	<?php $i=0; ?>
-	<?php foreach ($viewdict['field_conditions'] as $c) { ?>
-		<input type="hidden" class="conditionkey_<?php echo $i ?>" value="<?php echo $c['key'] ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_conditions][<?php echo $i ?>][key]">
-		<input type="hidden" class="conditionvalue_<?php echo $i ?>" value="<?php echo $c['value'] ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_conditions][<?php echo $i ?>][value]">
-		<?php $i++; ?>
+	<?php if( sizeof( $viewdict['field_conditions'] ) > 0 ){
+		foreach ($viewdict['field_conditions'] as $c) { ?>
+			<input type="hidden" class="conditionkey_<?php echo $i ?>" value="<?php echo $c['key'] ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_conditions][<?php echo $i ?>][key]">
+			<input type="hidden" class="conditionvalue_<?php echo $i ?>" value="<?php echo $c['value'] ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_conditions][<?php echo $i ?>][value]">
+			<?php $i++; ?>
+		<?php } ?>
 	<?php } ?>
 </div>
 
