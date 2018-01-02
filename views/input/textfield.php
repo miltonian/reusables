@@ -24,6 +24,8 @@ if( !isset($viewdict['field_conditions'] ) ){
 }
 
 $is_currency = Data::getValue( $viewdict, "is_currency" );
+$is_hidden = Data::getValue( $viewdict, "is_hidden" );
+
 
 ?>
 
@@ -33,13 +35,18 @@ $is_currency = Data::getValue( $viewdict, "is_currency" );
 </style>
 
 <div class="viewtype_input <?php echo $identifier ?> textfield">
-	<label style="margin-bottom: -5px; font-weight: 700; font-size: 11px"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
+	<?php if( !$is_hidden ){ ?>
+		<label style="margin-bottom: -5px; font-weight: 700; font-size: 11px"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
+	<?php } ?>
 	<?php if( $is_currency != "" ){ ?>
 		<span class="input_groupaddon">$</span>
 		<input type="text" class="field_value input_withaddon" placeholder="<?php echo Data::getValue( $viewdict, 'placeholder') ?>" value="<?php echo Data::getValue( $viewdict, 'field_value') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_value]">
+	<?php }else if( $is_hidden ){ ?>
+		<input type="hidden" class="field_value" placeholder="<?php echo Data::getValue( $viewdict, 'placeholder') ?>" value="<?php echo Data::getValue( $viewdict, 'field_value') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_value]">
 	<?php }else{ ?>
 		<input type="text" class="field_value" placeholder="<?php echo Data::getValue( $viewdict, 'placeholder') ?>" value="<?php echo Data::getValue( $viewdict, 'field_value') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_value]">
 	<?php } ?>
+
 	<input type="hidden" class="field_type" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_type]" value="text" style="visibility: hidden; z-index: -1;">
 	<input type="hidden" class="tablename" value="<?php echo Data::getValue( $viewdict, 'field_table') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][tablename]">
 	<input type="hidden" class="col_name" value="<?php echo Data::getValue( $viewdict, 'field_colname') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][col_name]">

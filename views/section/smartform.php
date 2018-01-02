@@ -8,6 +8,12 @@ if( !isset( $viewoptions['ifnone_insert'] ) ){
 	$ifnone_insert = $viewoptions['ifnone_insert'];
 }
 
+if( !isset( $viewoptions['multiple_inserts'] ) ){
+	$multiple_inserts = false;
+}else{
+	$multiple_inserts = $viewoptions['multiple_inserts'];
+}
+
 if( !isset( $viewoptions['formaction'] ) ){
 	$formaction = '/edit_view.php';
 }else{
@@ -50,6 +56,9 @@ extract( Input::convertInputKeys( $identifier ) );
 
 <?php if( $ifnone_insert ){ ?>
 	<input type='hidden' name='ifnone_insert' value='1' >
+<?php } ?>
+<?php if( $multiple_inserts ){ ?>
+	<input type='hidden' name='multiple_inserts' value='1' >
 <?php } ?>
 <div class="viewtype_section <?php echo $identifier ?> smartform main">
 	<div class='thecontainer' style='text-align: left; margin-top: 10px; margin-bottom: 0px; text-align: center;'>

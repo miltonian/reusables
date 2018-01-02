@@ -33,12 +33,16 @@ class Input {
 		}
 		$iscurrency = false;
 		$isbutton = false;
+		$ishidden = false;
 		if( $type == "currency" ) {
 			$type = "textfield";
 			$iscurrency = "1";
 		}else if( $type == "button" ) {
 			$type = "textfield";
 			$isbutton = "1";
+		}else if( $type == "hidden" ) {
+			$type = "textfield";
+			$ishidden = "1";
 		}
 		Input::setInputType( $key, $type );
 		// echo json_encode( $placeholder );
@@ -64,6 +68,7 @@ class Input {
 				"field_conditions"=>Data::getConditions( ["data_id"=>$dataid, "key" => $key] ),
 				"options"=>$selectoptions,
 				"is_currency"=>$iscurrency,
+				"is_hidden"=>$ishidden,
 				"is_button"=>$isbutton
 			];
 			// exit( json_encode( $inputdict ) );
@@ -135,29 +140,14 @@ class Input {
 	{
 		$data = Data::retrieveDataWithID( $identifier );
 		$options = Data::retrieveOptionsWithID( $identifier );
+		if( $identifier == "template_form" ) {
+			// exit( json_encode( $options ) );
+		}
+		$multiple_inserts = Data::getValue( $options, "multiple_inserts" );
+
 
 		$onstep = ReusableClasses::getOnStepForm( $identifier );
 		ReusableClasses::setOnStepForm( $identifier, $onstep );
-
-		$input_onlykeys = [];
-
-		if( !isset( $options['input_keys'] ) ){ 
-			if( isset( $data['value'] ) ){
-				if ( !Data::isAssoc( $data['value'] ) ) {
-					$input_keys = array_keys( $data['value'][0] );
-				}else{
-					$input_keys = array_keys( $data['value'] );
-				}
-			}else{
-				$input_keys = array_keys( $data ); 
-			}
-			$input_keydicts = [];
-		}else{
-			$input_keydicts = $options['input_keys'];
-			$input_keys = array_keys($options['input_keys']);
-		}
-
-
 
 		$steps = Data::getValue( $options, 'steps' );
 
@@ -176,11 +166,82 @@ class Input {
 			$nextinputindex = $lastinputindex+1;
 		}
 
-		$inputs = array();
 		$i=$nextinputindex;
 
 		$s = $onstep;
 
+
+		$input_onlykeys = [];
+		$inputs = [];
+
+		if( !isset( $options['input_keys'] ) ){ 
+
+			$input_keys = [];
+			return Input::convertInputKeys2( $input_keys, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys );
+		}else{
+
+			$input_keys = $options['input_keys'];
+			if( $multiple_inserts ) {
+				$returnthisdict = [];
+				foreach ($input_keys as $this_inputkeys) {
+					$dict = Input::convertInputKeys2( $this_inputkeys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys );
+					$inputs = $dict['inputs'];
+					$input_onlykeys = $dict['input_onlykeys'];
+					$i = $dict['input_i'];
+					$i++;
+					$returnthisdict = $dict;
+
+					// exit( json_encode( $this_inputkeys ) );
+				}
+				return $returnthisdict;
+			}else{
+				return Input::convertInputKeys2( $input_keys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys );
+			}
+
+		}
+
+
+
+
+
+
+		// if( $multiple_inserts != "" ) {
+		// 	if( $multiple_inserts == true ) {
+		// 		$input_i = 0;
+		// 		foreach ($options['input_keys'] as $inputkey) {
+		// 			# code...
+		// 		}
+		// 	}else{
+
+		// 	}
+		// }else{
+
+		// }
+		
+
+	}
+
+	public static function convertInputKeys2( $input_keys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys )
+	{
+
+		if( sizeof($input_keys) == 0 ){ 
+			if( isset( $data['value'] ) ){
+				if ( !Data::isAssoc( $data['value'] ) ) {
+					$input_keys = array_keys( $data['value'][0] );
+				}else{
+					$input_keys = array_keys( $data['value'] );
+				}
+			}else{
+				$input_keys = array_keys( $data ); 
+			}
+			$input_keydicts = [];
+		}else{
+			$input_keydicts = $input_keys;
+			$input_keys = array_keys($input_keys);
+		}
+
+
+		
 		foreach ($input_keys as $ik) {
 
 			$placeholder = null; $labeltext = null; $type = null;
@@ -202,7 +263,9 @@ class Input {
 			}
 			if( $steps == $s ){
 				ReusableClasses::setFormInputIndex( $identifier, $i );
-
+if( $identifier == "template_form" ) {
+	// exit(json_encode( [$data, $thekey, $i, $type, $placeholder, $labeltext, $identifier, $selectoptions ] ) );
+}
 				$theinput = Input::fill( $data, $thekey, $i, $type, $placeholder, $labeltext, $identifier, $selectoptions  );
 				if( sizeof( $theinput ) == 2 ) {
 					array_push( 
@@ -226,7 +289,8 @@ class Input {
 			"input_onlykeys" => $input_onlykeys,
 			"inputs" => $inputs,
 			"steps" => $steps,
-			"onstep" => $onstep
+			"onstep" => $onstep,
+			"input_i" => $i
 		];
 	}
 

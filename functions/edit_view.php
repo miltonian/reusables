@@ -209,40 +209,43 @@ if (isset($fieldarray)) {
 		// exit( json_encode( $_POST['ifnone_insert'] ) );
 		if( isset( $_POST['ifnone_insert'] ) ){
 			if( $_POST['ifnone_insert'] == "1" ){ 
-				$query = "INSERT INTO " . $tablename . " ( ";// . $colname . " = ? " . $whereclause;
-				$questionmarks = "";
-				$insertconditionvalues = [];
-				for ($i=0; $i < sizeof($indexes); $i++) { 
-					$arrayorimages = $fieldarray;
-					if( !isset( $fieldarray[ $indexes[$i] ]['col_name'] ) ) {
-						if( !isset( $fieldimages[ $indexes[$i] ]['col_name'] ) ) {
-							continue;
-						}else{
-							$arrayorimages = $fieldimages;
+				$sizeofarraystoinsert = 0;
+				$keys_found = [];
+
+				if( isset( $_POST['multiple_inserts'] ) ){
+					if( $_POST['multiple_inserts'] == "1" ) {
+						// exit( json_encode( $fieldarray ) );
+						$arraytoinsert_i=0;
+						foreach ($fieldarray as $key) {
+							if( !isset($keys_found[$key['col_name']]) ) {
+								$keys_found[$key['col_name']] = true;
+							}else{
+								$sizeofarraystoinsert = $arraytoinsert_i;
+								break;
+							}
+							$arraytoinsert_i++;
 						}
 					}
-					if( $arrayorimages[ $indexes[$i] ]['col_name'] == 'id' ){
-						continue;
-					}
-					if( sizeof($insertconditionvalues) > 0 ){
-						$query .= ", " . $arrayorimages[ $indexes[$i] ]['col_name'];
-						$questionmarks .= ", ?";
-					}else{
-						// exit(json_encode($i));
-						// $query .= $conditions[$i]['key'];
-						$query .= $arrayorimages[ $indexes[$i] ]['col_name'];
-						$questionmarks .= "?";
-					}
-					array_push( $insertconditionvalues, $arrayorimages[ $indexes[$i] ]['field_value'] );
 				}
-
-				$query .= " ) VALUES ( " . $questionmarks . ")";
-				$values = $insertconditionvalues;
-				$type = "insert";
-				// $result = $MainClasses->querySQL( $query, $values, $type );
-				// exit( "6" );
-				// exit( json_encode( array( $query, $insertconditionvalues ) ) );
-				$result = Reusables\CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
+				if( isset( $_POST['multiple_inserts'] ) ){
+					if( $_POST['multiple_inserts'] == "1" ) {
+						// exit( json_encode( $indexes ) );
+						for ($i=0; $i < (sizeof($indexes)); $i++) { 
+							if( !isset($fieldimages) ){
+								$fieldimages = null;
+							}
+							// echo $i;
+							insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename, $i, $sizeofarraystoinsert );
+							$i=($i+$sizeofarraystoinsert-1);
+						}
+					}else{
+						insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename );
+					}
+				}else{
+					insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename );
+				}
+				
+				// exit("done");
 			}
 		}
 	}
@@ -257,4 +260,56 @@ if( isset( $_POST['goto'] ) ){
 	}
 }else{
 	header( 'Location: /' );
+}
+
+
+
+
+function insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename, $starting_i=0, $sizeofarraystoinsert=(-1) )
+{
+	$query = "INSERT INTO " . $tablename . " ( ";// . $colname . " = ? " . $whereclause;
+	$questionmarks = "";
+	$insertconditionvalues = [];
+	// exit( json_encode( $sizeofarraystoinsert ) );
+	if( $sizeofarraystoinsert == -1 ) {
+		$sizeofarraystoinsert = sizeof($indexes);
+	}
+	for ($i=$starting_i; $i < $starting_i+$sizeofarraystoinsert; $i++) { 
+		if( $i < sizeof( $indexes ) ) {
+			$arrayorimages = $fieldarray;
+			if( !isset( $fieldarray[ $indexes[$i] ]['col_name'] ) ) {
+				if( !isset( $fieldimages[ $indexes[$i] ]['col_name'] ) ) {
+					continue;
+				}else{
+					$arrayorimages = $fieldimages;
+				}
+			}
+			if( $arrayorimages[ $indexes[$i] ]['col_name'] == 'id' ){
+				continue;
+			}
+			if( sizeof($insertconditionvalues) > 0 ){
+				$query .= ", " . $arrayorimages[ $indexes[$i] ]['col_name'];
+				$questionmarks .= ", ?";
+			}else{
+				// exit(json_encode($i));
+				// $query .= $conditions[$i]['key'];
+				$query .= $arrayorimages[ $indexes[$i] ]['col_name'];
+				$questionmarks .= "?";
+			}
+			array_push( $insertconditionvalues, $arrayorimages[ $indexes[$i] ]['field_value'] );
+		}
+		
+	}
+
+	$query .= " ) VALUES ( " . $questionmarks . ")";
+	if( $starting_i > 0 ) {
+// exit( json_encode( [$starting_i, $sizeofarraystoinsert] ) );
+	}
+	
+	$values = $insertconditionvalues;
+	$type = "insert";
+	// $result = $MainClasses->querySQL( $query, $values, $type );
+	// exit( "6" );
+	// exit( json_encode( array( $query, $insertconditionvalues ) ) );
+	$result = Reusables\CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
 }
