@@ -177,7 +177,7 @@ class Input {
 		if( !isset( $options['input_keys'] ) ){ 
 
 			$input_keys = [];
-			return Input::convertInputKeys2( $input_keys, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys );
+			return Input::convertInputKeys2( $input_keys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys );
 		}else{
 
 			$input_keys = $options['input_keys'];
