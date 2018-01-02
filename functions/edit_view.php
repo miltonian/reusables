@@ -143,9 +143,9 @@ if( isset($fieldimages ) ) {
 							// }
 							// echo $i;
 							if( $sizeofarraystoinsert == 0 ) {
-								$fieldarray = insertimage( $indexes, $fieldarray, $fieldimages, $tablename, $i, 1 );
+								insertimage( $indexes, $fieldarray, $fieldimages, $tablename, $i, 1 );
 							}else{
-								$fieldarray = insertimage( $indexes, $fieldarray, $fieldimages, $tablename, $i, $sizeofarraystoinsert );
+								insertimage( $indexes, $fieldarray, $fieldimages, $tablename, $i, $sizeofarraystoinsert );
 							}
 
 							if( ($i+$sizeofarraystoinsert-1) > $i ) {
