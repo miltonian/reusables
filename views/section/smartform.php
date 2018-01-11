@@ -14,6 +14,12 @@ if( !isset( $viewoptions['multiple_inserts'] ) ){
 	$multiple_inserts = $viewoptions['multiple_inserts'];
 }
 
+if( !isset( $viewoptions['multiple_updates'] ) ){
+	$multiple_updates = false;
+}else{
+	$multiple_updates = $viewoptions['multiple_updates'];
+}
+
 if( !isset( $viewoptions['formaction'] ) ){
 	$formaction = '/edit_view.php';
 }else{
@@ -60,6 +66,9 @@ extract( Input::convertInputKeys( $identifier ) );
 <?php if( $multiple_inserts ){ ?>
 	<input type='hidden' name='multiple_inserts' value='1' >
 <?php } ?>
+<?php if( $multiple_updates ){ ?>
+	<input type='hidden' name='multiple_updates' value='1' >
+<?php } ?>
 <div class="viewtype_section <?php echo $identifier ?> smartform main">
 	<div class='thecontainer' style='text-align: left; margin-top: 10px; margin-bottom: 0px; text-align: center;'>
 		<label class="smartform titlelabel"><?php echo Data::getValue( $viewoptions, 'title' ) ?></label>
@@ -102,16 +111,16 @@ extract( Input::convertInputKeys( $identifier ) );
 
 		class <?php echo $identifier ?>Classes {
 			populateview( index=null ){
-				console.log( JSON.stringify( index ) )
+				var multiple_updates = "<?php echo $multiple_updates ?>";
 
 				var viewdict = <?php echo json_encode($viewdict) ?>;
 				var input_keys = <?php echo json_encode($input_onlykeys) ?>;
-				var typearray = <?php echo json_encode( ReusableClasses::getTypeArray( $input_onlykeys ) ) ?>;
+				var typearray = <?php echo json_encode( ReusableClasses::getTypeArray( $input_onlykeys, $multiple_updates ) ) ?>;
+// console.log("hello1: "+JSON.stringify(typearray))
 				var dataarray = <?php echo json_encode( Data::getFullArray( $viewdict ) ) ?>;
 				var formatteddata = <?php echo json_encode( Data::retrieveDataWithID( $original_data_id ) ) ?>;
 				var identifier = "<?php echo $identifier ?>";
-				Reusable.setinputvalues( viewdict, input_keys, identifier, typearray, dataarray, formatteddata, index )
-// alert(JSON.stringify(viewdict))
+				Reusable.setinputvalues( viewdict, input_keys, identifier, typearray, dataarray, formatteddata, index, multiple_updates )
 
 				<?php if( $steps > 1 ) { ?>
 					$('.<?php echo $identifier ?> .main_with_hidden.next').css({'display': 'inline-block'});

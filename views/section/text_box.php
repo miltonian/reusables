@@ -19,7 +19,7 @@ namespace Reusables;
 
 <script>
 
-		$('.text_box.clicktoedit').off().click(function(e){ 
+		$('.<?php echo $identifier ?>.text_box.clicktoedit').off().click(function(e){ 
 			<?php
 				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
 			?>		

@@ -55,6 +55,9 @@ class ReusableClasses {
 
 	public static function endpage( $parent_dir, $page, $endbody=true, $addjquery=true, $addeditor=true )
 	{
+		Views::analyze( true );
+		ob_start();
+
 		Views::makeViews();
 
 		if( $endbody ){
@@ -70,6 +73,13 @@ class ReusableClasses {
 		// exit( json_encode( $page ) );
 		$page = rtrim($page, ".php");
 		
+		if( file_exists( BASE_DIR . '/vendor/miltonian/custom/css/pages/header.css' ) ){
+			echo "<link rel='stylesheet' type='text/css' href='" . PROJECT_ROOT . "/vendor/miltonian/custom/css/pages/header.css'>";
+		}
+		if( file_exists( BASE_DIR . '/vendor/miltonian/custom/css/pages/footer.css' ) ){
+			echo "<link rel='stylesheet' type='text/css' href='" . PROJECT_ROOT . "/vendor/miltonian/custom/css/pages/footer.css'>";
+		}
+
 		if( $parent_dir == ""){
 			echo "<link rel='stylesheet' type='text/css' href='" . PROJECT_ROOT . "/vendor/miltonian/custom/css/pages/" . basename($page, '.php') . ".css'>";
 			if( file_exists( BASE_DIR . '/vendor/miltonian/custom/js/pages/before/' . basename($page, '.php') . ".js" ) ){
@@ -96,6 +106,17 @@ class ReusableClasses {
 		";
 
 		Views::cleararrays();
+
+				// ReusableClasses::addEditing($editing);
+		echo "
+			<script>
+				$('.horizontal.main.adminbar.desktopnav.navbar-shadow .horizontal.button.edit_switch.wrapper  a.horizontal.topbar-button').click(function(e){
+					e.preventDefault()
+					Reusable.toggleEditing()
+				})
+
+			</script>
+		";
 
 	}
 
@@ -131,9 +152,9 @@ class ReusableClasses {
 
 	public static function testReusables()
 	{
-		ReusableClasses::startpage( "" );
+		// ReusableClasses::startpage( "" );
 		Data::addData(["title"=>"It works!"], "test_header" );
-		echo Header::make( "underline_edit", "test_header" );
+		Header::set( "underline_edit", "test_header" );
 		ReusableClasses::endpage( "", "" );
 	}
 
@@ -187,18 +208,36 @@ class ReusableClasses {
 		}
 	}
 
-	public static function getTypeArray( $input_onlykeys ) {
+	public static function getTypeArray( $input_onlykeys, $multiple_updates=false) {
 
 		$typearray = [];
 
+if($multiple_updates){
+}
+		$i=0;
 		foreach ( $input_onlykeys as $k ) {
 			if( $k == "download_script" ){
 				array_push( $typearray, 'copybutton_1' );
 			}else{
-				$inputtype = Input::getInputType( $k );
-				array_push( $typearray, $inputtype );
+				if( $multiple_updates ) {
+					// echo "console.log( 'lets see1: '+JSON.stringify( " . json_encode( Input::getInputTypes() ) . ")); ";
+					// $inputtype = Input::getInputType( $k, $multiple_updates, $i );
+					// array_push( $typearray, $inputtype );
+					$typearray = Input::getInputTypes();
+					break;
+				}else{
+					$inputtype = Input::getInputType( $k );
+					array_push( $typearray, $inputtype );
+				}
 			}
+			$i = $i+5;
+			// if( $i > 3 ) {
+			// 	$i=0;
+			// }
 		}
+		if($multiple_updates){
+	// echo "console.log( 'lets see3: '+JSON.stringify( " . json_encode( $typearray ) . ")); ";
+}
 
 		return $typearray;
 	}

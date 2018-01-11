@@ -15,7 +15,7 @@ var editingon = false
 				thisdict = dataarray[data_id];
 
 				if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
-				
+
 			$('.' + identifier + ' .' + inputclass + ' input.field_value').val( thisdictvalue[key] );
 				$('.' + identifier + ' .' + inputclass + ' input.tablename').val( thisdict['db_info']['tablenames'][key] );
 				$('.' + identifier + ' .' + inputclass + ' input.col_name').val( db_key );
@@ -65,7 +65,7 @@ var editingon = false
 				var thisdictvalue = [];
 				thisdict = dataarray[data_id];
 				if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
-
+// console.log("IMAGE IS: "+JSON.stringify(thisdictvalue))
 			$('.' + identifier + ' .' + inputclass + ' #imglabel').css({'background-image': 'url("'+thisdictvalue[key]+'")'});
 				$('.' + identifier + ' .' + inputclass + ' .fieldvalue').val("");
 				$('.' + identifier + ' .' + inputclass + ' input.tablename').val(thisdict['db_info']['tablenames'][key]);
@@ -373,39 +373,96 @@ var editingon = false
 
 		}
 
-		setinputvalues( sectiondict, input_keys, identifier, typearray, dataarray, formatteddata, index ) {
+		setinputvalues( sectiondict, input_keys, identifier, typearray, dataarray, formatteddata, index, multiple_updates=false ) {
 
+			var multipleupdate_type_count = 0
+			var multipleupdate_type_i = 0
 			for (var i = 0; i < input_keys.length; i++) {
 				var key = input_keys[i];
 				var colname = formatteddata['db_info']['colnames'][key];
 				var type = typearray[i];
-				Reusable.fillinputvalues( type, dataarray, identifier, key, colname, index, i )
+				// console.log("fieldindex: "+JSON.stringify(type['value_string'][20]))
+				// console.log("AHHHH_"+i+": "+JSON.stringify(type))
+				Reusable.fillinputvalues( type, dataarray, identifier, key, colname, index, i, multiple_updates, typearray )
+				if(multiple_updates){
+					break
+				}
+				// i+5
 			}
 
 		}
 
-		fillinputvalues( type, dataarray, identifier, key, colname, index, fieldindex ) {
+		fillinputvalues( type, dataarray, identifier, key, colname, index, fieldindex, multiple_updates=false, typearray=false ) {
 
 			var inputclass = identifier + "_" + key + "_input_" + fieldindex
+			if( multiple_updates ) {
+				var thisdata = dataarray[identifier]['value'];
+				if( $.isArray(thisdata ) ) {
 
-			if(type=="textarea"){
-				Reusable.updateTextArea( dataarray, identifier, identifier, key, inputclass, colname, index );
-			}else if(type=="wysi"){
-				Reusable.updateWysi( dataarray, identifier, identifier, key, inputclass, colname, index, fieldindex );
-			}else if(type=="file_image"){
-				Reusable.updateFileImage( dataarray, identifier, identifier, key, inputclass, colname, index );
-			}else if(type=="textfield"){
-				Reusable.updateTextField( dataarray, identifier, identifier, key, inputclass, colname, index );
-			}else if(type=="colorpicker"){
-				Reusable.updateColorPicker( dataarray, identifier, identifier, key, inputclass, colname, index );
-			}else if(type=="copybutton_1"){
-				Reusable.updateCopyButton( dataarray, identifier, identifier, key, inputclass, colname, index );
+				}else{
+					thisdata = [thisdata]
+				}
+
+				for (var i = 0; i <= thisdata.length; i++) {
+					var type = typearray['value_string'][fieldindex]
+					console.log("THIS DATA_"+type+"_"+inputclass+": "+JSON.stringify(thisdict))
+					inputclass = identifier + "_" + key + "_input_" + fieldindex
+					var thisdict = dataarray
+					thisdict[identifier]['value'] = thisdata[i]
+					// var type = typearray[i]
+					// console.log("THIS DATA_"+typearray+"_"+inputclass+": "+JSON.stringify(thisdict))
+					if(type=="textarea"){
+						Reusable.updateTextArea( thisdict, identifier, identifier, key, inputclass, colname, 0 );
+					}else if(type=="wysi"){
+						Reusable.updateWysi( thisdict, identifier, identifier, key, inputclass, colname, 0, fieldindex );
+					}else if(type=="file_image"){
+						Reusable.updateFileImage( thisdict, identifier, identifier, key, inputclass, colname, 0 );
+					}else if(type=="textfield"){
+						Reusable.updateTextField( thisdict, identifier, identifier, key, inputclass, colname, 0 );
+					}else if(type=="colorpicker"){
+						Reusable.updateColorPicker( thisdict, identifier, identifier, key, inputclass, colname, 0 );
+					}else if(type=="copybutton_1"){
+						Reusable.updateCopyButton( thisdict, identifier, identifier, key, inputclass, colname, 0 );
+					}
+					fieldindex = fieldindex+5;
+					// console.log("fieldindex: "+JSON.stringify(thisdata.length))
+				}
+			}else{
+				if(type=="textarea"){
+					Reusable.updateTextArea( dataarray, identifier, identifier, key, inputclass, colname, index );
+				}else if(type=="wysi"){
+					Reusable.updateWysi( dataarray, identifier, identifier, key, inputclass, colname, index, fieldindex );
+				}else if(type=="file_image"){
+					Reusable.updateFileImage( dataarray, identifier, identifier, key, inputclass, colname, index );
+				}else if(type=="textfield"){
+					Reusable.updateTextField( dataarray, identifier, identifier, key, inputclass, colname, index );
+				}else if(type=="colorpicker"){
+					Reusable.updateColorPicker( dataarray, identifier, identifier, key, inputclass, colname, index );
+				}else if(type=="copybutton_1"){
+					Reusable.updateCopyButton( dataarray, identifier, identifier, key, inputclass, colname, index );
+				}
 			}
 		}
 
 		
 		switchEditing( turnOn ) {
 			editingon = turnOn
+
+			$('div.horizontal.main.adminbar.desktopnav.navbar-shadow').css({'background-color': '#FFF8E0'})
+				$('.horizontal.button.edit_switch.wrapper.buttonindex_1  .horizontal.topbar-button label').html('Edit: <b style=\"color: green\">On</b>/Off');
+		}
+
+		toggleEditing() {
+			if( editingon ) {
+				editingon = false
+				$('div.horizontal.main.adminbar.desktopnav.navbar-shadow').css({'background-color': '#ffffff'})
+				$('.horizontal.button.edit_switch.wrapper.buttonindex_1  .horizontal.topbar-button label').html('Edit: On/<b>Off</b>');
+			}else{
+				editingon = true
+				$('div.horizontal.main.adminbar.desktopnav.navbar-shadow').css({'background-color': '#FFF8E0'})
+				$('.horizontal.button.edit_switch.wrapper.buttonindex_1  .horizontal.topbar-button label').html('Edit: <b style=\"color: green\">On</b>/Off');
+			}
+
 		}
 
 		isEditing() {

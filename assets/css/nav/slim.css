@@ -6,6 +6,7 @@
 	.slim.desktopnav { left: 0; text-align: left; background-color: white;  }
 		.slim.desktopnav .slim.wrapper { display: inline-block; position: relative; padding: 0 20px; cursor: pointer; height: 100%; }
 		.slim.desktopnav .slim.wrapper a { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; height: 100%; }
+
 		.slim.desktopnav a label { display: inline-block; position: relative; margin: 0; padding: 0; top: 50%; transform: translateY(-50%); float: left; pointer-events: none; }
 			.slim.desktopnav a img { display: inline-block; position: relative; margin: 0; padding: 0 15px; height: auto; width: auto; max-width: 60%; max-height: 60%; float: left; top: 50%; transform: translateY(-50%); pointer-events: none; }
 	.slim.topbarlogo { display: inline-block; position: relative; width: auto; border-style: solid; border-width: 0px; margin-left: 2em; top: 50%; margin-top: -20px; }
@@ -13,9 +14,13 @@
 	.slim.mobilenav .slim.topbarlogo { width: auto; height: auto; max-width: 60%; margin: 0; max-height: 100%; top: 50%;  transform: translateY(-50%); }
 	.slim.dropdown { position: relative; display: inline-block; }
 	
-	.slim.dropdown-content { display: none; position: absolute; background-color: #f9f9f9; width: 30%; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); padding: 12px 16px; z-index: 1; float: right;  right: 0; font-size: 2em; }
-	.slim.dropdown-content a.slim#link { color: #333333; padding: 30px 20px; text-decoration: none; display: block; font-size: 0.7em; border-bottom: 1px solid #e0e0e0; padding: 15px 0; font-size: 15px; }
+	.slim.dropdown-content { display: none; left: 0; position: absolute; background-color: #f9f9f9; width: 30%; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); padding: 12px 16px; padding: 12px 0px; z-index: 1; float: right;  right: 0; font-size: 2em; }
+	.slim.dropdown-content a.slim#link { color: #333333; padding: 30px 20px; text-decoration: none; display: block; font-size: 0.7em; border-bottom: 1px solid #e0e0e0; border: 0; padding: 10px 10px; width: calc(100% - 20px); font-size: 13px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; max-width: 200px; }
+		.slim.dropdown-content.fullwidth a.slim#link { display: inline-block; float: left; position: relative; }
+		.slim.dropdown-content a.slim#link:hover { background-color: rgba(0,0,0,0.1); }
 		.slim.desktopnav .slim.dropdown-content { background: white; width: calc(100% - 40px); box-shadow: none; margin-top: 60px; }
+
+	.slim.desktopnav .slim.dropdown-content.fullwidth { max-height: 200px; overflow: hidden; }
 	/*.slim:hover{ background-color: rgba(124,199,192, 0.6); }*/
 	.slim.page:hover{ background-color: rgba(100,100,100,0.1); }
 

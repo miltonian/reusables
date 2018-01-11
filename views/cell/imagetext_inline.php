@@ -5,7 +5,7 @@ namespace Reusables;
 	// image left 
 	// text right
 	
-	extract( Cell::prepareCell( $identifier ) );
+	// extract( Cell::prepareCell( $identifier ) );
 
 
 
@@ -14,6 +14,12 @@ namespace Reusables;
 		[],
 		$identifier
 	);
+
+	$viewdict = Data::convertKeysInTable( $identifier, $viewdict );
+	
+
+
+	extract( Cell::prepareCell( $identifier ) );
 
 ?>
 
@@ -38,7 +44,7 @@ namespace Reusables;
 					<h2 class="imagetext_inline" id="title" style=""><?php if(isset($viewdict['title'])){ echo Data::getValue( $viewdict, 'title' ); } ?></h2>
 				</a>
 				<br>
-				<label class="imagetext_inline" id="desc"><?php echo implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $viewdict, 'html_text' ))), 0, 10) ); ?>...</label>
+				<label class="imagetext_inline" id="desc"><?php echo $description ?></label>
 			</div>
 		</div>
 </div>

@@ -644,7 +644,7 @@ if( \$editing ) {
 	\"buttons\" => [
 		// [ \"name\" => \"Articles\", \"classname\"=> \"admin_articles_button\", \"slug\"=>\"#\", \"position\"=>\"right\", \"type\"=>\"modal\", \"modal\"=>\"admin_articles\" ],
 		[ \"name\" => \"New Post\", \"classname\"=> \"admin_newpost_button\", \"slug\"=>\"\", \"position\"=>\"right\", \"type\"=>\"modal\", \"modal\"=>\"newpost_modal\" ],
-		[ \"name\" => \"Edit: On/<b>Off</b>\", \"classname\"=> \"edit_switch\", \"slug\"=>\$editinglink, \"position\"=>\"right\" ],
+		[ \"name\" => \"Edit: On/<b>Off</b>\", \"classname\"=> \"edit_switch\", \"slug\"=>\"\", \"position\"=>\"right\" ],
 	]
 ];
 
@@ -658,18 +658,12 @@ Reusables\Form::makeInsertOnly( \"posts\", \"newpost_modal\" );
 
 Reusables\Data::addData( \$adminbardict, \"adminbar\" );
 
-Reusables\ReusableClasses::startpage( __FILE__ );
-
 	if( \$loggedin ) {
-
-		echo Reusables\Section::make( \"smartform_inmodal\", \"newpost_modal\" );
 		
-		echo Reusables\Menu::make( \"horizontal\", \"adminbar\" );
+		Reusables\Menu::set( \"horizontal\", \"adminbar\" );
 
 
-	}
-
-Reusables\ReusableClasses::endpage( \"\", __FILE__ );" > header.php
+	}" > header.php
 
 cd ../
 
@@ -682,12 +676,16 @@ require_once 'DBClasses.php';
 
 class Posts {
 
-	public static function getFeaturedContent( \$featuredid )
+	public static function getFeaturedContent( \$featuredid, \$multiple=false )
 	{
 		\$query = 'SELECT * FROM featured_content WHERE featured_id=?';
 		\$values = [ \$featuredid ];
 		\$type = 'select';
-		\$result = DBClasses::querySQL( \$query, \$values, \$type )[1];
+		if( \$multiple ) {
+			\$result = DBClasses::querySQL( \$query, \$values, \$type )[1];
+		}else{
+			\$result = DBClasses::querySQL( \$query, \$values, \$type )[1][0];
+		}
 
 		\$conditions = [[ \"key\"=>\"id\", \"value\"=>\"\" ]];
 		\$returningdict = Reusables\ReusableClasses::toValueAndDBInfo( \$result, \$conditions, \"featured_content\" );
@@ -773,6 +771,19 @@ class Posts {
 		return \$returningdict;
 	}
 
+	public static function getCustomDataParams( \$customparamclassid )
+	{
+		\$query = 'SELECT * FROM customdata_params WHERE custom_param_classid=?';
+		\$values = [ \$customparamclassid ];
+		\$type = 'select';
+		\$result = DBClasses::querySQL( \$query, \$values, \$type )[1];
+
+		\$conditions = [[ \"key\"=>\"id\", \"value\"=>\"\" ]];
+		\$returningdict = Reusables\ReusableClasses::toValueAndDBInfo( \$result, \$conditions, \"customdata_params\" );
+
+		return \$returningdict;
+	}
+
 }" > Posts.php
 
 cd ../../../../
@@ -783,7 +794,7 @@ echo "<?php
 
 require_once( BASE_DIR . '/structure/header.php' );
 
-echo Reusables\ReusableClasses::testReusables();
+Reusables\ReusableClasses::testReusables();
 
 
 ?>
@@ -795,8 +806,16 @@ echo Reusables\ReusableClasses::testReusables();
 
 " > home.php
 
+cd ../vendor/miltonian/custom/css/pages
+touch header.css
+echo "
+
+body { margin: 0; padding: 0; }
+
+" > header.css
 
 
+cd ../../../../../
 
 
 

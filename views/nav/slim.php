@@ -23,6 +23,11 @@ Views::setParams(
 	$identifier
 );
 
+$dropdown_fullwidth = Data::getValue( $viewoptions, "dropdown_fullwidth" );
+if( $dropdown_fullwidth == "" ) {
+	$dropdown_fullwidth = false;
+}
+
 ?>
 
 <style>
@@ -61,11 +66,12 @@ Views::setParams(
 		$leftbuttons = array();
 		$rightbuttons = array();
 		$button = "";
+		$dropdownindex = 0;
 		foreach ($navbuttons as $b) {
-			// exit( json_encode( $b ) );
-			$button = "<div class='slim page " . $b['classname'] . " wrapper ";
+
+			$button = "<div class='slim page " . $b['classname'] . " wrapper dropdownindex_" . $dropdownindex . " ";
 			if(isset($b['buttons'])){
-				$button .= "has_dropdown";
+				$button .= "has_dropdown desktopnavdropdown";
 			}
 			$button .= " ' style='float: " . $b['position'] . ";'> ";
 			$button .= "<a href='" . $b['slug'] . "' class='slim topbar-button'>"; 
@@ -77,8 +83,15 @@ Views::setParams(
 				$button .= "<label>" . $b['name'] . "</label>"; 
 			} 
 			$button .= "</a>";
+			if( $dropdown_fullwidth && isset($b['buttons']) ) {
+				$button .= "</div>";
+			}
 			if(isset($b['buttons'])){
-				$button .= "<div class='slim dropdown-content'>";
+				$button .= "<div class='slim dropdown-content dropdownindex_" . $dropdownindex . " ";
+				if( $dropdown_fullwidth ) {
+					$button .= " fullwidth ";
+				}
+				$button .= "'>";
 					foreach ($b['buttons'] as $s) {
 						$button .= "<a class='slim' id='link' href='" . $s['slug'] . "'>";
 						if(isset($s['imagepath'])){ 
@@ -92,16 +105,18 @@ Views::setParams(
 					}
 				$button .= "</div>";
 			}
-			$button .= "</div>";
+			if( !$dropdown_fullwidth || !isset($b['buttons']) ) {
+				$button .= "</div>";
+			}
+			// $button .= "</div>";
 			if($b['position'] == "left"){
 				array_push($leftbuttons, $button);
 			}else if($b['position'] == "right"){
 				array_push($rightbuttons, $button);
 			}
+			$dropdownindex++;
 		}
 
-		// echo $leftbuttons;
-		// echo $rightbuttons;
 		foreach ($leftbuttons as $b) {
 			echo $b;
 		}
@@ -109,20 +124,10 @@ Views::setParams(
 		foreach ($rightbuttons as $b) {
 			echo $b;
 		}
-		// echo Structure::make( 
-		// 	"main_withside",
-		// 	[
-		// 		"maincolumn"=>$leftbuttons,
-		// 		"sidecolumn_right"=>$rightbuttons
-		// 	],
-		// 	"slim_structure"
-		// );
 	?>
-	<!-- <?php foreach ($navbuttons as $b) { ?>
 
-		<a href='/<?php echo $b['slug'] ?>' class='topbar-button'><?php if(isset($b['imagepath'])){ echo "<img src='".$b['imagepath']."'>"; }else if(isset($b['emoji'])){ echo $b['emoji']; }else{ echo $b['name']; } ?></a>
-	<?php } ?> -->
 </div>
+
 
 
 <div class="slim spacing"></div>
@@ -140,10 +145,19 @@ Views::setParams(
 		// e.preventDefault();
 	})
 	$('.slim.desktopnav .slim.has_dropdown').mouseenter(function(e){
-		$(this).find('.slim.dropdown-content').css({'display': 'block'});
+		var dropdownindex = Reusable.getIndexFromClass("dropdownindex_", this)
+		$('.slim.dropdown-content.dropdownindex_' + dropdownindex).css({'display': 'block'});
 	});
 	$('.slim.desktopnav .slim.has_dropdown').mouseleave(function(e){
-		$(this).find('.slim.dropdown-content').css({'display': 'none'});
+		var dropdownindex = Reusable.getIndexFromClass("dropdownindex_", this)
+		if( $('.slim.dropdown-content.dropdownindex_' + dropdownindex).hasClass('fullwidth') == false ) {
+			$('.slim.dropdown-content.dropdownindex_' + dropdownindex).css({'display': 'none'});
+		}else{
+			$('.slim.dropdown-content.dropdownindex_' + dropdownindex).off().mouseleave(function(e){
+				$('.slim.dropdown-content.dropdownindex_' + dropdownindex).css({'display': 'none'});
+			});
+		}
+		
 	});
 
 	$(document).ready(function(){

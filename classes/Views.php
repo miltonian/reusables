@@ -14,6 +14,64 @@ class Views {
 
 	public static function setDefaultViewInfo( $file, $identifier, $viewtype, $tablenames=[], $children=[] )
 	{
+		$viewoptions = Data::retrieveOptionsWithID( $identifier );
+		if( isset( $viewoptions["editable"] ) || isset( $viewoptions["insertonly"] ) || isset( $viewoptions["editable_dynamic"] ) || isset( $viewoptions["insertonly_dynamic"] ) ) {
+			if( !isset($viewoptions["editable"] ) ) { $viewoptions["editable"] = false; }
+			if( !isset($viewoptions["insertonly"] ) ) { $viewoptions["insertonly"] = false; }
+			if( !isset($viewoptions["editable_dynamic"] ) ) { $viewoptions["editable_dynamic"] = false; }
+			if( !isset($viewoptions["insertonly_dynamic"] ) ) { $viewoptions["insertonly_dynamic"] = false; }
+			if( $viewoptions["editable"] == true || $viewoptions["insertonly"] == true || $viewoptions["editable_dynamic"] == true || $viewoptions["insertonly_dynamic"] == true ) {
+
+				$viewdata = Data::retrieveDataWithID( $identifier );
+				
+				Data::addOption( "modal", "type", $identifier );
+				Data::addOption( $identifier . "_form", "modal", $identifier );
+
+				if( $viewoptions["insertonly"] == true ) {
+					if( !isset( $viewoptions["tb"] ) ) {
+						exit( "insertonly option needs a tablename option as well. the key to pass the tablename is 'tb'" );
+					}
+					$tablename = Data::getValue( $viewoptions, "tb" );
+					Form::prepareInsertOnly( $tablename, $identifier . "_form" );
+					// Reusables\Form::makeInsertOnly( "customdata_params", "main_button_form" );
+				} else if( $viewoptions["editable_dynamic"] == true ) {
+					if( !isset( $viewoptions["featured_content_id"] ) ) {
+						exit( "editable_dynamic option needs a featured_content_id option as well. the key to pass the featured_content_id is 'featured_content_id'" );
+					}
+					if( !isset( $viewoptions["form_data"] ) ) {
+						exit( "editable_dynamic option needs a form_data option as well. the key to pass the form_data is 'form_data'" );
+					}
+					$user_id = 0;
+					if( isset( $viewoptions["user_id"] ) ) {
+						$user_id = $viewoptions["user_id"];
+					}
+					// exit( json_encode( $viewoptions["featured_content_id"] ) );
+					Form::makeDynamic( $viewoptions['form_data'], $viewoptions["featured_content_id"], $identifier . "_form", $user_id );
+				} else if( $viewoptions["insertonly_dynamic"] == true ) {
+					if( !isset( $viewoptions["featured_content_id"] ) ) {
+						exit( "insertonly_dynamic option needs a featured_content_id option as well. the key to pass the featured_content_id is 'featured_content_id'" );
+					}
+					$user_id = 0;
+					if( isset( $viewoptions["user_id"] ) ) {
+						$user_id = $viewoptions["user_id"];
+					}
+					Form::makeDynamicInsertOnly( $viewoptions["featured_content_id"], $identifier . "_form", $user_id );
+				} else{
+					Data::addData( $viewdata, $identifier . "_form" );
+				}
+
+				$form_dict = [
+					"file"=>"smartform_inmodal",
+					"identifier"=>$identifier . "_form",
+					"viewtype"=>"section",
+					"tablenames"=>[],
+					"children"=>[]
+				];
+				array_push( self::$bufferedviews, $form_dict );
+
+			}
+		}
+
 		$dict = [
 			"file"=>$file,
 			"identifier"=>$identifier,

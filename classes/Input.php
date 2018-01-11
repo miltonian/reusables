@@ -5,6 +5,7 @@ namespace Reusables;
 class Input {
 
 	protected static $inputtypes = [];
+	protected static $input_field_types = [];
 
 	public static function set( $file, $identifier )
 	{
@@ -16,6 +17,30 @@ class Input {
 		return Views::makeView( $file, $identifier, "input" );
 	}
 
+	public static function setInputFieldType( $type, $identifier )
+	{
+
+		self::$input_field_types[$identifier] = $type;
+
+	}
+
+	public static function getInputFieldType( $identifier )
+	{
+		
+		if( !isset( self::$input_field_types[$identifier] ) ) {
+			return "textfield";
+		}
+		return self::$input_field_types[$identifier];
+
+	}
+
+	public static function getInputTypes()
+	{
+		return self::$inputtypes;
+	}
+
+
+
 	// public static function make( $file, $identifier )
 	// {
 	// 	ReusableClasses::addfile( "input", $file );
@@ -26,11 +51,12 @@ class Input {
 	// 	return $View->render();
 	// }
 
-	public static function fill( $dict, $key, $index, $type=null, $placeholder=null, $labeltext=null, $parentclass=null, $selectoptions="" )
+	public static function fill( $dict, $key, $index, $type=null, $placeholder=null, $labeltext=null, $parentclass=null, $selectoptions="", $multiple_updates=false, $multipleupdate_i=(-1) )
 	{
 		if( !$type ){
-			$type = Input::getInputType( $key );
+			$type = Input::getInputType( $key, $multiple_updates, $multipleupdate_i );
 		}
+		
 		$iscurrency = false;
 		$isbutton = false;
 		$ishidden = false;
@@ -44,10 +70,9 @@ class Input {
 			$type = "textfield";
 			$ishidden = "1";
 		}
-		Input::setInputType( $key, $type );
-		// echo json_encode( $placeholder );
+		Input::setInputType( $key, $type, $multiple_updates, $multipleupdate_i );
+		// echo "<script> console.log( 'ASDF: '+JSON.stringify( ".json_encode( [$key, $type, $multiple_updates, $multipleupdate_i] ) ." ) ); </script>";
 		if( !$placeholder ){ $placeholder = ucfirst( $key ); }
-		// exit( json_encode( $placeholder ) );
 		if( !$labeltext ){ $labeltext = ucfirst( $key ); }
 
 		if( isset( $dict[$key]['data_id'] ) ){
@@ -112,11 +137,30 @@ class Input {
 		);
 	}
 
-	public static function getInputType( $key )
+	public static function getInputType( $key, $multiple_updates=false, $field_index=(-1) )
 	{
-			// exit( json_encode( self::$inputtypes ) );
+		if($key == "value_string"){
+			// echo " console.log( 'haha: '+JSON.stringify('".json_encode( self::$inputtypes ) . "')); ";
+		}
 		if( isset( self::$inputtypes[$key] ) ){
-			return self::$inputtypes[$key];
+			if( $multiple_updates ) {
+				if( is_array( self::$inputtypes[$key] ) ) {
+					$dict = [];
+					foreach (self::$inputtypes[$key] as $key=>$value) {
+						$dict[$key] = $value;
+					}
+					// echo "console.log( JSON.stringify( ". json_encode( $dict ) . ") ); ";
+					if( isset( $dict[strval($field_index)] ) ) {
+						return $dict[strval($field_index)];
+					}else{
+						// return self::$inputtypes[$key];
+					}
+				}else{
+					return self::$inputtypes[$key];
+				}
+			}else{
+				return self::$inputtypes[$key];
+			}
 		}
 
 		if( strpos( $key, "text") !== false || strpos($key, "desc") || strpos($key, "description") || strpos($key, "comment") || strpos($key, "snippet") ){
@@ -128,12 +172,28 @@ class Input {
 		}else{
 			$type = "textfield";
 		}
+
 		return $type;
 	}
 
-	public static function setInputType( $key, $type )
+	public static function setInputType( $key, $type, $multiple_updates=false, $index=(-1) )
 	{
-		self::$inputtypes[$key] = $type;
+		// if($type == "file_image"){
+// echo "<script> console.log('FOUND: '+JSON.stringify(".json_encode(self::$inputtypes).")) </script>";
+		// }
+		if( $multiple_updates ) {
+			if( !isset( self::$inputtypes[$key] ) ) {
+				self::$inputtypes[$key] = [];
+			}
+			if( $index == -1 ) {
+				self::$inputtypes[$key] = $type;
+			}else{
+				self::$inputtypes[$key][$index] = $type;
+				// echo "<script> console.log('FOUND: '+JSON.stringify(".json_encode([self::$inputtypes]).")) </script>";
+			}
+		}else{
+			self::$inputtypes[$key] = $type;
+		}
 	}
 
 	public static function convertInputKeys( $identifier )
@@ -144,6 +204,7 @@ class Input {
 			// exit( json_encode( $options ) );
 		}
 		$multiple_inserts = Data::getValue( $options, "multiple_inserts" );
+		$multiple_updates = Data::getValue( $options, "multiple_updates" );
 
 
 		$onstep = ReusableClasses::getOnStepForm( $identifier );
@@ -181,10 +242,10 @@ class Input {
 		}else{
 
 			$input_keys = $options['input_keys'];
-			if( $multiple_inserts ) {
+			if( $multiple_inserts || $multiple_updates ) {
 				$returnthisdict = [];
 				foreach ($input_keys as $this_inputkeys) {
-					$dict = Input::convertInputKeys2( $this_inputkeys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys );
+					$dict = Input::convertInputKeys2( $this_inputkeys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys, $multiple_updates );
 					$inputs = $dict['inputs'];
 					$input_onlykeys = $dict['input_onlykeys'];
 					$i = $dict['input_i'];
@@ -222,9 +283,9 @@ class Input {
 
 	}
 
-	public static function convertInputKeys2( $input_keys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys )
+	public static function convertInputKeys2( $input_keys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys, $multiple_updates=false )
 	{
-
+// Input::setInputFieldType( $t );
 		if( sizeof($input_keys) == 0 ){ 
 			if( isset( $data['value'] ) ){
 				if ( !Data::isAssoc( $data['value'] ) ) {
@@ -242,7 +303,7 @@ class Input {
 		}
 
 
-		
+		$multipleupdate_i = $i;
 		foreach ($input_keys as $ik) {
 
 			$placeholder = null; $labeltext = null; $type = null;
@@ -254,7 +315,6 @@ class Input {
 
 
 			$thekey = $ik;
-
 			if( is_numeric( $ik ) ){ $thekey = $input_keydicts[$ik]; }
 			array_push( $input_onlykeys, $thekey );
 
@@ -264,10 +324,8 @@ class Input {
 			}
 			if( $steps == $s ){
 				ReusableClasses::setFormInputIndex( $identifier, $i );
-if( $identifier == "template_form" ) {
-	// exit(json_encode( [$data, $thekey, $i, $type, $placeholder, $labeltext, $identifier, $selectoptions ] ) );
-}
-				$theinput = Input::fill( $data, $thekey, $i, $type, $placeholder, $labeltext, $identifier, $selectoptions  );
+
+				$theinput = Input::fill( $data, $thekey, $i, $type, $placeholder, $labeltext, $identifier, $selectoptions, $multiple_updates, $multipleupdate_i );
 				if( sizeof( $theinput ) == 2 ) {
 					array_push( 
 						$input_fields, 
@@ -283,6 +341,7 @@ if( $identifier == "template_form" ) {
 
 				$i++;
 			}
+			$multipleupdate_i++;
 		}
 		return [
 			"input_keys" => $input_keys,
@@ -291,7 +350,7 @@ if( $identifier == "template_form" ) {
 			"inputs" => $inputs,
 			"steps" => $steps,
 			"onstep" => $onstep,
-			"input_i" => $i
+			"input_i" => $i,
 		];
 	}
 
