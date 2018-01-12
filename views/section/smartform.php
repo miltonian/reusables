@@ -38,8 +38,15 @@ if( isset( $viewdict['formtitle'] ) ) {
 
 $original_data_id = $identifier;
 
+
+$insert_values = [];
+if( isset($viewoptions['insert_values']) ) {
+	$insert_values = $viewoptions["insert_values"];
+}
+
 extract( CustomView::makeFormVars( $viewdict, "viewdict" ) );
 extract( Input::convertInputKeys( $identifier ) );
+
 
 ?>
 
@@ -112,15 +119,37 @@ extract( Input::convertInputKeys( $identifier ) );
 		class <?php echo $identifier ?>Classes {
 			populateview( index=null ){
 				var multiple_updates = "<?php echo $multiple_updates ?>";
+				var multiple_inserts = "<?php echo $multiple_inserts ?>";
+				var insert_values = <?php echo json_encode($insert_values) ?>;
 
 				var viewdict = <?php echo json_encode($viewdict) ?>;
 				var input_keys = <?php echo json_encode($input_onlykeys) ?>;
+				var newinput_keys = [];
+				var newtypearray = [];
+				var newinsertvalues = [];
 				var typearray = <?php echo json_encode( ReusableClasses::getTypeArray( $input_onlykeys, $multiple_updates ) ) ?>;
-// console.log("hello1: "+JSON.stringify(typearray))
+				if( multiple_inserts ) {
+					console.log(JSON.stringify(input_keys))
+					for (var i = 0; i < input_keys.length; i++) {
+						if( i!=0 && input_keys[i]=="value_string" ) {
+							newinput_keys.push(false)
+							newtypearray.push(false)
+							newinsertvalues.push(false)
+						}
+						newinput_keys.push(input_keys[i])
+						newtypearray.push(typearray[i])
+						newinsertvalues.push(insert_values[i])
+					}
+					input_keys = newinput_keys
+					typearray = newtypearray
+					insert_values = newinsertvalues
+				}
+
 				var dataarray = <?php echo json_encode( Data::getFullArray( $viewdict ) ) ?>;
+				// console.log( 'INPUT KEYS: ' + JSON.stringify(input_keys) )
 				var formatteddata = <?php echo json_encode( Data::retrieveDataWithID( $original_data_id ) ) ?>;
 				var identifier = "<?php echo $identifier ?>";
-				Reusable.setinputvalues( viewdict, input_keys, identifier, typearray, dataarray, formatteddata, index, multiple_updates )
+				Reusable.setinputvalues( viewdict, input_keys, identifier, typearray, dataarray, formatteddata, index, multiple_updates, insert_values )
 
 				<?php if( $steps > 1 ) { ?>
 					$('.<?php echo $identifier ?> .main_with_hidden.next').css({'display': 'inline-block'});

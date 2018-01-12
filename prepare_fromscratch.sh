@@ -784,6 +784,19 @@ class Posts {
 		return \$returningdict;
 	}
 
+	public static function getCustomData( \$featured_id )
+	{
+		\$query = 'SELECT * FROM custom_data WHERE featured_content_id=?';
+		\$values = [ \$featured_id ];
+		\$type = 'select';
+		\$result = DBClasses::querySQL( \$query, \$values, \$type )[1];
+
+		\$conditions = [[ \"key\"=>\"id\", \"value\"=>\"\" ]];
+		\$returningdict = Reusables\ReusableClasses::toValueAndDBInfo( \$result, \$conditions, \"custom_data\" );
+
+		return \$returningdict;
+	}
+
 }" > Posts.php
 
 cd ../../../../
