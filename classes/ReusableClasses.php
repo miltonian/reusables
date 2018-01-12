@@ -58,6 +58,8 @@ class ReusableClasses {
 		Views::analyze( true );
 		ob_start();
 
+		Views::setViews();
+
 		Views::makeViews();
 
 		if( $endbody ){

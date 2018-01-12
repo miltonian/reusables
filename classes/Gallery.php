@@ -4,6 +4,11 @@ namespace Reusables;
 
 class Gallery {
 
+	public static function place( $file, $identifier )
+	{
+		Views::addToQueue( "Gallery", $file, $identifier );
+	}
+
 	public static function set( $file, $identifier )
 	{
 		Views::setDefaultViewInfo( $file, $identifier, "gallery" );

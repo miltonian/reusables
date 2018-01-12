@@ -4,6 +4,11 @@ namespace Reusables;
 
 class Slider {
 
+	public static function place( $file, $identifier )
+	{
+		Views::addToQueue( "Slider", $file, $identifier );
+	}
+
 	public static function set( $file, $identifier )
 	{
 		Views::setDefaultViewInfo( $file, $identifier, "slider" );

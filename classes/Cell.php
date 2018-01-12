@@ -4,6 +4,11 @@ namespace Reusables;
 
 class Cell {
 
+	public static function place( $file, $identifier )
+	{
+		Views::addToQueue( "Cell", $file, $identifier );
+	}
+
 	public static function set( $file, $identifier )
 	{
 		Views::setDefaultViewInfo( $file, $identifier, "cell" );

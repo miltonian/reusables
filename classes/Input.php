@@ -7,6 +7,11 @@ class Input {
 	protected static $inputtypes = [];
 	protected static $input_field_types = [];
 
+	public static function place( $file, $identifier )
+	{
+		Views::addToQueue( "Input", $file, $identifier );
+	}
+
 	public static function set( $file, $identifier )
 	{
 		Views::setDefaultViewInfo( $file, $identifier, "input" );

@@ -4,6 +4,11 @@ namespace Reusables;
 
 class Menu {
 
+	public static function place( $file, $identifier )
+	{
+		Views::addToQueue( "Menu", $file, $identifier );
+	}
+
 	public static function set( $file, $identifier )
 	{
 		Views::setDefaultViewInfo( $file, $identifier, "menu" );

@@ -4,6 +4,11 @@ namespace Reusables;
 
 class Button {
 	
+	public static function place( $file, $identifier )
+	{
+		Views::addToQueue( "Button", $file, $identifier );
+	}
+
 	public static function set( $file, $identifier )
 	{
 		Views::setDefaultViewInfo( $file, $identifier, "button" );

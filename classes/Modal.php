@@ -4,6 +4,11 @@ namespace Reusables;
 
 class Modal {
 
+	public static function place( $file, $identifier )
+	{
+		Views::addToQueue( "Modal", $file, $identifier );
+	}
+
 	public static function set( $file, $identifier )
 	{
 		Views::setDefaultViewInfo( $file, $identifier, "modal" );

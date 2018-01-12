@@ -5,6 +5,11 @@ namespace Reusables;
 class Sharing {
 
 	
+	public static function place( $file, $identifier )
+	{
+		Views::addToQueue( "Sharing", $file, $identifier );
+	}
+
 	public static function set( $file, $identifier )
 	{
 		Views::setDefaultViewInfo( $file, $identifier, "sharing" );

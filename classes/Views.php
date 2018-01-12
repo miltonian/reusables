@@ -9,6 +9,7 @@ class Views {
 	protected static $viewparams = [];
 
 	protected static $bufferedviews = [];
+	protected static $queue = [];
 
 	protected static $analyze = false;
 
@@ -131,22 +132,25 @@ class Views {
 
 	public static function makeViews()
 	{
-		// exit( json_encode( self::$bufferedviews ) );
 		foreach (self::$bufferedviews as $dict) {
-			$file = $dict["file"];
-			$identifier = $dict["identifier"];
 			$viewtype = $dict["viewtype"];
-			$tablenames = $dict["tablenames"];
-			$children = $dict["children"];
-// echo ( json_encode( $identifier ) );
-			
+			if( $viewtype == "CustomCode" ) {
+				echo $dict["code"];
+			}else{
+				$file = $dict["file"];
+				$identifier = $dict["identifier"];
+				$tablenames = $dict["tablenames"];
+				$children = $dict["children"];
+				
 
-			echo Views::makeView( $file, $identifier, $viewtype, $tablenames, $children=[] );
+				echo Views::makeView( $file, $identifier, $viewtype, $tablenames, $children=[] );
+			}
+
+			
 
 			// return $View->render();
 			// echo $View->render();
 		}
-		// exit();
 	}
 
 	public static function addView( $identifier )
@@ -292,6 +296,43 @@ class Views {
 		// 		// exit("4");
 		// 	}
 		// }
+	}
+
+	public static function addToQueue( $viewtype, $file, $identifier )
+	{
+
+		array_push( 
+			self::$queue, 
+			[
+				"viewtype" => $viewtype, 
+				"file" => $file, 
+				"identifier" => $identifier
+			]
+		);
+
+	}
+
+	public static function setViews()
+	{
+		foreach (self::$queue as $v) {
+			if( $v["viewtype"] == "CustomCode" ) {
+				array_push( self::$bufferedviews, $v );
+			} else {
+				call_user_func_array( "Reusables\\".$v['viewtype'] . "::set" , [ $v['file'], $v['identifier'] ] );
+			}
+		}
+	}
+
+
+	public static function addCustomCodeToQueue( $code )
+	{
+		array_push( 
+			self::$queue, 
+			[
+				"viewtype" => "CustomCode", 
+				"code" => $code
+			]
+		);
 	}
 
 }

@@ -5,6 +5,11 @@ namespace Reusables;
 class Header {
 
 
+	public static function place( $file, $identifier )
+	{
+		Views::addToQueue( "Header", $file, $identifier );
+	}
+
 	public static function set( $file, $identifier )
 	{
 		Views::setDefaultViewInfo( $file, $identifier, "header" );

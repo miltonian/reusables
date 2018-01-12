@@ -4,6 +4,11 @@ namespace Reusables;
 
 class Nav {
 
+	public static function place( $file, $identifier )
+	{
+		Views::addToQueue( "Nav", $file, $identifier );
+	}
+
 	public static function set( $file, $identifier )
 	{
 		Views::setDefaultViewInfo( $file, $identifier, "nav" );

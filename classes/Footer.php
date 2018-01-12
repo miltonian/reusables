@@ -4,6 +4,11 @@ namespace Reusables;
 
 class Footer {
 
+	public static function place( $file, $identifier )
+	{
+		Views::addToQueue( "Footer", $file, $identifier );
+	}
+
 	public static function set( $file, $identifier )
 	{
 		Views::setDefaultViewInfo( $file, $identifier, "footer" );

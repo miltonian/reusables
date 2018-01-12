@@ -4,6 +4,11 @@ namespace Reusables;
 
 class PostInternal {
 
+	public static function place( $file, $identifier )
+	{
+		Views::addToQueue( "PostInternal", $file, $identifier );
+	}
+
 	public static function set( $file, $identifier )
 	{
 		Views::setDefaultViewInfo( $file, $identifier, "postinternal" );
