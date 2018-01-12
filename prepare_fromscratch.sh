@@ -796,14 +796,6 @@ require_once( BASE_DIR . '/structure/header.php' );
 
 Reusables\ReusableClasses::testReusables();
 
-
-?>
-
-
-<script>
-	<?php Reusables\ReusableClasses::addEditing(\$editing); ?>
-</script>
-
 " > home.php
 
 cd ../vendor/miltonian/custom/css/pages
