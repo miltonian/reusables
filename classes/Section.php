@@ -14,6 +14,13 @@ class Section {
 		Views::setDefaultViewInfo( $file, $identifier, "section" );
 	}
 
+
+	public static function setincontainer( $file, $identifier )
+	{
+		Views::addEditableParts( $identifier );
+		return Section::make( $file, $identifier );
+	}
+
 	public static function make( $file, $identifier )
 	{
 		return Views::makeView( $file, $identifier, "section" );

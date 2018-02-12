@@ -14,6 +14,13 @@ class PostInternal {
 		Views::setDefaultViewInfo( $file, $identifier, "postinternal" );
 	}
 
+
+	public static function setincontainer( $file, $identifier )
+	{
+		Views::addEditableParts( $identifier );
+		return PostInternal::make( $file, $identifier );
+	}
+
 	public static function make( $file, $identifier )
 	{
 		return Views::makeView( $file, $identifier, "postinternal" );

@@ -56,7 +56,7 @@ class Input {
 	// 	return $View->render();
 	// }
 
-	public static function fill( $dict, $key, $index, $type=null, $placeholder=null, $labeltext=null, $parentclass=null, $selectoptions="", $multiple_updates=false, $multipleupdate_i=(-1) )
+	public static function fill( $dict, $key, $index, $type=null, $placeholder=null, $labeltext=null, $parentclass=null, $selectoptions="", $multiple_updates=false, $multipleupdate_i=-1 )
 	{
 		if( !$type ){
 			$type = Input::getInputType( $key, $multiple_updates, $multipleupdate_i );
@@ -88,20 +88,20 @@ class Input {
 		
 		// exit( json_encode( Data::getValue( $dict['value'][0], $key ) ) );
 		$inputdict = [
-				"placeholder"=>$placeholder,
-				"labeltext"=>$labeltext,
-				"background-image"=>"",
-				"field_value"=>"",
-				"field_index"=>$index,
-				"field_table"=>Data::getDefaultTableNameWithID( $dataid ),
-				"field_colname"=>Data::getColName( ["data_id"=>$dataid, "key" => $key] ),
-				"field_conditions"=>Data::getConditions( ["data_id"=>$dataid, "key" => $key] ),
-				"options"=>$selectoptions,
-				"is_currency"=>$iscurrency,
-				"is_hidden"=>$ishidden,
-				"is_button"=>$isbutton
-			];
-			// exit( json_encode( $inputdict ) );
+			"placeholder"=>$placeholder,
+			"labeltext"=>$labeltext,
+			"background-image"=>"",
+			"field_value"=>"",
+			"field_index"=>$index,
+			"field_table"=>Data::getDefaultTableNameWithID( $dataid ),
+			"field_colname"=>Data::getColName( ["data_id"=>$dataid, "key" => $key] ),
+			"field_conditions"=>Data::getConditions( ["data_id"=>$dataid, "key" => $key] ),
+			"options"=>$selectoptions,
+			"is_currency"=>$iscurrency,
+			"is_hidden"=>$ishidden,
+			"is_button"=>$isbutton
+		];
+		// exit( json_encode( $inputdict ) );
 
 		$stuff = "";
 		if($parentclass){
@@ -142,7 +142,7 @@ class Input {
 		);
 	}
 
-	public static function getInputType( $key, $multiple_updates=false, $field_index=(-1) )
+	public static function getInputType( $key, $multiple_updates=false, $field_index=-1 )
 	{
 		if($key == "value_string"){
 			// echo " console.log( 'haha: '+JSON.stringify('".json_encode( self::$inputtypes ) . "')); ";
@@ -181,7 +181,7 @@ class Input {
 		return $type;
 	}
 
-	public static function setInputType( $key, $type, $multiple_updates=false, $index=(-1) )
+	public static function setInputType( $key, $type, $multiple_updates=false, $index=-1 )
 	{
 		// if($type == "file_image"){
 // echo "<script> console.log('FOUND: '+JSON.stringify(".json_encode(self::$inputtypes).")) </script>";

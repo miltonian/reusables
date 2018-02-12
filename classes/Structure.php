@@ -4,9 +4,9 @@ namespace Reusables;
 
 class Structure {
 
-	public static function place( $file, $identifier )
+	public static function place( $file, $data, $identifier )
 	{
-		Views::addToQueue( "Structure", $file, $identifier );
+		Views::addToQueue( "Structure", $file, $identifier, $data );
 	}
 
 	public static function set( $file, $data, $identifier )

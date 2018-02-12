@@ -14,6 +14,12 @@ class Table {
 		Views::setDefaultViewInfo( $file, $identifier, "table" );
 	}
 
+	public static function setincontainer( $file, $identifier )
+	{
+		Views::addEditableParts( $identifier );
+		return Table::make( $file, $identifier );
+	}
+
 	public static function make( $file, $identifier )
 	{
 		return Views::makeView( $file, $identifier, "table" );

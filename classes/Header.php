@@ -15,6 +15,12 @@ class Header {
 		Views::setDefaultViewInfo( $file, $identifier, "header" );
 	}
 
+	public static function setincontainer( $file, $identifier )
+	{
+		Views::addEditableParts( $identifier );
+		return Header::make( $file, $identifier );
+	}
+
 	public static function make( $file, $identifier )
 	{
 		return Views::makeView( $file, $identifier, "header" );

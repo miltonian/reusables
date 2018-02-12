@@ -1,0 +1,13 @@
+.title_subtitle.main { position: relative; display: inline-block; padding: 20px 0px; margin: 0; width: calc( 100% - 0px ); }
+	div.viewtype_header.page_header.title_subtitle.main { text-align: center; }
+	.title_subtitle.subtitle_container { display: inline-block; position: relative; margin: 0; padding: 0; text-align: center; }
+	.title_subtitle.line { display: inline-block; position: relative; margin: 0; padding: 0; width: 40px; background-color: rgba(153, 153, 153, 0.26); height: 1px; margin-bottom: 2px; }
+	.title_subtitle#title { display: inline-block; position: relative; margin: 0px 0px; padding: 0; width: 100%; color: #333333; font-size: 35px; font-weight: 400; font-weight: 700 }
+	.title_subtitle#subtitle { display: inline-block; position: relative; margin: 0px 0px; padding: 0; color: #999; font-weight: 400; font-size: 12px; }
+@media (min-width: 0px) {
+	.title_subtitle#title { text-align: center; }
+	.title_subtitle#subtitle { text-align: center; }
+}
+@media (min-width: 768px) {
+
+}

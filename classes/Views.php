@@ -16,6 +16,20 @@ class Views {
 	public static function setDefaultViewInfo( $file, $identifier, $viewtype, $tablenames=[], $children=[] )
 	{
 		$viewoptions = Data::retrieveOptionsWithID( $identifier );
+		Views::addEditableParts( $identifier );
+
+		$dict = [
+			"file"=>$file,
+			"identifier"=>$identifier,
+			"viewtype"=>$viewtype,
+			"tablenames"=>$tablenames,
+			"children"=>$children
+		];
+		array_push( self::$bufferedviews, $dict );
+	}
+
+	public static function addEditableParts( $identifier ) {
+		$viewoptions = Data::retrieveOptionsWithID( $identifier );
 		if( isset( $viewoptions["editable"] ) || isset( $viewoptions["insertonly"] ) || isset( $viewoptions["editable_dynamic"] ) || isset( $viewoptions["insertonly_dynamic"] ) ) {
 			if( !isset($viewoptions["editable"] ) ) { $viewoptions["editable"] = false; }
 			if( !isset($viewoptions["insertonly"] ) ) { $viewoptions["insertonly"] = false; }
@@ -72,15 +86,6 @@ class Views {
 
 			}
 		}
-
-		$dict = [
-			"file"=>$file,
-			"identifier"=>$identifier,
-			"viewtype"=>$viewtype,
-			"tablenames"=>$tablenames,
-			"children"=>$children
-		];
-		array_push( self::$bufferedviews, $dict );
 	}
 
 	public static function makeView( $file, $identifier, $viewtype, $tablenames=[], $children=[] )
@@ -298,7 +303,7 @@ class Views {
 		// }
 	}
 
-	public static function addToQueue( $viewtype, $file, $identifier )
+	public static function addToQueue( $viewtype, $file, $identifier, $data=[] )
 	{
 
 		array_push( 
@@ -306,7 +311,8 @@ class Views {
 			[
 				"viewtype" => $viewtype, 
 				"file" => $file, 
-				"identifier" => $identifier
+				"identifier" => $identifier,
+				"data"=>$data
 			]
 		);
 
@@ -317,6 +323,8 @@ class Views {
 		foreach (self::$queue as $v) {
 			if( $v["viewtype"] == "CustomCode" ) {
 				array_push( self::$bufferedviews, $v );
+			} else if( $v["viewtype"] == "Structure" ) {
+				call_user_func_array( "Reusables\\".$v['viewtype'] . "::set" , [ $v['file'], $v['data'], $v['identifier'] ] );
 			} else {
 				call_user_func_array( "Reusables\\".$v['viewtype'] . "::set" , [ $v['file'], $v['identifier'] ] );
 			}

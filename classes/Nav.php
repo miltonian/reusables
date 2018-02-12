@@ -14,6 +14,13 @@ class Nav {
 		Views::setDefaultViewInfo( $file, $identifier, "nav" );
 	}
 
+
+	public static function setincontainer( $file, $identifier )
+	{
+		Views::addEditableParts( $identifier );
+		return Nav::make( $file, $identifier );
+	}
+
 	public static function make( $file, $identifier )
 	{
 		return Views::makeView( $file, $identifier, "nav" );

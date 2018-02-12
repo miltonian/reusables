@@ -1,0 +1,4 @@
+div.viewtype_cell.basic.main { display: inline-block; position: relative; margin: 0; padding: 10px; width: calc(100% - 20px); max-width: 400px; border: 0; border-bottom: 1px solid #333; text-align: left; }
+	.viewtype_cell.basic.main a.basic.link { text-decoration: none; color: #333; display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; }
+	.viewtype_cell.basic.main .basic.title { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; font-size: 18px; pointer-events: none; }
+	.viewtype_cell.basic.main .basic.description { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; color: #555; font-size: 15px; pointer-events: none; }

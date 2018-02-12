@@ -129,7 +129,7 @@ break;
 
 	if( !$didfind && sizeof($filesarray) > 0 ){
 		// exit( json_encode( $filesarray ) );
-		if( isset( $_POST['ifnone_insert'] ) ){
+		if( isset( $_POST['ifnone_insert'] ) && sizeof($filesarray[0])>0  ){
 			if( $_POST['ifnone_insert'] == "1" ){ 
 				$sizeofarraystoinsert = 0;
 				$keys_found = [];
