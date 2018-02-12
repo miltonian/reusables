@@ -14,6 +14,12 @@ class Modal {
 		Views::setDefaultViewInfo( $file, $identifier, "modal" );
 	}
 
+	public static function setincontainer( $file, $identifier )
+	{
+		Views::addEditableParts( $identifier );
+		return Modal::make( $file, $identifier );
+	}
+
 	public static function make( $file, $identifier )
 	{
 		return Views::makeView( $file, $identifier, "modal" );

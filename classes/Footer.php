@@ -14,6 +14,12 @@ class Footer {
 		Views::setDefaultViewInfo( $file, $identifier, "footer" );
 	}
 
+	public static function setincontainer( $file, $identifier )
+	{
+		Views::addEditableParts( $identifier );
+		return Footer::make( $file, $identifier );
+	}
+
 	public static function make( $file, $identifier )
 	{
 		return Views::makeView( $file, $identifier, "footer" );

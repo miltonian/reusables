@@ -129,7 +129,11 @@ break;
 
 	if( !$didfind && sizeof($filesarray) > 0 ){
 		// exit( json_encode( $filesarray ) );
+<<<<<<< HEAD
 		if( isset( $_POST['ifnone_insert'] ) && sizeof($filesarray[0]) > 0 ){
+=======
+		if( isset( $_POST['ifnone_insert'] ) && sizeof($filesarray[0])>0  ){
+>>>>>>> da6eeb0... improved functionality for 'place'. added views: title_subtitle, image_view, toggle
 			if( $_POST['ifnone_insert'] == "1" ){ 
 				$sizeofarraystoinsert = 0;
 				$keys_found = [];

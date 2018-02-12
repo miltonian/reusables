@@ -14,6 +14,12 @@ class Gallery {
 		Views::setDefaultViewInfo( $file, $identifier, "gallery" );
 	}
 
+	public static function setincontainer( $file, $identifier )
+	{
+		Views::addEditableParts( $identifier );
+		return Gallery::make( $file, $identifier );
+	}
+
 	public static function make( $file, $identifier )
 	{
 		return Views::makeView( $file, $identifier, "gallery" );

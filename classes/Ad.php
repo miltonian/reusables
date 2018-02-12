@@ -16,6 +16,12 @@ class Ad {
 		Views::setDefaultViewInfo( $file, $identifier, "ad" );
 	}
 
+	public static function setincontainer( $file, $identifier )
+	{
+		Views::addEditableParts( $identifier );
+		return Ad::make( $file, $identifier );
+	}
+
 	public static function make( $file, $identifier )
 	{
 		return Views::makeView( $file, $identifier, "ad" );

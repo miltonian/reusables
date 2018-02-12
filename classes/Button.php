@@ -14,6 +14,12 @@ class Button {
 		Views::setDefaultViewInfo( $file, $identifier, "button" );
 	}
 
+	public static function setincontainer( $file, $identifier )
+	{
+		Views::addEditableParts( $identifier );
+		return Button::make( $file, $identifier );
+	}
+
 	public static function make( $file, $identifier )
 	{
 

@@ -19,6 +19,12 @@ class Cell {
 		return Views::makeView( $file, $identifier, "cell" );
 	}
 
+	public static function setincontainer( $file, $identifier )
+	{
+		Views::addEditableParts( $identifier );
+		return Cell::make( $file, $identifier );
+	}
+
 	public static function prepareCell( $identifier )
 	{
 		$data = Data::retrieveDataWithID( $identifier );

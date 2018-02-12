@@ -2,30 +2,36 @@
 
 namespace Reusables;
 
-class Sharing {
+class Slider {
 
-	
 	public static function place( $file, $identifier )
 	{
-		Views::addToQueue( "Sharing", $file, $identifier );
+		Views::addToQueue( "Slider", $file, $identifier );
 	}
 
 	public static function set( $file, $identifier )
 	{
-		Views::setDefaultViewInfo( $file, $identifier, "sharing" );
+		Views::setDefaultViewInfo( $file, $identifier, "slider" );
+	}
+
+
+	public static function setincontainer( $file, $identifier )
+	{
+		Views::addEditableParts( $identifier );
+		return Slider::make( $file, $identifier );
 	}
 
 	public static function make( $file, $identifier )
 	{
-		return Views::makeView( $file, $identifier, "sharing" );
+		return Views::makeView( $file, $identifier, "slider" );
 	}
 
 	// public static function make( $file, $identifier )
 	// {
-	// 	ReusableClasses::addfile( "sharing", $file );
-	// 	$View = View::factory( 'reusables/views/sharing/' . $file );
+	// 	ReusableClasses::addfile( "slider", $file );
+	// 	$View = View::factory( 'reusables/views/slider/' . $file );
 	// 	$data = Data::retrieveDataWithID( $identifier );
-	// 	$View->set( 'sharingdict', $data );
+	// 	$View->set( 'sliderdict', $data );
 	// 	$View->set( 'identifier', $identifier );
 	// 	return $View->render();
 	// }

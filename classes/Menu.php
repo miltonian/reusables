@@ -14,6 +14,12 @@ class Menu {
 		Views::setDefaultViewInfo( $file, $identifier, "menu" );
 	}
 
+	public static function setincontainer( $file, $identifier )
+	{
+		Views::addEditableParts( $identifier );
+		return Menu::make( $file, $identifier );
+	}
+
 	public static function make( $file, $identifier )
 	{
 		return Views::makeView( $file, $identifier, "menu" );
