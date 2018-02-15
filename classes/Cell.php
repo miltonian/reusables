@@ -29,7 +29,11 @@ class Cell {
 	{
 		$data = Data::retrieveDataWithID( $identifier );
 		$options = Data::retrieveOptionsWithID( $identifier );
-
+		$info = Data::retrieveInfoWithID( $identifier );
+		
+		$viewpath = "";
+		$viewtype = Data::getValue( $info, "viewtype" );
+//, $viewpath
 		$data_id = Data::getDefaultDataID( $data );
 		$fullviewdict = Data::getFullArray( $data );
 		if( !isset($options['type'])){ $options['type'] = ""; }
@@ -39,6 +43,7 @@ class Cell {
 		$linkpath = Data::getViewLinkPath( $identifier );
 		$mediatype = Data::getValue( $data, 'mediatype' );
 		$cellindex = Data::getValue( $data, 'index' );
+		$table_identifier = str_replace("_cell_".$cellindex, "", $identifier);
 
 		$isfulldesc = false;
 		if( isset( $options['fulldesc'] ) ) {
@@ -48,9 +53,9 @@ class Cell {
 		}
 
 		if( !$isfulldesc ) {
-			$description = implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $data, 'html_text' ))), 0, 10) ) . "...";
+			$description = implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $data, 'html_text', $table_identifier ))), 0, 10) ) . "...";
 		}else{
-			$description = Data::getValue( $data, 'html_text' );
+			$description = Data::getValue( $data, 'html_text', $table_identifier );
 		}
 		if( $description == "..." ){
 			$description = "";
@@ -59,7 +64,8 @@ class Cell {
 		$celldate = Data::getValue( $data, 'date' );
 
 		$celltype = Data::getValue( $options, 'type' );
-// exit( json_encode( $celltype ) );
+
+		$table_identifier = str_replace("_cell_" . $cellindex, "", $identifier);
 
 		return [
 			"data_id" => $data_id,
@@ -69,7 +75,8 @@ class Cell {
 			"cellindex" => $cellindex,
 			"description" => $description,
 			"celldate" => $celldate,
-			"celltype" => $celltype
+			"celltype" => $celltype,
+			"table_identifier" => $table_identifier
 		];
 	}
 

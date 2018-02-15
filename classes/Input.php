@@ -240,13 +240,18 @@ class Input {
 		$input_onlykeys = [];
 		$inputs = [];
 
-		if( !isset( $options['input_keys'] ) ){ 
+		if( !isset( $options['input_keys'] ) && !isset( $options['default_input_keys'] ) ) { 
 
 			$input_keys = [];
 			return Input::convertInputKeys2( $input_keys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys );
 		}else{
-
-			$input_keys = $options['input_keys'];
+			$input_keys = [];
+			if( isset( $options['input_keys'] ) ) { 
+				$input_keys = $options['input_keys'];
+			} else {
+				$input_keys = $options['default_input_keys'];
+			}
+			
 			if( $multiple_inserts || $multiple_updates ) {
 				$returnthisdict = [];
 				foreach ($input_keys as $this_inputkeys) {

@@ -258,4 +258,109 @@ class Form {
 
 	}
 
+	public static function addJSClassToForm( $identifier, $viewdict, $input_onlykeys, $original_data_id ) {
+
+		ob_start();
+
+			if( !isset( $viewoptions['ifnone_insert'] ) ){
+				$ifnone_insert = false;
+			}else{
+				$ifnone_insert = $viewoptions['ifnone_insert'];
+			}
+
+			if( !isset( $viewoptions['multiple_inserts'] ) ){
+				$multiple_inserts = false;
+			}else{
+				$multiple_inserts = $viewoptions['multiple_inserts'];
+			}
+
+			if( !isset( $viewoptions['multiple_updates'] ) ){
+				$multiple_updates = false;
+			}else{
+				$multiple_updates = $viewoptions['multiple_updates'];
+			}
+
+			if( !isset( $viewoptions['formaction'] ) ){
+				$formaction = '/edit_view.php';
+			}else{
+				$formaction = $viewoptions['formaction'];
+			}
+
+			if( isset( $viewdict['formtitle'] ) ) {
+				unset( $viewdict['formtitle'] );
+			}
+
+			$steps = 1;
+			$onstep = 1;
+		?>
+
+			<?php if( $steps == $onstep ) { ?>
+
+				var viewdict = <?php echo json_encode($viewdict) ?>;
+				var input_keys = <?php echo json_encode($input_onlykeys) ?>;
+				var typearray = <?php echo json_encode( ReusableClasses::getTypeArray( $input_onlykeys ) ) ?>;
+				var dataarray = <?php echo json_encode( Data::getFullArray( $viewdict ) ) ?>;
+				var formatteddata = <?php echo json_encode( Data::retrieveDataWithID( $original_data_id ) ) ?>;
+				var identifier = "<?php echo $identifier ?>";
+
+				class <?php echo $identifier ?>Classes {
+					populateview( index=null ){
+					<?php $insert_values = [];
+					if( isset($viewoptions['insert_values']) ) {
+						$insert_values = $viewoptions["insert_values"];
+					}
+					?>
+						var multiple_updates = "<?php echo $multiple_updates ?>";
+						var multiple_inserts = "<?php echo $multiple_inserts ?>";
+						var insert_values = <?php echo json_encode($insert_values) ?>;
+
+						var viewdict = <?php echo json_encode($viewdict) ?>;
+						var input_keys = <?php echo json_encode($input_onlykeys) ?>;
+						var newinput_keys = [];
+						var newtypearray = [];
+						var newinsertvalues = [];
+						var typearray = <?php echo json_encode( ReusableClasses::getTypeArray( $input_onlykeys, $multiple_updates ) ) ?>;
+						if( multiple_inserts ) {
+							console.log(JSON.stringify(input_keys))
+							for (var i = 0; i < input_keys.length; i++) {
+								if( i!=0 && input_keys[i]=="value_string" ) {
+									newinput_keys.push(false)
+									newtypearray.push(false)
+									newinsertvalues.push(false)
+								}
+								newinput_keys.push(input_keys[i])
+								newtypearray.push(typearray[i])
+								newinsertvalues.push(insert_values[i])
+							}
+							input_keys = newinput_keys
+							typearray = newtypearray
+							insert_values = newinsertvalues
+						}
+
+						var dataarray = <?php echo json_encode( Data::getFullArray( $viewdict ) ) ?>;
+						// console.log( 'INPUT KEYS: ' + JSON.stringify(input_keys) )
+						var formatteddata = <?php echo json_encode( Data::retrieveDataWithID( $original_data_id ) ) ?>;
+						var identifier = "<?php echo $identifier ?>";
+						Reusable.setinputvalues( viewdict, input_keys, identifier, typearray, dataarray, formatteddata, index, multiple_updates, insert_values )
+
+						<?php if( $steps > 1 ) { ?>
+							$('.<?php echo $identifier ?> .main_with_hidden.next').css({'display': 'inline-block'});
+							$('.<?php echo $identifier ?> .main_with_hidden.save').css({'display': 'none'});
+						<?php } else { ?>
+							$('.<?php echo $identifier ?> .main_with_hidden.save').css({'display': 'inline-block'});
+							$('.<?php echo $identifier ?> .main_with_hidden.next').css({'display': 'none'});
+						<?php } ?>
+					}
+				}
+
+				
+
+			<?php } ?>
+
+		<?php
+		$output = ob_get_contents();
+		ob_end_clean();
+		return $output;
+	}
+
 }

@@ -9,7 +9,9 @@ class Views {
 	protected static $viewparams = [];
 
 	protected static $bufferedviews = [];
+	protected static $bufferedforms = [];
 	protected static $queue = [];
+	protected static $formqueue = [];
 
 	protected static $analyze = false;
 
@@ -25,11 +27,26 @@ class Views {
 			"tablenames"=>$tablenames,
 			"children"=>$children
 		];
-		array_push( self::$bufferedviews, $dict );
+
+		// if( strtolower($viewtype) == "section" && ($file == "smartform_inmodal" || $file == "smartform") ) {
+		// 	array_push( self::$bufferedforms, $dict );
+		// } else {
+			array_push( self::$bufferedviews, $dict );
+		// }
 	}
 
 	public static function addEditableParts( $identifier ) {
+
+		if( !isset( $viewoptions['editable'] ) && !isset( $viewoptions['insertonly'] ) && !isset( $viewoptions['editable_dynamic'] ) && !isset( $viewoptions['insertonly_dynamic'] ) ) {
+			if( isset( $_SESSION['login'][0] ) ) {
+				if( $_SESSION['login'][0] == 1 ) {
+					Data::addOption( true, "editable", $identifier );
+				}
+			}
+		}
+
 		$viewoptions = Data::retrieveOptionsWithID( $identifier );
+
 		if( isset( $viewoptions["editable"] ) || isset( $viewoptions["insertonly"] ) || isset( $viewoptions["editable_dynamic"] ) || isset( $viewoptions["insertonly_dynamic"] ) ) {
 			if( !isset($viewoptions["editable"] ) ) { $viewoptions["editable"] = false; }
 			if( !isset($viewoptions["insertonly"] ) ) { $viewoptions["insertonly"] = false; }
@@ -137,6 +154,7 @@ class Views {
 
 	public static function makeViews()
 	{
+		// exit( json_encode( self::$bufferedviews ) );
 		foreach (self::$bufferedviews as $dict) {
 			$viewtype = $dict["viewtype"];
 			if( $viewtype == "CustomCode" ) {
@@ -155,6 +173,28 @@ class Views {
 
 			// return $View->render();
 			// echo $View->render();
+		}
+
+		// Views::makeForms();
+	}
+
+	public static function makeForms()
+	{
+		exit( json_encode( self::$bufferedforms ) );
+		foreach (self::$bufferedforms as $dict) {
+			$viewtype = $dict["viewtype"];
+			if( $viewtype == "CustomCode" ) {
+				echo $dict["code"];
+			}else{
+				$file = $dict["file"];
+				$identifier = $dict["identifier"];
+				$tablenames = $dict["tablenames"];
+				$children = $dict["children"];
+				
+
+				echo Views::makeView( $file, $identifier, $viewtype, $tablenames, $children=[] );
+			}
+
 		}
 	}
 
@@ -201,10 +241,12 @@ class Views {
 		self::$viewidentifiers = null;
 		self::$viewparams = null;
 		self::$bufferedviews = null;
+		self::$bufferedforms = null;
 
 		self::$viewidentifiers = [];
 		self::$viewparams = [];
 		self::$bufferedviews = [];
+		self::$bufferedforms = [];
 	}
 
 	public static function analyze( $turnOn = false )
@@ -306,20 +348,38 @@ class Views {
 	public static function addToQueue( $viewtype, $file, $identifier, $data=[] )
 	{
 
-		array_push( 
-			self::$queue, 
-			[
-				"viewtype" => $viewtype, 
-				"file" => $file, 
-				"identifier" => $identifier,
-				"data"=>$data
-			]
-		);
+		Data::addInfo( $viewtype, 'viewtype', $identifier );
+		Data::addInfo( $file, 'file', $identifier );
+		Data::addInfo( $identifier, 'identifier', $identifier );
+
+		// if( $viewtype == "Section" && ($file == "smartform_inmodal" || $file == "smartform") ) {
+		// 	array_push( 
+		// 		self::$formqueue, 
+		// 		[
+		// 			"viewtype" => $viewtype, 
+		// 			"file" => $file, 
+		// 			"identifier" => $identifier,
+		// 			"data"=>$data
+		// 		]
+		// 	);
+		// } else {
+			array_push( 
+				self::$queue, 
+				[
+					"viewtype" => $viewtype, 
+					"file" => $file, 
+					"identifier" => $identifier,
+					"data"=>$data
+				]
+			);
+		// }
 
 	}
 
 	public static function setViews()
 	{
+		ob_start();
+
 		foreach (self::$queue as $v) {
 			if( $v["viewtype"] == "CustomCode" ) {
 				array_push( self::$bufferedviews, $v );
@@ -329,7 +389,54 @@ class Views {
 				call_user_func_array( "Reusables\\".$v['viewtype'] . "::set" , [ $v['file'], $v['identifier'] ] );
 			}
 		}
+
+		Views::makeViews();
+
+		// if( sizeof(self::$bufferedforms) == 0 ) {
+			// if( $endbody ){
+				echo "</body>";
+			// }
+		// }
+		$output = ob_get_contents();
+		ob_end_clean();
+		return $output;
 	}
+
+	public static function setForms()
+	{
+		ob_start();
+		
+		foreach (self::$formqueue as $v) {
+			if( $v["viewtype"] == "CustomCode" ) {
+				array_push( self::$bufferedviews, $v );
+			} else if( $v["viewtype"] == "Structure" ) {
+				call_user_func_array( "Reusables\\".$v['viewtype'] . "::set" , [ $v['file'], $v['data'], $v['identifier'] ] );
+			} else {
+				call_user_func_array( "Reusables\\".$v['viewtype'] . "::set" , [ $v['file'], $v['identifier'] ] );
+			}
+		}
+		Views::makeForms();
+
+		echo "</body>";
+
+		$output = ob_get_contents();
+		ob_end_clean();
+		return $output;
+
+	}
+
+	// public static function setAndMakeViews()
+	// {
+	// 	foreach (self::$queue as $v) {
+	// 		if( $v["viewtype"] == "CustomCode" ) {
+	// 			array_push( self::$bufferedviews, $v );
+	// 		} else if( $v["viewtype"] == "Structure" ) {
+	// 			call_user_func_array( "Reusables\\".$v['viewtype'] . "::set" , [ $v['file'], $v['data'], $v['identifier'] ] );
+	// 		} else {
+	// 			call_user_func_array( "Reusables\\".$v['viewtype'] . "::set" , [ $v['file'], $v['identifier'] ] );
+	// 		}
+	// 	}
+	// }
 
 
 	public static function addCustomCodeToQueue( $code )

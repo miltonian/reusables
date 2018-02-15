@@ -12,6 +12,7 @@ class ReusableClasses {
 	protected static $includedfiles = array();
 	protected static $forminputlastindexes = [];
 	protected static $formonstep = [];
+	protected static $editableviews = [];
 
 	protected static $addedjs = "";
 
@@ -56,17 +57,15 @@ class ReusableClasses {
 	public static function endpage( $parent_dir, $page, $endbody=true, $addjquery=true, $addeditor=true )
 	{
 		Views::analyze( true );
-		ob_start();
 
-		Views::setViews();
+		$viewoutput = Views::setViews();
+		// $formoutput = Views::setForms();
 
-		Views::makeViews();
+		// Views::makeViews();
 
-		if( $endbody ){
-			echo "</body>";
-		}
-		$output = ob_get_contents();
-		ob_end_clean();
+		
+		// $output = ob_get_contents();
+		// ob_end_clean();
 		ReusableClasses::addcss();
 		ReusableClasses::addReusableJS( $addjquery );
 		ReusableClasses::addEditor( $addeditor );
@@ -96,7 +95,9 @@ class ReusableClasses {
 		}
 		// echo "<link rel='stylesheet' type='text/css' href='/vendor/miltonian/custom/css/pages/" . basename($page, '.php') . ".css'>";
 
-		echo $output;
+		echo $viewoutput;
+		echo ReusableClasses::makeEditing();
+		// echo $formoutput;
 		ReusableClasses::addjs();
 
 		echo "
@@ -285,16 +286,56 @@ if($multiple_updates){
 
 	public static function addEditingToCell( $identifier, $fullviewdict, $celltype )
 	{
-		
+		$dict = [
+			'identifier' => $identifier,
+			'fullviewdict' => $fullviewdict,
+			'celltype' => $celltype,
+			'viewtype' => 'Cell'
+		];
+		array_push(self::$editableviews, $dict);
+
+	}
+
+	public static function makeEditing() {
+		// ob_start();
+// echo " <script> ";
+		foreach (self::$editableviews as $e) {
+
+			if( strtolower( $e['viewtype'] ) == 'cell' ) {
+				echo " <script> ";
+				ReusableClasses::makeCellEditing( $e['identifier'], $e['fullviewdict'], $e['celltype'] );
+				echo " </script> ";
+			} else {
+				// echo " <script> ";
+				// ReusableClasses::makeViewEditing( $e['viewdict'], $e['viewoptions'], $e['identifier'] );
+				// echo " </script> ";
+			}
+		}
+
+// echo " </script> ";
+
+	}
+
+	public static function makeCellEditing( $identifier, $fullviewdict, $celltype ) {
 		$viewdict = Data::retrieveDataWithID( $identifier );
 		$viewoptions = Data::retrieveOptionsWithID( $identifier );
+
 		// exit( json_encode( $fullviewdict ) );
 
 		echo 'var thismodalclass = "";';
 		echo 'var celltype = ' . json_encode( $celltype ) . ';';
 
 		if( $celltype == "modal" ) {
+			// if( $celltype == "modal" ) {
+				// exit(json_encode( $identifier ) );
+			// echo ' if (typeof ' . $viewoptions['modal']['modalclass'] . 'Classes == "undefined") { ';
+			// 	$table_identifier = str_replace("_cell_" . $viewdict['index'], "", $identifier);
+			// 	extract( Input::convertInputKeys( $table_identifier . "_form" ));
+			// 	echo ' ' . Form::addJSClassToForm( $table_identifier . "_form", $viewdict, $input_onlykeys, $table_identifier . "_form" ) . '; ';
+			// echo ' } ';
+			// }
 			echo 'thismodalclass = new ' . $viewoptions['modal']['modalclass'] . 'Classes();';
+			
 			echo 'var dataarray = ' . json_encode( $fullviewdict ) . ';';
 		}else if( $celltype == "attached" ) {
 			echo 'var dataarray = ' . json_encode( $fullviewdict ) . ';';
@@ -343,8 +384,50 @@ if($multiple_updates){
 			// Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );';
 		echo '}';
 		echo '});';
+	}
 
+	public static function makeViewEditing( $viewdict, $viewoptions, $identifier ) {
 
+		echo " if( Reusable.isEditing() ) { ";
+
+		$fullarray = Data::getFullArray( $viewdict );
+		if( isset( $viewdict[$identifier]['value'] ) ) {
+			$fullviewdict = Data::getFullArray( $viewdict )[$identifier]['value'];
+		}else{
+			$fullviewdict = $viewdict;
+		}
+
+		$optiontype = Data::getValue( $viewoptions, 'type' );
+
+		echo "var viewdict = " . json_encode( $viewdict ) . ";
+		var viewoptions = " . json_encode( $viewoptions ) . ";
+
+		var thismodalclass = '';
+
+		var type = " . json_encode( $optiontype ) . ";";
+		echo "console.log( JSON.stringify( ".json_encode( $optiontype )." ) );";
+
+		if( $optiontype == "modal" ){ 
+			// extract( Input::convertInputKeys( $identifier . "_form" ));
+			// 	echo ' ' . Form::addJSClassToForm( $identifier . "_form", $viewdict, $input_onlykeys, $identifier . "_form" ) . '; ';
+			// 	echo " /*asdf*/ ";
+			echo "thismodalclass = new " . $viewoptions['modal']['modalclass'] . "Classes();
+			var dataarray = " . json_encode( $fullviewdict ) . ";";
+		}
+		echo "
+		var optiontype = " . json_encode($optiontype) . ";
+
+		if( optiontype == 'modal' || optiontype == 'dropdown' ) { 
+			e.preventDefault();
+			if( typeof dataarray === 'undefined' ) { 
+				dataarray = []
+			}
+			Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );
+		}";
+
+		ReusableClasses::getEditingFunctionsJS( $viewoptions ) ;
+
+		echo " } ";
 	}
 
 	public static function getDropdownFunctionsJS( $dict )
@@ -449,42 +532,19 @@ if($multiple_updates){
 
 	public static function setUpEditingForSection( $viewdict, $viewoptions, $identifier )
 	{
-		echo " if( Reusable.isEditing() ) { ";
 
-		$fullarray = Data::getFullArray( $viewdict );
-		if( isset( $viewdict[$identifier]['value'] ) ) {
-			$fullviewdict = Data::getFullArray( $viewdict )[$identifier]['value'];
-		}else{
-			$fullviewdict = $viewdict;
-		}
+		// echo " <script> ";
+			ReusableClasses::makeViewEditing( $viewdict, $viewoptions, $identifier );
+		// echo " </script> ";
 
-		$optiontype = Data::getValue( $viewoptions, 'type' );
-
-		echo "var viewdict = " . json_encode( $viewdict ) . ";
-		var viewoptions = " . json_encode( $viewoptions ) . ";
-
-		var thismodalclass = '';
-
-		var type = " . json_encode( $optiontype ) . ";";
-		echo "console.log( JSON.stringify( ".json_encode( $optiontype )." ) );";
-		if( $optiontype == "modal" ){ 
-			echo "thismodalclass = new " . $viewoptions['modal']['modalclass'] . "Classes();
-			var dataarray = " . json_encode( $fullviewdict ) . ";";
-		}
-		echo "
-		var optiontype = " . json_encode($optiontype) . ";
-
-		if( optiontype == 'modal' || optiontype == 'dropdown' ) { 
-			e.preventDefault();
-			if( typeof dataarray === 'undefined' ) { 
-				dataarray = []
-			}
-			Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );
-		}";
-
-		ReusableClasses::getEditingFunctionsJS( $viewoptions ) ;
-
-		echo " } ";
+		// $dict = [
+		// 	'identifier' => $identifier,
+		// 	'viewdict' => $viewdict,
+		// 	'viewoptions' => $viewoptions,
+		// 	'viewtype' => 'View'
+		// ];
+		// array_push(self::$editableviews, $dict);
+		
 	}
 
 

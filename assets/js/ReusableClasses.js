@@ -13,8 +13,9 @@ var editingon = false
 			var thisdict = [];
 				var thisdictvalue = [];
 				thisdict = dataarray[data_id];
-
-				if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
+				
+				if(thisdict == null ){ return; }
+				if(index == null || index == ""){ if(thisdict == null ){ return; } thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
 
 			$('.' + identifier + ' .' + inputclass + ' input.field_value').val( thisdictvalue[key] );
 				$('.' + identifier + ' .' + inputclass + ' input.tablename').val( thisdict['db_info']['tablenames'][key] );
@@ -39,6 +40,8 @@ var editingon = false
 			var thisdict = [];
 				var thisdictvalue = [];
 				thisdict = dataarray[data_id];
+
+				if(thisdict == null ){ return; }
 				if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
 
 			$('.' + identifier + ' .' + inputclass + ' .field_value').val(thisdictvalue[key]);
@@ -64,6 +67,8 @@ var editingon = false
 			var thisdict = [];
 				var thisdictvalue = [];
 				thisdict = dataarray[data_id];
+
+				if(thisdict == null ){ return; }
 				if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
 // console.log("IMAGE IS: "+JSON.stringify(thisdictvalue))
 			$('.' + identifier + ' .' + inputclass + ' #imglabel').css({'background-image': 'url("'+thisdictvalue[key]+'")'});
@@ -89,6 +94,8 @@ var editingon = false
 			var thisdict = [];
 			var thisdictvalue = [];
 			thisdict = dataarray[data_id];
+			
+			if(thisdict == null ){ return; }
 			if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
 			var name = 'fieldarray_' + inputclass + '[' + fieldindex + '][field_value]'
 			CKEDITOR.instances[name].setData( thisdictvalue[key] ); 
