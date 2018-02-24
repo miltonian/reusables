@@ -46,48 +46,11 @@ if( isset( $viewdict[$identifier]['value'] ) ) {
 
 <script>
 
+
 	$('.<?php echo $identifier ?> .basic.button').click(function(e){
-
-var isediting = <?php echo $isediting ?>;
-
-	var viewdict = <?php echo json_encode( $viewdict ) ?>;
-	var viewoptions = <?php echo json_encode( $viewoptions ) ?>;
-
-	var thismodalclass = "";
-	<?php $celltype = "" ?>
-	var type = <?php echo json_encode( $optiontype ) ?>;
-
-	<?php if( $celltype == "modal" ){ ?>
-		thismodalclass = new <?php echo $viewoptions['modal']['modalclass'] ?>Classes();
-		var dataarray = <?php echo json_encode( $fullviewdict ) ?>;
-	<?php } ?>
-
-	var viewdict = <?php echo json_encode($viewdict) ?>;
-	var viewoptions = <?php echo json_encode( $viewoptions ) ?>;
-
-	var viewdict = <?php echo json_encode($viewdict) ?>;
-
-		var optiontype = <?php echo json_encode($optiontype) ?>;
-		if( optiontype == "modal" || optiontype == "dropdown" ) { 
-			e.preventDefault();
-			if( typeof dataarray === "undefined" ) { 
-				dataarray = []
-			}
-			Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );
-		}
-
-		<?php 
-			ReusableClasses::getEditingFunctionsJS( $viewoptions ) ;
+		<?php
+			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
 		?>
-
-		if( typeof dataarray === "undefined" ) {
-			dataarray = []
-		}
-		var viewdict = <?php echo json_encode($viewdict) ?>;
-		var viewoptions = <?php echo  json_encode( $viewoptions ) ?>;
-		Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );
-
-
-	});
+	})
 
 </script>
