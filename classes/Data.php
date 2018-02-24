@@ -21,6 +21,7 @@ class Data {
 	protected static $alloptions = array();
 	protected static $allinfo = array();
 
+
 	public static function formatForDefaultData( $dataid )
 	{
 		$defaultdata = [];
@@ -128,6 +129,7 @@ class Data {
 		
 	}
 
+
 	public static function addInfo( $data, $key, $identifier )
 	{
 		if( !isset( self::$allinfo[ $identifier ] ) ) {
@@ -211,6 +213,7 @@ class Data {
 		return $tablenames[$allkeys[0]];
 	}
 
+
 	public static function getValue( $dict, $key=-1, $identifier="" )
 	{
 		if( !is_array( $dict ) ){
@@ -271,6 +274,7 @@ class Data {
 			// $thevalue = $pair;
 			$thevalue = "";
 		}
+
 		Data::addDefaultInputKeys( $key, $identifier );
 		
 		return $thevalue;

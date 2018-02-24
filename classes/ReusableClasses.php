@@ -58,6 +58,7 @@ class ReusableClasses {
 	{
 		Views::analyze( true );
 
+
 		$viewoutput = Views::setViews();
 		// $formoutput = Views::setForms();
 
@@ -66,6 +67,7 @@ class ReusableClasses {
 		
 		// $output = ob_get_contents();
 		// ob_end_clean();
+
 		ReusableClasses::addcss();
 		ReusableClasses::addReusableJS( $addjquery );
 		ReusableClasses::addEditor( $addeditor );
@@ -95,9 +97,11 @@ class ReusableClasses {
 		}
 		// echo "<link rel='stylesheet' type='text/css' href='/vendor/miltonian/custom/css/pages/" . basename($page, '.php') . ".css'>";
 
+
 		echo $viewoutput;
 		echo ReusableClasses::makeEditing();
 		// echo $formoutput;
+
 		ReusableClasses::addjs();
 
 		echo "
@@ -150,6 +154,11 @@ class ReusableClasses {
 
 		if( $addjquery ){
 			echo "<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>";
+
+			echo '<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>';
 		}
 	}
 
@@ -533,6 +542,7 @@ if($multiple_updates){
 	public static function setUpEditingForSection( $viewdict, $viewoptions, $identifier )
 	{
 
+
 		// echo " <script> ";
 			ReusableClasses::makeViewEditing( $viewdict, $viewoptions, $identifier );
 		// echo " </script> ";
@@ -545,6 +555,7 @@ if($multiple_updates){
 		// ];
 		// array_push(self::$editableviews, $dict);
 		
+
 	}
 
 

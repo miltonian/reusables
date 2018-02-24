@@ -74,6 +74,8 @@ class Input {
 		}else if( $type == "hidden" ) {
 			$type = "textfield";
 			$ishidden = "1";
+		}else if( $type == "date" ) {
+			$type = "datepicker";
 		}
 		Input::setInputType( $key, $type, $multiple_updates, $multipleupdate_i );
 		// echo "<script> console.log( 'ASDF: '+JSON.stringify( ".json_encode( [$key, $type, $multiple_updates, $multipleupdate_i] ) ." ) ); </script>";
@@ -239,6 +241,7 @@ class Input {
 
 		$input_onlykeys = [];
 		$inputs = [];
+
 
 		if( !isset( $options['input_keys'] ) && !isset( $options['default_input_keys'] ) ) { 
 

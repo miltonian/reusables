@@ -258,6 +258,7 @@ class Form {
 
 	}
 
+
 	public static function addJSClassToForm( $identifier, $viewdict, $input_onlykeys, $original_data_id ) {
 
 		ob_start();

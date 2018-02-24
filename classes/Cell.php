@@ -29,11 +29,12 @@ class Cell {
 	{
 		$data = Data::retrieveDataWithID( $identifier );
 		$options = Data::retrieveOptionsWithID( $identifier );
+
 		$info = Data::retrieveInfoWithID( $identifier );
 		
 		$viewpath = "";
 		$viewtype = Data::getValue( $info, "viewtype" );
-//, $viewpath
+
 		$data_id = Data::getDefaultDataID( $data );
 		$fullviewdict = Data::getFullArray( $data );
 		if( !isset($options['type'])){ $options['type'] = ""; }

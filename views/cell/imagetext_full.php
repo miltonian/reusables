@@ -43,6 +43,7 @@
 						<br>
 						<a href="<?php echo $linkpath ?>">
 							<label class="imagetext_full title" style=""><?php echo Data::getValue( $viewdict, 'title', $table_identifier ); ?></label>
+
 						</a>
 						<br>
 						<label class="imagetext_full grey-label"><?php echo $description ?></label>

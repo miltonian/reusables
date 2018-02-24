@@ -21,7 +21,6 @@
 $containsp = false;
 
 
-
 $lastinsertid = false;
 
 if(isset($_POST[ 'fieldarray' ])){ $fieldarray = $_POST[ 'fieldarray' ]; $containsp=true; }
@@ -129,6 +128,8 @@ break;
 
 	if( !$didfind && sizeof($filesarray) > 0 ){
 		// exit( json_encode( $filesarray ) );
+
+
 		if( isset( $_POST['ifnone_insert'] ) && sizeof($filesarray[0])>0  ){
 			if( $_POST['ifnone_insert'] == "1" ){ 
 				$sizeofarraystoinsert = 0;
@@ -293,20 +294,24 @@ if (isset($fieldarray)) {
 							}
 							// echo $i;
 							// exit( json_encode( $tablename ) );
-							insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename, $i, $sizeofarraystoinsert );
+
+							$lastinsertid = insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename, $i, $sizeofarraystoinsert );
+
 							$i=($i+$sizeofarraystoinsert-1);
 						}
 					}else{
 						if( !isset( $fieldimages ) ) {
 							$fieldimages = [];
 						}
-						insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename );
+						$lastinsertid = insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename );
+
 					}
 				}else{
 					if( !isset( $fieldimages ) ) {
 						$fieldimages = [];
 					}
-					insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename );
+
+					$lastinsertid = insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename );
 				}
 				
 				// exit("done");
@@ -315,6 +320,12 @@ if (isset($fieldarray)) {
 	}
 }
 
+
+if( isset( $_POST['added_file'] ) ) {
+	if( $_POST['added_file'] != "" ) {
+		include_once( BASE_DIR . '/vendor/miltonian/custom/functions/' . $_POST['added_file'] . '.php' );
+	}
+}
 
 if( isset( $_POST['goto'] ) ){
 	if( $_POST['goto'] == "" ) {
@@ -376,6 +387,8 @@ function insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename, $start
 	// exit( "6" );
 	// exit( json_encode( array( $query, $insertconditionvalues ) ) );
 	$result = Reusables\CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
+
+	return $result;
 }
 
 

@@ -9,6 +9,7 @@ class Views {
 	protected static $viewparams = [];
 
 	protected static $bufferedviews = [];
+
 	protected static $bufferedforms = [];
 	protected static $queue = [];
 	protected static $formqueue = [];
@@ -28,6 +29,7 @@ class Views {
 			"children"=>$children
 		];
 
+
 		// if( strtolower($viewtype) == "section" && ($file == "smartform_inmodal" || $file == "smartform") ) {
 		// 	array_push( self::$bufferedforms, $dict );
 		// } else {
@@ -37,7 +39,7 @@ class Views {
 
 	public static function addEditableParts( $identifier ) {
 
-		if( !isset( $viewoptions['editable'] ) && !isset( $viewoptions['insertonly'] ) && !isset( $viewoptions['editable_dynamic'] ) && !isset( $viewoptions['insertonly_dynamic'] ) ) {
+		if( !empty( $viewoptions['editable'] ) && !empty( $viewoptions['insertonly'] ) && !empty( $viewoptions['editable_dynamic'] ) && !empty( $viewoptions['insertonly_dynamic'] ) ) {
 			if( isset( $_SESSION['login'][0] ) ) {
 				if( $_SESSION['login'][0] == 1 ) {
 					Data::addOption( true, "editable", $identifier );
@@ -154,7 +156,7 @@ class Views {
 
 	public static function makeViews()
 	{
-		// exit( json_encode( self::$bufferedviews ) );
+
 		foreach (self::$bufferedviews as $dict) {
 			$viewtype = $dict["viewtype"];
 			if( $viewtype == "CustomCode" ) {
@@ -174,6 +176,7 @@ class Views {
 			// return $View->render();
 			// echo $View->render();
 		}
+
 
 		// Views::makeForms();
 	}
@@ -348,6 +351,7 @@ class Views {
 	public static function addToQueue( $viewtype, $file, $identifier, $data=[] )
 	{
 
+
 		Data::addInfo( $viewtype, 'viewtype', $identifier );
 		Data::addInfo( $file, 'file', $identifier );
 		Data::addInfo( $identifier, 'identifier', $identifier );
@@ -378,6 +382,7 @@ class Views {
 
 	public static function setViews()
 	{
+
 		ob_start();
 
 		foreach (self::$queue as $v) {
@@ -389,6 +394,7 @@ class Views {
 				call_user_func_array( "Reusables\\".$v['viewtype'] . "::set" , [ $v['file'], $v['identifier'] ] );
 			}
 		}
+
 
 		Views::makeViews();
 
@@ -437,7 +443,6 @@ class Views {
 	// 		}
 	// 	}
 	// }
-
 
 	public static function addCustomCodeToQueue( $code )
 	{
