@@ -19,6 +19,10 @@ class Data {
 
 	protected static $alldata = array();
 	protected static $alloptions = array();
+<<<<<<< HEAD
+=======
+	protected static $allinfo = array();
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 
 	public static function formatForDefaultData( $dataid )
 	{
@@ -127,6 +131,17 @@ class Data {
 		
 	}
 
+<<<<<<< HEAD
+=======
+	public static function addInfo( $data, $key, $identifier )
+	{
+		if( !isset( self::$allinfo[ $identifier ] ) ) {
+			self::$allinfo[ $identifier ] = [];
+		}
+		self::$allinfo[ $identifier ][ $key ] = $data;
+	}
+
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 	public static function retrieveDataWithID( $identifier )
 	{
 		if( is_array( $identifier ) ){
@@ -151,6 +166,21 @@ class Data {
 		}
 	}
 
+<<<<<<< HEAD
+=======
+	public static function retrieveInfoWithID( $identifier )
+	{
+		if( is_array( $identifier ) ){
+			return null;
+		}
+		if ( !isset( self::$allinfo[ $identifier ] ) ) {
+			return null;
+		}else{
+			return self::$allinfo[ $identifier ];
+		}
+	}
+
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 	public static function getDefaultDataID( $viewdict )
 	{
 		if ( self::isAssoc($viewdict) ) {
@@ -190,7 +220,11 @@ class Data {
 		return $tablenames[$allkeys[0]];
 	}
 
+<<<<<<< HEAD
 	public static function getValue( $dict, $key=-1 )
+=======
+	public static function getValue( $dict, $key=-1, $identifier="" )
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 	{
 		if( !is_array( $dict ) ){
 			$dict = Data::retrieveDataWithID( $dict );
@@ -217,7 +251,10 @@ class Data {
 			}
 		}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 		$hasindex = false;
 		if( !isset( $pair['data_id'] ) ){ 
 			// echo "<script>console.log(JSON.stringify( 'retrieve data is missing data_id' + " . $pair . " ) );</script>"; 
@@ -251,9 +288,44 @@ class Data {
 			// $thevalue = $pair;
 			$thevalue = "";
 		}
+<<<<<<< HEAD
 		return $thevalue;
 	}
 
+=======
+		Data::addDefaultInputKeys( $key, $identifier );
+		
+		return $thevalue;
+	}
+
+	public static function addDefaultInputKeys( $key, $identifier ) {
+		if( $identifier != "" ) {
+			$viewoptions = Data::retrieveOptionsWithID( $identifier . "_form" );
+			$defaultinputkeys = Data::getValue( $viewoptions, "default_input_keys" );
+			if( $defaultinputkeys == "" ) {
+				$defaultinputkeys = [];
+				// exit( json_encode( $identifier."_form" ) );
+			}
+			$found = false;
+			foreach ($defaultinputkeys as $k) {
+				if( $k == $key ) {
+					$found = true;
+				}
+			}
+			if( !$found ) {
+				array_push( $defaultinputkeys, $key );
+			}
+			if( $identifier == "featured_table" ) {
+				if($key != "html_text"){
+
+					// exit( json_encode( $identifier . "_form" ) );
+				}
+			}
+			Data::addOption( $defaultinputkeys, "default_input_keys", $identifier . "_form" );
+		}
+	}
+
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 	public static function getConditions( $pair )
 	{
 		if( !isset( $pair['data_id'] ) ){ return ""; }

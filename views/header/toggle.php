@@ -5,7 +5,11 @@ namespace Reusables;
 $viewdict = Data::convertKeys( $viewdict );
 
 $togglearray = Data::getValue( $viewdict, 'data_array' );
+<<<<<<< HEAD
 
+=======
+// exit( json_encode( $togglearray ) );
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 $underline_index = Data::getValue( $viewoptions, 'underline_index' );
 if( $underline_index == "" ) {
 	$underline_index = 0;
@@ -16,7 +20,11 @@ if( $underline_index == "" ) {
 <style>
 
 	.toggle.viewtype_header.main .toggle.wrapper .toggle.link { width: calc(<?php echo (100 / sizeof($togglearray)) ?>% - 2px); }
+<<<<<<< HEAD
 	.toggle.viewtype_header.main .toggle.wrapper .toggle.underline_container { display: inline-block; position: absolute; margin: 0; padding: 0; width: 50%; height: 2px; left: 0; top: 70%; text-align: center; }
+=======
+	.toggle.viewtype_header.main .toggle.wrapper .toggle.underline_container { display: inline-block; position: absolute; margin: 0; padding: 0; width: calc(<?php echo (100 / sizeof($togglearray)) ?>% - 2px); height: 2px; left: 0; top: 70%; text-align: center; }
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 		.toggle.viewtype_header.main .toggle.wrapper .toggle.underline { width: 60%; background-color: #555; display: inline-block; position: relative; margin: 0; padding: 0; height: 100%; }
 	
 </style>
@@ -54,7 +62,12 @@ if( $underline_index == "" ) {
 		let togglearray = <?php echo json_encode( $togglearray) ?>;
 		let dict = togglearray[index]
 		let link = dict['link']
+<<<<<<< HEAD
 		if( link == "" ) {
+=======
+		
+		if( link == "" || typeof link === "undefined" ) {
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 			e.preventDefault()
 			changetoggle(index)
 		}

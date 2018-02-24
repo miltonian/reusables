@@ -74,8 +74,11 @@ class Input {
 		}else if( $type == "hidden" ) {
 			$type = "textfield";
 			$ishidden = "1";
+<<<<<<< HEAD
 		}else if( $type == "date" ) {
 			$type = "datepicker";
+=======
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 		}
 		Input::setInputType( $key, $type, $multiple_updates, $multipleupdate_i );
 		// echo "<script> console.log( 'ASDF: '+JSON.stringify( ".json_encode( [$key, $type, $multiple_updates, $multipleupdate_i] ) ." ) ); </script>";
@@ -242,13 +245,27 @@ class Input {
 		$input_onlykeys = [];
 		$inputs = [];
 
+<<<<<<< HEAD
 		if( !isset( $options['input_keys'] ) ){ 
+=======
+		if( !isset( $options['input_keys'] ) && !isset( $options['default_input_keys'] ) ) { 
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 
 			$input_keys = [];
 			return Input::convertInputKeys2( $input_keys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys );
 		}else{
+<<<<<<< HEAD
 
 			$input_keys = $options['input_keys'];
+=======
+			$input_keys = [];
+			if( isset( $options['input_keys'] ) ) { 
+				$input_keys = $options['input_keys'];
+			} else {
+				$input_keys = $options['default_input_keys'];
+			}
+			
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 			if( $multiple_inserts || $multiple_updates ) {
 				$returnthisdict = [];
 				foreach ($input_keys as $this_inputkeys) {

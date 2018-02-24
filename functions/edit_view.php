@@ -19,7 +19,11 @@
 // require_once('vendor/miltonian/reusables/classes/Shortcuts.php');
 
 $containsp = false;
+<<<<<<< HEAD
 // exit( json_encode( $_POST ) );
+=======
+
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 
 
 $lastinsertid = false;
@@ -130,10 +134,14 @@ break;
 	if( !$didfind && sizeof($filesarray) > 0 ){
 		// exit( json_encode( $filesarray ) );
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if( isset( $_POST['ifnone_insert'] ) && sizeof($filesarray[0]) > 0 ){
 =======
 		if( isset( $_POST['ifnone_insert'] ) && sizeof($filesarray[0])>0  ){
 >>>>>>> da6eeb0... improved functionality for 'place'. added views: title_subtitle, image_view, toggle
+=======
+		if( isset( $_POST['ifnone_insert'] ) && sizeof($filesarray[0])>0  ){
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 			if( $_POST['ifnone_insert'] == "1" ){ 
 				$sizeofarraystoinsert = 0;
 				$keys_found = [];
@@ -297,20 +305,32 @@ if (isset($fieldarray)) {
 							}
 							// echo $i;
 							// exit( json_encode( $tablename ) );
+<<<<<<< HEAD
 							$lastinsertid = insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename, $i, $sizeofarraystoinsert );
+=======
+							insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename, $i, $sizeofarraystoinsert );
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 							$i=($i+$sizeofarraystoinsert-1);
 						}
 					}else{
 						if( !isset( $fieldimages ) ) {
 							$fieldimages = [];
 						}
+<<<<<<< HEAD
 						$lastinsertid = insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename );
+=======
+						insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename );
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 					}
 				}else{
 					if( !isset( $fieldimages ) ) {
 						$fieldimages = [];
 					}
+<<<<<<< HEAD
 					$lastinsertid = insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename );
+=======
+					insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename );
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 				}
 				
 				// exit("done");
@@ -319,11 +339,14 @@ if (isset($fieldarray)) {
 	}
 }
 
+<<<<<<< HEAD
 if( isset( $_POST['added_file'] ) ) {
 	if( $_POST['added_file'] != "" ) {
 		include_once( BASE_DIR . '/vendor/miltonian/custom/functions/' . $_POST['added_file'] . '.php' );
 	}
 }
+=======
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 
 if( isset( $_POST['goto'] ) ){
 	if( $_POST['goto'] == "" ) {
@@ -385,7 +408,10 @@ function insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename, $start
 	// exit( "6" );
 	// exit( json_encode( array( $query, $insertconditionvalues ) ) );
 	$result = Reusables\CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
+<<<<<<< HEAD
 	return $result;
+=======
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 }
 
 

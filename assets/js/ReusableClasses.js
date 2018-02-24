@@ -13,6 +13,7 @@ var editingon = false
 			var thisdict = [];
 				var thisdictvalue = [];
 				thisdict = dataarray[data_id];
+<<<<<<< HEAD
 
 				if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
 
@@ -42,6 +43,11 @@ var editingon = false
 				thisdict = dataarray[data_id];
 
 				if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
+=======
+				
+				if(thisdict == null ){ return; }
+				if(index == null || index == ""){ if(thisdict == null ){ return; } thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 
 			$('.' + identifier + ' .' + inputclass + ' input.field_value').val( thisdictvalue[key] );
 				$('.' + identifier + ' .' + inputclass + ' input.tablename').val( thisdict['db_info']['tablenames'][key] );
@@ -66,6 +72,11 @@ var editingon = false
 			var thisdict = [];
 				var thisdictvalue = [];
 				thisdict = dataarray[data_id];
+<<<<<<< HEAD
+=======
+
+				if(thisdict == null ){ return; }
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 				if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
 
 			$('.' + identifier + ' .' + inputclass + ' .field_value').val(thisdictvalue[key]);
@@ -91,6 +102,11 @@ var editingon = false
 			var thisdict = [];
 				var thisdictvalue = [];
 				thisdict = dataarray[data_id];
+<<<<<<< HEAD
+=======
+
+				if(thisdict == null ){ return; }
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 				if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
 // console.log("IMAGE IS: "+JSON.stringify(thisdictvalue))
 			$('.' + identifier + ' .' + inputclass + ' #imglabel').css({'background-image': 'url("'+thisdictvalue[key]+'")'});
@@ -116,6 +132,11 @@ var editingon = false
 			var thisdict = [];
 			var thisdictvalue = [];
 			thisdict = dataarray[data_id];
+<<<<<<< HEAD
+=======
+			
+			if(thisdict == null ){ return; }
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 			if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
 			var name = 'fieldarray_' + inputclass + '[' + fieldindex + '][field_value]'
 			CKEDITOR.instances[name].setData( thisdictvalue[key] ); 
@@ -163,6 +184,7 @@ var editingon = false
 
 		}
 
+<<<<<<< HEAD
 		updateSelect( dataarray, identifier, data_id, key, inputclass, db_key, index=null )
 		{
 			var thisdict = [];
@@ -189,6 +211,8 @@ var editingon = false
 
 		}
 
+=======
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 		updateCopyButton( dataarray, identifier, data_id, key, inputclass, db_key, index=null )
 		{
 			$('.' + identifier + ' .copybutton_1.copy').text("Copy")
@@ -472,8 +496,11 @@ var editingon = false
 						Reusable.updateFileImage( thisdict, identifier, identifier, key, inputclass, colname, 0 );
 					}else if(type=="textfield"){
 						Reusable.updateTextField( thisdict, identifier, identifier, key, inputclass, colname, 0 );
+<<<<<<< HEAD
 					}else if(type=="datepicker"){
 						Reusable.updateDatePicker( thisdict, identifier, identifier, key, inputclass, colname, 0 );
+=======
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 					}else if(type=="colorpicker"){
 						Reusable.updateColorPicker( thisdict, identifier, identifier, key, inputclass, colname, 0 );
 					}else if(type=="copybutton_1"){
@@ -483,6 +510,7 @@ var editingon = false
 					// console.log("fieldindex: "+JSON.stringify(thisdata.length))
 				}
 			}else{
+<<<<<<< HEAD
 				if( type == "textarea" ){
 					Reusable.updateTextArea( dataarray, identifier, identifier, key, inputclass, colname, index );
 				} else if( type == "wysi" ) {
@@ -499,6 +527,20 @@ var editingon = false
 					Reusable.updateCopyButton( dataarray, identifier, identifier, key, inputclass, colname, index );
 				} else if( type == "select" ) {
 					Reusable.updateSelect( dataarray, identifier, identifier, key, inputclass, colname, index );
+=======
+				if(type=="textarea"){
+					Reusable.updateTextArea( dataarray, identifier, identifier, key, inputclass, colname, index );
+				}else if(type=="wysi"){
+					Reusable.updateWysi( dataarray, identifier, identifier, key, inputclass, colname, index, fieldindex );
+				}else if(type=="file_image"){
+					Reusable.updateFileImage( dataarray, identifier, identifier, key, inputclass, colname, index );
+				}else if(type=="textfield"){
+					Reusable.updateTextField( dataarray, identifier, identifier, key, inputclass, colname, index );
+				}else if(type=="colorpicker"){
+					Reusable.updateColorPicker( dataarray, identifier, identifier, key, inputclass, colname, index );
+				}else if(type=="copybutton_1"){
+					Reusable.updateCopyButton( dataarray, identifier, identifier, key, inputclass, colname, index );
+>>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 				}
 			}
 		}
