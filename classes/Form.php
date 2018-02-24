@@ -258,8 +258,7 @@ class Form {
 
 	}
 
-<<<<<<< HEAD
-=======
+
 	public static function addJSClassToForm( $identifier, $viewdict, $input_onlykeys, $original_data_id ) {
 
 		ob_start();
@@ -365,5 +364,4 @@ class Form {
 		return $output;
 	}
 
->>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 }

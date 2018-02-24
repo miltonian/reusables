@@ -54,10 +54,6 @@ namespace Reusables;
 
 
 				$post = Data::convertKeysInTable( $identifier, $post );
-<<<<<<< HEAD
-=======
-
->>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 				$post['index'] = $i;
 				$postoptions['pre_slug'] = Data::getValue( $viewoptions, 'pre_slug' );
 				$postoptions['type'] = Data::getValue( $viewoptions, 'type' );
@@ -89,12 +85,10 @@ namespace Reusables;
 						$cellname = "imagetext_full";
 					}
 				}
-<<<<<<< HEAD
-=======
 				Data::addInfo( "Cell", 'viewtype', $identifier . "_cell_" . $i );
 				Data::addInfo( $cellname, 'file', $identifier . "_cell_" . $i );
 				Data::addInfo( $identifier . "_cell_" . $i, 'identifier', $identifier . "_cell_" . $i );
->>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
+
 				if( Data::hasprefix( $cellname, "custom/" ) ) {
 					$filename = substr( $cellname, strlen( "custom/" ), strlen( $cellname ) );
 					// exit( json_encode( $filename ) );

@@ -9,13 +9,10 @@ class Views {
 	protected static $viewparams = [];
 
 	protected static $bufferedviews = [];
-<<<<<<< HEAD
-	protected static $queue = [];
-=======
+
 	protected static $bufferedforms = [];
 	protected static $queue = [];
 	protected static $formqueue = [];
->>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 
 	protected static $analyze = false;
 
@@ -31,13 +28,7 @@ class Views {
 			"tablenames"=>$tablenames,
 			"children"=>$children
 		];
-<<<<<<< HEAD
-		array_push( self::$bufferedviews, $dict );
-	}
 
-	public static function addEditableParts( $identifier ) {
-		$viewoptions = Data::retrieveOptionsWithID( $identifier );
-=======
 
 		// if( strtolower($viewtype) == "section" && ($file == "smartform_inmodal" || $file == "smartform") ) {
 		// 	array_push( self::$bufferedforms, $dict );
@@ -48,7 +39,7 @@ class Views {
 
 	public static function addEditableParts( $identifier ) {
 
-		if( !isset( $viewoptions['editable'] ) && !isset( $viewoptions['insertonly'] ) && !isset( $viewoptions['editable_dynamic'] ) && !isset( $viewoptions['insertonly_dynamic'] ) ) {
+		if( !empty( $viewoptions['editable'] ) && !empty( $viewoptions['insertonly'] ) && !empty( $viewoptions['editable_dynamic'] ) && !empty( $viewoptions['insertonly_dynamic'] ) ) {
 			if( isset( $_SESSION['login'][0] ) ) {
 				if( $_SESSION['login'][0] == 1 ) {
 					Data::addOption( true, "editable", $identifier );
@@ -58,7 +49,6 @@ class Views {
 
 		$viewoptions = Data::retrieveOptionsWithID( $identifier );
 
->>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 		if( isset( $viewoptions["editable"] ) || isset( $viewoptions["insertonly"] ) || isset( $viewoptions["editable_dynamic"] ) || isset( $viewoptions["insertonly_dynamic"] ) ) {
 			if( !isset($viewoptions["editable"] ) ) { $viewoptions["editable"] = false; }
 			if( !isset($viewoptions["insertonly"] ) ) { $viewoptions["insertonly"] = false; }
@@ -166,10 +156,7 @@ class Views {
 
 	public static function makeViews()
 	{
-<<<<<<< HEAD
-=======
-		// exit( json_encode( self::$bufferedviews ) );
->>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
+
 		foreach (self::$bufferedviews as $dict) {
 			$viewtype = $dict["viewtype"];
 			if( $viewtype == "CustomCode" ) {
@@ -189,8 +176,7 @@ class Views {
 			// return $View->render();
 			// echo $View->render();
 		}
-<<<<<<< HEAD
-=======
+
 
 		// Views::makeForms();
 	}
@@ -213,7 +199,6 @@ class Views {
 			}
 
 		}
->>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 	}
 
 	public static function addView( $identifier )
@@ -259,18 +244,12 @@ class Views {
 		self::$viewidentifiers = null;
 		self::$viewparams = null;
 		self::$bufferedviews = null;
-<<<<<<< HEAD
-=======
 		self::$bufferedforms = null;
->>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 
 		self::$viewidentifiers = [];
 		self::$viewparams = [];
 		self::$bufferedviews = [];
-<<<<<<< HEAD
-=======
 		self::$bufferedforms = [];
->>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 	}
 
 	public static function analyze( $turnOn = false )
@@ -372,17 +351,7 @@ class Views {
 	public static function addToQueue( $viewtype, $file, $identifier, $data=[] )
 	{
 
-<<<<<<< HEAD
-		array_push( 
-			self::$queue, 
-			[
-				"viewtype" => $viewtype, 
-				"file" => $file, 
-				"identifier" => $identifier,
-				"data"=>$data
-			]
-		);
-=======
+
 		Data::addInfo( $viewtype, 'viewtype', $identifier );
 		Data::addInfo( $file, 'file', $identifier );
 		Data::addInfo( $identifier, 'identifier', $identifier );
@@ -408,17 +377,14 @@ class Views {
 				]
 			);
 		// }
->>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 
 	}
 
 	public static function setViews()
 	{
-<<<<<<< HEAD
-=======
+
 		ob_start();
 
->>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 		foreach (self::$queue as $v) {
 			if( $v["viewtype"] == "CustomCode" ) {
 				array_push( self::$bufferedviews, $v );
@@ -428,10 +394,7 @@ class Views {
 				call_user_func_array( "Reusables\\".$v['viewtype'] . "::set" , [ $v['file'], $v['identifier'] ] );
 			}
 		}
-<<<<<<< HEAD
-	}
 
-=======
 
 		Views::makeViews();
 
@@ -480,8 +443,6 @@ class Views {
 	// 		}
 	// 	}
 	// }
-
->>>>>>> d75818e4a721ec8c4f591c2ce3467a63444153d2
 
 	public static function addCustomCodeToQueue( $code )
 	{
