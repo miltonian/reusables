@@ -1,0 +1,14 @@
+.three_columns.main { display: block; position: relative; margin: 0; padding: 0; width: 100%;  }
+	.three_columns.maincolumn { display: inline-block; position: relative; margin: 10px; margin-right: 5px; padding: 0px; float: left; }
+	.three_columns.sidecolumn_right { position: relative; margin: 10px; margin-left: 5px; padding: 0px; width: calc( 20% - 20px ); float: left; }
+	.three_columns.sidecolumn_left { display: inline-block; position: relative; margin: 10px; padding: 0px;  float: left; }
+@media (min-width: 0px) {
+	.three_columns.maincolumn { width: calc(100% - 20px); }
+	.three_columns.sidecolumn_right { width: calc(100% - 20px); }
+	.three_columns.sidecolumn_left { width: calc(100% - 20px); }
+}
+@media (min-width: 768px) {
+	.three_columns.maincolumn { width: calc(60% - 20px); }
+	.three_columns.sidecolumn_right { width: calc(20% - 20px); }
+	.three_columns.sidecolumn_left { width: calc(20% - 20px); }
+}

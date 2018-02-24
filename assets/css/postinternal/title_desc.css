@@ -1,0 +1,3 @@
+.title_desc.main { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; min-height: 200px; }
+	.title_desc#title { margin: 0; }
+	.title_desc#desc { margin-top: 30px; font-weight: 400; }

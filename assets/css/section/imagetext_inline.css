@@ -1,0 +1,18 @@
+.imagetext_inline.main { display: inline-block; position: relative; margin: 0; padding: 20px 0px; width: 100%; background-color: white; border-bottom: 1px solid #e3e3e3; }
+	.imagetext_inline.featuredimage { display: inline-block; position: relative; margin: 0; padding: 0; background-size: cover; background-position: center; background-repeat: no-repeat; border: 0; border-radius: 5px; }
+	.imagetext_inline.thecontent { display: inline-block; position: relative; padding: 0px 20px; }
+		.imagetext_inline.thecontent .imagetext_inline#title { margin: 0; font-size: 23px; }
+
+	@media (min-width: 0px) {
+		.imagetext_inline { text-align: center; }
+			.imagetext_inline.featuredimage { width: 90%; height: 0; padding-bottom: 80%; float: none; margin-left: 0px; margin-bottom: 20px; }
+			.imagetext_inline.thecontent { float: none; }
+	}
+	@media (min-width: 768px) {
+		.imagetext_inline { text-align: left; }
+			.imagetext_inline.featuredimage { width: 120px; height: 120px; float: left; margin-left: 50px; margin-bottom: 0px; padding-bottom: 0%; }
+			.imagetext_inline.thecontent { float: left; width: calc( 100% - 120px - 50px - 50px - 40px ); }
+	}
+	@media (min-width: 992px) {
+
+	}

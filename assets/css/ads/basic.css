@@ -1,0 +1,6 @@
+@media (min-width: 0px) {
+	.basic img { width: 95%; }
+}
+@media (min-width: 768px) {
+	.basic img { width: 95%; }
+}

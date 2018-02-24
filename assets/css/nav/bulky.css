@@ -1,0 +1,27 @@
+.bulky.main { width: 100%; }
+.bulky.container { position: relative;  display: inline-block; margin: 0; padding: 0; width: 100%; }
+	.bulky.main-content { position: relative;  display: inline-block; margin: 0; padding: 0; width: 100%; height: 90px; background-color: white; border-bottom: 1px solid #cecece; }	
+
+	.bulky.logo-div { position: absolute; display: block; margin: 0; padding: 0; width: 275px; top: 50%; transform: translateY(-50%); }
+	.bulky.subnav { position: relative;  display: inline-block; margin: 0; padding: 0; width: 100%; height: 40px; background-color: white; border-bottom: 1px solid #cecece; text-align: center; }
+	.bulky.categories-wrapper { position: relative; margin: 0; padding: 0; top: 50%; transform: translateY(-50%); text-transform: uppercase; }
+	.bulky.category-btn { position: relative;  display: inline-block; margin: 0px 30px; padding: 5px; background: transparent; float: left; text-decoration: none; color: #555555; font-size: 0.9em; font-weight: 500; }
+	.bulky.subscribe-btn { position: relative; display: inline-block; margin: 0; padding: 5px; color: #333333; font-weight: 600; font-size: 0.9em; -webkit-appearance: none; background: transparent; border: 0; cursor: pointer; }
+	.bulky.tagline { position: absolute; margin: 0; padding: 0; left: 50%; color: #555555; text-decoration: none; bottom: 13px; font-weight: 400; font-size: 0.6em; transform: translateX(-50%); }
+	.bulky.socialbtns-container { display: inline-block; position: relative; margin: 0; padding: 0; top: 50%; transform: translateY(-50%); float: left; margin-left: 20px; }
+
+@media ( min-width: 0px ) {
+	.bulky.categories-wrapper { display: none; }
+	.bulky.logo-div { left: auto; transform: translate(0, -50%); right: 0; text-align: right; padding-right: 20px; }
+	.bulky.logo-div img { max-width: 70%; max-height: 70%; }
+	.bulky.logo-div h3 { text-decoration: none; color: #333333; }
+	.bulky.search-container { display: none; }
+	.bulky.tagline { display: none; }
+}
+@media (min-width: 768px) {
+	.bulky.categories-wrapper { display: inline-block; }
+	.bulky.logo-div { left: 50%; transform: translate(-50%, -50%); right: auto; text-align: center; padding-right: 0; }
+	.bulky.logo-div img { max-width: 90%; max-height: 90%; }
+	.bulky.search-container { display: inline-block; }
+	.bulky.tagline { display: inline-block; }
+}

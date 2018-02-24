@@ -1,0 +1,12 @@
+.gallery_1 { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: black; width: calc(100% - 40px); padding: 0 20px; margin: 0; overflow: hidden; }
+	.gallery_1 .backgroundimage { position: absolute; display: inline-block; margin: 0; padding: 0; top: -10%; left: -10%; width: 120%; height: 120%; background-position: center; background-size: cover; filter:blur(15px); }
+	.gallery_1 .image { display: inline-block; position: absolute; margin: 0; padding: 0; height: 100%; width: 100%; background-position: center; background-size: contain; background-repeat: no-repeat; }
+	.gallery_1 .image.left {left: -100%;}
+	.gallery_1 .image.mid {left: 0;}
+	.gallery_1 .image.right {left: 100%;}
+
+	.gallery_1 .buttons { display: inline-block; position: absolute; margin: 0; padding: 0; height: 100%; width: 20%; top: 0; z-index: 1; -webkit-appearance: none; border: 0; cursor: pointer; background: transparent; background-position: center; background-size: 30% auto; background-repeat: no-repeat; opacity: 0.8; }
+	.gallery_1 .buttons:hover {background-color: rgba(0,0,0,0.5);}
+	.gallery_1 .buttons.left { left: 0; float: left; background-image: url('/reusables/uploads/icons/leftarrow-white.png'); }
+	.gallery_1 .buttons.right { right: 0; float: right; background-image: url('/reusables/uploads/icons/rightarrow-white.png'); }
+	.gallery_1.editing { cursor: pointer; }

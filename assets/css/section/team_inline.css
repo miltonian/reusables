@@ -1,0 +1,17 @@
+.team_inline.main { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; text-align: center; }
+	.team_inline.thecontainer { display: inline-block; position: relative; margin: 0; padding: 0; max-width: 1200px; }
+	.team_inline.person { display: inline-block; position: relative;  margin: 0; padding: 0; margin: 0px 10px; }
+		.team_inline.person img { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; }
+		.team_inline.person .team_inline.name { display: inline-block; position: relative; margin: 0; padding: 10px; width: calc(100% - 20px); color: #333333; text-align: center; padding-bottom: 0; }
+		.team_inline.person .team_inline.title { display: inline-block; position: relative; margin: 0; padding: 10px; width: calc(100% - 20px); color: #333333; text-align: center;}
+		.team_inline.person .team_inline.email { display: inline-block; position: relative; margin: 0; padding: 0px; width: calc(100% - 20px); color: #555555; text-align: center; font-weight: 300; font-size: 0.9em; }
+		.team_inline.person .team_inline.desc { display: inline-block; position: relative; margin: 0; padding: 10px; width: calc(100% - 20px); color: #555555; text-align: center; font-weight: 300; }
+@media (min-width: 0px) {
+	.team_inline.person {width: calc(100% - 20px); float: none; margin-bottom: 50px;}
+}
+@media (min-width: 768px) {
+	.team_inline.person { width: calc(60% - 20px); float: none;}
+}
+@media (min-width: 992px) {
+	.team_inline.person { width: calc(33% - 20px); float: left;}
+}

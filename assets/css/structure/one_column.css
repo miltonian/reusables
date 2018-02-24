@@ -1,0 +1,7 @@
+.one_column.main { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; }
+	.one_column.maincolumn { display: inline-block; position: relative; margin: 10px; margin-right: 5px; padding: 0px; float: left; }
+@media (min-width: 0px) {
+	.one_column.maincolumn { width: calc(100% - 20px); }
+}
+@media (min-width: 768px) {
+}

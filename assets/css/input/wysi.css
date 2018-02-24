@@ -1,0 +1,4 @@
+.textarea { display: inline-block; position: relative; margin: 0; padding: 0; float: left; width: 100%; }
+	.textarea label { display: inline-block; position: relative; margin: 0; padding: 10px 0; width: calc(100% - 0px); font-size: 13px; font-weight: 500; }
+	.textarea textarea { display: inline-block; position: relative; margin: 0; padding: 10px; width: calc(100% - 20px); font-size: 14px; font-weight: 400; color: #333333; background-color: white; border: 1px solid #e0e0e0; border-radius: 5px; height: 100px; }
+.cke_editable img { max-width: 100%; }

@@ -1,0 +1,5 @@
+.price_text_button.main { display: inline-block; position: relative; margin: 0; padding: 5px; width: calc(100% - 5px); text-align: left; }
+	.price_text_button#goal { display: inline-block; position: relative; margin: 5px 0; padding: 0; width: 100%; color: #19C826; font-weight: 300; font-size: 30px; }
+	.price_text_button#title { display: inline-block; position: relative; margin: 5px 0; padding: 0; width: 100%; color: #888; font-weight: 500; }
+	.price_text_button#desc { display: inline-block; position: relative; margin: 5px 0; padding: 0; width: 100%; color: #888; font-weight: 300; }
+	.price_text_button button#select { display: inline-block; position: relative; margin: 5px 0 20px 0; padding: 13px 23px; background-color: #19C826; color: white; border: 1px solid rgba(0,0,0,0.3); -webkit-appearance: none; border-radius: 5px; font-size: 14px; text-shadow: 1px 1px rgba(0,0,0,0.3); cursor: pointer; }

@@ -1,0 +1,44 @@
+.logoleft_textright.main { position: fixed; margin: 0; height: 60px; width: calc(100% - 50px); padding: 0; z-index: 1; box-shadow: 0px 0px 15px rgba(0,0,0,0.2); padding-right: 50px; background-color: white }
+	.logoleft_textright_structure.main_withside.main { width: calc(100% - 150px); width: calc(100% - 200px); }
+	.logoleft_textright_structure .main_withside.maincolumn { height: 100%; text-align: left; }
+	.logoleft_textright_structure .main_withside.sidecolumn_right { height: 100%; text-align: right; }
+	.logoleft_textright.mobilenav { margin: 0; height: 200px; width: 100%; padding: 0; background-color: white; z-index: 3; left: 0; height: 200px; height: 100px; text-align: left; }
+	.logoleft_textright.desktopnav { left: 0; text-align: left; background-color: white; height: 90px; }
+		.logoleft_textright.desktopnav .logoleft_textright.wrapper { display: inline-block; position: relative; padding: 0 20px; cursor: pointer; height: 100%; }
+		.logoleft_textright.desktopnav .logoleft_textright.wrapper a { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; height: 100%; }
+		.logoleft_textright.desktopnav a label { display: inline-block; position: relative; margin: 0; padding: 0; top: 50%; transform: translateY(-50%); float: left; pointer-events: none; }
+			.logoleft_textright.desktopnav a img { display: inline-block; position: relative; margin: 0; padding: 0 15px; height: auto; width: auto; max-width: 60%; max-height: 60%; top: 50%; transform: translateY(-50%); pointer-events: none; }
+	.logoleft_textright.topbarlogo { display: inline-block; position: relative; width: auto; border-style: solid; border-width: 0px; margin-left: 2em; top: 50%; margin-top: -20px; }
+	.logoleft_textright.desktopnav .logoleft_textright.topbarlogo { height: 35%; width: auto; max-width: 100%; }
+	.logoleft_textright.mobilenav .logoleft_textright.topbarlogo { width: auto; height: auto; max-width: 60%; margin: 0; max-height: 100%; top: 50%;  transform: translateY(-50%); }
+
+.logoleft_textright.menubtn { width: auto; margin-right: 30px; height: 50%; top: 50% !important; transform: translateY(-50%); float: right; cursor: pointer; position: absolute; display: inline-block; }
+
+.logoleft_textright.logo-div h3, .logoleft_textright.logo-div { text-decoration: none; color: #333333; text-transform: uppercase; margin-left: 20px; /* float: left; */ }
+.logoleft_textright.logo_container { display: inline-block; position: relative; margin: 0; padding: 0; width: 50%; float: left; text-align: center; height: 100%; }
+.logoleft_textright.right_container { display: inline-block; position: relative; margin: 0; padding: 0; width: 50%; float: left; text-align: center; height: 100%; }
+.logoleft_textright.logo-div { display: inline-block; position: relative; margin: 0; padding: 0; height: 100%; }
+.logoleft_textright.logo-div h3 { display: inline-block; position: relative; margin: 0; margin-left: 20px; padding: 0; top: 50%; transform: translateY(-50%); font-size: 15px; max-width: calc(300px - 100px) }
+
+
+.logoleft_textright.right_inner { display: inline-block; position: relative; margin: 0; padding: 0; top: 50%; transform: translateY(-50%); font-size: 25px; }
+	.logoleft_textright.info_label, .logoleft_textright.info_img { display: inline-block; position: relative; margin: 0; padding: 0; float: left; }
+		.logoleft_textright.info_img { height: 25px; width: auto; margin-top: 2px; margin-right: 10px; }
+
+
+.logoleft_textright.topbar-button { display: inline-block; position: relative; margin: 0 5px; padding: 0; background: transparent; float: right; text-decoration: none; color: #333333; top: 50%; transform: translateY(-50%); }
+.logoleft_textright.main { border-radius: 0; width: 100%; }
+.logoleft_textright.mobilenav .logoleft_textright#brandname {  width: calc(100% - 10px); text-decoration: none; margin: 0; padding: 0; margin-left: 10px; color: #333333; display: inline-block; top: 50% !important; position: relative; transform: translateY(-50%); }
+.logoleft_textright.mobilenav .logoleft_textright#brandlink { display: inline-block; position: relative; margin: 0; padding: 0; width: calc(100% - 80px); height: 100%; }
+@media (min-width: 0px) {
+	.logoleft_textright.mobilenav {display: block;}
+	.logoleft_textright.desktopnav {display: none;}
+}
+@media (min-width: 768px) {
+	.logoleft_textright.mobilenav {display: none;}
+	.logoleft_textright.desktopnav {display: inline-block;}
+	.logoleft_textright.spacing { height: 60px; }
+}
+@media (min-width: 992px) {
+
+}

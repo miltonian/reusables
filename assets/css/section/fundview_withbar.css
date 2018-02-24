@@ -1,0 +1,12 @@
+.fundview_1 { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; }
+	.fundview_1 .header { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; text-align: center; text-transform: uppercase; color: #777777; font-size: 30px; font-weight: 300; }
+		.fundview_1 .header span { color: #19C826; }
+	.fundview_1 .bar { display: inline-block; position: relative; margin: 15px 0; padding: 0; width: 100%; height: 10px; background-color: rgba(0,0,5,0.2); border-radius: 5px; }
+		.fundview_1 .bar .inner { display: inline-block; position: relative; margin: 0; padding: 0; height: 100%; max-width: 100%; border-radius: 5px; background-color: #19C826; float: left; }
+	.fundview_1 .stats .goal { width: 50%; float: left; font-weight: 300; text-align: left; }
+		.fundview_1 .stats .goal .value span { font-size: 1.8em; }
+	.fundview_1 .stats .funders { width: 50%; float: left; text-align: right; }
+	.fundview_1 .stats .value { display: inline-block; position: relative; width: 100%; font-size: 13px; font-weight: 300; }
+		.fundview_1 .stats .funders .value { font-size: 1.4em; }
+	.fundview_1 .stats .name { display: inline-block; position: relative; font-weight: 300; font-size: 10px; text-transform: uppercase; color: #555555; width: 100%; }
+	.fundview_1 button.fund { display: inline-block; position: relative; margin: 20px 0 10px 0; padding: 20px 0px; width: 100%; background-color: #19C826; color: white; border: 1px solid rgba(0,0,0,0.3); border-bottom-width: 3px; border-radius: 5px; font-size: 18px; font-weight: 500; cursor: pointer; }

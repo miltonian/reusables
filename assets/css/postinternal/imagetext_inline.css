@@ -1,0 +1,5 @@
+.imagetext_inline.main { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; min-height: 200px; }
+	.imagetext_inline#title { margin: 0; }
+	.imagetext_inline#desc { font-weight: 300; }
+	.imagetext_inline.featured_image_container { display: inline-block; position: relative; margin: 0; padding: 0;  }
+		.imagetext_inline.featured_image { display: inline-block; position: relative; margin: 0; padding: 0; width: auto; height: auto; max-width: 90%; max-height: 90%;  }

@@ -1,0 +1,3 @@
+.banner.main { position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; }
+	.banner.top { position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; height: 8px; background-color: red; }
+	.banner.bottom { position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; height: 27px; background-color: green; }

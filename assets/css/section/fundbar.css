@@ -1,0 +1,6 @@
+.viewtype_section.fundbar.funding_container { position: absolute; bottom: 0; width: calc(100% - 40px); }
+	.viewtype_section.fundbar .fundbar#fund_goal { color: #444444; text-transform: none; font-weight: 200; font-size: 1.2em; }
+	.viewtype_section.fundbar .fundbar#raised { font-size: 1.9em; font-weight: 300; }
+	.viewtype_section.fundbar .fundbar#bar { height: 10px; border-radius: 5px; background-color: #dcdce5; overflow: hidden; position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; }
+	.viewtype_section.fundbar .fundbar#fill { position: absolute; display: inline-block; margin: 0; padding: 0; min-width: 2%; height: 100%; left: 0; top: 0; }
+	.viewtype_section.fundbar .fundbar#fill { min-width: 2%; background-color: #19C826 }

@@ -1,0 +1,5 @@
+.register_basic.main { position: relative; display: inline-block; margin: 0; margin-top: 0px; padding: 0; width: 100%; text-align: center; }
+	.register_basic.formcontainer { position: relative; display: inline-block; max-width: 1200px; width: 100%; text-align: center; }
+		.register_basic.thecontainer { text-align: left; margin-top: 10px; margin-bottom: 30px; text-align: center; position: relative; display: inline-block; background: transparent; margin: 0; padding: 0; width: 60%;  min-height: 100px; border-radius: 6px; border: 0; background-color: rgba(0,0,0,0.5); text-align: center; margin-bottom: 50px; }
+		.register_basic.title { width: calc(100% - 0px); padding: 0px 0px; text-align: center; color: white; font-weight: 400; }
+		.register_basic.custombutton { background-color: #ff5719; width: 170px; margin-top: 10px; margin-bottom: 10px; cursor: pointer; }

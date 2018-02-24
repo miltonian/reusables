@@ -1,0 +1,22 @@
+.inline_images.main { position: relative;display: inline-block;margin: 0;padding: 0;width: 100%;text-align: center; }
+	.inline_images.picture {position: relative;margin: 0;background-size: cover;background-position: center;margin: 2px;}
+	.inline_images.words{ position: relative; display: block; margin: 0; padding: 0; width: auto; height: 100px; background-color: white;}
+	.inline_images.text-container{ position: relative; display: inline-block; top: 50%; transform: translateY(-50%); width: 100%; }
+	.inline_images.post .image { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; height: 100%; background-size: contain; background-position: center; background-repeat: no-repeat; }
+	.inline_images.post { padding: 10px; }
+
+	.inline_images.title { position: absolute; font-size: 30px; left: 50%; display: inline-block; margin: 0; padding: 0px 10px; padding: 0; top: 50%; transform: translate(-50%, -50%); color: white; width: calc(100% - 0px); text-align: center; pointer-events: none; }
+
+@media (min-width: 0px) {
+	.inline_images.picture.one, .inline_images.picture.three {display: none;}
+	.inline_images.picture {width: 100%; padding: 0; padding-bottom: 68%;}
+	.inline_images.post.one, .inline_images.post.three {display: none;}
+	.inline_images.post.two {display: inline-block; width: 100%;}
+}
+@media (min-width: 768px) {
+	.inline_images.picture {display: inline-block;}
+	.inline_images.picture.one, .inline_images.picture.three {display: inline-block;}
+	.inline_images.picture {width: 32%; padding: 0; padding-bottom: 28%;}
+	.inline_images.post.one, .inline_images.post.three {display: inline-block; width: calc(31% - 20px);}
+	.inline_images.post.two {display: inline-block; width: 34%;}
+}

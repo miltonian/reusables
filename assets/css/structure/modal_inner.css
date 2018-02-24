@@ -1,0 +1,5 @@
+.modal_inner.main { position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; overflow: hidden; }
+	.modal_inner.header { position: relative; display: inline-block; margin: 0; padding: 10px 0; width: 100%; }
+	.modal_inner.body { position: relative; display: inline-block; margin: 0; padding: 10px 0; width: 100%; }
+	.modal_inner.column { position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; left: 0; top: 0; margin-top: 0px; }
+	.modal_inner#close { display: inline-block; position: absolute; margin: 0; padding: 0; width: 40px; height: 40px; background: transparent; border-radius: 50%; border: 0px solid #efefef; font-size: 15px; top: 5px; cursor: pointer; z-index: 99; }

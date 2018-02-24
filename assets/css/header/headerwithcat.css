@@ -1,0 +1,7 @@
+.headerwithcat.main { display: inline-block; position: relative; margin: 0; padding: 0; width: calc( 100% - 60px ); padding: 30px 30px; border: 5px solid rgba(100,100,100,0.1); }
+	.headerwithcat.title { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; text-align: center; font-size: 32px; font-weight: 300; }
+	.headerwithcat.categories_wrapper { display: inline-block; position: relative; margin: 0; padding: 0; text-align: center; width: 100%; }
+		.headerwithcat.categoriesinner_wrapper { display: inline-block; position: relative; margin: 0; padding: 0; }
+		.headerwithcat#separator { display: inline-block; position: relative; margin: 0; padding: 0; float: left; padding: 10px 5px; }
+		.headerwithcat.link { display: inline-block; position: relative; margin: 0; padding: 0; float: left; padding: 10px 5px; text-decoration: none; color: #333333; }
+			.headerwithcat.link:hover { text-decoration: underline; }

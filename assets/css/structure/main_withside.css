@@ -1,0 +1,11 @@
+.main_withside.main { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%;  }
+	.main_withside.maincolumn { display: inline-block; position: relative; margin: 0px; margin-right: 5px; padding: 0px; float: left; }
+	.main_withside.sidecolumn_right { display: inline-block; position: relative; margin: 0px; margin-left: 5px; padding: 0px; float: left; }
+@media (min-width: 0px) {
+	.main_withside.maincolumn { width: 100% /*calc(100% - 20px)*/; }
+	.main_withside.sidecolumn_right { width: 100% /*calc( 100% - 20px )*/; }
+}
+@media (min-width: 768px) {
+	.main_withside.maincolumn { width: calc(70% - 20px); }
+	.main_withside.sidecolumn_right { width: calc( 30% - 20px ); }
+}

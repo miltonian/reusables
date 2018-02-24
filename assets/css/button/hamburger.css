@@ -1,0 +1,4 @@
+.hamburger { display: inline-block; position: relative; cursor: pointer; }
+	.hamburger .btn-container { position: relative; display: inline-block; margin: 0; padding: 10px; text-align: center; background: transparent; cursor: pointer; width: 20px; }
+	.hamburger .bar-single { position: relative; display: inline-block; margin: 2px 0px; margin-right: 0; padding: 0; width: 100%; height: 2px; background-color: #333333; border-radius: 1px; cursor: pointer; }
+	.hamburger label { position: relative; display: inline-block; margin: 0; padding: 0; color: #706966; margin-left: -5px; margin-right: 5px; top: -4px; font-size: 12px; font-weight: 500; cursor: pointer; }

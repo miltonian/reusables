@@ -1,0 +1,11 @@
+.socialpage_circles { position: relative; display: inline-block; margin: 0; padding: 0; }
+.socialpage_circles .social-icon { position: relative; display: inline-block; margin: 0px 5px; padding: 0; height: 40px; width: 40px; border-radius: 50%; border: 1px solid #cecece; background-color: white; float: left; cursor: pointer; -webkit-filter: grayscale(100%); filter: grayscale(100%); background-size: 60%; background-position: center; background-repeat: no-repeat; }
+.socialpage_circles .social-icon:hover { -webkit-filter: grayscale(0%); filter: grayscale(0%); }
+
+.socialpage_circles a {display: inline-block;}
+.socialpage_circles .social-icon.facebook {background-image: url('/vendor/miltonian/reusables/assets/images/icons/facebook-icon.png');}
+.socialpage_circles .social-icon.twitter {background-image: url('/vendor/miltonian/reusables/assets/images/icons/twitter-icon.png');}
+.socialpage_circles .social-icon.instagram {background-image: url('/vendor/miltonian/reusables/assets/images/icons/insta-icon.png');}
+	.socialpage_circles .social-icon.facebook:hover {border: 2px solid #3b5998}
+	.socialpage_circles .social-icon.twitter:hover {border: 2px solid #4099FF}
+	.socialpage_circles .social-icon.instagram:hover {border: 2px solid #8a3ab9}
