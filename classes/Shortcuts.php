@@ -124,6 +124,11 @@ class Shortcuts {
 	    return 1;
 	}
 
+	public static function hasPrefix( $string, $prefix )
+	{
+		return substr($string, 0, strlen($prefix)) === $prefix;
+	}
+
 
 }
 

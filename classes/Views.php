@@ -91,7 +91,10 @@ class Views {
 					}
 					Form::makeDynamicInsertOnly( $viewoptions["featured_content_id"], $identifier . "_form", $user_id );
 				} else{
-					Data::addData( $viewdata, $identifier . "_form" );
+					$formdata = Data::retrieveDataWithID( $identifier . "_form" );
+					if( !isset( $formdata ) ) {
+						Data::addData( $viewdata, $identifier . "_form" );
+					}
 				}
 
 				$form_dict = [
@@ -453,6 +456,28 @@ class Views {
 				"code" => $code
 			]
 		);
+	}
+
+	public static function convertOptionKeys( $options_formatted )
+	{
+		if( isset( $options_formatted['value'] ) ) {
+			$options_formatted = $options_formatted['value'];
+		} else {
+			$options_formatted = [];
+		}
+		$options = [];
+		foreach ($options_formatted as $option) {
+			$key = Data::getValue( $option, 'option_key' );
+			$value = Data::getValue( $option, 'title' );
+			$identifier = Data::getValue( $option, 'identifier' );
+			$dict = [
+				"key" => $key,
+				"value" => $value,
+				"identifier" => $identifier
+			];
+			array_push($options, $dict);
+		}
+		return $options;
 	}
 
 }
