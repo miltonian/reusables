@@ -3,9 +3,11 @@
 namespace Reusables;
 
 if(!isset($isadmin)){ $isadmin=false; }
-$navbuttons = array();
-if(isset($viewdict['pages'])){ $navbuttons = $viewdict['pages']; }
 
+$navbuttons = Data::getValue( $viewdict, 'pages' );
+if($navbuttons == "") {
+	$navbuttons = [];
+}
 // exit( json_encode( $navbuttons ) );
 
 $required = array(
@@ -67,9 +69,15 @@ if( $dropdown_fullwidth == "" ) {
 		$rightbuttons = array();
 		$button = "";
 		$dropdownindex = 0;
+		$i=0;
 		foreach ($navbuttons as $b) {
+			if( !isset($b['position'] ) ){ $b['position'] = "left"; }
+			$classname = Data::getValue( $b, 'classname' );
+			if( $classname == "" ) {
+				$classname = $identifier . "_page_" . $i;
+			}
 
-			$button = "<div class='slim page " . $b['classname'] . " wrapper dropdownindex_" . $dropdownindex . " ";
+			$button = "<div class='slim page clicktoedit " . $classname . " wrapper dropdownindex_" . $dropdownindex . " ";
 			if(isset($b['buttons'])){
 				$button .= "has_dropdown desktopnavdropdown";
 			}
@@ -79,8 +87,8 @@ if( $dropdown_fullwidth == "" ) {
 				$button .= "<img src='" . $b['imagepath'] . "'>"; 
 			}if( isset( $b['emoji'] ) ){ 
 				$button .= $b['emoji']; 
-			}if( isset( $b['name'] ) ){ 
-				$button .= "<label>" . $b['name'] . "</label>"; 
+			}if( isset( $b['title'] ) ){ 
+				$button .= "<label>" . $b['title'] . "</label>"; 
 			} 
 			$button .= "</a>";
 			if( $dropdown_fullwidth && isset($b['buttons']) ) {
@@ -115,6 +123,7 @@ if( $dropdown_fullwidth == "" ) {
 				array_push($rightbuttons, $button);
 			}
 			$dropdownindex++;
+			$i++;
 		}
 
 		foreach ($leftbuttons as $b) {
@@ -166,6 +175,14 @@ if( $dropdown_fullwidth == "" ) {
 			$('.slim.mobilenav .slim.dropdown').css('background-color', 'transparent');
 		};
 	});
+
+	$('.<?php echo $identifier ?> .slim.clicktoedit').click(function(e){
+			<?php
+				// ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+				// $fullviewdict = Data::getFullArray( $viewdict );
+				// ReusableClasses::addEditingToCell( $identifier, $fullviewdict, "modal" );
+			?>
+		})
 		
 </script>
 	

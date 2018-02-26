@@ -6,7 +6,7 @@ namespace Reusables;
 		[
 			"id"=>"",
 			"title"=>"",
-			"featured_imagepath"=>"",
+			"imagepath"=>"",
 			"html_text"=>"",
 			"isfeatured"=>""
 		]
@@ -17,7 +17,7 @@ namespace Reusables;
 
 
 	Views::setParams( 
-		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "cellindex", "description", "celldate", "celltype", "slug", "featured_imagepath", "title" ],
+		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "cellindex", "description", "celldate", "celltype", "slug", "imagepath", "title" ],
 		[],
 		$identifier
 	);
@@ -30,7 +30,7 @@ namespace Reusables;
 
 <div class="viewtype_cell imagetext_inline_small main <?php echo $identifier ?> index_<?php echo $cellindex ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo $mediatype; } ?> index_<?php echo $cellindex ?>">
 	<div class="imagetext_inline_small leftdiv">
-		<a href="<?php echo $linkpath ?>"><div class="imagetext_inline_small image" style="background-image: url('<?php echo Data::getValue( $viewdict, 'featured_imagepath' ) ?>');"></div></a>
+		<a href="<?php echo $linkpath ?>"><div class="imagetext_inline_small image" style="background-image: url('<?php echo Data::getValue( $viewdict, 'imagepath' ) ?>');"></div></a>
 	</div>
 	<div class="imagetext_inline_small rightdiv">
 		<a href="<?php echo $linkpath ?>"><label class="imagetext_inline_small title"><?php echo Data::getValue( $viewdict, 'title') ?></label></a>

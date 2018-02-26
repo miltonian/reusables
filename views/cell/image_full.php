@@ -3,7 +3,7 @@
 	namespace Reusables;
 
 	Views::setParams( 
-		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "cellindex", "description", "celldate", "celltype", "featured_imagepath", "title", "slug" ],
+		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "cellindex", "description", "celldate", "celltype", "imagepath", "title", "slug" ],
 		[],
 		$identifier
 	);
@@ -16,9 +16,9 @@
 
 
 	$isyoutube = false;
-	if( substr( Data::getValue( $viewdict, 'featured_imagepath' ), 0, 13 ) == "https://youtu" || substr( Data::getValue( $viewdict, 'featured_imagepath' ), 0, 17 ) == "https://www.youtu" ) {
+	if( substr( Data::getValue( $viewdict, 'imagepath' ), 0, 13 ) == "https://youtu" || substr( Data::getValue( $viewdict, 'imagepath' ), 0, 17 ) == "https://www.youtu" ) {
 		$isyoutube = true;
-		$youtube_src = Data::getValue( $viewdict, 'featured_imagepath' );
+		$youtube_src = Data::getValue( $viewdict, 'imagepath' );
 		$youtube_frame = preg_replace(
 		"/\s*[a-zA-Z\/\/:\.]*youtu(be.com\/watch\?v=|.be\/)([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i",
 		"<iframe class='image_full picture' width=\"100%\" height=\"44%\" src=\"//www.youtube.com/embed/$2\" allowfullscreen></iframe>", $youtube_src);
@@ -37,7 +37,7 @@
 					<?php if( $isyoutube ) { ?>
 						<?php echo $youtube_frame; ?>
 					<?php } else { ?>
-						<div class="image_full picture" style="<?php echo 'background-image: url('.Data::getValue( $viewdict, 'featured_imagepath' ).');'; ?>">
+						<div class="image_full picture" style="<?php echo 'background-image: url('.Data::getValue( $viewdict, 'imagepath' ).');'; ?>">
 							<label class="image_full title"><?php echo Data::getValue( $viewdict, 'title' ) ?></label>
 						</div>
 					<?php } ?>

@@ -10,7 +10,7 @@ namespace Reusables;
 
 
 	Views::setParams( 
-		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "cellindex", "description", "celldate", "celltype", "slug", "index", "featured_imagepath", "title", "html_text" ],
+		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "cellindex", "description", "celldate", "celltype", "slug", "index", "imagepath", "title", "html_text" ],
 		[],
 		$identifier
 	);
@@ -28,11 +28,11 @@ namespace Reusables;
 
 <div class="viewtype_cell imagetext_inline main <?php echo $identifier ?> index_<?php echo $cellindex ?> <?php if($isfeatured){ echo "featured"; } ?> <?php if($mediatype=="youtube" || $mediatype=="podcast"){ echo Data::getValue( $viewdict, 'mediatype' ); } ?>" id="<?php echo Data::getValue( $viewdict, 'index' ) ?>">
 		<a href="<?php echo $linkpath; ?>">
-			<div class="imagetext_inline picture" style="background-color: #333333; <?php if( Data::getValue( $viewdict, 'featured_imagepath' ) ){ echo 'background-image: url('.Data::getValue( $viewdict, 'featured_imagepath' ).');'; } ?>">
+			<div class="imagetext_inline picture" style="background-color: #333333; <?php if( Data::getValue( $viewdict, 'imagepath' ) ){ echo 'background-image: url('.Data::getValue( $viewdict, 'imagepath' ).');'; } ?>">
 				<?php if( $mediatype ){ ?>
 					<video width="100%" height="auto" autoplay loop>
-					  <source src="<?php echo Data::getValue( $viewdict, 'featured_imagepath' ) ?>" type="video/mp4">
-					  <source src="<?php echo Data::getValue( $viewdict, 'featured_imagepath' ) ?>" type="video/ogg">
+					  <source src="<?php echo Data::getValue( $viewdict, 'imagepath' ) ?>" type="video/mp4">
+					  <source src="<?php echo Data::getValue( $viewdict, 'imagepath' ) ?>" type="video/ogg">
 					Your browser does not support the video tag.
 					</video>
 				<?php } ?>
