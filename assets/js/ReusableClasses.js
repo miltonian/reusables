@@ -212,7 +212,7 @@ var editingon = false
 
 		}
 
-		addAction( button, editingfunctions, index, dataarray=null, view=null, e, viewoptions=null )
+		addAction( button, editingfunctions, index, dataarray=null, view=null, e, viewoptions=null, formviewoptions=null )
 		{
 
 			// index is the button's index, not the cell's
@@ -249,6 +249,7 @@ var editingon = false
 				// window.open( linkpath );
 			}else if( type == "modal" ){
 				e.preventDefault();
+
 				var cellindex = null;
 				if( view ){ 
 					// theid=view.id 
@@ -269,6 +270,29 @@ var editingon = false
 					}
 				}else{
 					$('.' + identifier + '_modalbackground .' + ' .' + button[type]['parentclass']).css({'display': 'inline-block'});
+				}
+				if( typeof viewoptions['modal_type'] !== 'undefined' ) {
+					if( viewoptions['modal_type'] == "table" ) {
+						let thelinkobject = $(view).find('a' )
+					// alert(JSON.stringify(dataarray['featured_section']['value'][cellindex]))
+					var thisdict = dataarray['featured_section']['value'][cellindex]
+						var postid = thisdict['id']
+						var cellname = formviewoptions['cellname']
+						if( typeof cellname === 'undefined' ) {
+							cellname = 'imagetext_full'
+						}
+						var formtable = Reusable.getTableFromCell( view ) + "_form"
+						// alert(JSON.stringify($('div.viewtype_cell.imagetext_full.main.featured_section_form_cell_0.index_0').find('a').attr('href')))
+						// alert(JSON.stringify( $('.' + formtable + ' .viewtype_cell.' + cellname).find('a').attr('href') ))
+						// alert(JSON.stringify(cellname))
+						// var theurl = $(view).find('a').attr('href')
+						$('.' + formtable + ' .viewtype_cell.' + cellname).click(function(){
+							var theurl = $(this).find('a').attr('href')
+							theurl = theurl.replace("[[FEATURED_ID]]", postid )
+							$(this).find('a').attr({'href': theurl})
+							window.location.href = theurl
+						})
+					}
 				}
 			}else if( type == "dropdown" ){
 				e.preventDefault();
@@ -302,10 +326,24 @@ var editingon = false
 					var foundclass = classes[i].split("_")
 					var theindex = foundclass[((foundclass.length)-1)]
 					// alert( "index is: " + theindex )
+					break
 				}
 			}
 			return theindex
 
+		}
+
+		getTableFromCell( cell )
+		{
+			var classesstring = $(cell).attr('class')
+			var classes = classesstring.split(" ")
+			for (var i = 0; i < classes.length ; i++) {
+				if (classes[i].indexOf("_cell_") >= 0) {
+					var theclass = classes[i].split('_cell_')[0]
+					break
+				}
+			}
+			return theclass
 		}
 
 

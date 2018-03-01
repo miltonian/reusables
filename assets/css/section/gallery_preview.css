@@ -1,0 +1,6 @@
+.viewtype_section.gallery_preview.main { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; }
+
+.gallery_preview.title_container { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; text-align: center; height: 20px; margin-bottom: 20px; }
+.gallery_preview.title { display: inline-block; position: relative; margin: 0; padding: 0 10px; text-align: center; background-color: white; }
+.gallery_preview.title_container .gallery_preview.line { display: inline-block; position: absolute; margin: 0; padding: 0; top: 50%; transform: translateY(-50%); background-color: rgba(153, 153, 153, 0.26); height: 1px; left: 0; width: 100%; }
+.gallery_preview.image { display: inline-block; position: relative; margin: 0; padding: 0; float: left; width: 33.33%; padding-bottom: 33.33%; outline: 3px solid white; background-position: center; background-size: cover; }
