@@ -54,6 +54,7 @@ class Views {
 			if( !isset($viewoptions["insertonly"] ) ) { $viewoptions["insertonly"] = false; }
 			if( !isset($viewoptions["editable_dynamic"] ) ) { $viewoptions["editable_dynamic"] = false; }
 			if( !isset($viewoptions["insertonly_dynamic"] ) ) { $viewoptions["insertonly_dynamic"] = false; }
+			if( !isset($viewoptions["modal_table"] ) ) { $viewoptions["modal_table"] = false; }
 			if( $viewoptions["editable"] == true || $viewoptions["insertonly"] == true || $viewoptions["editable_dynamic"] == true || $viewoptions["insertonly_dynamic"] == true ) {
 
 				$viewdata = Data::retrieveDataWithID( $identifier );
@@ -96,14 +97,29 @@ class Views {
 						Data::addData( $viewdata, $identifier . "_form" );
 					}
 				}
-
-				$form_dict = [
-					"file"=>"smartform_inmodal",
-					"identifier"=>$identifier . "_form",
-					"viewtype"=>"section",
-					"tablenames"=>[],
-					"children"=>[]
-				];
+				if( $viewoptions["modal_table"] == true ) {
+					if( !isset($viewoptions["modal_table_array"]) ) {
+						exit( "missing modal_table_array" );
+					} 
+					Data::addOption( "/functions/change_featuredpost?featured_id=[[FEATURED_ID]]&post_id=", "pre_slug", $identifier . "_form" );
+					Data::addOption( ["id"=>"slug"], "convert_keys", $identifier . "_form" );
+					Data::addOption( "table", "modal_type", $identifier );
+					$form_dict = [
+						"file"=>"table",
+						"identifier"=>$identifier . "_form",
+						"viewtype"=>"modal",
+						"tablenames"=>[],
+						"children"=>[]
+					];
+				} else {
+					$form_dict = [
+						"file"=>"smartform_inmodal",
+						"identifier"=>$identifier . "_form",
+						"viewtype"=>"section",
+						"tablenames"=>[],
+						"children"=>[]
+					];
+				}
 				array_push( self::$bufferedviews, $form_dict );
 
 			}

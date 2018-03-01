@@ -58,7 +58,7 @@ namespace Reusables;
 				$postoptions['pre_slug'] = Data::getValue( $viewoptions, 'pre_slug' );
 				$postoptions['type'] = Data::getValue( $viewoptions, 'type' );
 				$postoptions['fulldesc'] = Data::getValue( $viewoptions, 'fulldesc' );
-
+				$postoptions['modal_type'] = Data::getValue( $viewoptions, 'modal_type' );
 				if( Data::getValue( $viewoptions, 'modal' ) != "" ) {
 					$postoptions['modal'] = Data::getValue( $viewoptions, 'modal' );
 				}

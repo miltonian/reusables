@@ -329,7 +329,7 @@ if($multiple_updates){
 		$viewdict = Data::retrieveDataWithID( $identifier );
 		$viewoptions = Data::retrieveOptionsWithID( $identifier );
 
-		// exit( json_encode( $fullviewdict ) );
+		// echo " console.log( JSON.stringify( 'table: " . json_encode( $tableviewoptions ) . "' ) ); ";
 
 		echo 'var thismodalclass = "";';
 		echo 'var celltype = ' . json_encode( $celltype ) . ';';
@@ -357,6 +357,10 @@ if($multiple_updates){
 		echo " if( Reusable.isEditing() ) { ";
 		echo 'var viewdict = ' . json_encode($viewdict) . ';
 		var viewoptions = ' . json_encode( $viewoptions ) . ';';
+		$formid = substr($identifier, 0, strpos($identifier, "_cell_")) . "_form";
+		$formviewoptions = Data::retrieveOptionsWithID($formid);
+		echo '
+		var formviewoptions = ' . json_encode( $formviewoptions ) . ';';
 			if( $celltype == "modal" ) {
 				echo 'thismodalclass = new ' . $viewoptions['modal']['modalclass'] . 'Classes();';
 				echo 'var dataarray = ' . json_encode( $fullviewdict ) . ';';
@@ -370,7 +374,7 @@ if($multiple_updates){
 				if( typeof dataarray === "undefined" ) { 
 					dataarray = []
 				}
-				Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );
+				Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions, formviewoptions );
 			}else if( celltype == "attached" ){
 				e.preventDefault();
 				dataarray = ' . json_encode( $fullviewdict ) . ';
