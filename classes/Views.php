@@ -92,15 +92,18 @@ class Views {
 					}
 					Form::makeDynamicInsertOnly( $viewoptions["featured_content_id"], $identifier . "_form", $user_id );
 				} else{
+					if( $viewoptions["modal_table"] == true ) {
+						if( !isset($viewoptions["modal_table_array"]) ) {
+							exit( "missing modal_table_array" );
+						} 
+						Data::addData( $viewoptions['modal_table_array'], $identifier . "_form" );
+					}
 					$formdata = Data::retrieveDataWithID( $identifier . "_form" );
 					if( !isset( $formdata ) ) {
 						Data::addData( $viewdata, $identifier . "_form" );
 					}
 				}
 				if( $viewoptions["modal_table"] == true ) {
-					if( !isset($viewoptions["modal_table_array"]) ) {
-						exit( "missing modal_table_array" );
-					} 
 					Data::addOption( "/functions/change_featuredpost?featured_id=[[FEATURED_ID]]&post_id=", "pre_slug", $identifier . "_form" );
 					Data::addOption( ["id"=>"slug"], "convert_keys", $identifier . "_form" );
 					Data::addOption( "table", "modal_type", $identifier );
