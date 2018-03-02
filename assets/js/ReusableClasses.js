@@ -212,7 +212,7 @@ var editingon = false
 
 		}
 
-		addAction( button, editingfunctions, index, dataarray=null, view=null, e, viewoptions=null, formviewoptions=null )
+		addAction( button, editingfunctions, index, dataarray=null, view=null, e, viewoptions=null, formviewoptions=null, identifier="" )
 		{
 
 			// index is the button's index, not the cell's
@@ -271,24 +271,54 @@ var editingon = false
 				}else{
 					$('.' + identifier + '_modalbackground .' + ' .' + button[type]['parentclass']).css({'display': 'inline-block'});
 				}
+
 				if( typeof viewoptions['modal_type'] !== 'undefined' ) {
 					if( viewoptions['modal_type'] == "table" ) {
 						let thelinkobject = $(view).find('a' )
-					// alert(JSON.stringify(dataarray['featured_section']['value'][cellindex]))
-					var thisdict = dataarray['featured_section']['value'][cellindex]
+						// alert(JSON.stringify(dataarray['featured_section']['value'][cellindex]))
+						var thisdict = []
+						var thekey = ""
+						$.each(dataarray, function(key, value) {
+						      thekey = key
+						      return false;
+						});
+						if( typeof dataarray['value'] === 'undefined' ) {
+							thisdict = dataarray[thekey]['value'][cellindex]
+						} else {
+							thisdict = dataarray['value'][cellindex]
+						}
+
+						// thisdict = dataarray['featured_section']['value'][cellindex]
+						var thetable = Reusable.getTableFromCell( view )
+						var iscell = false
+						if( typeof thetable === 'undefined' ) {
+							iscell = false
+						} else {
+							iscell = true
+						}
+
+						var formtable = ""
+						if( iscell ) {
+							formtable = Reusable.getTableFromCell( view ) + "_form"
+						} else {
+							formtable = identifier
+						}
+
 						var postid = thisdict['id']
 						var cellname = formviewoptions['cellname']
 						if( typeof cellname === 'undefined' ) {
 							cellname = 'imagetext_full'
 						}
-						var formtable = Reusable.getTableFromCell( view ) + "_form"
-						// alert(JSON.stringify($('div.viewtype_cell.imagetext_full.main.featured_section_form_cell_0.index_0').find('a').attr('href')))
-						// alert(JSON.stringify( $('.' + formtable + ' .viewtype_cell.' + cellname).find('a').attr('href') ))
-						// alert(JSON.stringify(cellname))
 						// var theurl = $(view).find('a').attr('href')
 						$('.' + formtable + ' .viewtype_cell.' + cellname).click(function(){
 							var theurl = $(this).find('a').attr('href')
-							theurl = theurl.replace("[[FEATURED_ID]]", postid )
+							var goto_link = ""
+							if( typeof formviewoptions['goto'] != 'undefined' ) {
+								goto_link = formviewoptions['goto']
+								theurl = theurl.replace("[[FEATURED_ID]]", postid + "&goto=" + goto_link )
+							} else {
+								theurl = theurl.replace("[[FEATURED_ID]]", postid )
+							}
 							$(this).find('a').attr({'href': theurl})
 							window.location.href = theurl
 						})
