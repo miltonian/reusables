@@ -428,14 +428,20 @@ if($multiple_updates){
 			var dataarray = " . json_encode( $fullviewdict ) . ";";
 		}
 		echo "
-		var optiontype = " . json_encode($optiontype) . ";
+		var optiontype = " . json_encode($optiontype) . ";";
+		$formid = $identifier . "_form";
+		$formviewoptions = Data::retrieveOptionsWithID($formid);
+		echo '
+		var formviewoptions = ' . json_encode( $formviewoptions ) . ";
+		var identifier = " . json_encode( $identifier ) . ";
 
 		if( optiontype == 'modal' || optiontype == 'dropdown' ) { 
 			e.preventDefault();
 			if( typeof dataarray === 'undefined' ) { 
 				dataarray = []
 			}
-			Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );
+
+			Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions, formviewoptions, identifier );
 		}";
 
 		ReusableClasses::getEditingFunctionsJS( $viewoptions ) ;

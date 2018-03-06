@@ -103,6 +103,14 @@ class Views {
 						Data::addData( $viewdata, $identifier . "_form" );
 					}
 				}
+				$formoptions = Data::retrieveOptionsWithID($identifier . "_form");
+					$goto = Data::getValue( $formoptions, "goto" );
+					// exit( json_encode( $_SERVER ) );
+					if( $goto == "" ) {
+						$redirecturl = "/";
+						if( isset($_SERVER['REDIRECT_URL']) ){ $redirecturl = $_SERVER['REDIRECT_URL']; }
+						Data::addOption( $redirecturl, "goto", $identifier . "_form" );
+					}
 				if( $viewoptions["modal_table"] == true ) {
 					Data::addOption( "/functions/change_featuredpost?featured_id=[[FEATURED_ID]]&post_id=", "pre_slug", $identifier . "_form" );
 					Data::addOption( ["id"=>"slug"], "convert_keys", $identifier . "_form" );
