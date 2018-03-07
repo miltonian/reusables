@@ -23,6 +23,8 @@ $containsp = false;
 
 $lastinsertid = false;
 
+$fieldarray = [];
+
 if(isset($_POST[ 'fieldarray' ])){ $fieldarray = $_POST[ 'fieldarray' ]; $containsp=true; }
 if(isset($_POST[ 'fieldimage' ])){ $fieldimages = $_POST[ 'fieldimage' ]; $containsp=true; }
 if(!$containsp){ exit("missing parameters"); }
@@ -186,7 +188,7 @@ break;
 }
 
 // exit( json_encode( $fieldarray ) );;
-if (isset($fieldarray)) {
+if ( sizeof($fieldarray) > 0 ) {
 	// exit("1");
 	$indexes = array_keys( $fieldarray );
 	$didfind = false;
