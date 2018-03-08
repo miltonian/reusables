@@ -399,9 +399,10 @@ if($multiple_updates){
 		echo '});';
 	}
 
-	public static function makeViewEditing( $viewdict, $viewoptions, $identifier ) {
+	public static function makeViewEditing( $viewdict, $viewoptions, $identifier, $alwayseditable=false ) {
 
-		echo " if( Reusable.isEditing() ) { ";
+		echo " let alwayseditable = " . json_encode( $alwayseditable ) . "; ";
+		echo " if( Reusable.isEditing() || alwayseditable ) { ";
 
 		$fullarray = Data::getFullArray( $viewdict );
 		if( isset( $viewdict[$identifier]['value'] ) ) {
@@ -549,12 +550,12 @@ if($multiple_updates){
 
 	}
 
-	public static function setUpEditingForSection( $viewdict, $viewoptions, $identifier )
+	public static function setUpEditingForSection( $viewdict, $viewoptions, $identifier, $alwayseditable=false )
 	{
 
 
 		// echo " <script> ";
-			ReusableClasses::makeViewEditing( $viewdict, $viewoptions, $identifier );
+			ReusableClasses::makeViewEditing( $viewdict, $viewoptions, $identifier, $alwayseditable );
 		// echo " </script> ";
 
 		// $dict = [

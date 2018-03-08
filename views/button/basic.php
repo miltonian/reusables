@@ -49,7 +49,7 @@ if( isset( $viewdict[$identifier]['value'] ) ) {
 
 	$('.<?php echo $identifier ?> .basic.button').click(function(e){
 		<?php
-			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier, true );
 		?>
 	})
 

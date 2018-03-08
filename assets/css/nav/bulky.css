@@ -25,3 +25,26 @@
 	.bulky.search-container { display: inline-block; }
 	.bulky.tagline { display: inline-block; }
 }
+
+
+.bulky.socialpages_button { position: relative; display: inline-block; margin: 0; padding: 0; }
+.bulky.socialpages_button .social-icon { position: relative; display: inline-block; margin: 0px 5px; padding: 0; height: 40px; width: 40px; border-radius: 50%; border: 1px solid #cecece; background-color: white; float: left; cursor: pointer; -webkit-filter: grayscale(100%); filter: grayscale(100%); background-size: 60%; background-position: center; background-repeat: no-repeat; }
+.bulky.socialpages_button .social-icon:hover { -webkit-filter: grayscale(0%); filter: grayscale(0%); }
+
+.bulky.socialpages_button a { display: inline-block; }
+div.bulky.socialpages a { text-decoration: none; }
+.bulky.socialpages_button .social-icon.facebook { background-image: url('/vendor/miltonian/reusables/assets/images/icons/facebook-icon.png'); }
+.bulky.socialpages_button .social-icon.twitter { background-image: url('/vendor/miltonian/reusables/assets/images/icons/twitter-icon.png'); }
+.bulky.socialpages_button .social-icon.instagram { background-image: url('/vendor/miltonian/reusables/assets/images/icons/insta-icon.png'); }
+	/*.bulky.socialpages_button .social-icon:hover { border: 2px solid #3b5998 }*/
+	.bulky.socialpages_button .social-icon.facebook:hover { border: 2px solid #3b5998 }
+	.bulky.socialpages_button .social-icon.twitter:hover { border: 2px solid #4099FF }
+	.bulky.socialpages_button .social-icon.instagram:hover { border: 2px solid #8a3ab9 }
+
+
+
+
+
+
+
+

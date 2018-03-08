@@ -20,12 +20,18 @@ if( $pages == "" ) {
 }
 $menudict = [ "pages" => $pages ];
 
-$categories = Data::getValue( $viewdict, 'categories' );
+$categories = Data::getValue( $viewoptions, 'categories' );
 
 Data::addData( $menudict, "menuview1" );
 echo Menu::make( "menuview_1", "menuview1");
 
 
+
+
+$socialbuttons = Data::getValue( $viewoptions, 'socialbuttons' );
+if ( $socialbuttons == "" ) {
+	$socialbuttons = [];
+}
 
 
 ?>
@@ -37,7 +43,36 @@ echo Menu::make( "menuview_1", "menuview1");
 	<div class="bulky container">
 		<div class="bulky main-content">
 			<div class="bulky socialbtns-container">
-				<?php echo Sharing::make("socialpage_circles", "socialpages"); ?>
+				<div class="bulky socialpages">
+					<?php $i=0; ?>
+					<?php foreach ($socialbuttons as $s) { ?>
+						<?php 
+							$imagepath = Data::getValue( $s, 'imagepath' );
+							if( $imagepath != "" ) { ?>
+								<style>
+									.bulky.socialpages_button.index_<?php echo $i ?> {
+										background-image: url('<?php echo $imagepath ?>');
+									}
+								</style>
+						<?php } ?>
+						<a href="<?php echo Data::getValue( $s, 'link' ) ?>" >
+							<div class="bulky socialpages_button index_<?php echo $i ?>">
+								<img class="social-icon <?php echo Data::getValue( $s, 'classname' ) ?>">
+							</div>
+						</a>
+						<?php $i++; ?>
+					<?php } ?>
+					
+					<!-- <div class="bulky socialpages_button index_1">
+						<img class="social-icon twitter">
+					</div>
+					<div class="bulky socialpages_button index_2">
+						<img class="social-icon instagram">
+					</div> -->
+				</div>
+				<?php 
+				// Sharing::set("socialpage_circles", "socialpages"); 
+				?>
 			</div>
 			<a href="/">
 				<div class="bulky logo-div">
@@ -64,12 +99,14 @@ echo Menu::make( "menuview_1", "menuview1");
 				?>
 			</div>
 
+<?php $i=0; ?>
 			<?php if( $categories != "" ){ ?>
 				<div class='bulky categories-wrapper'>
 				<?php foreach ($categories as $c) { ?>
-					<a href="<?php echo '/'.$c['id'] . '/' . preg_replace('/\PL/u', '', $c['name']); ?>" 
-						id="<?php echo $c['id'] ?>" 
-						class="bulky category category-btn 1 sortorder_1 featuredsectionid_<?php echo $featuredsectionid ?>"><?php echo $c['name'] ?></a>
+					<a href="<?php echo Data::getValue( $c, 'link' ) ?>" 
+						 
+						class="bulky category category-btn 1 sortorder_1 featuredsectionid_<?php echo $featuredsectionid ?> index_<?php echo $i ?>"><?php echo $c['title'] ?></a>
+						<?php $i++; ?>
 				<?php } ?>
 
 				</div>
