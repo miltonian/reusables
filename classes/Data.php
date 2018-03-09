@@ -73,13 +73,13 @@ class Data {
 			$data = Data::retrieveDataWithID( $data );
 		}
 		
-		if ( !isset( self::$alldata[ $identifier ] ) ) {
+		// if ( !isset( self::$alldata[ $identifier ] ) ) {
 			$data['data_id'] = $identifier;
 			self::$alldata[ $identifier ] = $data;
 
-		}else{
-			exit( "Duplicate data id: '" . $identifier . "' entries. " );
-		}
+		// }else{
+			// exit( "Duplicate data id: '" . $identifier . "' entries. " );
+		// }
 
 		Views::addView( $identifier );
 
