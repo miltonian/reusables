@@ -23,7 +23,7 @@ if( $options == "" ) {
 <div class="viewtype_input <?php echo $identifier ?> checkbox">
 	<label style="margin-bottom: -5px; font-weight: 700; font-size: 11px"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
 
-		<input type="text" class="field_value" value="{[]}" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_value]">
+		<input type="hidden" class="field_value" value="{[]}" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_value]">
 
 		<div class="checkboxes_container" >
 			<?php $i=0; ?>
