@@ -159,13 +159,38 @@ class Views {
 
 			// echo $View->render();
 		}else{
-			// if( $identifier == "admin_insertview" ) {
-			// 	exit( json_encode( $file ) );
-			// }
 			ReusableClasses::addfile( $viewtype, $file );
 			$View = View::factory( 'reusables/views/' . $viewtype . '/' . $file );
 			$data = Data::retrieveDataWithID( $identifier );
 			$options = Data::retrieveOptionsWithID( $identifier );
+			if( $identifier == "program_form" ) {
+				if( isset($options['input_keys']) ) {
+					$input_keys = $options['input_keys'];
+					foreach ($input_keys as $key=>$value) {
+						if( is_array($value) ){
+							$field_value = "";
+							$arraykeys = array_keys($value);
+
+							foreach ($arraykeys as $ak) {
+								if( $ak == "field_value" ) {
+									$field_value = $value['field_value'];
+									if( isset( $data['value'] ) ) {
+										if( isset($data['value'][$key]) ) {
+											$data['value'][$key] = $field_value;
+										}
+									} else {
+										if( isset($data[$key]) ) {
+											$data[$key] = $field_value;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			
+			Data::addData( $data, $identifier );
 			$options = ReusableClasses::convertViewActions( $options );
 			
 			$View->set( 'viewdict', $data );
@@ -196,7 +221,6 @@ class Views {
 				$identifier = $dict["identifier"];
 				$tablenames = $dict["tablenames"];
 				$children = $dict["children"];
-				
 
 				echo Views::makeView( $file, $identifier, $viewtype, $tablenames, $children=[] );
 			}

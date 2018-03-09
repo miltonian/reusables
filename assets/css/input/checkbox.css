@@ -1,0 +1,2 @@
+.checkbox { display: inline-block; position: relative; margin: 0; padding: 0; width: 100%; text-align: left; }
+	.checkbox label { display: inline-block; position: relative; margin: 0; padding: 10px 0; width: calc(100% - 0px); font-size: 13px; font-weight: 500; }

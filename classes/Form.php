@@ -11,7 +11,7 @@ class Form {
 
 		Form::prepareInsertOnly( $tablename, $identifier );
 
-		Section::set( "smartform_inmodal", $identifier );
+		Section::place( "smartform_inmodal", $identifier );
 
 	}
 
