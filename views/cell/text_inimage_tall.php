@@ -7,6 +7,7 @@
 	
 	extract( Cell::prepareCell( $identifier ) );
 
+
 ?>
 
 <style>
@@ -18,7 +19,7 @@
 	<div class="text_inimage_tall container">
 		<div style="display: inline-block; width: 100%;">
 			<div>
-				<a href="<?php echo $linkpath ?>">
+				<a href="<?php echo $linkpath ?>" >
 					<div class="text_inimage_tall picture" style="<?php echo 'background-image: url('.Data::getValue( $viewdict, 'imagepath', $table_identifier ).');'; ?>; <?php if( $mediatype == "video" ){ echo 'padding-bottom: 0;';  } ?>)">
 						<?php if($mediatype == "video"){ ?>
 							<video width="100%" height="auto" autoplay loop>
@@ -33,10 +34,10 @@
 								<!-- <label class="grey-label">Today</label> -->
 								<label class="text_inimage_tall category"><?php echo Data::getValue( $viewdict, 'category', $table_identifier ) ?></label>
 								<br>
-								<a href="<?php echo $linkpath ?>">
+								<!-- <a href="<?php echo $linkpath ?>"> -->
 									<label class="text_inimage_tall title" style=""><?php echo Data::getValue( $viewdict, 'title', $table_identifier ); ?></label>
 
-								</a>
+								<!-- </a> -->
 								<br>
 								<label class="text_inimage_tall grey-label"><?php echo $description ?></label>
 							</div>
