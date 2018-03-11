@@ -16,6 +16,10 @@ class Menu {
 
 	public static function setincontainer( $file, $identifier )
 	{
+		Data::addInfo( 'Menu', 'viewtype', $identifier );
+		Data::addInfo( $file, 'file', $identifier );
+		Data::addInfo( $identifier, 'identifier', $identifier );
+
 		Views::addEditableParts( $identifier );
 		return Menu::make( $file, $identifier );
 	}

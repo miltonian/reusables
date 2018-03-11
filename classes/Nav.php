@@ -17,6 +17,10 @@ class Nav {
 
 	public static function setincontainer( $file, $identifier )
 	{
+		Data::addInfo( 'Nav', 'viewtype', $identifier );
+		Data::addInfo( $file, 'file', $identifier );
+		Data::addInfo( $identifier, 'identifier', $identifier );
+
 		Views::addEditableParts( $identifier );
 		return Nav::make( $file, $identifier );
 	}

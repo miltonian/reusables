@@ -17,6 +17,10 @@ class Header {
 
 	public static function setincontainer( $file, $identifier )
 	{
+		Data::addInfo( 'Header', 'viewtype', $identifier );
+		Data::addInfo( $file, 'file', $identifier );
+		Data::addInfo( $identifier, 'identifier', $identifier );
+
 		Views::addEditableParts( $identifier );
 		return Header::make( $file, $identifier );
 	}

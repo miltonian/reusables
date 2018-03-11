@@ -81,7 +81,6 @@ class Input {
 		// echo "<script> console.log( 'ASDF: '+JSON.stringify( ".json_encode( [$key, $type, $multiple_updates, $multipleupdate_i] ) ." ) ); </script>";
 		if( !$placeholder ){ $placeholder = ucfirst( $key ); }
 		if( !$labeltext ){ $labeltext = ucfirst( $key ); }
-
 		if( isset( $dict[$key]['data_id'] ) ){
 			$dataid = $dict[$key]['data_id'];
 		}else{
@@ -89,6 +88,10 @@ class Input {
 		}
 		
 		// exit( json_encode( Data::getValue( $dict['value'][0], $key ) ) );
+		if( (Data::getColName( ["data_id"=>$dataid, "key" => $key] )) == null ) {
+			return null;
+		}
+
 		$inputdict = [
 			"placeholder"=>$placeholder,
 			"labeltext"=>$labeltext,
@@ -171,7 +174,11 @@ class Input {
 		}
 
 		if( strpos( $key, "text") !== false || strpos($key, "desc") || strpos($key, "description") || strpos($key, "comment") || strpos($key, "snippet") ){
-			$type = "textarea";
+			if( strpos( $key, "html") !== false || strpos( $key, "html") !== false ) {
+				$type = "wysi";
+			} else {
+				$type = "textarea";
+			}
 		}else if( strpos( $key, "image" ) !== false ) {
 			$type = "file_image";
 		}else if( strpos( $key, "color" ) ) {
@@ -315,7 +322,6 @@ class Input {
 			$input_keys = array_keys($input_keys);
 		}
 
-
 		$multipleupdate_i = $i;
 		foreach ($input_keys as $ik) {
 
@@ -325,7 +331,6 @@ class Input {
 			if( isset( $input_keydicts[ $ik ]['labeltext'] ) ){ $labeltext = $input_keydicts[ $ik ]['labeltext']; }else{ $labeltext = null; }
 			if( isset( $input_keydicts[ $ik ]['type'] ) ){ $type = $input_keydicts[ $ik ]['type']; }else{ $type = null; }
 			if( isset( $input_keydicts[ $ik ]['options'] ) ){ $selectoptions = $input_keydicts[ $ik ]['options']; }else{ $selectoptions = ""; }
-
 
 			$thekey = $ik;
 			if( is_numeric( $ik ) ){ $thekey = $input_keydicts[$ik]; }
@@ -339,6 +344,7 @@ class Input {
 				ReusableClasses::setFormInputIndex( $identifier, $i );
 
 				$theinput = Input::fill( $data, $thekey, $i, $type, $placeholder, $labeltext, $identifier, $selectoptions, $multiple_updates, $multipleupdate_i );
+				
 				if( sizeof( $theinput ) == 2 ) {
 					array_push( 
 						$input_fields, 

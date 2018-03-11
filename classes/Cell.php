@@ -21,6 +21,10 @@ class Cell {
 
 	public static function setincontainer( $file, $identifier )
 	{
+		Data::addInfo( 'Cell', 'viewtype', $identifier );
+		Data::addInfo( $file, 'file', $identifier );
+		Data::addInfo( $identifier, 'identifier', $identifier );
+
 		Views::addEditableParts( $identifier );
 		return Cell::make( $file, $identifier );
 	}
@@ -54,12 +58,12 @@ class Cell {
 		}
 
 		if( !$isfulldesc ) {
-			$description = implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $data, 'html_text', $table_identifier ))), 0, 10) ) . "...";
+			$html_text = implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $data, 'html_text' ))), 0, 10) ) . "...";
 		}else{
-			$description = Data::getValue( $data, 'html_text', $table_identifier );
+			$html_text = Data::getValue( $data, 'html_text' );
 		}
-		if( $description == "..." ){
-			$description = "";
+		if( $html_text == "..." ){
+			$html_text = "";
 		}
 
 		$celldate = Data::getValue( $data, 'date' );
@@ -74,7 +78,7 @@ class Cell {
 			"linkpath" => $linkpath,
 			"mediatype" => $mediatype,
 			"cellindex" => $cellindex,
-			"description" => $description,
+			"html_text" => $html_text,
 			"celldate" => $celldate,
 			"celltype" => $celltype,
 			"table_identifier" => $table_identifier

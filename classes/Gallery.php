@@ -16,6 +16,10 @@ class Gallery {
 
 	public static function setincontainer( $file, $identifier )
 	{
+		Data::addInfo( 'Gallery', 'viewtype', $identifier );
+		Data::addInfo( $file, 'file', $identifier );
+		Data::addInfo( $identifier, 'identifier', $identifier );
+
 		Views::addEditableParts( $identifier );
 		return Gallery::make( $file, $identifier );
 	}

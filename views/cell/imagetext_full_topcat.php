@@ -32,7 +32,7 @@
 
 						</a>
 						<br>
-						<label class="imagetext_full_topcat grey-label"><?php echo $description ?></label>
+						<label class="imagetext_full_topcat grey-label"><?php echo Data::getValue( $html_text ) ?></label>
 					</div>
 				</div>
 			</div>

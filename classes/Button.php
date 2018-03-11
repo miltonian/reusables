@@ -16,6 +16,10 @@ class Button {
 
 	public static function setincontainer( $file, $identifier )
 	{
+		Data::addInfo( 'Button', 'viewtype', $identifier );
+		Data::addInfo( $file, 'file', $identifier );
+		Data::addInfo( $identifier, 'identifier', $identifier );
+
 		Views::addEditableParts( $identifier );
 		return Button::make( $file, $identifier );
 	}

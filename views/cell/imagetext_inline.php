@@ -10,7 +10,7 @@ namespace Reusables;
 
 
 	Views::setParams( 
-		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "cellindex", "description", "celldate", "celltype", "slug", "index", "imagepath", "title", "html_text" ],
+		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "cellindex", "html_text", "celldate", "celltype", "slug", "index", "imagepath", "title", "html_text" ],
 		[],
 		$identifier
 	);
@@ -44,7 +44,7 @@ namespace Reusables;
 					<h2 class="imagetext_inline" id="title" style=""><?php if(isset($viewdict['title'])){ echo Data::getValue( $viewdict, 'title' ); } ?></h2>
 				</a>
 				<br>
-				<label class="imagetext_inline" id="desc"><?php echo $description ?></label>
+				<label class="imagetext_inline" id="desc"><?php echo Data::getValue( $html_text ) ?></label>
 			</div>
 		</div>
 </div>

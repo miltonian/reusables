@@ -23,8 +23,8 @@
 					<div class="text_inimage_tall picture" style="<?php echo 'background-image: url('.Data::getValue( $viewdict, 'imagepath', $table_identifier ).');'; ?>; <?php if( $mediatype == "video" ){ echo 'padding-bottom: 0;';  } ?>)">
 						<?php if($mediatype == "video"){ ?>
 							<video width="100%" height="auto" autoplay loop>
-							  <source src="<?php echo Data::getValue( $viewdict, 'featured_imagepath', $table_identifier ) ?>" type="video/mp4">
-							  <source src="<?php echo Data::getValue( $viewdict, 'featured_imagepath', $table_identifier ) ?>" type="video/ogg">
+							  <source src="<?php echo Data::getValue( $viewdict, 'imagepath', $table_identifier ) ?>" type="video/mp4">
+							  <source src="<?php echo Data::getValue( $viewdict, 'imagepath', $table_identifier ) ?>" type="video/ogg">
 							Your browser does not support the video tag.
 							</video>
 						<?php } ?>
@@ -39,7 +39,7 @@
 
 								<!-- </a> -->
 								<br>
-								<label class="text_inimage_tall grey-label"><?php echo $description ?></label>
+								<label class="text_inimage_tall grey-label"><?php echo Data::getValue( $html_text ) ?></label>
 							</div>
 						</div>
 					</div>

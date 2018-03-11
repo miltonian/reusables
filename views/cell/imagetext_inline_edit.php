@@ -22,7 +22,7 @@ $cellindex = Data::getValue( $viewdict, 'index' );
 $viewoptions = ReusableClasses::convertViewActions( $viewoptions );
 
 	Views::setParams( 
-		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "index", "description", "celldate", "celltype", "slug", "actions" ], 
+		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "index", "html_text", "celldate", "celltype", "slug", "actions" ], 
 		[],
 		$identifier
 	);

@@ -3,7 +3,7 @@
 	namespace Reusables;
 
 	Views::setParams( 
-		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "cellindex", "description", "celldate", "celltype", "imagepath", "title", "slug" ],
+		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "cellindex", "html_text", "celldate", "celltype", "imagepath", "title", "slug" ],
 		[],
 		$identifier
 	);
