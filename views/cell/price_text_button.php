@@ -5,7 +5,7 @@
 		extract( Cell::prepareCell( $identifier ) );
 
 	Views::setParams( 
-		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "cellindex", "description", "celldate", "celltype", "slug", "price", "title", "desc" ],
+		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "cellindex", "html_text", "celldate", "celltype", "slug", "price", "title", "desc" ],
 		[],
 		$identifier
 	);

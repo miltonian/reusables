@@ -21,7 +21,7 @@ namespace Reusables;
 	// exit( json_encode( Data::getValue( $viewdict, 'needed' ) ) );
 
 	Views::setParams( 
-		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "index", "description", "celldate", "celltype", "slug" ], 
+		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "index", "html_text", "celldate", "celltype", "slug" ], 
 		[],
 		$identifier
 	);

@@ -16,9 +16,9 @@ namespace Reusables;
 	if( isset($viewdict['editing']) ){ $isediting=1; }else{ $isediting=0; }
 	
 
-	$linkpath = Data::getValue( $viewoptions, 'pre_slug' ) . Data::getValue( $viewdict, 'slug' );
-	if( $linkpath == "" ) {
-		$linkpath = "#";
+	$slug = Data::getValue( $viewoptions, 'pre_slug' ) . Data::getValue( $viewdict, 'slug' );
+	if( $slug == "" ) {
+		$slug = "#";
 	}
 	$optiontype = Data::getValue( $viewoptions, 'type' );
 	$fullarray = Data::getFullArray( $viewdict );
@@ -39,7 +39,7 @@ namespace Reusables;
 			.hero:hover { opacity: 0.8; }
 	<?php } ?>
 		.hero.link { position: absolute; display: inline-block; margin: 0; padding: 0; width: 100%; height: 100%; }
-	<?php if( $linkpath == "" && $optiontype == "") { ?>
+	<?php if( $slug == "" && $optiontype == "") { ?>
 		/*.hero.link { display: none; }*/
 	<?php } ?>
 </style>
@@ -53,7 +53,7 @@ namespace Reusables;
 				<h3 class="hero" id="subtitle"><?php echo Data::getValue( $viewdict, 'subtitle' ) ?></h3>
 			</div>
 		</div>
-	<a class="hero link" href="<?php echo $linkpath ?>"></a>
+	<a class="hero link" href="<?php echo Data::getValue( $slug ) ?>"></a>
 </div>
 
 <script>

@@ -16,6 +16,10 @@ class Table {
 
 	public static function setincontainer( $file, $identifier )
 	{
+		Data::addInfo( 'Table', 'viewtype', $identifier );
+		Data::addInfo( $file, 'file', $identifier );
+		Data::addInfo( $identifier, 'identifier', $identifier );
+
 		Views::addEditableParts( $identifier );
 		return Table::make( $file, $identifier );
 	}

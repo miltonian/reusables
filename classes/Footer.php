@@ -16,6 +16,10 @@ class Footer {
 
 	public static function setincontainer( $file, $identifier )
 	{
+		Data::addInfo( 'Footer', 'viewtype', $identifier );
+		Data::addInfo( $file, 'file', $identifier );
+		Data::addInfo( $identifier, 'identifier', $identifier );
+
 		Views::addEditableParts( $identifier );
 		return Footer::make( $file, $identifier );
 	}

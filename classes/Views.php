@@ -48,6 +48,8 @@ class Views {
 		}
 
 		$viewoptions = Data::retrieveOptionsWithID( $identifier );
+		// $viewinfo = Data::retrieveInfoWithID( $identifier );
+		$viewinfo = Data::retrieveInfoWithID( $identifier );
 
 		if( isset( $viewoptions["editable"] ) || isset( $viewoptions["insertonly"] ) || isset( $viewoptions["editable_dynamic"] ) || isset( $viewoptions["insertonly_dynamic"] ) ) {
 			if( !isset($viewoptions["editable"] ) ) { $viewoptions["editable"] = false; }
@@ -68,6 +70,22 @@ class Views {
 					}
 					$tablename = Data::getValue( $viewoptions, "tb" );
 					Form::prepareInsertOnly( $tablename, $identifier . "_form" );
+					$formoptions = Data::retrieveOptionsWithID( $identifier . "_form" );
+					if( !isset($formoptions['input_keys']) ) {
+
+						$viewtype = $viewinfo['viewtype'];
+						$filename = $viewinfo['file'];
+						$input_keys = Views::getViewInputs( $viewtype, $filename );
+						if( $viewtype == "Table" ) {
+							$viewtype = "Cell";
+							$filename = $viewoptions['cellname'];
+							if( $filename == "" ) {
+								$filename = "imagetext_full";
+							}
+							$input_keys = Views::getViewInputs( $viewtype, $filename );
+						}
+						Data::addOption( $input_keys, "input_keys", $identifier . "_form" );
+					}
 					// Reusables\Form::makeInsertOnly( "customdata_params", "main_button_form" );
 				} else if( $viewoptions["editable_dynamic"] == true ) {
 					if( !isset( $viewoptions["featured_content_id"] ) ) {
@@ -102,13 +120,35 @@ class Views {
 					if( !isset( $formdata ) ) {
 						Data::addData( $viewdata, $identifier . "_form" );
 					}
+
+					$formoptions = Data::retrieveOptionsWithID( $identifier . "_form" );
+					if( !isset($formoptions['input_keys']) ) {
+
+						$viewtype = $viewinfo['viewtype'];
+						$filename = $viewinfo['file'];
+						$input_keys = Views::getViewInputs( $viewtype, $filename );
+						if( $viewtype == "Table" ) {
+							$viewtype = "Cell";
+							if( !isset( $viewoptions['cellname'] ) ) {
+								$viewoptions['cellname'] = "";
+							}
+							$filename = $viewoptions['cellname'];
+							if( $filename == "" ) {
+								$filename = "imagetext_full";
+							}
+							$input_keys = Views::getViewInputs( $viewtype, $filename );
+						}
+						Data::addOption( $input_keys, "input_keys", $identifier . "_form" );
+					}
+					
+					// exit(json_encode([$input_keys]));
 				}
 				$formoptions = Data::retrieveOptionsWithID($identifier . "_form");
 					$goto = Data::getValue( $formoptions, "goto" );
-					// exit( json_encode( $_SERVER ) );
 					if( $goto == "" ) {
 						$redirecturl = "/";
 						if( isset($_SERVER['REDIRECT_URL']) ){ $redirecturl = $_SERVER['REDIRECT_URL']; }
+						// exit( json_encode( $redirecturl ) );
 						Data::addOption( $redirecturl, "goto", $identifier . "_form" );
 					}
 				if( $viewoptions["modal_table"] == true ) {
@@ -139,6 +179,9 @@ class Views {
 
 	public static function makeView( $file, $identifier, $viewtype, $tablenames=[], $children=[] )
 	{
+
+		Views::analyzeView( $identifier );
+
 		if( $viewtype == "wrapper" ) {
 
 			ReusableClasses::addfile( "wrapper", "wrapper_1" );
@@ -267,11 +310,10 @@ class Views {
 
 	public static function setParams( $dataparams, $optionparams, $identifier, $numofrows=0 )
 	{
-
 		self::$viewparams[$identifier]['data'] = $dataparams;
 		self::$viewparams[$identifier]['options'] = $optionparams;
 		self::$viewparams[$identifier]['numofrows'] = $numofrows;
-		Views::analyzeView( $identifier );
+		// Views::analyzeView( $identifier );
 
 	}
 	
@@ -316,8 +358,18 @@ class Views {
 		if( self::$analyze ) {
 				$data = Data::retrieveDataWithID( $identifier );
 				$options = Data::retrieveOptionsWithID( $identifier );
-				$dataparams = Views::getDataParams( $identifier );
-
+				$info = Data::retrieveInfoWithID( $identifier );
+				if( !$info ) {
+					return;
+				}
+				// $dataparams = Views::getDataParams( $identifier );
+				$viewtype = $info['viewtype'];
+				$filename = $info['file'];
+				if( $filename == "smartform" || $filename == "smartform_inmodal" || $viewtype == "Modal" ) {
+return;
+				}
+				$dataparams = Views::getViewInputs( $viewtype, $filename );
+// exit( json_encode( [$dataparams, $viewtype, $filename, $options, $identifier] ) );
 				if( $data && $dataparams ) {
 					// ready to start analyzing
 					if( isset( $data['value'] ) ) {
@@ -360,17 +412,21 @@ class Views {
 			}
 		}else if( isset( $data[0][$paramkey] ) && !isset( $data[0][$datakey] ) ) {
 			if( isset( $dataparams[0] ) ) {
-				if( !is_int( array_search($paramkey, $dataparams[0]) ) && is_int( array_search($datakey, $dataparams[0]) ) ) {
-					// suggest convert keys [imagepath=>featured_imagepath]
-					// exit( json_encode( $identifier ) );
-					Data::addOption( [$paramkey=>$datakey], "convert_keys", $identifier );
+				if( is_array($dataparams[0]) ) {
+					if( !is_int( array_search($paramkey, $dataparams[0]) ) && is_int( array_search($datakey, $dataparams[0]) ) ) {
+						// suggest convert keys [imagepath=>featured_imagepath]
+						// exit( json_encode( $identifier ) );
+						Data::addOption( [$paramkey=>$datakey], "convert_keys", $identifier );
+					}
 				}
 			}
 		}else if( !isset( $data[0][$paramkey] ) && isset( $data[0][$datakey] ) ) {
 			if( isset( $dataparams[0] ) ) {
-				if( is_int( array_search($paramkey, $dataparams[0]) ) && !is_int( array_search($datakey, $dataparams[0]) ) ) {
-					// suggest convert keys [featured_imagepath=>imagepath]
-					Data::addOption( [$datakey=>$paramkey], "convert_keys", $identifier );
+				if( is_array($dataparams[0]) ) {
+					if( is_int( array_search($paramkey, $dataparams[0]) ) && !is_int( array_search($datakey, $dataparams[0]) ) ) {
+						// suggest convert keys [featured_imagepath=>imagepath]
+						Data::addOption( [$datakey=>$paramkey], "convert_keys", $identifier );
+					}
 				}
 			}
 		}
@@ -529,6 +585,75 @@ class Views {
 			array_push($options, $dict);
 		}
 		return $options;
+	}
+
+	public static function getViewInputs( $viewtype, $filename )
+	{
+
+		$path = BASE_DIR . '/vendor/miltonian/reusables/views/' . $viewtype . '/' . $filename . '.php';
+		$searchthis = 'Data::getValue';
+
+		$matches = array();
+
+		$handle = @fopen($path, "r");
+		if ($handle)
+		{
+		    while (!feof($handle))
+		    {
+		        $buffer = fgets($handle);
+		        if(strpos($buffer, $searchthis) !== FALSE)
+		            $matches[] = $buffer;
+		    }
+		    fclose($handle);
+		}
+
+		$input_keys = [];
+
+		foreach ($matches as $str) {
+			$fullstring = $str;
+			$fullstring = str_replace(" ", '', $fullstring);
+			$fullstring = str_replace(',$table_identifier', '', $fullstring);
+			$idk = explode('?>', $fullstring);
+			$arr = [];
+			foreach ($idk as $fullstring) {
+				// $fullstring = Views::get_string_between($idkstr, 'Data::getValue($viewdict,', ')');
+				// exit( json_encode( ($arr ) ) );
+				$parsed = Views::get_string_between($fullstring, 'Data::getValue($viewdict,', ')');
+				if( !$parsed ){ $parsed = Views::get_string_between($fullstring, ',', ')'); }
+				if( !$parsed ){ $parsed = Views::get_string_between($fullstring, 'Data::getValue(', ')'); }
+				$parsed = str_replace('$', '', $parsed);
+
+				if( $parsed ) {
+					$parsed = str_replace("'", '', $parsed);
+					$parsed = str_replace('"', '', $parsed);
+					$parsed = str_replace(" ", '', $parsed);
+					$add=true;
+					foreach ($input_keys as $added_string) {
+						if( $parsed == $added_string || $parsed == "value" || $parsed == "" ) {
+							$add = false;
+							break;
+						}
+					}
+					if( $add ) {
+						array_push($input_keys, $parsed);
+					}
+				}
+			}
+			
+		}
+
+
+		return $input_keys;
+
+	}
+
+	public static function get_string_between($string, $start, $end){
+	    $string = ' ' . $string;
+	    $ini = strpos($string, $start);
+	    if ($ini == 0) return '';
+	    $ini += strlen($start);
+	    $len = strpos($string, $end, $ini) - $ini;
+	    return substr($string, $ini, $len);
 	}
 
 }

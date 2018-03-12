@@ -103,6 +103,19 @@ class Data {
 
 	}
 
+	// public static function addInputKey( $input_key, $identifier )
+	// {
+	// 	$viewoptions = Data::retrieveOptionsWithID( $identifier );
+		
+	// 	array_merge( $viewoptions['input_keys'], $input_key );
+	// }
+
+	// public static function addInputKey( $input_key, $identifier )
+	// {
+	// 	$viewoptions = Data::retrieveOptionsWithID( $identifier );
+	// 	array_merge( $viewoptions['input_keys'], $input_key );
+	// }
+
 	public static function setKeyValue( $pair, $identifier )
 	{
 		if( !isset( self::$alldata[ $identifier ] ) ) {
@@ -136,6 +149,11 @@ class Data {
 			self::$allinfo[ $identifier ] = [];
 		}
 		self::$allinfo[ $identifier ][ $key ] = $data;
+	}
+
+	public static function getAllViewsInfo()
+	{
+		return self::$allinfo;
 	}
 
 	public static function retrieveDataWithID( $identifier )
@@ -216,6 +234,10 @@ class Data {
 
 	public static function getValue( $dict, $key=-1, $identifier="" )
 	{
+		if( is_string($dict) ) {
+			return $dict;
+		}
+
 		if( !is_array( $dict ) ){
 			$dict = Data::retrieveDataWithID( $dict );
 		}
@@ -322,6 +344,9 @@ class Data {
 		if( !isset( $pair['data_id'] ) ){ return ""; }
 		if( !isset( $pair['key'] ) ){ return ""; }
 		
+		if( !isset(self::retrieveDataWithID( $pair['data_id'] )['db_info'][ "colnames" ][$pair['key']]) ) {
+			return null;
+		}
 		$colname = self::retrieveDataWithID( $pair['data_id'] )['db_info'][ "colnames" ][$pair['key']];
 
 		return $colname;

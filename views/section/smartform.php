@@ -44,7 +44,6 @@ if( isset($viewoptions['insert_values']) ) {
 	$insert_values = $viewoptions["insert_values"];
 }
 
-
 $added_inputs = Data::getValue( $viewoptions, 'added_inputs' );
 if( $added_inputs == "" ) {
 	$added_inputs = [];
@@ -52,6 +51,7 @@ if( $added_inputs == "" ) {
 
 extract( CustomView::makeFormVars( $viewdict, "viewdict" ) );
 extract( Input::convertInputKeys( $identifier ) );
+
 
 ?>
 
