@@ -20,6 +20,13 @@ namespace Reusables;
 	// exit( json_encode( $temp_tablearray ) );
 	unset( $temp_tablearray['data_id'] );
 
+	$columns = Data::getValue( $viewoptions, 'columns' );
+	if( $columns == "" ) {
+		$columns = [];
+	}
+
+	$options_cellname = Data::getValue( $viewoptions, 'cellname' );
+
 ?>
 
 <style>
@@ -33,7 +40,18 @@ namespace Reusables;
 </style>
 
 <div class="viewtype_table <?php echo $identifier ?> table_2">
-	<div class="table" style="background-color: transparent;">
+	<?php if( $options_cellname == "columns" ) { ?>
+		<table class="table" style="background-color: transparent; display: table;">
+	<?php } else { ?>
+		<div class="table" style="background-color: transparent;">
+	<?php } ?>
+		<?php if( sizeof( $columns) > 0 ) { ?>
+			<thead>
+				<?php foreach ( $columns as $c ) { ?>
+					<th><?php echo Data::getValue( $c, 'title' ) ?></th>
+				<?php } ?>
+			</thead>
+		<?php } ?>
 <?php if($sortable){ ?>
 	<ul id="sortable" style="background-color: transparent;">
 <?php } ?>
@@ -59,6 +77,7 @@ namespace Reusables;
 				$postoptions['type'] = Data::getValue( $viewoptions, 'type' );
 				$postoptions['fulldesc'] = Data::getValue( $viewoptions, 'fulldesc' );
 				$postoptions['modal_type'] = Data::getValue( $viewoptions, 'modal_type' );
+				$postoptions['columns'] = $columns;
 				if( Data::getValue( $viewoptions, 'modal' ) != "" ) {
 					$postoptions['modal'] = Data::getValue( $viewoptions, 'modal' );
 				}
@@ -104,7 +123,11 @@ namespace Reusables;
 		<?php if($sortable){ ?>
 			</ul>
 		<?php } ?>
-	</div>
+	<?php if( $options_cellname == "columns" ) { ?>
+		</table>
+	<?php } else { ?>
+		</div>
+	<?php } ?>
 </div>
 
 
