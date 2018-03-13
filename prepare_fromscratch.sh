@@ -6,6 +6,7 @@ if [ ! -d "custom" ]; then
 		mkdir css
 		mkdir data
 		mkdir images
+		mkdir functions
 		mkdir reusables
 		mkdir uploads
 		mkdir views
