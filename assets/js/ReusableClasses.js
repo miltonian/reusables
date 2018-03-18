@@ -65,6 +65,38 @@ var editingon = false
 
 		}
 
+		updateTimePicker( dataarray, identifier, data_id, key, inputclass, db_key, index=null )
+		{
+
+			var thisdict = [];
+				var thisdictvalue = [];
+				thisdict = dataarray[data_id];
+
+				if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
+
+				
+				if(thisdict == null ){ return; }
+				if(index == null || index == ""){ if(thisdict == null ){ return; } thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
+
+			$('.' + identifier + ' .' + inputclass + ' input.field_value').val( thisdictvalue[key] );
+				$('.' + identifier + ' .' + inputclass + ' input.tablename').val( thisdict['db_info']['tablenames'][key] );
+				$('.' + identifier + ' .' + inputclass + ' input.col_name').val( db_key );
+				for (var i = 0; i < thisdict['db_info']['conditions'].length; i++) {
+					var conditions = thisdict['db_info']['conditions'];
+					if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
+						conditions[i]['value'] = key; 
+					}else{
+						conditions[i]['value'] = thisdictvalue[conditions[i]['key']]; 
+						// alert(JSON.stringify(thisdictvalue));
+					}
+					$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
+					$( '.' + identifier + ' .' + inputclass + ' input.conditionvalue_' + i ).val( conditions[i]['value'] );
+				}
+				// if( key == "name" ){ alert( JSON.stringify( thisdict['db_info']['tablenames'] ) ); }
+
+		}
+
+
 		updateTextArea( dataarray, identifier, data_id, key, inputclass, db_key, index=null )
 		{
 			var thisdict = [];
@@ -553,6 +585,8 @@ var editingon = false
 						Reusable.updateTextField( thisdict, identifier, identifier, key, inputclass, colname, 0 );
 					}else if(type=="datepicker"){
 						Reusable.updateDatePicker( thisdict, identifier, identifier, key, inputclass, colname, 0 );
+					}else if(type=="timepicker"){
+						Reusable.updateTimePicker( thisdict, identifier, identifier, key, inputclass, colname, 0 )
 					}else if(type=="colorpicker"){
 						Reusable.updateColorPicker( thisdict, identifier, identifier, key, inputclass, colname, 0 );
 					}else if(type=="copybutton_1"){
@@ -572,6 +606,8 @@ var editingon = false
 					Reusable.updateTextField( dataarray, identifier, identifier, key, inputclass, colname, index );
 				} else if( type == "datepicker" ) {
 					Reusable.updateDatePicker( dataarray, identifier, identifier, key, inputclass, colname, index );
+				} else if( type=="timepicker" ){
+					Reusable.updateTimePicker( dataarray, identifier, identifier, key, inputclass, colname, index )
 				} else if( type == "colorpicker" ) {
 					Reusable.updateColorPicker( dataarray, identifier, identifier, key, inputclass, colname, index );
 				} else if( type == "copybutton_1" ) {

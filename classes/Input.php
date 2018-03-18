@@ -76,6 +76,8 @@ class Input {
 			$ishidden = "1";
 		}else if( $type == "date" ) {
 			$type = "datepicker";
+		}else if( $type == "time" ) {
+			$type = "timepicker";
 		}
 		Input::setInputType( $key, $type, $multiple_updates, $multipleupdate_i );
 		// echo "<script> console.log( 'ASDF: '+JSON.stringify( ".json_encode( [$key, $type, $multiple_updates, $multipleupdate_i] ) ." ) ); </script>";
