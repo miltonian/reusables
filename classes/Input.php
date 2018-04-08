@@ -7,9 +7,17 @@ class Input {
 	protected static $inputtypes = [];
 	protected static $input_field_types = [];
 
-	public static function place( $file, $identifier )
+	public static function place( $file, $identifier, $in_html=false )
 	{
+		if( $in_html ) {
+			CustomCode::end();
+		}
+
 		Views::addToQueue( "Input", $file, $identifier );
+		
+		if( $in_html ) {
+			CustomCode::start();
+		}
 	}
 
 	public static function set( $file, $identifier )
@@ -21,6 +29,42 @@ class Input {
 	{
 		return Views::makeView( $file, $identifier, "input" );
 	}
+
+
+// FOR CUSTOM VIEWS
+
+	public static function cplace( $file, $identifier, $in_html=false )
+	{
+		if( $in_html ) {
+			CustomCode::end();
+		}
+
+		Views::addToQueue( "Custom/Input", $file, $identifier );
+
+		if( $in_html ) {
+			CustomCode::start();
+		}
+	}
+
+	public static function cset( $file, $identifier )
+	{
+		// exit( json_encode( [$file, $identifier] ) );
+		Views::setDefaultViewInfo( $file, $identifier, "custom/input" );
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	public static function setInputFieldType( $type, $identifier )
 	{

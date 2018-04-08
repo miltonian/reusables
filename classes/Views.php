@@ -20,7 +20,7 @@ class Views {
 	{
 		$viewoptions = Data::retrieveOptionsWithID( $identifier );
 		Views::addEditableParts( $identifier );
-
+// exit( json_encode( $viewtype ) );
 		$dict = [
 			"file"=>$file,
 			"identifier"=>$identifier,
@@ -203,7 +203,16 @@ class Views {
 			// echo $View->render();
 		}else{
 			ReusableClasses::addfile( $viewtype, $file );
-			$View = View::factory( 'reusables/views/' . $viewtype . '/' . $file );
+
+			$lowercased_viewtype = strtolower( $viewtype );
+			
+			if( substr($lowercased_viewtype, 0, strlen("custom")) === "custom" ) {
+				$arr = explode("/", $viewtype);
+				$viewtype = $arr[1];
+				$View = View::factory( 'custom/views/' . $viewtype . '/' . $file );
+			} else {
+				$View = View::factory( 'reusables/views/' . $viewtype . '/' . $file );
+			}
 			$data = Data::retrieveDataWithID( $identifier );
 			$options = Data::retrieveOptionsWithID( $identifier );
 			if( $identifier == "program_form" ) {
@@ -477,6 +486,7 @@ return;
 		// 		]
 		// 	);
 		// } else {
+		// exit( json_encode( [$viewtype, $file, $identifier] ) );
 			array_push( 
 				self::$queue, 
 				[
@@ -496,12 +506,22 @@ return;
 		ob_start();
 
 		foreach (self::$queue as $v) {
+
 			if( $v["viewtype"] == "CustomCode" ) {
 				array_push( self::$bufferedviews, $v );
 			} else if( $v["viewtype"] == "Structure" ) {
 				call_user_func_array( "Reusables\\".$v['viewtype'] . "::set" , [ $v['file'], $v['data'], $v['identifier'] ] );
 			} else {
-				call_user_func_array( "Reusables\\".$v['viewtype'] . "::set" , [ $v['file'], $v['identifier'] ] );
+				$viewtype = $v['viewtype'];
+				$lowercased_viewtype = strtolower( $viewtype );
+				if( substr($lowercased_viewtype, 0, strlen("custom")) === "custom" ) {
+					$arr = explode("/", $viewtype);
+					$viewtype = $arr[1];
+					// exit( json_encode( $v['file'] ) );
+					call_user_func_array( "Reusables\\".$viewtype . "::cset" , [ $v['file'], $v['identifier'] ] );
+				} else {
+					call_user_func_array( "Reusables\\".$v['viewtype'] . "::set" , [ $v['file'], $v['identifier'] ] );
+				}
 			}
 		}
 

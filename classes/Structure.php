@@ -25,6 +25,28 @@ class Structure {
 
 	}
 
+
+	// FOR CUSTOM VIEWS
+
+	public static function cplace( $file, $identifier, $in_html=false )
+	{
+		if( $in_html ) {
+			CustomCode::end();
+		}
+
+		Views::addToQueue( "Custom/Structure", $file, $identifier );
+
+		if( $in_html ) {
+			CustomCode::start();
+		}
+	}
+
+	public static function cset( $file, $identifier )
+	{
+		// exit( json_encode( [$file, $identifier] ) );
+		Views::setDefaultViewInfo( $file, $identifier, "custom/structure" );
+	}
+
 }
 
 

@@ -4,9 +4,17 @@ namespace Reusables;
 
 class Footer {
 
-	public static function place( $file, $identifier )
+	public static function place( $file, $identifier, $in_html=false )
 	{
+		if( $in_html ) {
+			CustomCode::end();
+		}
+
 		Views::addToQueue( "Footer", $file, $identifier );
+		
+		if( $in_html ) {
+			CustomCode::start();
+		}
 	}
 
 	public static function set( $file, $identifier )
@@ -44,6 +52,31 @@ class Footer {
 		return "
 			<div style='display: inline-block; position: absolute; margin: 0; padding: 0; margin-top: -65px; z-index: 2; right: 65px; width: 100px; height: 100px; background: transparent; background-size: contain; background-position: center; background-repeat: no-repeat; background-image: url(" . $imagepath . ");'></div>
 		";
+	}
+
+
+
+
+
+	// FOR CUSTOM VIEWS
+
+	public static function cplace( $file, $identifier, $in_html=false )
+	{
+		if( $in_html ) {
+			CustomCode::end();
+		}
+
+		Views::addToQueue( "Custom/Footer", $file, $identifier );
+
+		if( $in_html ) {
+			CustomCode::start();
+		}
+	}
+
+	public static function cset( $file, $identifier )
+	{
+		// exit( json_encode( [$file, $identifier] ) );
+		Views::setDefaultViewInfo( $file, $identifier, "custom/footer" );
 	}
 
 }

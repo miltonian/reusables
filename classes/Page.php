@@ -8,6 +8,13 @@ if( !defined( 'PROJECT_ROOT' ) ){
 
 class Page {
 
+	public static function start()
+	{
+		// IMPORTANT: this function isnt needed unless page is mainly custom code
+
+		ob_start();
+	}
+
 	public static function end( $page, $endbody=true, $addjquery=true, $addeditor=true )
 	{
 		Views::analyze( true );

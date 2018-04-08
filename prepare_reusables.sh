@@ -11,24 +11,44 @@ if [ ! -d "custom" ]; then
 		mkdir uploads
 		mkdir views
 
-	cd css
-		mkdir pages
-		mkdir views
-
-	cd ../reusables
-		mkdir css
-		mkdir download
-		mkdir images
-		mkdir js
-		mkdir views
-		mkdir zips
+		cd views
+			mkdir ad
+			mkdir button
+			mkdir cell
+			mkdir footer
+			mkdir gallery
+			mkdir header
+			mkdir input
+			mkdir menu
+			mkdir modal
+			mkdir nav
+			mkdir postinternal
+			mkdir section
+			mkdir sharing
+			mkdir slider
+			mkdir structure
+			mkdir table
+			mkdir wrapper
+		cd ..
 
 		cd css
 			mkdir pages
 			mkdir views
 
-		cd ../js
-			mkdir before
+		cd ../reusables
+			mkdir css
+			mkdir download
+			mkdir images
+			mkdir js
+			mkdir views
+			mkdir zips
+
+			cd css
+				mkdir pages
+				mkdir views
+
+			cd ../js
+				mkdir before
 
 	cd ../../uploads
 		mkdir ads

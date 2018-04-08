@@ -4,9 +4,17 @@ namespace Reusables;
 
 class Table {
 
-	public static function place( $file, $identifier )
+	public static function place( $file, $identifier, $in_html=false )
 	{
+		if( $in_html ) {
+			CustomCode::end();
+		}
+
 		Views::addToQueue( "Table", $file, $identifier );
+		
+		if( $in_html ) {
+			CustomCode::start();
+		}
 	}
 
 	public static function set( $file, $identifier )
@@ -38,6 +46,28 @@ class Table {
 	// 	$View->set( 'identifier', $identifier );
 	// 	return $View->render();
 	// }
+
+
+	// FOR CUSTOM VIEWS
+
+	public static function cplace( $file, $identifier, $in_html=false )
+	{
+		if( $in_html ) {
+			CustomCode::end();
+		}
+
+		Views::addToQueue( "Custom/Table", $file, $identifier );
+
+		if( $in_html ) {
+			CustomCode::start();
+		}
+	}
+
+	public static function cset( $file, $identifier )
+	{
+		// exit( json_encode( [$file, $identifier] ) );
+		Views::setDefaultViewInfo( $file, $identifier, "custom/table" );
+	}
 
 }
 
