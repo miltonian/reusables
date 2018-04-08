@@ -8,15 +8,22 @@ if( !defined( 'PROJECT_ROOT' ) ){
 
 class Page {
 
+	public static function reusables($a) {
+	    return $a;
+	}
+
 	public static function start()
 	{
 		// IMPORTANT: this function isnt needed unless page is mainly custom code
 
-		ob_start();
+		ob_start('Reusables\Page::reusables');
 	}
 
 	public static function end( $page, $endbody=true, $addjquery=true, $addeditor=true )
 	{
+		if( sizeof( ob_get_status('Reusables\Page::reusables') ) > 0 ) {
+			CustomCode::end();
+		}
 		Views::analyze( true );
 
 

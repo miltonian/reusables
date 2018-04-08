@@ -11,7 +11,7 @@ class CustomCode {
 
 	public static function start()
 	{
-		ob_start();
+		ob_start('Reusables\Page::reusables');
 	}
 
 	public static function end()

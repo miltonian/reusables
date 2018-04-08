@@ -51,7 +51,7 @@ class ReusableClasses {
 
 	public static function startpage( $page )
 	{
-		ob_start();
+		ob_start('Reusables\Page::reusables');
 	}
 
 	public static function endpage( $parent_dir, $page, $endbody=true, $addjquery=true, $addeditor=true )
