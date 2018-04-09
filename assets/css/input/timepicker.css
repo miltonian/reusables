@@ -1,3 +1,8 @@
-.timepicker { display: inline-block; position: relative; margin: 0; padding: 0; float: left; width: 100%; text-align: left; }
-	.timepicker label { display: inline-block; position: relative; margin: 0; padding: 10px 0; width: calc(100% - 0px); font-size: 13px; font-weight: 500; }
+.timepicker { display: inline-block; position: relative; margin: 0; padding: 0; float: left; /*width: 100%;*/ text-align: left; }
+	.timepicker label { display: inline-block; position: relative; margin: 0; padding: 10px 0; width: calc(100% - 0px); font-weight: 600; font-size: 16px; }
 	.timepicker input { display: inline-block; position: relative; margin: 0; padding: 10px; width: calc(100% - 0px); font-size: 18px; font-weight: 300; color: #333333; background-color: white; border: 1px solid #e0e0e0; border-radius: 5px; }
+
+
+.timepicker.size_small { width: calc(33% - 20px); padding-left: 10px; padding-right: 10px; }
+.timepicker.size_medium { width: calc(50% - 20px); padding-left: 10px; padding-right: 10px; }
+.timepicker.size_large { width: calc(100% - 20px); padding-left: 10px; padding-right: 10px; }

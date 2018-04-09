@@ -22,6 +22,14 @@ if( !isset($viewdict['field_conditions'] ) ){
 	$viewdict['field_conditions'] = [];
 }
 
+
+$size = Data::getValue( $viewdict, "size" );
+
+if( $size == "" ) {
+	$size = "large";
+}
+$sizeclass = "size_" . $size;
+
 // exit( json_encode( $identifier ) );
 
 
@@ -30,8 +38,8 @@ if( !isset($viewdict['field_conditions'] ) ){
 <style>
 </style>
 
-<div class="viewtype_input <?php echo $identifier ?> textarea">
-	<label style="margin-bottom: -5px; font-weight: 700; font-size: 11px"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
+<div class="viewtype_input <?php echo $identifier ?> textarea <?php echo $sizeclass ?>">
+	<label style="margin-bottom: -5px; /* font-weight: 700; font-size: 11px; */"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
 	<textarea class="field_value" name="fieldarray[<?php echo Data::getValue( $viewdict,'field_index') ?>][field_value]"><?php echo Data::getValue( $viewdict, 'field_value') ?></textarea>
 	<input type="hidden" class="field_type" name="fieldarray[<?php echo Data::getValue( $viewdict,'field_index') ?>][field_type]" value="text" style="visibility: hidden; z-index: -1;">
 	<input type="hidden" class="tablename" value="<?php echo Data::getValue( $viewdict,'field_table') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict,'field_index') ?>][tablename]">

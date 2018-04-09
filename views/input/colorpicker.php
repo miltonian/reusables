@@ -4,6 +4,13 @@ namespace Reusables;
 
 include_once 'vendor/miltonian/reusables/assets/thirdparty/spectrum.php';
 
+
+$size = Data::getValue( $viewdict, "size" );
+
+if( $size == "" ) {
+	$size = "large";
+}
+$sizeclass = "size_" . $size;
 ?>
 
 <style>
@@ -12,8 +19,8 @@ include_once 'vendor/miltonian/reusables/assets/thirdparty/spectrum.php';
 
 
 
-<div class="viewtype_input <?php echo $identifier ?> colorpicker main">
-	<label style="margin-bottom: -5px; font-weight: 700; font-size: 11px"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
+<div class="viewtype_input <?php echo $identifier ?> colorpicker main <?php echo $sizeclass ?>">
+	<label style="margin-bottom: -5px; /* font-weight: 700; font-size: 11px; */"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
 	<input type="text" class="field_value" placeholder="<?php echo $viewdict['placeholder'] ?>" value="<?php echo $viewdict['field_value'] ?>" name="fieldarray[<?php echo $viewdict['field_index'] ?>][field_value]">
 	<input type="hidden" class="field_type" name="fieldarray[<?php echo $viewdict['field_index'] ?>][field_type]" value="text" style="visibility: hidden; z-index: -1;">
 	<input type="hidden" class="tablename" value="<?php echo $viewdict['field_table'] ?>" name="fieldarray[<?php echo $viewdict['field_index'] ?>][tablename]">

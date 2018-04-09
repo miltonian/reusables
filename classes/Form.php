@@ -5,13 +5,29 @@ namespace Reusables;
 
 class Form {
 
-	public static function makeInsertOnly( $tablename, $identifier )
+	public static function makeInsertOnly( $tablename, $identifier, $ishtml=false )
 	{
 		// data needs to be from 'DESCRIBE tablename' SQL query
 
 		Form::prepareInsertOnly( $tablename, $identifier );
 
-		Section::place( "smartform_inmodal", $identifier );
+		Section::place( "smartform_inmodal", $identifier, $ishtml );
+
+	}
+
+	public static function placeInsert( $tablename, $identifier, $ishtml=false )
+	{
+
+		Form::prepareInsertOnly( $tablename, $identifier );
+
+		Section::place( "smartform", $identifier, $ishtml );
+
+	}
+
+	public static function prepareInsert( $tablename, $identifier )
+	{
+
+		Form::prepareInsertOnly( $tablename, $identifier );
 
 	}
 

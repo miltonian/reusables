@@ -33,6 +33,13 @@ if( !isset($viewdict['field_conditions'] ) ){
 $is_currency = Data::getValue( $viewdict, "is_currency" );
 $is_hidden = Data::getValue( $viewdict, "is_hidden" );
 
+$size = Data::getValue( $viewdict, "size" );
+
+if( $size == "" ) {
+	$size = "large";
+}
+$sizeclass = "size_" . $size;
+
 if($identifier == "template_form_value_string_input_0"){
 	// exit( json_encode( sizeof( $viewdict['field_conditions']) ) );
 }
@@ -45,9 +52,9 @@ if($identifier == "template_form_value_string_input_0"){
 </style>
 
 
-<div class="viewtype_input <?php echo $identifier ?> timepicker">
+<div class="viewtype_input <?php echo $identifier ?> timepicker <?php echo $sizeclass ?>">
 	<?php if( !$is_hidden ){ ?>
-		<label style="margin-bottom: -5px; font-weight: 700; font-size: 11px"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
+		<label style="margin-bottom: -5px; /* font-weight: 700; font-size: 11px; */"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
 	<?php } ?>
 	<?php if( $is_currency != "" ){ ?>
 		<span class="input_groupaddon">$</span>

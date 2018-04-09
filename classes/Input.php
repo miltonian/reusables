@@ -100,7 +100,7 @@ class Input {
 	// 	return $View->render();
 	// }
 
-	public static function fill( $dict, $key, $index, $type=null, $placeholder=null, $labeltext=null, $parentclass=null, $selectoptions="", $multiple_updates=false, $multipleupdate_i=-1 )
+	public static function fill( $dict, $key, $index, $type=null, $placeholder=null, $labeltext=null, $size=null, $parentclass=null, $selectoptions="", $multiple_updates=false, $multipleupdate_i=-1 )
 	{
 		if( !$type ){
 			$type = Input::getInputType( $key, $multiple_updates, $multipleupdate_i );
@@ -125,15 +125,28 @@ class Input {
 		}
 		Input::setInputType( $key, $type, $multiple_updates, $multipleupdate_i );
 		// echo "<script> console.log( 'ASDF: '+JSON.stringify( ".json_encode( [$key, $type, $multiple_updates, $multipleupdate_i] ) ." ) ); </script>";
-		if( !$placeholder ){ $placeholder = ucfirst( $key ); }
-		if( !$labeltext ){ $labeltext = ucfirst( $key ); }
+		// exit( json_encode( $key ) );
+		if( !$placeholder ){ $placeholder = ucfirst( str_replace("_", " ", $key) ); }
+		if( !$labeltext ){ $labeltext = ucfirst( str_replace("_", " ", $key) ); }
+		// if( !$size ){ $size = ucfirst( $key ); }
 		if( isset( $dict[$key]['data_id'] ) ){
 			$dataid = $dict[$key]['data_id'];
+			$options = Data::retrieveOptionsWithID($dataid);
 		}else{
 			$dataid = $dict['data_id'];
+			$options = Data::retrieveOptionsWithID($dataid);
 		}
-		
-		// exit( json_encode( Data::getValue( $dict['value'][0], $key ) ) );
+		if( isset( $options['input_keys'] ) ) {
+			$input_keys = $options['input_keys'];
+			if( isset( $input_keys[$key] ) ) {
+				$field_value = Data::getValue( $input_keys[$key], "field_value" );
+			}
+		}
+		// if($key == "client_type") {
+
+		// exit( json_encode( $field_value ) );
+		// }
+		// exit( json_encode( Data::getValue( $dict['value'], $key ) ) );
 		if( (Data::getColName( ["data_id"=>$dataid, "key" => $key] )) == null ) {
 			return null;
 		}
@@ -142,7 +155,7 @@ class Input {
 			"placeholder"=>$placeholder,
 			"labeltext"=>$labeltext,
 			"background-image"=>"",
-			"field_value"=>"",
+			"field_value"=>$field_value,
 			"field_index"=>$index,
 			"field_table"=>Data::getDefaultTableNameWithID( $dataid ),
 			"field_colname"=>Data::getColName( ["data_id"=>$dataid, "key" => $key] ),
@@ -150,7 +163,8 @@ class Input {
 			"options"=>$selectoptions,
 			"is_currency"=>$iscurrency,
 			"is_hidden"=>$ishidden,
-			"is_button"=>$isbutton
+			"is_button"=>$isbutton,
+			"size"=>$size
 		];
 		// exit( json_encode( $inputdict ) );
 
@@ -260,6 +274,7 @@ class Input {
 	{
 		$data = Data::retrieveDataWithID( $identifier );
 		$options = Data::retrieveOptionsWithID( $identifier );
+
 		if( $identifier == "template_form" ) {
 			// exit( json_encode( $options ) );
 		}
@@ -377,6 +392,7 @@ class Input {
 			if( isset( $input_keydicts[ $ik ]['labeltext'] ) ){ $labeltext = $input_keydicts[ $ik ]['labeltext']; }else{ $labeltext = null; }
 			if( isset( $input_keydicts[ $ik ]['type'] ) ){ $type = $input_keydicts[ $ik ]['type']; }else{ $type = null; }
 			if( isset( $input_keydicts[ $ik ]['options'] ) ){ $selectoptions = $input_keydicts[ $ik ]['options']; }else{ $selectoptions = ""; }
+			if( isset( $input_keydicts[ $ik ]['size'] ) ){ $size = $input_keydicts[ $ik ]['size']; }else{ $size = ""; }
 
 			$thekey = $ik;
 			if( is_numeric( $ik ) ){ $thekey = $input_keydicts[$ik]; }
@@ -389,7 +405,7 @@ class Input {
 			if( $steps == $s ){
 				ReusableClasses::setFormInputIndex( $identifier, $i );
 
-				$theinput = Input::fill( $data, $thekey, $i, $type, $placeholder, $labeltext, $identifier, $selectoptions, $multiple_updates, $multipleupdate_i );
+				$theinput = Input::fill( $data, $thekey, $i, $type, $placeholder, $labeltext, $size, $identifier, $selectoptions, $multiple_updates, $multipleupdate_i );
 				
 				if( sizeof( $theinput ) == 2 ) {
 					array_push( 

@@ -29,10 +29,19 @@ if( !isset($viewdict['field_conditions'] ) ){
 
 $is_currency = Data::getValue( $viewdict, "is_currency" );
 $is_hidden = Data::getValue( $viewdict, "is_hidden" );
+$size = Data::getValue( $viewdict, "size" );
 
-if($identifier == "template_form_value_string_input_0"){
-	// exit( json_encode( sizeof( $viewdict['field_conditions']) ) );
+if( $size == "" ) {
+	$size = "large";
 }
+$sizeclass = "size_" . $size;
+
+
+
+// exit( json_encode( [$colname, $placeholder] ) );
+
+
+// exit( json_encode( Data::getValue( $viewdict, 'field_value') ) );
 
 ?>
 
@@ -41,16 +50,16 @@ if($identifier == "template_form_value_string_input_0"){
 	.<?php echo $identifier ?> .field_value.input_withaddon { border-top-left-radius: 0; border-bottom-left-radius: 0; width: calc( 100% - 32px); }
 </style>
 
-<div class="viewtype_input <?php echo $identifier ?> textfield">
+<div class="viewtype_input <?php echo $identifier ?> textfield <?php echo $sizeclass ?>">
 	<?php if( !$is_hidden ){ ?>
-		<label style="margin-bottom: -5px; font-weight: 700; font-size: 11px"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
+		<label style="margin-bottom: -5px; /* font-weight: 700; font-size: 11px; */"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
 	<?php } ?>
 	<?php if( $is_currency != "" ){ ?>
 		<span class="input_groupaddon">$</span>
-		<input type="text" class="field_value input_withaddon" placeholder="<?php echo Data::getValue( $viewdict, 'placeholder') ?>" value="<?php echo Data::getValue( $viewdict, 'field_value') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_value]">
-	<?php }else if( $is_hidden ){ ?>
+		<input type="text" class="field_value input_withaddon" placeholder="<?php echo $placeholder ?>" value="<?php echo Data::getValue( $viewdict, 'field_value') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_value]">
+	<?php } else if( $is_hidden ){ ?>
 		<input type="hidden" class="field_value" placeholder="<?php echo Data::getValue( $viewdict, 'placeholder') ?>" value="<?php echo Data::getValue( $viewdict, 'field_value') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_value]">
-	<?php }else{ ?>
+	<?php } else{ ?>
 		<input type="text" class="field_value" placeholder="<?php echo Data::getValue( $viewdict, 'placeholder') ?>" value="<?php echo Data::getValue( $viewdict, 'field_value') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_value]">
 	<?php } ?>
 

@@ -1,3 +1,18 @@
-.select { display: inline-block; position: relative; margin: 0; padding: 0; float: left; width: 100%; text-align: left; }
-	.select label { display: inline-block; position: relative; margin: 0; padding: 10px 0; width: calc(100% - 0px); font-size: 13px; font-weight: 500; }
+.select { display: inline-block; position: relative; margin: 0; padding: 0; float: left; /*width: 100%;*/ text-align: left; }
+	.select label { display: inline-block; position: relative; margin: 0; padding: 10px 0; width: calc(100% - 0px); font-weight: 600; font-size: 16px; }
 	.select .field_value { display: inline-block; width: 100%; background: white; height: 50px; box-shadow: none ; }
+
+	.select .field_value { width: 100%; height: 43px; padding: 6px 12px; font-size: 14px; line-height: 1.42857143; color: #555; background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 4px; }
+
+
+
+
+
+
+
+
+
+
+.select.size_small { width: calc(33% - 20px); padding-left: 10px; padding-right: 10px; }
+.select.size_medium { width: calc(50% - 20px); padding-left: 10px; padding-right: 10px; }
+.select.size_large { width: calc(100% - 20px); padding-left: 10px; padding-right: 10px; }

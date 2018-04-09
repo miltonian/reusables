@@ -17,6 +17,13 @@ namespace Reusables;
 <input type="hidden" class="row_id" value="<?php echo $viewdict['field_rowid'] ?>" name="fieldarray[<?php echo $viewdict['field_index'] ?>][row_id]">
 */
 
+$size = Data::getValue( $viewdict, "size" );
+
+if( $size == "" ) {
+	$size = "large";
+}
+$sizeclass = "size_" . $size;
+
 // exit(json_encode($viewdict));
 if( !isset($viewdict['field_conditions'] ) ){
 	$viewdict['field_conditions'] = [];
@@ -27,8 +34,8 @@ if( !isset($viewdict['field_conditions'] ) ){
 .wysi img { max-width: 100%; }
 </style>
 
-<div class="viewtype_input <?php echo $identifier ?> wysi">
-	<label style="margin-bottom: 0px; font-weight: 700; font-size: 11px"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
+<div class="viewtype_input <?php echo $identifier ?> wysi <?php echo $sizeclass ?>">
+	<label style="margin-bottom: 0px; /* font-weight: 700; font-size: 11px; */"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
 	<!-- <input type="text" class="field_value" placeholder="<?php /*echo $viewdict['placeholder']*/ ?>" value="<?php /*echo $viewdict['field_value']*/ ?>" name="fieldarray[<?php /*echo $viewdict['field_index']*/ ?>][field_value]"> -->
 	<textarea class="field_value" name='fieldarray[<?php echo Data::getValue( $viewdict, 'field_index' ) ?>][field_value]' id='fieldarray_<?php echo $identifier ?>[<?php echo Data::getValue( $viewdict, 'field_index' ) ?>][field_value]' rows='10' cols='80'>
 		<?php /*echo $viewdict['field_value']*/ ?>

@@ -13,6 +13,13 @@ if( $options == "" ) {
 	$options = [];
 }
 
+$size = Data::getValue( $viewdict, "size" );
+
+if( $size == "" ) {
+	$size = "large";
+}
+$sizeclass = "size_" . $size;
+
 ?>
 
 <style>
@@ -20,8 +27,8 @@ if( $options == "" ) {
 	.<?php echo $identifier ?> .field_value.input_withaddon { border-top-left-radius: 0; border-bottom-left-radius: 0; width: calc( 100% - 30px); }
 </style>
 
-<div class="viewtype_input <?php echo $identifier ?> checkbox">
-	<label style="margin-bottom: -5px; font-weight: 700; font-size: 11px"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
+<div class="viewtype_input <?php echo $identifier ?> checkbox <?php echo $sizeclass ?>">
+	<label style="margin-bottom: -5px; /* font-weight: 700; font-size: 11px; */"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
 
 		<input type="hidden" class="field_value" value="{[]}" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_value]">
 
