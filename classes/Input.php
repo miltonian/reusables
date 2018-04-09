@@ -142,6 +142,9 @@ class Input {
 				$field_value = Data::getValue( $input_keys[$key], "field_value" );
 			}
 		}
+		if( !isset($field_value) ) {
+			$field_value = "";
+		}
 		// if($key == "client_type") {
 
 		// exit( json_encode( $field_value ) );
