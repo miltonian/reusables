@@ -19,7 +19,8 @@ if( $size == "" ) {
 	$size = "large";
 }
 $sizeclass = "size_" . $size;
-
+// exit( json_encode( $viewdict ) );
+// exit( json_encode( $viewdict['field_conditions'] ) );
 ?>
 
 <style>

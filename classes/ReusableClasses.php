@@ -809,7 +809,39 @@ if($multiple_updates){
 				return $result;
 			}
 		}
+		$i=0;
+		foreach ($conditions as $c) {
+			if( sizeof( $c ) == 0 ) {
+				continue;
+			}
+			$key_arr = explode(".", $c['key']);
+			if( sizeof($key_arr) < 2  ) {
+				$conditions[$i]['key'] = $default_table.".".$c['key'];
+			}
+			$i++;
+		}
+		// exit( json_encode( $conditions ) );
+		$newresult = [];
 
+		foreach ($result as $key => $value) {
+			if( !is_numeric($key) ) {
+				$newresult[$default_table . "." . $key] = $result[$key];
+			} else {
+				// exit( json_encode( $value ) );
+				$newvalue = [];
+				foreach ($value as $k=>$v) {
+					$newvalue[$default_table . "." . $k] = $value[$k];
+				}
+				if( sizeof($newvalue) > 0 ) {
+					$value = $newvalue;
+					$result[$key] = $value;
+				}
+			}
+		}
+		if( sizeof($newresult) > 0 ) {
+			$result = $newresult;
+		}
+// exit( json_encode( $result ) );
 		$tablenames = [];
 		$colnames = [];
 		$thisdict = [];
@@ -835,10 +867,21 @@ if($multiple_updates){
 			if( $customcolname ){
 				$colnames[$k] = $customcolname;
 			}else{
-				$colnames[$k] = $k;
+				$colname_arr = explode(".", $k);
+				$addtable = true;
+				if( isset($colname_arr) ) {
+					if( sizeof($colname_arr) > 1 ) {
+						$addtable = false;
+					}
+				}
+				if( $addtable ) {
+					$colnames[$k] = $default_table.".".$k;
+				} else {
+					$colnames[$k] = $k;
+				}
+
 			}
 		}
-
 		$returningdict = [
 			"value" => $result,
 			"db_info" => [

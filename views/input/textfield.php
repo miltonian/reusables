@@ -37,11 +37,11 @@ if( $size == "" ) {
 $sizeclass = "size_" . $size;
 
 
-
-// exit( json_encode( [$colname, $placeholder] ) );
-
-
-// exit( json_encode( Data::getValue( $viewdict, 'field_value') ) );
+// exit( json_encode( [$viewdict['field_colname'], $viewdict['field_conditions']] ) );
+$field_table = Data::getValue( $viewdict, 'field_table' );
+if( $field_table != "new_apps_client_information" ) {
+	// exit( json_encode( $field_table ) );
+}
 
 ?>
 

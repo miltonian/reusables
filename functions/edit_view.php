@@ -52,7 +52,7 @@ if( isset($fieldimages ) ) {
 		if( sizeof($filesarray)==0){
 			$i++;
 			if( $i > sizeof($filesarray) ) {
-break;
+				break;
 			}
 			continue;
 		}
@@ -64,6 +64,7 @@ break;
 	}
 	// foreach ($fieldimages as $fi) {
 	// exit( json_encode( $_FILES['fieldimage']['name'] ) );
+	$tablenames_array = [];
 	for( $i=0; $i<sizeof($indexes);$i++ ){
 		$fi = $fieldimages[$indexes[$i]];
 
@@ -77,7 +78,17 @@ break;
 
 			// exit( json_encode( $fieldimages ) );
 			$tablename = $fi['tablename'];
+			if( !isset( $tablenames_array[$tablename] ) ) {
+				$tablenames_array[$tablename] = true;
+			}
 			$colname = $fi['col_name'];
+			$colname = $colname;
+			$colname_arr = explode('.', $colname);
+			if( isset($colname_arr) ) {
+				if( sizeof( $colname_arr ) == 2 ) {
+					$colname = $colname_arr[1];
+				}
+			}
 			if( !isset($fi['field_conditions']) ) {
 				$conditions = false;
 			}else{
@@ -88,10 +99,15 @@ break;
 				$whereclause = "";
 				$conditionvalues = [];
 				for ($a=0; $a < sizeof($conditions); $a++) { 
+					$conditionkey = $conditions[$a]['key'];
+					$conditionkey_arr = explode(".", $conditionkey);
+					if( sizeof($conditionkey_arr) != 2 ) {
+						$conditionkey = $tablename.".".$conditionkey;
+					}
 					if( $a > 0 ){
-						$whereclause .= " AND " . $tablename . "." . $conditions[$a]['key'] . "=? ";
+						$whereclause .= " AND " . $conditionkey . "=? ";
 					}else{
-						$whereclause .= "WHERE " . $tablename . "." . $conditions[$a]['key'] . "=? ";
+						$whereclause .= "WHERE " . $conditionkey . "=? ";
 					}
 					array_push( $conditionvalues, $conditions[$a]['value'] );
 				}
@@ -175,10 +191,17 @@ break;
 							}
 						}
 					}else{
-						$fieldarray = insertimage( $indexes, $fieldarray, $fieldimages, $tablename );
+						foreach ($tablenames_array as $table=>$bool) {
+							$fieldarray = insertimage( $indexes, $fieldarray, $fieldimages, $table );
+							// $fieldarray = insertimage( $indexes, $fieldarray, $fieldimages, $tablename );
+						}
 					}
 				}else{
-					$fieldarray = insertimage( $indexes, $fieldarray, $fieldimages, $tablename );
+					
+					foreach ($tablenames_array as $table=>$bool) {
+						$fieldarray = insertimage( $indexes, $fieldarray, $fieldimages, $table );
+						// $fieldarray = insertimage( $indexes, $fieldarray, $fieldimages, $tablename );
+					}
 				}
 
 			}
@@ -187,13 +210,19 @@ break;
 
 }
 
-// exit( json_encode( $fieldarray ) );;
+$tablenames_array = null; $tablenames_array = [];
+
+
+// exit( json_encode( $fieldarray ) );
 if ( sizeof($fieldarray) > 0 ) {
 	// exit("1");
+	$tablenames_array = [];
 	$indexes = array_keys( $fieldarray );
 	$didfind = false;
 	$testi=0;
+	// exit( json_encode( $fieldarray ) );
 	foreach ($fieldarray as $f) {
+		// exit( json_encode( $f ) );
 		$fieldvalue = "";
 		$tablename = "";
 		$colname = "";
@@ -202,9 +231,20 @@ if ( sizeof($fieldarray) > 0 ) {
 		}
 		if( isset( $f['tablename'] ) ) {
 			$tablename = $f['tablename'];
+			if( !isset( $tablenames_array[$tablename] ) ) {
+				$tablenames_array[$tablename] = true;
+			}
 		}
 		if( isset( $f['col_name'] ) ) {
 			$colname = $f['col_name'];
+			$colname = $f['col_name'];
+			$colname = $colname;
+			$colname_arr = explode('.', $colname);
+			if( isset($colname_arr) ) {
+				if( sizeof( $colname_arr ) == 2 ) {
+					$colname = $colname_arr[1];
+				}
+			}
 		}
 		// $rowid = $f['row_id'];
 		if( !isset($f['field_conditions']) ) {
@@ -217,12 +257,24 @@ if ( sizeof($fieldarray) > 0 ) {
 			$whereclause = "";
 			$conditionvalues = [];
 			// exit( "lastinsertid: " . json_encode( $lastinsertid ) );
-			if($conditions[0]['key']=="id" && $conditions[0]['value']=="" && $lastinsertid==true && $lastinsertid!=0 ){ $conditions[0]['value'] = $lastinsertid; }
+			$conditionkey = $conditions[0]['key'];
+			$conditionkey_arr = explode(".", $conditionkey);
+			if( sizeof($conditionkey_arr) != 2 ) {
+				$conditionkey = $conditionkey;
+			} else {
+				$conditionkey = $conditionkey_arr[1];
+			}
+			if($conditionkey=="id" && $conditions[0]['value']=="" && $lastinsertid==true && $lastinsertid!=0 ){ $conditions[0]['value'] = $lastinsertid; }
 			for ($i=0; $i < sizeof($conditions); $i++) { 
+				$conditionkey = $conditions[$i]['key'];
+				$conditionkey_arr = explode(".", $conditionkey);
+				if( sizeof($conditionkey_arr) != 2 ) {
+					$conditionkey = $tablename.".".$conditionkey;
+				}
 				if( $i > 0 ){
-					$whereclause .= " AND " . $tablename . "." . $conditions[$i]['key'] . "=? ";
+					$whereclause .= " AND " . $conditionkey . "=? ";
 				}else{
-					$whereclause .= "WHERE " . $tablename . "." . $conditions[$i]['key'] . "=? ";
+					$whereclause .= "WHERE " . $conditionkey . "=? ";
 				}
 				array_push( $conditionvalues, $conditions[$i]['value'] );
 			}
@@ -230,8 +282,6 @@ if ( sizeof($fieldarray) > 0 ) {
 			$query = "SELECT * FROM " . $tablename . " " . $whereclause;
 			$values = $conditionvalues;
 			$type = "select";
-			// exit( json_encode( $conditions ) );
-			// $result = $MainClasses->querySQL( $query, $values, $type );
 			// exit( "4" );
 			// exit( json_encode( array( $query, $values, $type ) ) );
 			$result = Reusables\CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
@@ -239,7 +289,7 @@ if ( sizeof($fieldarray) > 0 ) {
 			// exit(json_encode($result));
 			if($result[0] == 0){
 
-			}else if( isset($f['field_conditions']) ) {
+			} else if ( isset($f['field_conditions']) ) {
 				$didfind=true;
 				if($colname=='id'){
 					continue;
@@ -248,10 +298,6 @@ if ( sizeof($fieldarray) > 0 ) {
 				$query = "UPDATE " . $tablename . " SET " . $colname . " = ? " . $whereclause;
 				$values = array_merge( [ $fieldvalue ], $conditionvalues );
 				$type = "update";
-				// if( $testi==3 ){
-				// 	exit( json_encode( [$conditions] ) );
-				// }
-				// exit(json_encode($indexes));
 				// $result = $MainClasses->querySQL( $query, $values, $type );
 	// exit( "5" );
 				// exit( json_encode( array( $query, $values, $type ) ) );
@@ -262,7 +308,7 @@ if ( sizeof($fieldarray) > 0 ) {
 		$testi++;
 	}
 	// exit( json_encode( $didfind ) );
-	if( !$didfind ){
+	if( !$didfind ) {
 		// exit( json_encode( $_POST['ifnone_insert'] ) );
 		if( isset( $_POST['ifnone_insert'] ) ){
 			if( $_POST['ifnone_insert'] == "1" ){ 
@@ -301,19 +347,29 @@ if ( sizeof($fieldarray) > 0 ) {
 
 							$i=($i+$sizeofarraystoinsert-1);
 						}
-					}else{
+					} else {
 						if( !isset( $fieldimages ) ) {
 							$fieldimages = [];
 						}
-						$lastinsertid = insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename );
+						// exit( json_encode( $fieldarray ) );
+						// $lastinsertid = insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename );
+						foreach ($tablenames_array as $table=>$bool) {
+							$lastinsertid = insertnonimage( $indexes, $fieldarray, $fieldimages, $table );
+							// $lastinsertid = insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename );
+						}
 
 					}
-				}else{
+				} else {
 					if( !isset( $fieldimages ) ) {
 						$fieldimages = [];
 					}
 
-					$lastinsertid = insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename );
+					foreach ($tablenames_array as $table=>$bool) {
+						// exit( json_encode( $tablenames_array ) );
+						$lastinsertid = insertnonimage( $indexes, $fieldarray, $fieldimages, $table );
+						// $lastinsertid = insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename );
+					}
+
 				}
 				
 				// exit("done");
@@ -321,7 +377,7 @@ if ( sizeof($fieldarray) > 0 ) {
 		}
 	}
 }
-
+// exit("hold up");
 
 if( isset( $_POST['added_file'] ) ) {
 	if( $_POST['added_file'] != "" ) {
@@ -354,35 +410,52 @@ function insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename, $start
 	for ($i=$starting_i; $i < $starting_i+$sizeofarraystoinsert; $i++) { 
 		if( $i < sizeof( $indexes ) ) {
 			$arrayorimages = $fieldarray;
-			if( !isset( $fieldarray[ $indexes[$i] ]['col_name'] ) ) {
-				if( !isset( $fieldimages[ $indexes[$i] ]['col_name'] ) ) {
+
+
+			if( !isset( $arrayorimages[ $indexes[$i] ]['col_name'] ) ) {
+				if( !isset( $arrayorimages[ $indexes[$i] ]['col_name'] ) ) {
 					continue;
-				}else{
-					$arrayorimages = $fieldimages;
+				} else{
+					if( $fieldimages[ $indexes[$i] ]['tablename'] == $tablename ) {
+						$arrayorimages = $fieldimages;
+					} else {
+						continue;
+					}
+				}
+			} else{
+				if( $fieldarray[ $indexes[$i] ]['tablename'] != $tablename ) {
+					continue;
 				}
 			}
-			if( $arrayorimages[ $indexes[$i] ]['col_name'] == 'id' ){
+			$colname = $arrayorimages[ $indexes[$i] ]['col_name'];
+			$colname_arr = explode('.', $colname);
+			if( isset($colname_arr) ) {
+				if( sizeof( $colname_arr ) == 2 ) {
+					$colname = $colname_arr[1];
+				}
+			}
+			// exit( json_encode( $colname ) );
+			// if( $colname == "package_type" ) {
+			// 	exit( json_encode( $arrayorimages[ $indexes[$i] ]['field_value'] ) );
+			// }
+			if( $colname == 'id' ){
 				continue;
 			}
 			if( sizeof($insertconditionvalues) > 0 ){
-				$query .= ", " . $arrayorimages[ $indexes[$i] ]['col_name'];
+				$query .= ", " . $colname;
+				// $query .= ", " . $arrayorimages[ $indexes[$i] ]['col_name'];
 				$questionmarks .= ", ?";
 			}else{
 				// exit(json_encode($i));
 				// $query .= $conditions[$i]['key'];
-				$query .= $arrayorimages[ $indexes[$i] ]['col_name'];
+				$query .= $colname;
 				$questionmarks .= "?";
 			}
 			array_push( $insertconditionvalues, $arrayorimages[ $indexes[$i] ]['field_value'] );
 		}
-		
 	}
 
 	$query .= " ) VALUES ( " . $questionmarks . ")";
-	if( $starting_i > 0 ) {
-// exit( json_encode( [$starting_i, $sizeofarraystoinsert] ) );
-	}
-	// exit( json_encode( $query ) );
 	$values = $insertconditionvalues;
 	$type = "insert";
 	// $result = $MainClasses->querySQL( $query, $values, $type );
@@ -407,17 +480,24 @@ function insertimage( $indexes, $fieldarray, $fieldimages, $tablename, $starting
 
 	for ($i=$starting_i; $i < $starting_i+$sizeofarraystoinsert; $i++) { 
 		if( $i < sizeof( $indexes ) ) {
-			if( $fieldimages[ $indexes[$i] ]['col_name'] == 'id' ){
+			$colname = $fieldimages[ $indexes[$i] ]['col_name'];
+				$colname_arr = explode('.', $colname);
+				if( isset($colname_arr) ) {
+					if( sizeof( $colname_arr ) == 2 ) {
+						$colname = $colname_arr[1];
+					}
+				}
+			if( $colname == 'id' ){
 				continue;
 			}
 			if( $fieldimages[ $indexes[$i] ]['field_value'] == false ){
 				continue;
 			}
 			if( sizeof($insertconditionvalues) > 0 ){
-				$query .= ", " . $fieldimages[ $indexes[$i] ]['col_name'];
+				$query .= ", " . $colname;
 				$questionmarks .= ", ?";
 			}else{
-				$query .= $fieldimages[ $indexes[$i] ]['col_name'];
+				$query .= $colname;
 				$questionmarks .= "?";
 			}
 			

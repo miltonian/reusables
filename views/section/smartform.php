@@ -51,6 +51,7 @@ if( $added_inputs == "" ) {
 
 extract( CustomView::makeFormVars( $viewdict, "viewdict" ) );
 extract( Input::convertInputKeys( $identifier ) );
+// exit( json_encode( $inputs ) );
 
 
 ?>

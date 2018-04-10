@@ -37,7 +37,9 @@ $sizeclass = "size_" . $size;
 
 <script>
 
-	$('.<?php echo $identifier ?> .field_value').spectrum({
+var identifier = "<?php echo $identifier ?>";
+		identifier = identifier.replace('.', '\\.')
+	$('.'+identifier+' .field_value').spectrum({
 		color: "<?php echo $viewdict['field_value'] ?>",
 		preferredFormat: "hex",
 		backgroundColor: "#ffffff",

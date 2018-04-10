@@ -29,6 +29,9 @@ var editingon = false
 					}
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionvalue_' + i ).val( conditions[i]['value'] );
+					console.log(JSON.stringify( '.' + identifier + ' .' + inputclass + ' input.conditionvalue_' + i ))
+					// .testview_form .testview_form_new_apps_client_information.state_input_0 input.conditionvalue_0
+					// viewtype_input testview_form_new_apps_client_information.state_input_0 textfield size_large
 				}
 				// if( key == "name" ){ alert( JSON.stringify( thisdict['db_info']['tablenames'] ) ); }
 
@@ -559,6 +562,7 @@ var editingon = false
 		fillinputvalues( type, dataarray, identifier, key, colname, index, fieldindex, multiple_updates=false, typearray=false ) {
 
 			var inputclass = identifier + "_" + key + "_input_" + fieldindex
+			inputclass = inputclass.replace('.', '\\.')
 			if( multiple_updates ) {
 				var thisdata = dataarray[identifier]['value'];
 				if( $.isArray(thisdata ) ) {

@@ -14,6 +14,8 @@
 
 	extract( Cell::prepareCell( $identifier ) );
 
+	// exit( json_encode( Data::getValue( $viewdict, 'title' ) ) );
+
 ?>
 
 <style>

@@ -78,10 +78,14 @@ if($identifier == "template_form_value_string_input_0"){
 <script>
 
 	$( function() {
-		$( ".<?php echo $identifier ?>.datepicker #<?php echo $identifier ?>_datepicker" ).datepicker();
+		var identifier = "<?php echo $identifier ?>";
+		identifier = identifier.replace('.', '\\.')
+		$( "."+identifier+".datepicker #"+identifier+"_datepicker" ).datepicker();
 	} );
 
-	$('.<?php echo $identifier ?>.datepicker #<?php echo $identifier ?>_datepicker').datepicker({
+var identifier = "<?php echo $identifier ?>";
+		identifier = identifier.replace('.', '\\.')
+	$('.'+identifier+'.datepicker #'+identifier+'_datepicker').datepicker({
 	    //comment the beforeShow handler if you want to see the ugly overlay
 	    beforeShow: function() {
 	        setTimeout(function(){

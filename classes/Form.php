@@ -49,7 +49,28 @@ class Form {
 
 		$conditions = [[]];
 		$returningdict = ReusableClasses::toValueAndDBInfo( $converteddata, $conditions, $tablename );
-		
+		// exit( json_encode( $returningdict ) );
+
+		$formwithsameid_dict = Data::retrieveDataWithID( $identifier );
+		if( $formwithsameid_dict ) {
+			if( isset( $formwithsameid_dict['value'] ) ) {
+				$formwithsameid_dict_real = $formwithsameid_dict['value'];
+				$returningdict_real = $returningdict['value'];
+
+				$formwithsameid_dict_tablenames = $formwithsameid_dict['db_info']['tablenames'];
+				$returningdict_tablenames = $returningdict['db_info']['tablenames'];
+
+				$formwithsameid_dict_colnames = $formwithsameid_dict['db_info']['colnames'];
+				$returningdict_colnames = $returningdict['db_info']['colnames'];
+
+				$newdict_real = array_merge( $formwithsameid_dict_real, $returningdict_real );
+				$newdict_tablenames = array_merge( $formwithsameid_dict_tablenames, $returningdict_tablenames );
+				$newdict_colnames = array_merge( $formwithsameid_dict_colnames, $returningdict_colnames );
+				$returningdict['value'] = $newdict_real;
+				$returningdict['db_info']['tablenames'] = $newdict_tablenames;
+				$returningdict['db_info']['colnames'] = $newdict_colnames;
+			}
+		}
 
 		Data::addData( $returningdict, $identifier );
 			Data::addOption( true, "ifnone_insert", $identifier );

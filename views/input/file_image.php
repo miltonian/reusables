@@ -50,7 +50,11 @@ $sizeclass = "size_" . $size;
 </div>
 
 <script>
-	$('#<?php echo $identifier ?>_field_value').change(function(){
-		Reusable.readthisURL(this, $('.<?php echo $identifier ?>').find('#imglabel'), null, null);
+	var identifier = "<?php echo $identifier ?>";
+		identifier = identifier.replace('.', '\\.')
+	$('#'+identifier+'_field_value').change(function(){
+		var identifier = "<?php echo $identifier ?>";
+		identifier = identifier.replace('.', '\\.')
+		Reusable.readthisURL(this, $('.'+identifier+'').find('#imglabel'), null, null);
 	});
 </script>

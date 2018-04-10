@@ -126,9 +126,17 @@ class Input {
 		Input::setInputType( $key, $type, $multiple_updates, $multipleupdate_i );
 		// echo "<script> console.log( 'ASDF: '+JSON.stringify( ".json_encode( [$key, $type, $multiple_updates, $multipleupdate_i] ) ." ) ); </script>";
 		// exit( json_encode( $key ) );
-		if( !$placeholder ){ $placeholder = ucfirst( str_replace("_", " ", $key) ); }
-		if( !$labeltext ){ $labeltext = ucfirst( str_replace("_", " ", $key) ); }
+		$raw_key_arr = explode( '.', $key );
+		if( sizeof( $raw_key_arr ) != 2 ) {
+			return null;
+		}
+
+		$raw_key = $raw_key_arr[1];
+
+		if( !$placeholder ){ $placeholder = ucfirst( str_replace("_", " ", $raw_key) ); }
+		if( !$labeltext ){ $labeltext = ucfirst( str_replace("_", " ", $raw_key) ); }
 		// if( !$size ){ $size = ucfirst( $key ); }
+// exit( json_encode( $key ) );
 		if( isset( $dict[$key]['data_id'] ) ){
 			$dataid = $dict[$key]['data_id'];
 			$options = Data::retrieveOptionsWithID($dataid);
@@ -136,6 +144,7 @@ class Input {
 			$dataid = $dict['data_id'];
 			$options = Data::retrieveOptionsWithID($dataid);
 		}
+		// exit( json_encode( $dataid ) );
 		if( isset( $options['input_keys'] ) ) {
 			$input_keys = $options['input_keys'];
 			if( isset( $input_keys[$key] ) ) {
@@ -145,14 +154,16 @@ class Input {
 		if( !isset($field_value) ) {
 			$field_value = "";
 		}
-		// if($key == "client_type") {
 
-		// exit( json_encode( $field_value ) );
-		// }
-		// exit( json_encode( Data::getValue( $dict['value'], $key ) ) );
-		if( (Data::getColName( ["data_id"=>$dataid, "key" => $key] )) == null ) {
+		// exit( json_encode( Data::getColName( ["data_id"=>$dataid, "key" => $key] ) ) );
+		if( ( Data::getColName( ["data_id"=>$dataid, "key" => $key] ) ) == null ) {
 			return null;
 		}
+
+
+// exit( json_encode( $dict['db_info']['tablenames']['client_status'] ) );
+		// $tablename = Data::getDefaultTableNameWithID( $dataid, $raw_key );
+		$tablename = Data::getDefaultTableNameWithID( $dataid, $key );
 
 		$inputdict = [
 			"placeholder"=>$placeholder,
@@ -160,7 +171,7 @@ class Input {
 			"background-image"=>"",
 			"field_value"=>$field_value,
 			"field_index"=>$index,
-			"field_table"=>Data::getDefaultTableNameWithID( $dataid ),
+			"field_table"=>$tablename,
 			"field_colname"=>Data::getColName( ["data_id"=>$dataid, "key" => $key] ),
 			"field_conditions"=>Data::getConditions( ["data_id"=>$dataid, "key" => $key] ),
 			"options"=>$selectoptions,
@@ -277,10 +288,8 @@ class Input {
 	{
 		$data = Data::retrieveDataWithID( $identifier );
 		$options = Data::retrieveOptionsWithID( $identifier );
+		$default_tablename = Data::getDefaultTableNameWithID( $identifier );
 
-		if( $identifier == "template_form" ) {
-			// exit( json_encode( $options ) );
-		}
 		$multiple_inserts = Data::getValue( $options, "multiple_inserts" );
 		$multiple_updates = Data::getValue( $options, "multiple_updates" );
 
@@ -325,7 +334,30 @@ class Input {
 			} else {
 				$input_keys = $options['default_input_keys'];
 			}
-			
+			foreach ($input_keys as $k=>$v) {
+				if( is_numeric($k) ) {
+					if( is_string($v) ) {
+						$v_arr = explode(".", $v);
+						if( sizeof($v_arr ) == 1 ) {
+							$v = $default_tablename . "." . $v;
+						}
+						$input_keys[$k] = $v;
+					}
+				} else {
+					if( is_string($k) ) {
+						$newk = "";
+						$k_arr = explode(".", $k);
+						if( sizeof($k_arr ) == 1 ) {
+							$newk = $default_tablename . "." . $k;
+						}
+						if( $newk != "" ) {
+							$input_keys[$newk] = $k;
+							unset($input_keys[$k]);
+						}
+					}
+				}
+			}
+			// exit( json_encode( $input_keys ) );
 			if( $multiple_inserts || $multiple_updates ) {
 				$returnthisdict = [];
 				foreach ($input_keys as $this_inputkeys) {
@@ -388,7 +420,7 @@ class Input {
 
 		$multipleupdate_i = $i;
 		foreach ($input_keys as $ik) {
-
+// exit( json_encode( $ik ) );
 			$placeholder = null; $labeltext = null; $type = null;
 			if( isset( $input_keydicts[ $ik ]['step'] ) ){ $steps = $input_keydicts[ $ik ]['step']; }
 			if( isset( $input_keydicts[ $ik ]['placeholder'] ) ){ $placeholder = $input_keydicts[ $ik ]['placeholder']; }else{ $placeholder = null; }

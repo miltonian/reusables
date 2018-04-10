@@ -52,10 +52,13 @@ $sizeclass = "size_" . $size;
 </div>
 
 <script>
-	$('.<?php echo $identifier ?>.checkbox .checkboxes_container input').change(function(){
+	var identifier = "<?php echo $identifier ?>";
+		identifier = identifier.replace('.', '\\.')
+	$('.'+identifier+'.checkbox .checkboxes_container input').change(function(){
 		var c = this.checked
-
-		var thevalue = $('.<?php echo $identifier ?>.checkbox .field_value').val();
+		var identifier = "<?php echo $identifier ?>";
+		identifier = identifier.replace('.', '\\.')
+		var thevalue = $('.'+identifier+'.checkbox .field_value').val();
 		if( c ) {
 			// add
 			if( thevalue == '{[]}' ) {
@@ -79,6 +82,6 @@ $sizeclass = "size_" . $size;
 			thevalue = thevalue.replace(',,', ',')
 			thevalue = '{[' + thevalue + ']}'
 		}
-		$('.<?php echo $identifier ?>.checkbox .field_value').val(thevalue);
+		$('.'+identifier+'.checkbox .field_value').val(thevalue);
 	})
 </script>

@@ -46,7 +46,7 @@ class CustomView {
 		if( isset($dict['index'] ) ){
 			$dict = Data::convertDataForArray( $data_id, $dict['index'] );
 		}
-
+		
 		if( $viewtypedict ){
 			return [ "data_id"=>$data_id, $viewtypedict=>$dict, "default_tablename"=>$default_tablename ];
 		}else{

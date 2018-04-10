@@ -81,12 +81,15 @@ if($identifier == "template_form_value_string_input_0"){
 
 <script>
 
+var identifier = "<?php echo $identifier ?>";
+		identifier = identifier.replace('.', '\\.')
+$('.'+identifier+'.timepicker #'+identifier+'_timepicker').timepicker({ 'scrollDefault': 'now' });
 
-$('.<?php echo $identifier ?>.timepicker #<?php echo $identifier ?>_timepicker').timepicker({ 'scrollDefault': 'now' });
 
-
-	$('.<?php echo $identifier ?>.timepicker #<?php echo $identifier ?>_timepicker').on('click', function (){
-	    $('.<?php echo $identifier ?>.timepicker #<?php echo $identifier ?>_timepicker').timepicker({ 'scrollDefault': 'now' });
+	$('.'+identifier+'.timepicker #'+identifier+'_timepicker').on('click', function (){
+		var identifier = "<?php echo $identifier ?>";
+		identifier = identifier.replace('.', '\\.')
+	    $('.'+identifier+'.timepicker #'+identifier+'_timepicker').timepicker({ 'scrollDefault': 'now' });
 	});
 
 
