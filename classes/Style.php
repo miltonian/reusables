@@ -19,6 +19,7 @@ class Style {
 				}else{
 					$parent_dir = PROJECT_ROOT . "/vendor/miltonian/custom/css/views/";
 				}
+
 			}else if( $parent_dir == "customreusableview" ){
 				$currentversion = CustomView::getCurrentVersion();
 				if( $currentversion ){
@@ -31,7 +32,14 @@ class Style {
 			}else{
 				$parent_dir = PROJECT_ROOT . "/vendor/miltonian/reusables/assets/css/";
 			}
-			echo "<link rel=stylesheet href='" . $parent_dir . $file . ".css' type='text/css'>";
+
+			if (strpos($parent_dir, 'css/custom') !== false) {
+				$parent_dir = str_replace('miltonian/reusables/assets/css/custom', 'miltonian/custom/css/views', $parent_dir);
+			}
+
+			if( file_exists(BASE_DIR . $parent_dir . $file . ".css") ) {
+				echo "<link rel=stylesheet href='" . $parent_dir . $file . ".css' type='text/css'>";
+			}
 		}
 	}
 
