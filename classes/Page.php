@@ -8,14 +8,20 @@ if( !defined( 'PROJECT_ROOT' ) ){
 
 class Page {
 
+	protected static $page_in_html=false;
+
 	public static function reusables($a) {
 	    return $a;
 	}
 
-	public static function start()
+	public static function inhtml() {
+		return self::$page_in_html;
+	}
+
+	public static function start( $in_html=false )
 	{
 		// IMPORTANT: this function isnt needed unless page is mainly custom code
-
+		self::$page_in_html = $in_html;
 		ob_start('Reusables\Page::reusables');
 	}
 

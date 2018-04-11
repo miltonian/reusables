@@ -6,6 +6,7 @@ class Modal {
 
 	public static function place( $file, $identifier, $in_html=false )
 	{
+		$in_html = Page::inhtml();
 		if( $in_html ) {
 			CustomCode::end();
 		}
@@ -51,6 +52,7 @@ class Modal {
 
 	public static function cplace( $file, $identifier, $in_html=false )
 	{
+		$in_html = Page::inhtml();
 		if( $in_html ) {
 			CustomCode::end();
 		}
