@@ -4,7 +4,7 @@ namespace Reusables;
 
 class Footer {
 
-	public static function place( $file, $identifier, $in_html=false )
+	public static function place( $file, $identifier )
 	{
 		$in_html = Page::inhtml();
 		if( $in_html ) {
@@ -61,7 +61,7 @@ class Footer {
 
 	// FOR CUSTOM VIEWS
 
-	public static function cplace( $file, $identifier, $in_html=false )
+	public static function cplace( $file, $identifier )
 	{
 		$in_html = Page::inhtml();
 		if( $in_html ) {

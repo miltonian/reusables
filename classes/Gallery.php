@@ -4,7 +4,7 @@ namespace Reusables;
 
 class Gallery {
 
-	public static function place( $file, $identifier, $in_html=false )
+	public static function place( $file, $identifier )
 	{
 		$in_html = Page::inhtml();
 		if( $in_html ) {
@@ -53,7 +53,7 @@ class Gallery {
 
 	// FOR CUSTOM VIEWS
 
-	public static function cplace( $file, $identifier, $in_html=false )
+	public static function cplace( $file, $identifier )
 	{
 		$in_html = Page::inhtml();
 		if( $in_html ) {

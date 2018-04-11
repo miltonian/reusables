@@ -4,7 +4,7 @@ namespace Reusables;
 
 class Button {
 	
-	public static function place( $file, $identifier, $in_html=false )
+	public static function place( $file, $identifier )
 	{
 		$in_html = Page::inhtml();
 		if( $in_html ) {
@@ -51,7 +51,7 @@ class Button {
 
 	// FOR CUSTOM VIEWS
 
-	public static function cplace( $file, $identifier, $in_html=false )
+	public static function cplace( $file, $identifier )
 	{
 		$in_html = Page::inhtml();
 		if( $in_html ) {

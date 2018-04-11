@@ -5,7 +5,7 @@ namespace Reusables;
 class Header {
 
 
-	public static function place( $file, $identifier, $in_html=false )
+	public static function place( $file, $identifier )
 	{
 		$in_html = Page::inhtml();
 		if( $in_html ) {
@@ -51,7 +51,7 @@ class Header {
 
 	// FOR CUSTOM VIEWS
 
-	public static function cplace( $file, $identifier, $in_html=false )
+	public static function cplace( $file, $identifier )
 	{
 		$in_html = Page::inhtml();
 		if( $in_html ) {
