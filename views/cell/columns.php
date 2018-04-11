@@ -6,13 +6,22 @@
 	
 	extract( Cell::prepareCell( $identifier ) );
 
-	// $title = Data::getValue($viewdict, 'title', $table_identifier);
 	$result = '';
 
 	$columns = Data::getValue( $viewoptions, 'columns' );
 	if( $columns == "" ) {
 		$columns = [];
 	}
+
+
+$tablename = Data::getDefaultTableNameWithID($table_identifier);
+foreach ($columns as $key => $value) {
+	$val_arr = explode(".", $value['key']);
+	if( sizeof($val_arr) == 1 ) {
+		$value['key'] = $tablename . "." . $value['key'];
+		$columns[$key] = $value;
+	}
+}
 
 ?>
 
