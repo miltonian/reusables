@@ -15,7 +15,11 @@ class Page {
 	}
 
 	public static function inhtml() {
-		return self::$page_in_html;
+		if( sizeof( ob_get_status('Reusables\Page::reusables') ) > 0 ) {
+			// CustomCode::end();
+			return self::$page_in_html;
+		}
+		
 	}
 
 	public static function start( $in_html=false )
