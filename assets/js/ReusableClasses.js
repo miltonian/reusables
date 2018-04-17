@@ -163,7 +163,10 @@ var editingon = false
 			if(thisdict == null ){ return; }
 			if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
 			var name = 'fieldarray_' + inputclass + '[' + fieldindex + '][field_value]'
-			CKEDITOR.instances[name].setData( thisdictvalue[key] ); 
+			
+			if( typeof CKEDITOR.instances[name] !== 'undefined' ) {
+				CKEDITOR.instances[name].setData( thisdictvalue[key] ); 
+			}
 
 			$('.' + identifier + ' .' + inputclass + ' input.tablename').val(thisdict['db_info']['tablenames'][key]);
 			$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);
