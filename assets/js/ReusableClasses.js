@@ -159,16 +159,21 @@ var editingon = false
 			var thisdict = [];
 			var thisdictvalue = [];
 			thisdict = dataarray[data_id];
-			
+
 			if(thisdict == null ){ return; }
 			if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
 			var name = 'fieldarray_' + inputclass + '[' + fieldindex + '][field_value]'
-			
-			if( typeof CKEDITOR.instances[name] !== 'undefined' ) {
-				CKEDITOR.instances[name].setData( thisdictvalue[key] ); 
+			var thisvalue = thisdictvalue[key]
+			if( thisvalue == "" ) {
+				thisvalue = thisdictvalue[db_key]
 			}
 
-			$('.' + identifier + ' .' + inputclass + ' input.tablename').val(thisdict['db_info']['tablenames'][key]);
+			var normalname = name.replace('\\.', '.')
+			if( typeof CKEDITOR.instances[normalname] !== "undefined" ) {
+				CKEDITOR.instances[normalname].setData( thisvalue ); 
+			}
+
+			$('.' + identifier + ' .' + inputclass + ' input.tablename').val(thisdict['db_info']['tablenames'][db_key]);
 			$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);
 			for (var i = 0; i < thisdict['db_info']['conditions'].length; i++) {
 				var conditions = thisdict['db_info']['conditions'];
