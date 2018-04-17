@@ -267,10 +267,27 @@ class Data {
 		}else{
 			if( isset( $dict['value'][ $key ] )  ){
 				$pair = $dict['value'][ $key ];
-				// if( $key == "logo_imagepath" ){
-				// }
 			}else{
-				return "";
+				$tablename = "";
+				if( isset($dict['db_info']) ) {
+					if( isset($dict['db_info']['tablenames']) ) {
+						$firstkey = array_keys($dict['db_info']['tablenames'])[0];
+						$tablename = $dict['db_info']['tablenames'][$firstkey];
+					}
+				}
+				
+				if($tablename != "") {
+					$key = $tablename.".".$key;
+					if( isset($dict[ $key ]) ){
+						$pair = $dict[ $key ];
+					}else if( isset( $dict['value'][ $key ] )  ){
+						$pair = $dict['value'][ $key ];
+					}else{
+						return "";
+					}
+				} else {
+					return "";
+				}
 			}
 		}
 
