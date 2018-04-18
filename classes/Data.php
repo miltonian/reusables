@@ -269,10 +269,22 @@ class Data {
 				$pair = $dict['value'][ $key ];
 			}else{
 				$tablename = "";
+				
 				if( isset($dict['db_info']) ) {
+					
 					if( isset($dict['db_info']['tablenames']) ) {
 						$firstkey = array_keys($dict['db_info']['tablenames'])[0];
 						$tablename = $dict['db_info']['tablenames'][$firstkey];
+
+					}
+				} else {
+					if( isset($dict['data_id']) ) {
+						$info = Data::retrieveInfoWithID( $dict['data_id'] );
+						if( strtolower($info['viewtype']) == "cell" ) {
+							$cellindex = Data::getValue( $dict, 'index' );
+							$table_identifier = str_replace("_cell_".$cellindex, "", $dict['data_id']);
+							$tablename = Data::getDefaultTableNameWithID($table_identifier);
+						}
 					}
 				}
 				
