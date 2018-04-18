@@ -51,7 +51,13 @@ class View
         {
             // Load the view within the current scope
             // include $view_filename;
-            include realpath(__DIR__ . '/../..') . "/" . $view_filename;
+            if( substr($view_filename, 0, strlen("/")) === "/" ) {
+                $f = BASE_DIR . "/" . $view_filename;
+                $f = str_replace("//", "/", $f);
+                include $f;
+            } else {
+                include realpath(__DIR__ . '/../..') . "/" . $view_filename;
+            }
         }
         catch( \Exception $e )
         {

@@ -5,6 +5,7 @@ namespace Reusables;
 class CustomCode {
 
 	public static $viewsSet = [];
+	public static $optionsSet = [];
 
 	public static function place( $code )
 	{
@@ -51,7 +52,13 @@ class CustomCode {
 				$str = str_replace("}}", "", $str);
 				$str = $str;
 				if( is_string($str) && $str ) {
-
+					// exit( json_encode( $str ) );
+					$check_arr = explode(".", $str);
+					if( sizeof($check_arr) == 2 ) {
+						if( strtolower($check_arr[0]) == "form" ) {
+							// echo "<form>";
+						}
+					}
 					$new_output = CustomCode::convertToView($output, $matches, $str, $index);
 
 					CustomCode::checkForViews( $new_output );
@@ -68,27 +75,16 @@ class CustomCode {
 		$str = str_replace(" ", "", $str);
 		$id_arr = explode("(", $str);
 		$str_arr = $id_arr;
-		$identifier = $str_arr[0];
-		
-		if( isset( self::$viewsSet[$identifier] ) ) {
-			$output = str_replace( $matches[$index], "", $output );
-			return;
-		} else {
-			self::$viewsSet[$identifier] = true;
-		}
-
-		if( !isset( $id_arr[1] ) ) {
-			$arr = explode(".", $id_arr[0]);
-			if( $arr[0] == "form" ) {
-				if( $arr[1] == "start" ) {
-
-				} else if ( $arr[1] == "end" ) {
-
-				}
-				// exit( json_encode( $arr[0] ) );
+		$identifier_arr = $str_arr[0];
+		$identifier_arr = explode(".", $identifier_arr);
+		$identifier = $identifier_arr[0];
+		$isoptions = false;
+		if( sizeof($identifier_arr) == 2 ) {
+			if( $identifier_arr[1] == "options" ) {
+				$isoptions=true;
 			}
-			return $output;
 		}
+		
 		$other = $id_arr[1];
 		$other = str_replace(");", "", $other);
 		$values = explode(",", $other);
@@ -97,10 +93,43 @@ class CustomCode {
 			$v = explode(":", $v);
 			$view_inputs[$v[0]] = $v[1];
 		}
+
+		if( isset( self::$viewsSet[$identifier] ) && !$isoptions ) {
+			$output = str_replace( $matches[$index], "", $output );
+			return;
+		} else if( !$isoptions ) {
+			self::$viewsSet[$identifier] = true;
+		} else if( $isoptions ) {
+			if( !isset( self::$optionsSet[$identifier] ) ) {
+				self::$optionsSet[$identifier] = [];
+			}
+			if( isset(self::$optionsSet[$identifier][array_keys($view_inputs)[0]] ) ) {
+				$output = str_replace($matches[$index], "", $output );
+				return;
+			} else {
+				self::$optionsSet[$identifier][array_keys($view_inputs)[0]] = true;
+			}
+		}
+		
+		
+		$after_string = $output;
+		if( isset($view_inputs['view']) ) {
+			$after_string = CustomCode::placeView( $output, $matches, $str, $index, $view_inputs, $identifier);
+		}
+		if( $isoptions ) {
+			$after_string = CustomCode::addOptions( $output, $matches, $str, $index, $view_inputs, $identifier);
+		}
+
+
+		return $after_string;
+	}
+
+	public static function placeView( $output, $matches, $str, $index, $view_inputs, $identifier)
+	{
 		$view = $view_inputs['view'];
 
 		$viewdict = Data::getValue( $view_inputs, 'data' );
-		$viewoptions = Data::getValue( $view_inputs, 'options' );
+		// $viewoptions = Data::getValue( $view_inputs, 'options' );
 		$view_array = explode("/", $view);
 		$beforeafter_string = explode($matches[$index], $output);
 		$before_string = $beforeafter_string[0];
@@ -116,6 +145,17 @@ class CustomCode {
 		}
 
 		return $after_string;
+	}
+
+	public static function addOptions( $output, $matches, $str, $index, $view_inputs, $identifier) 
+	{
+		// exit( json_encode( $view_inputs ) );
+		foreach ($view_inputs as $key => $value) {
+			Data::addOption( $value, $key, $identifier );
+		}
+		$output = str_replace($matches[$index], "", $output );
+
+		return $output;
 	}
 
 	public static function get_string_between($string, $start, $end)

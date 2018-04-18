@@ -30,6 +30,19 @@ if( !isset($viewdict['field_conditions'] ) ){
 $is_currency = Data::getValue( $viewdict, "is_currency" );
 $is_hidden = Data::getValue( $viewdict, "is_hidden" );
 $size = Data::getValue( $viewdict, "size" );
+$labeltext = Data::getValue( $viewdict, "labeltext" );
+$placeholder = Data::getValue( $viewdict, "placeholder" );
+$field_value = Data::getValue( $viewdict, "field_value" );
+
+if( $is_currency == "" && $is_hidden == "" && $size == "" && $labeltext == "" && $placeholder=="" && $field_value == "" ) {
+
+	$is_currency = Data::getValue( $viewoptions, "is_currency" );
+	$is_hidden = Data::getValue( $viewoptions, "is_hidden" );
+	$size = Data::getValue( $viewoptions, "size" );
+	$labeltext = Data::getValue( $viewoptions, "labeltext" );
+	$placeholder = Data::getValue( $viewoptions, "placeholder" );
+	$field_value = Data::getValue( $viewoptions, "field_value" );
+}
 
 if( $size == "" ) {
 	$size = "large";
@@ -52,15 +65,15 @@ if( $field_table != "new_apps_client_information" ) {
 
 <div class="viewtype_input <?php echo $identifier ?> textfield <?php echo $sizeclass ?>">
 	<?php if( !$is_hidden ){ ?>
-		<label style="margin-bottom: -5px; /* font-weight: 700; font-size: 11px; */"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
+		<label style="margin-bottom: -5px; /* font-weight: 700; font-size: 11px; */"><?php echo $labeltext ?></label>
 	<?php } ?>
 	<?php if( $is_currency != "" ){ ?>
 		<span class="input_groupaddon">$</span>
-		<input type="text" class="field_value input_withaddon" placeholder="<?php echo $placeholder ?>" value="<?php echo Data::getValue( $viewdict, 'field_value') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_value]">
+		<input type="text" class="field_value input_withaddon" placeholder="<?php echo $placeholder ?>" value="<?php echo $field_value ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_value]">
 	<?php } else if( $is_hidden ){ ?>
-		<input type="hidden" class="field_value" placeholder="<?php echo Data::getValue( $viewdict, 'placeholder') ?>" value="<?php echo Data::getValue( $viewdict, 'field_value') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_value]">
+		<input type="hidden" class="field_value" placeholder="<?php echo $placeholder ?>" value="<?php echo $field_value ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_value]">
 	<?php } else{ ?>
-		<input type="text" class="field_value" placeholder="<?php echo Data::getValue( $viewdict, 'placeholder') ?>" value="<?php echo Data::getValue( $viewdict, 'field_value') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_value]">
+		<input type="text" class="field_value" placeholder="<?php echo $placeholder ?>" value="<?php echo $field_value ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_value]">
 	<?php } ?>
 
 	<input type="hidden" class="field_type" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_type]" value="text" style="visibility: hidden; z-index: -1;">

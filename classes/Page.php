@@ -8,13 +8,22 @@ if( !defined( 'PROJECT_ROOT' ) ){
 
 class Page {
 
+	public static $customdir="custom/views/";
 	protected static $page_in_html=false;
 
-	public static function reusables($a) {
+
+	public static function setCustomDir( $dir )
+	{
+		Page::$customdir = $dir;
+	}
+
+	public static function reusables($a)
+	{
 	    return $a;
 	}
 
-	public static function inhtml() {
+	public static function inhtml()
+	{
 		if( sizeof( ob_get_status('Reusables\Page::reusables') ) > 0 ) {
 			// CustomCode::end();
 			return self::$page_in_html;

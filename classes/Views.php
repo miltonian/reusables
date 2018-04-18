@@ -209,7 +209,8 @@ class Views {
 			if( substr($lowercased_viewtype, 0, strlen("custom")) === "custom" ) {
 				$arr = explode("/", $viewtype);
 				$viewtype = $arr[1];
-				$View = View::factory( 'custom/views/' . $viewtype . '/' . $file );
+				// $View = View::factory( 'custom/views/' . $viewtype . '/' . $file );
+				$View = View::factory( Page::$customdir . $viewtype . '/' . $file );
 			} else {
 				$View = View::factory( 'reusables/views/' . $viewtype . '/' . $file );
 			}
