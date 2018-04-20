@@ -13,6 +13,6 @@
 
 
 
-.select.size_small { width: calc(33% - 20px); padding-left: 10px; padding-right: 10px; }
-.select.size_medium { width: calc(50% - 10px); padding-left: 10px; padding-right: 10px; }
-.select.size_large { width: calc(100% - 20px); padding-left: 10px; padding-right: 10px; }
+.select.size_small { width: calc(33% - 0px); padding-left: 0px; padding-right: 0px; }
+.select.size_medium { width: calc(50% - 0px); padding-left: 0px; padding-right: 0px; }
+.select.size_large { width: calc(100% - 0px); padding-left: 0px; padding-right: 0px; }

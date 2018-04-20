@@ -3,6 +3,6 @@
 	.datepicker input { display: inline-block; position: relative; margin: 0; padding: 6px; width: calc(100% - 0px); font-size: 14px; font-weight: 300; color: #333333; background-color: white; border: 1px solid #e0e0e0; border-radius: 5px; }
 
 
-.datepicker.size_small { width: calc(33% - 20px); padding-left: 10px; padding-right: 10px; }
-.datepicker.size_medium { width: calc(50% - 10px); padding-left: 10px; padding-right: 10px; }
-.datepicker.size_large { width: calc(100% - 20px); padding-left: 10px; padding-right: 10px; }
+.datepicker.size_small { width: calc(33% - 0px); padding-left: 0px; padding-right: 0px; }
+.datepicker.size_medium { width: calc(50% - 0px); padding-left: 0px; padding-right: 0px; }
+.datepicker.size_large { width: calc(100% - 0px); padding-left: 0px; padding-right: 0px; }

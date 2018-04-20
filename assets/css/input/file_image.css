@@ -4,6 +4,6 @@
 	.file_image#imglabel { width: calc(50% - 0px); padding-bottom: 50%; background-color: #e3e3e9; border-radius: 5px; overflow: hidden; cursor: pointer; background-size: cover; background-position: center; background-repeat: no-repeat; }
 
 
-.file_image.size_small { width: calc(33% - 20px); padding-left: 10px; padding-right: 10px; }
-.file_image.size_medium { width: calc(50% - 20px); padding-left: 10px; padding-right: 10px; }
-.file_image.size_large { width: calc(100% - 20px); padding-left: 10px; padding-right: 10px; }
+.file_image.size_small { width: calc(33% - 0px); padding-left: 0px; padding-right: 0px; }
+.file_image.size_medium { width: calc(50% - 0px); padding-left: 0px; padding-right: 0px; }
+.file_image.size_large { width: calc(100% - 0px); padding-left: 0px; padding-right: 0px; }

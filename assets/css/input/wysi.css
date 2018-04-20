@@ -5,6 +5,6 @@
 .cke_editable img { max-width: 100%; }
 
 
-.wysi.size_small { width: calc(33% - 20px); padding-left: 10px; padding-right: 10px; }
-.wysi.size_medium { width: calc(50% - 10px); padding-left: 10px; padding-right: 10px; }
-.wysi.size_large { width: calc(100% - 20px); padding-left: 10px; padding-right: 10px; }
+.wysi.size_small { width: calc(33% - 0px); padding-left: 0px; padding-right: 0px; }
+.wysi.size_medium { width: calc(50% - 0px); padding-left: 0px; padding-right: 0px; }
+.wysi.size_large { width: calc(100% - 0px); padding-left: 0px; padding-right: 0px; }
