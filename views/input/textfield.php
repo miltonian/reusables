@@ -33,6 +33,12 @@ $size = Data::getValue( $viewdict, "size" );
 $labeltext = Data::getValue( $viewdict, "labeltext" );
 $placeholder = Data::getValue( $viewdict, "placeholder" );
 $field_value = Data::getValue( $viewdict, "field_value" );
+$is_smart = Data::getValue( $viewoptions, "is_smart" );
+if( $is_smart == "" ) {
+	$is_smart = true;
+} else {
+	$is_smart = false;
+}
 
 if( $is_currency == "" && $is_hidden == "" && $size == "" && $labeltext == "" && $placeholder=="" && $field_value == "" ) {
 
@@ -42,6 +48,13 @@ if( $is_currency == "" && $is_hidden == "" && $size == "" && $labeltext == "" &&
 	$labeltext = Data::getValue( $viewoptions, "labeltext" );
 	$placeholder = Data::getValue( $viewoptions, "placeholder" );
 	$field_value = Data::getValue( $viewoptions, "field_value" );
+}
+
+if( $placeholder == "" ) {
+	$placeholder = ucfirst(str_replace("_", " ", $identifier));
+}
+if( $labeltext == "" ) {
+	$labeltext = ucfirst(str_replace("_", " ", $identifier));
 }
 
 if( $size == "" ) {
@@ -54,6 +67,17 @@ $sizeclass = "size_" . $size;
 $field_table = Data::getValue( $viewdict, 'field_table' );
 if( $field_table != "new_apps_client_information" ) {
 	// exit( json_encode( $field_table ) );
+}
+
+$field_name = "fieldarray[" . Data::getValue( $viewdict, 'field_index') . "][field_value]";
+if( !$is_smart ) {
+	$field_name = Data::getValue( $viewdict, 'field_name' );
+	if( $field_name == "" ) {
+		$field_name = Data::getValue( $viewoptions, 'field_name' );
+		if( $field_name == "" ) {
+			$field_name = $identifier;
+		}
+	}
 }
 
 ?>
@@ -69,24 +93,27 @@ if( $field_table != "new_apps_client_information" ) {
 	<?php } ?>
 	<?php if( $is_currency != "" ){ ?>
 		<span class="input_groupaddon">$</span>
-		<input type="text" class="field_value input_withaddon" placeholder="<?php echo $placeholder ?>" value="<?php echo $field_value ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_value]">
+		<input type="text" class="field_value input_withaddon" placeholder="<?php echo $placeholder ?>" value="<?php echo $field_value ?>" name="<?php echo $field_name ?>">
 	<?php } else if( $is_hidden ){ ?>
-		<input type="hidden" class="field_value" placeholder="<?php echo $placeholder ?>" value="<?php echo $field_value ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_value]">
+		<input type="hidden" class="field_value" placeholder="<?php echo $placeholder ?>" value="<?php echo $field_value ?>" name="<?php echo $field_name ?>">
 	<?php } else{ ?>
-		<input type="text" class="field_value" placeholder="<?php echo $placeholder ?>" value="<?php echo $field_value ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_value]">
+		<input type="text" class="field_value" placeholder="<?php echo $placeholder ?>" value="<?php echo $field_value ?>" name="<?php echo $field_name ?>">
 	<?php } ?>
 
-	<input type="hidden" class="field_type" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_type]" value="text" style="visibility: hidden; z-index: -1;">
-	<input type="hidden" class="tablename" value="<?php echo Data::getValue( $viewdict, 'field_table') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][tablename]">
-	<input type="hidden" class="col_name" value="<?php echo Data::getValue( $viewdict, 'field_colname') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][col_name]">
-	<?php $i=0; ?>
-	<?php if( sizeof( $viewdict['field_conditions'] ) > 0 ){
-		foreach ($viewdict['field_conditions'] as $c) { ?>
-			<input type="hidden" class="conditionkey_<?php echo $i ?>" value="<?php echo $c['key'] ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_conditions][<?php echo $i ?>][key]">
-			<input type="hidden" class="conditionvalue_<?php echo $i ?>" value="<?php echo $c['value'] ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_conditions][<?php echo $i ?>][value]">
-			<?php $i++; ?>
+	<?php if( $is_smart ) { ?>
+		<input type="hidden" class="field_type" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_type]" value="text" style="visibility: hidden; z-index: -1;">
+		<input type="hidden" class="tablename" value="<?php echo Data::getValue( $viewdict, 'field_table') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][tablename]">
+		<input type="hidden" class="col_name" value="<?php echo Data::getValue( $viewdict, 'field_colname') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][col_name]">
+		<?php $i=0; ?>
+		<?php if( sizeof( $viewdict['field_conditions'] ) > 0 ){
+			foreach ($viewdict['field_conditions'] as $c) { ?>
+				<input type="hidden" class="conditionkey_<?php echo $i ?>" value="<?php echo $c['key'] ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_conditions][<?php echo $i ?>][key]">
+				<input type="hidden" class="conditionvalue_<?php echo $i ?>" value="<?php echo $c['value'] ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_conditions][<?php echo $i ?>][value]">
+				<?php $i++; ?>
+			<?php } ?>
 		<?php } ?>
 	<?php } ?>
+	
 </div>
 
 <script>

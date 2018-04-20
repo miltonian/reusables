@@ -1,6 +1,9 @@
 .checkbox { display: inline-block; position: relative; margin: 0; padding: 0; /*width: 100%;*/ text-align: left; }
 	.checkbox label { display: inline-block; position: relative; margin: 0; padding: 10px 0; width: calc(100% - 0px); font-weight: 600; font-size: 16px; }
 
+.checkbox input.checkbox_inner { position: relative; margin-left: 0; margin-right: 10px; }
+.checkbox span.checkbox_title { font-weight: 600; }
+
 .checkbox.size_small { width: calc(33% - 20px); padding-left: 10px; padding-right: 10px; }
-.checkbox.size_medium { width: calc(50% - 20px); padding-left: 10px; padding-right: 10px; }
+.checkbox.size_medium { width: calc(50% - 10px); padding-left: 10px; padding-right: 10px; }
 .checkbox.size_large { width: calc(100% - 20px); padding-left: 10px; padding-right: 10px; }

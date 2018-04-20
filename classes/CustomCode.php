@@ -36,8 +36,23 @@ class CustomCode {
 
 	public static function checkForViews( $output )
 	{
-		preg_match("/\\{\\{\s(.*)\\}\\}/", $output, $foundreusables);
-		if( isset($foundreusables) && $foundreusables && !empty($foundreusables) ) {
+		// preg_match("/\\{\\{\s(.*)\\}\\}/", $output, $foundreusables);
+		preg_match('/\\{\\{(.*)\\}\\}/sU', $output, $foundreusables);
+		if( isset($foundreusables) && $foundreusables && !empty($foundreusables) ) {	
+			// $foundreusables = str_replace("\n", "", $foundreusables[0]);
+			$foundreusables = $foundreusables[0];
+			$arr = explode(");", $foundreusables);
+			$new_arr = [];
+			foreach ($arr as $key => $value) {
+				// $value = str_replace("{{", "", $value);
+				// $value = str_replace("}}", "", $value);
+				if( $key < sizeof($arr)-1 ) {
+					$value = "" . $value . ");";
+				}
+				array_push($new_arr, $value);
+			}
+			$foundreusables = $new_arr;
+			// exit( json_encode( ($foundreusables[5]) ) );
 			CustomCode::replaceViews( $output, $foundreusables );
 		} else {
 			CustomCode::place( $output );
@@ -51,7 +66,9 @@ class CustomCode {
 			foreach ($matches as $index => $matchdict) {
 				$str = str_replace("{{", "", $matches[$index]);
 				$str = str_replace("}}", "", $str);
+				$str = str_replace("\n", "", $str);
 				$str = $str;
+
 				if( is_string($str) && $str ) {
 					// exit( json_encode( $str ) );
 					$check_arr = explode(".", $str);
@@ -61,20 +78,46 @@ class CustomCode {
 						}
 					}
 					$new_output = CustomCode::convertToView($output, $matches, $str, $index);
-
-					CustomCode::checkForViews( $new_output );
-					return;
+					if( $new_output != null ) {
+						$output = $new_output;
+					}
+					// CustomCode::checkForViews( $output );
+					// return;
+					// continue;
 				}
 
 			}
+			if( $output ) {
+				CustomCode::checkForViews( $output );
+			}
+			// return;
 			
 		}
+	}
+
+	public static function str_replace_first($from, $to, $content)
+	{
+	    $from = '/'.preg_quote($from, '/').'/';
+
+	    return preg_replace($from, $to, $content, 1);
 	}
 
 	public static function convertToView( $output, $matches, $str, $index )
 	{
 		$str_orig = $str;
 		// $str = str_replace(" ", "", $str);
+		$checkingforblankstring = str_replace("}}", "", $matches[$index]);
+		$checkingforblankstring = str_replace("\n", "", $checkingforblankstring);
+		$checkingforblankstring = str_replace(" ", "", $checkingforblankstring);
+		if( $checkingforblankstring == "" ) {
+			// $output = str_replace($matches[$index], "", $output );
+			$output = CustomCode::str_replace_first($matches[$index], "", $output );
+			return $output;
+		}
+		// if( $index == 5 ) {
+
+		// 	exit( json_encode( $matches[$index] ) );
+		// }
 		$id_arr = explode("(", $str);
 		$str_arr = $id_arr;
 		$identifier_arr = $str_arr[0];
@@ -95,7 +138,10 @@ class CustomCode {
 				$isdata=true;
 			}
 		}
-		
+		if( !isset($id_arr[1]) ) {
+			// exit( json_encode( $matches ) );
+			return;
+		}
 		$other = $id_arr[1];
 		if( !$isdata ) {
 			$other = str_replace(" ", "", $other);
@@ -172,11 +218,12 @@ class CustomCode {
 		$after_string = str_replace( $matches[$index], "", $after_string );
 		CustomCode::place( $before_string );
 		if( $view_array[0] == "custom" ) {
-			// exit( json_encode( $view_array[1] ));
 			call_user_func_array('\\Reusables\\'.ucfirst($view_array[1]) . "::cplace", [$view_array[2], $identifier] );
-
 		} else {
 			call_user_func_array('\\Reusables\\'.ucfirst($view_array[0]) . "::place", [$view_array[1], $identifier] );
+			if( strtolower($view_array[0]) == "input" ){ 
+				Data::addOption( "0", "is_smart", $identifier );
+			}
 		}
 
 		return $after_string;

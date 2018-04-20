@@ -2,32 +2,58 @@
 
 namespace Reusables;
 	
-	$required = array(
-		"placeholder"=>"",
-		"field_value"=>"",
-		"field_index"=>"",
-		"field_table"=>"",
-		"field_colname"=>"",
-		// "field_rowid"=>""
-		"field_conditions"=>[]
-	);
 
-	// ReusableClasses::checkRequired( "wysi", $viewdict, $required );
-/*
-<input type="hidden" class="row_id" value="<?php echo $viewdict['field_rowid'] ?>" name="fieldarray[<?php echo $viewdict['field_index'] ?>][row_id]">
-*/
+
 
 $size = Data::getValue( $viewdict, "size" );
+$labeltext = Data::getValue( $viewdict, "labeltext" );
+$placeholder = Data::getValue( $viewdict, "placeholder" );
+$field_value = Data::getValue( $viewdict, "field_value" );
+$is_smart = Data::getValue( $viewoptions, "is_smart" );
+if( $is_smart == "" ) {
+	$is_smart = true;
+} else {
+	$is_smart = false;
+}
+
+if( $size == "" && $labeltext == "" && $placeholder=="" && $field_value == "" ) {
+
+	$size = Data::getValue( $viewoptions, "size" );
+	$labeltext = Data::getValue( $viewoptions, "labeltext" );
+	$placeholder = Data::getValue( $viewoptions, "placeholder" );
+	$field_value = Data::getValue( $viewoptions, "field_value" );
+}
+
+if( $placeholder == "" ) {
+	$placeholder = ucfirst(str_replace("_", " ", $identifier));
+}
+if( $labeltext == "" ) {
+	$labeltext = ucfirst(str_replace("_", " ", $identifier));
+}
+
 
 if( $size == "" ) {
 	$size = "large";
 }
 $sizeclass = "size_" . $size;
 
-// exit(json_encode($viewdict));
+$field_name = "fieldarray[" . Data::getValue( $viewdict, 'field_index') . "][field_value]";
+$field_id = "fieldarray_".$identifier."[". Data::getValue( $viewdict, 'field_index' ) . "][field_value]";
+if( !$is_smart ) {
+	$field_name = Data::getValue( $viewdict, 'field_name' );
+	$field_id = $identifier;
+	if( $field_name == "" ) {
+		$field_name = Data::getValue( $viewoptions, 'field_name' );
+		if( $field_name == "" ) {
+			$field_name = $identifier;
+		}
+	}
+}
+
 if( !isset($viewdict['field_conditions'] ) ){
 	$viewdict['field_conditions'] = [];
 }
+
 ?>
 
 <style>
@@ -35,26 +61,28 @@ if( !isset($viewdict['field_conditions'] ) ){
 </style>
 
 <div class="viewtype_input <?php echo $identifier ?> wysi <?php echo $sizeclass ?>">
-	<label style="margin-bottom: 0px; /* font-weight: 700; font-size: 11px; */"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
+	<label style="margin-bottom: 0px; /* font-weight: 700; font-size: 11px; */"><?php echo $labeltext ?></label>
 	<!-- <input type="text" class="field_value" placeholder="<?php /*echo $viewdict['placeholder']*/ ?>" value="<?php /*echo $viewdict['field_value']*/ ?>" name="fieldarray[<?php /*echo $viewdict['field_index']*/ ?>][field_value]"> -->
-	<textarea class="field_value" name='fieldarray[<?php echo Data::getValue( $viewdict, 'field_index' ) ?>][field_value]' id='fieldarray_<?php echo $identifier ?>[<?php echo Data::getValue( $viewdict, 'field_index' ) ?>][field_value]' rows='10' cols='80'>
+	<textarea class="field_value" name='<?php echo $field_name ?>' id='<?php echo $field_id ?>' rows='10' cols='80'>
 		<?php /*echo $viewdict['field_value']*/ ?>
 
 	</textarea>
 	<script>
-		CKEDITOR.replace( 'fieldarray_<?php echo $identifier ?>[<?php echo Data::getValue( $viewdict, 'field_index' ) ?>][field_value]');
+		CKEDITOR.replace( '<?php echo $field_id ?>' );
 		CKEDITOR.config.height = '150' ;
 		$('.cke_editor img').css({'max-width': '100%'})
 	</script>
 
-	<input type="hidden" class="field_type" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index' ) ?>][field_type]" value="text" style="visibility: hidden; z-index: -1;">
-	<input type="hidden" class="tablename" value="<?php echo Data::getValue( $viewdict, 'field_table' ) ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index' ) ?>][tablename]">
-	<input type="hidden" class="col_name" value="<?php echo Data::getValue( $viewdict, 'field_colname' ) ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index' ) ?>][col_name]">
-	<?php $i=0; ?>
-	<?php foreach ($viewdict['field_conditions'] as $c) { ?>
-		<input type="hidden" class="conditionkey_<?php echo $i ?>" value="<?php echo $c['key'] ?>" name="fieldarray[<?php echo $viewdict['field_index'] ?>][field_conditions][<?php echo $i ?>][key]">
-		<input type="hidden" class="conditionvalue_<?php echo $i ?>" value="<?php echo $c['value'] ?>" name="fieldarray[<?php echo $viewdict['field_index'] ?>][field_conditions][<?php echo $i ?>][value]">
-		<?php $i++; ?>
+	<?php if( $is_smart ) { ?>
+		<input type="hidden" class="field_type" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index' ) ?>][field_type]" value="text" style="visibility: hidden; z-index: -1;">
+		<input type="hidden" class="tablename" value="<?php echo Data::getValue( $viewdict, 'field_table' ) ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index' ) ?>][tablename]">
+		<input type="hidden" class="col_name" value="<?php echo Data::getValue( $viewdict, 'field_colname' ) ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index' ) ?>][col_name]">
+		<?php $i=0; ?>
+		<?php foreach ($viewdict['field_conditions'] as $c) { ?>
+			<input type="hidden" class="conditionkey_<?php echo $i ?>" value="<?php echo $c['key'] ?>" name="fieldarray[<?php echo $viewdict['field_index'] ?>][field_conditions][<?php echo $i ?>][key]">
+			<input type="hidden" class="conditionvalue_<?php echo $i ?>" value="<?php echo $c['value'] ?>" name="fieldarray[<?php echo $viewdict['field_index'] ?>][field_conditions][<?php echo $i ?>][value]">
+			<?php $i++; ?>
+		<?php } ?>
 	<?php } ?>
 </div>
 
