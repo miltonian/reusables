@@ -143,20 +143,23 @@ class CustomCode {
 			return;
 		}
 		$other = $id_arr[1];
-		if( !$isdata ) {
+		if( !$isdata && !$isoptions ) {
 			$other = str_replace(" ", "", $other);
 		}
 		$other = str_replace(");", "", $other);
 		$values = explode(",", $other);
 		$view_inputs = [];
+		$i=0;
 		foreach ($values as $v) {
 
 			$v = explode(":", $v);
 			if( isset($v[1]) ) {
 				$view_inputs[$v[0]] = $v[1];
 			} else {
-				$view_inputs[$v[0]] = "";
+				// $view_inputs[$v[0]] = "";
+				$view_inputs[$i] = $v[0];
 			}
+			$i++;
 		}
 
 		if( isset( self::$viewsSet[$identifier] ) && !$isoptions && !$isdata ) {
@@ -235,10 +238,29 @@ class CustomCode {
 		// exit( json_encode( $view_inputs ) );
 		$thisdata = [];
 		foreach ($view_inputs as $key => $value) {
-			$key = ltrim($key, ' ');
-	        $key = rtrim($key, ' ');
-			$key = str_replace("\"", "", $key);
-			array_push( $thisdata, $key );
+			// exit( json_encode( $key));
+			if( is_numeric($key) ) {
+
+				$value = ltrim($value, ' ');
+		        $value = rtrim($value, ' ');
+		        $value = ltrim($value, '\"');
+		        $value = rtrim($value, '\"');
+		        array_push( $thisdata, $value );
+			} else {
+
+				$key = ltrim($key, ' ');
+		        $key = rtrim($key, ' ');
+		        $key = ltrim($key, '\"');
+		        $key = rtrim($key, '\"');
+
+		        $value = ltrim($value, ' ');
+		        $value = rtrim($value, ' ');
+		        $value = ltrim($value, '\"');
+		        $value = rtrim($value, '\"');
+		        $thisdata[$key] = $value;
+			}
+			// $key = str_replace("\"", "", $key);
+			// array_push( $thisdata, $value );
 		}
 		// $view_inputs = json_decode($view_inputs, true);
 		// exit( json_encode( [$thisdata, $identifier] ) );
@@ -251,8 +273,11 @@ class CustomCode {
 
 	public static function addOptions( $output, $matches, $str, $index, $view_inputs, $identifier) 
 	{
-		// exit( json_encode( $view_inputs ) );
 		foreach ($view_inputs as $key => $value) {
+			$value = ltrim($value, ' ');
+	        $value = rtrim($value, ' ');
+	        $value = ltrim($value, '\"');
+	        $value = rtrim($value, '\"');
 			Data::addOption( $value, $key, $identifier );
 		}
 		$output = str_replace($matches[$index], "", $output );
