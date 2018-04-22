@@ -67,9 +67,10 @@ class CustomCode {
 				$str = str_replace("{{", "", $matches[$index]);
 				$str = str_replace("}}", "", $str);
 				$str = str_replace("\n", "", $str);
+				$str = str_replace("\t", "", $str);
 				$str = $str;
 
-				if( is_string($str) && $str ) {
+				if( is_string($matches[$index]) && $matches[$index] != null ) {
 					// exit( json_encode( $str ) );
 					$check_arr = explode(".", $str);
 					if( sizeof($check_arr) == 2 ) {
@@ -108,6 +109,7 @@ class CustomCode {
 		// $str = str_replace(" ", "", $str);
 		$checkingforblankstring = str_replace("}}", "", $matches[$index]);
 		$checkingforblankstring = str_replace("\n", "", $checkingforblankstring);
+		$checkingforblankstring = str_replace("\t", "", $checkingforblankstring);
 		$checkingforblankstring = str_replace(" ", "", $checkingforblankstring);
 		if( $checkingforblankstring == "" ) {
 			// $output = str_replace($matches[$index], "", $output );
