@@ -50,7 +50,7 @@ if( sizeof($options) == 0 ) {
 	        // $value = ltrim($value, ' ');
 	        // $value = rtrim($value, ' ');
 	        $value = strtolower(str_replace(' ', '-', $value));
-	        $value = ["title"=>$title, "value"=>$value];
+	        $value = ["title"=>ucfirst(str_replace("_", " ", $title)), "value"=>$value];
 	        array_push($options, $value);
 	    } else {
 	        array_push($options, $value);
