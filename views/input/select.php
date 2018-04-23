@@ -21,6 +21,11 @@ if( $is_smart == "" ) {
 	$is_smart = false;
 }
 
+$hides_element_array = Data::getValue( $viewoptions, "hides_element_array" );
+if($identifier == "container_standalone") {
+
+// exit( json_encode( $hides_element_array ) );
+}
 $size = Data::getValue( $viewdict, "size" );
 
 if( $size == "" ) {
@@ -97,4 +102,17 @@ if( sizeof($options) == 0 ) {
 </div>
 
 <script>
+
+	$(".<?php echo $identifier ?> select.field_value").change(function () {
+
+		var hides_element_array = <?php echo json_encode( $hides_element_array) ?>;
+
+		$.each(hides_element_array, function(key, value) {
+	        if( $( ".<?php echo $identifier ?> select.field_value option:selected" ).text() == key ) {
+	        	$(value).hide();
+	        } else {
+	            $(value).show();
+	        }
+		})
+    });
 </script>
