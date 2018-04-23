@@ -24,6 +24,8 @@ if( $size == "" ) {
 }
 $sizeclass = "size_" . $size;
 
+$hide_element = Data::getValue( $viewoptions, "hides_element" );
+
 $field_name = "fieldarray[" . Data::getValue( $viewdict, 'field_index') . "][field_value]";
 $field_value = "{[]}";
 if( !$is_smart ) {
@@ -131,4 +133,12 @@ if( !isset($viewdict['field_conditions'] ) ){
 		}
 		$('.'+identifier+'.checkbox .field_value').val(thevalue);
 	})
+
+	$("." + identifier + " div input").change(function () {
+        if($(this).prop('checked') == true) {
+            $("<?php echo $hide_element; ?>").hide();
+        } else {
+            $("<?php echo $hide_element; ?>").show();
+        }
+    });
 </script>
