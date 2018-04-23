@@ -80,6 +80,24 @@ if( !$is_smart ) {
 	}
 }
 
+$keys = array_keys( $viewoptions );
+$attributes = "";
+foreach ($viewoptions as $key => $value) {
+	$key = $keys[$i];
+	if( $key != "is_smart" && $key != "is_currency" && $key != "is_hidden" && $key != "size" && $key != "labeltext" && $key != "placeholder" && $key != "field_value" ) {
+		if( $key == "" && is_numeric($value) ) {
+			continue;
+		}
+		$attributes .= " ";
+		if( $key == "" ) {
+			$attributes .= $value . " = " . $value ;
+		} else {
+			$attributes .= $key . " = " . $value;
+		}
+		$attributes .= " ";
+	}
+}
+
 ?>
 
 <style>
@@ -93,11 +111,11 @@ if( !$is_smart ) {
 	<?php } ?>
 	<?php if( $is_currency != "" ){ ?>
 		<span class="input_groupaddon">$</span>
-		<input type="text" class="field_value input_withaddon" placeholder="<?php echo $placeholder ?>" value="<?php echo $field_value ?>" name="<?php echo $field_name ?>">
+		<input type="text" class="field_value input_withaddon" placeholder="<?php echo $placeholder ?>" value="<?php echo $field_value ?>" name="<?php echo $field_name ?>" <?php echo $attributes ?> >
 	<?php } else if( $is_hidden ){ ?>
-		<input type="hidden" class="field_value" placeholder="<?php echo $placeholder ?>" value="<?php echo $field_value ?>" name="<?php echo $field_name ?>">
+		<input type="hidden" class="field_value" placeholder="<?php echo $placeholder ?>" value="<?php echo $field_value ?>" name="<?php echo $field_name ?>" <?php echo $attributes ?> >
 	<?php } else{ ?>
-		<input type="text" class="field_value" placeholder="<?php echo $placeholder ?>" value="<?php echo $field_value ?>" name="<?php echo $field_name ?>">
+		<input type="text" class="field_value" placeholder="<?php echo $placeholder ?>" value="<?php echo $field_value ?>" name="<?php echo $field_name ?>" <?php echo $attributes ?>>
 	<?php } ?>
 
 	<?php if( $is_smart ) { ?>
