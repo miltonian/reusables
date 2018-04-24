@@ -82,6 +82,9 @@ if( !isset($viewdict['field_conditions'] ) ){
 			<?php $i=0; ?>
 			<?php foreach($options as $o ) { ?>
 				<input type="checkbox" class="checkbox_inner index_<?php echo $i ?>" value="<?php echo $o['value'] ?>"><span class="checkbox_title"><?php echo $o['title'] ?></span>
+				<?php if( isset($viewoptions['breaks']) ) { ?>
+					<br>
+				<?php } ?>
 				<?php $i++; ?>
 			<?php } ?>
 		</div>
