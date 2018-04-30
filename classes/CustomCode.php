@@ -7,6 +7,7 @@ class CustomCode {
 	public static $viewsSet = [];
 	public static $optionsSet = [];
 	public static $dataSet = [];
+	public static $startSet = [];
 
 	public static function place( $code )
 	{
@@ -116,10 +117,7 @@ class CustomCode {
 			$output = CustomCode::str_replace_first($matches[$index], "", $output );
 			return $output;
 		}
-		// if( $index == 5 ) {
 
-		// 	exit( json_encode( $matches[$index] ) );
-		// }
 		$id_arr = explode("(", $str);
 		$str_arr = $id_arr;
 		$identifier_arr = $str_arr[0];
@@ -140,8 +138,18 @@ class CustomCode {
 				$isdata=true;
 			}
 		}
+		$is_start = false;
+		$is_end = false;
+		if( sizeof($identifier_arr) == 2 ) {
+			$data_type = str_replace(" ", "", $identifier_arr[1]);
+			if( $data_type == "start" ) {
+				$is_start=true;
+			} else if( $data_type == "end" ) {
+				$is_end=true;
+			}
+		}
+
 		if( !isset($id_arr[1]) ) {
-			// exit( json_encode( $matches ) );
 			return;
 		}
 		$other = $id_arr[1];
@@ -164,10 +172,10 @@ class CustomCode {
 			$i++;
 		}
 
-		if( isset( self::$viewsSet[$identifier] ) && !$isoptions && !$isdata ) {
+		if( isset( self::$viewsSet[$identifier] ) && !$isoptions && !$isdata && !$is_start && !$is_end ) {
 			$output = str_replace( $matches[$index], "", $output );
 			return;
-		} else if( !$isoptions && !$isdata ) {
+		} else if( !$isoptions && !$isdata && !$is_start && !$is_end ) {
 			self::$viewsSet[$identifier] = true;
 		} else if( $isoptions ) {
 			if( !isset( self::$optionsSet[$identifier] ) ) {
@@ -190,8 +198,18 @@ class CustomCode {
 			} else {
 				self::$dataSet[$identifier][array_keys($view_inputs)[0]] = true;
 			}
+		} else if( $is_start ) {
+			// if( !isset( self::$startSet[$identifier] ) ) {
+			// 	self::$startSet[$identifier] = [];
+			// }
+
+			if( isset(self::$startSet[$identifier] ) ) {
+				$output = str_replace($matches[$index], "", $output );
+				return;
+			} else {
+				self::$startSet[$identifier] = $view_inputs[0];
+			}
 		}
-		
 		
 		$after_string = $output;
 		if( isset($view_inputs['view']) ) {
@@ -202,6 +220,12 @@ class CustomCode {
 		}
 		if( $isdata ) {
 			$after_string = CustomCode::addData( $output, $matches, $str, $index, $view_inputs, $identifier);
+		}
+		if( $is_start ) {
+			$after_string = CustomCode::addStart( $output, $matches, $str, $index, $view_inputs, $identifier);
+		}
+		if( $is_end ) {
+			$after_string = CustomCode::addEnd( $output, $matches, $str, $index, $view_inputs, $identifier);
 		}
 
 
@@ -281,6 +305,48 @@ class CustomCode {
 	        $value = ltrim($value, '\"');
 	        $value = rtrim($value, '\"');
 			Data::addOption( $value, $key, $identifier );
+		}
+		$output = str_replace($matches[$index], "", $output );
+
+		return $output;
+	}
+
+	public static function addStart( $output, $matches, $str, $index, $view_inputs, $identifier) 
+	{
+		foreach ($view_inputs as $key => $value) {
+			$value = ltrim($value, ' ');
+	        $value = rtrim($value, ' ');
+	        $value = ltrim($value, '\"');
+	        $value = rtrim($value, '\"');
+			if( strtolower($value) == "modal" ) {
+				// Modal::start($identifier);
+				$beforeafter_string = explode($matches[$index], $output);
+				$before_string = $beforeafter_string[0];
+				$after_string = $beforeafter_string[1];
+				$before_string = str_replace( $matches[$index], "", $before_string );
+				$after_string = str_replace( $matches[$index], "", $after_string );
+				CustomCode::place( $before_string );
+				call_user_func_array("\\Reusables\\Modal::start", [$identifier] );
+				return $after_string;
+			}
+		}
+		$output = str_replace($matches[$index], "", $output );
+
+		return $output;
+	}
+
+	public static function addEnd( $output, $matches, $str, $index, $view_inputs, $identifier) 
+	{
+		if( strtolower(self::$startSet[$identifier]) == "modal" ) {
+			// Modal::end($identifier);
+			$beforeafter_string = explode($matches[$index], $output);
+			$before_string = $beforeafter_string[0];
+			$after_string = $beforeafter_string[1];
+			$before_string = str_replace( $matches[$index], "", $before_string );
+			$after_string = str_replace( $matches[$index], "", $after_string );
+			CustomCode::place( $before_string );
+			call_user_func_array("\\Reusables\\Modal::end", [$identifier] );
+			return $after_string;
 		}
 		$output = str_replace($matches[$index], "", $output );
 
