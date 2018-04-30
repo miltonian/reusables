@@ -6,7 +6,16 @@ class Structure {
 
 	public static function place( $file, $data, $identifier )
 	{
+		$in_html = Page::inhtml();
+		if( $in_html ) {
+			CustomCode::end();
+		}
+
 		Views::addToQueue( "Structure", $file, $identifier, $data );
+
+		if( $in_html ) {
+			CustomCode::start();
+		}
 	}
 
 	public static function set( $file, $data, $identifier )
@@ -23,6 +32,18 @@ class Structure {
 		Data::addData( $data, $identifier );
 		return Views::makeView( $file, $identifier, "structure" );
 
+	}
+
+	public static function start( $identifier, $file )
+	{
+		// Structure::place( "modal_background_start", [], $identifier);
+		Structure::place( $file . "_start", [], $identifier);
+	}
+
+	public static function end( $identifier, $file )
+	{
+		// Structure::place( "modal_background_end", [], $identifier);
+		Structure::place( $file . "_end", [], $identifier);
 	}
 
 

@@ -182,7 +182,7 @@ class Views {
 
 		Views::analyzeView( $identifier );
 
-		if( $viewtype == "wrapper" ) {
+		if( $viewtype == "wrapper" && $file != "wrapper_start" && $file != "wrapper_end" ) {
 
 			ReusableClasses::addfile( "wrapper", "wrapper_1" );
 			$View = View::factory( 'reusables/views/wrapper/wrapper_1' );
@@ -197,6 +197,9 @@ class Views {
 			ReusableClasses::addfile( "structure", $file );
 			$View = View::factory( 'reusables/views/structure/' . $file );
 			$data = Data::retrieveDataWithID( $identifier );
+			$options = Data::retrieveOptionsWithID( $identifier );
+			$View->set( 'viewdict', $data );
+			$View->set( 'viewoptions', $options );
 			$View->set( 'structuredict', $data );
 			$View->set( 'identifier', $identifier );
 

@@ -1,0 +1,11 @@
+.wrapper_1.main { display: inline-block; position: relative; background-color: white; border: 1px solid #e0e0e0; /*height: 100%;*/ overflow-y: scroll; overflow-x: hidden; }
+	.wrapper_1.main.modal { display: none; max-width: 600px; max-height: 80%; overflow-y: scroll;  }
+
+@media( min-width: 0px ) {
+	.wrapper_1.main { margin: 0; padding: 10px; width: 100%; border-radius: 0; }
+}
+
+@media( min-width: 768px ) {
+	.wrapper_1.main { margin: 0px; padding: 10px 20px; padding: 0; width: calc( 100% - 0px ); }
+
+}

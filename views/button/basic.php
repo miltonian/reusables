@@ -8,7 +8,32 @@ Views::setParams(
 	$identifier
 );
 
+$title = Data::getValue( $viewdict, 'title' );
+if( $title == "" ) {
+	if( isset($viewdict[0]) ) {
+		if( is_string($viewdict[0]) ) {
+			$title = $viewdict[0];
+		}
+	}
+}
+
 $viewdict = Data::convertKeys( $viewdict );
+
+$connectedto_smartform = true;
+
+$modal = Data::getValue( $viewoptions, "modal" );
+
+$modal_type = "";
+if( $modal != "" ) {
+	$modal_type = "modal";
+	$modal_name = $modal["modalclass"];
+	$modal_parent = $modal["parentclass"];
+	$info = Data::retrieveInfoWithID($modal_name);
+	if( $info["file"] != "smartform" && $info["file"] != "smartform_inmodal" ) {
+		$connectedto_smartform = false;
+	}
+}
+$is_editable = Data::getValue( $viewoptions, "is_editable" );
 
 	if( isset( $viewdict['value'] ) ){ 
 		$data_id = $identifier;
@@ -32,12 +57,17 @@ if( isset( $viewdict[$identifier]['value'] ) ) {
 	$fullviewdict = $viewdict;
 }
 
+$classnames = Data::getValue( $viewoptions, "classnames" );
+
 
 ?>
+<style>
+	div.viewtype_button.basic.main { width: auto; }
+</style>
 
 <div class="viewtype_button <?php echo $identifier ?> basic main">
 	<a class="basic link" href="<?php echo Data::getValue( $viewdict, 'link' ) ?>">
-		<button class="basic button"><?php echo Data::getValue( $viewdict, 'title' ) ?></button>
+		<button class="basic button <?php echo $classnames ?>"><i class="<?php echo Data::getValue( $viewoptions, "i_classnames") ?>"></i> <?php echo $title ?></button>
 	</a>
 </div>
 
@@ -48,9 +78,16 @@ if( isset( $viewdict[$identifier]['value'] ) ) {
 
 
 	$('.<?php echo $identifier ?> .basic.button').click(function(e){
-		<?php
-			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier, true );
-		?>
+		var connectedto_smartform = <?php echo json_encode($connectedto_smartform) ?>;
+		if( connectedto_smartform == false ) {
+			e.preventDefault()
+			$("div.viewtype_structure.<?php echo $modal_name ?>_outer_structure.modal_background.main").css({"display": "inline-block"})
+			$("div.viewtype_structure.<?php echo $modal_name ?>_outer_structure.modal_background.main .<?php echo $modal_parent ?>").css({"display": "inline-block"})
+		} else {
+			<?php
+				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier, true );
+			?>
+		}
 	})
 
 </script>

@@ -1,12 +1,12 @@
 .main_with_hidden.main { position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; /*overflow: hidden; height: 100%;*/ }
 	.main_with_hidden.header { position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; }
-	.main_with_hidden.body { position: relative; display: inline-block; margin: 0; padding: 10px 0; width: 100%; }
+	.main_with_hidden.body { position: relative; display: inline-block; margin: 0; padding: 10px 15px; width: 100%; font-weight: 300; padding-top: 0; }
 	.main_with_hidden.column { position: absolute; display: inline-block; margin: 0; padding: 0; padding: 10px 20px; width: 100%; width: calc(100% - 40px); left: 100%; top: 0; margin-top: 0px;}
 		.main_with_hidden.column.c1 { left: 0; position: relative; }
-	.main_with_hidden#close { display: inline-block; position: absolute; margin: 0; padding: 0; width: 40px; height: 60px; background: transparent; border-radius: 50%; border: 0px solid #efefef; font-size: 15px; top: 5px; cursor: pointer; z-index: 99; right: 0px; color: rgba(0, 0, 0, 0.5); }
-.main_with_hidden .basic.main { width: calc( 100% - 80px ); padding: 20px 40px; }
+	.main_with_hidden.close { display: inline-block; position: absolute; margin: 0; padding: 0; width: 40px; height: 60px; background: transparent; border-radius: 50%; border: 0px solid #efefef; font-size: 15px; top: 0px; cursor: pointer; z-index: 99; right: 0px; color: rgba(0, 0, 0, 0.9); }
+.main_with_hidden .basic.main { width: calc( 100% - 0px ); padding: 20px 15px; }
 
-.main_with_hidden .basic.title { text-transform: none; font-size: 18px; }
+.main_with_hidden .basic.main .basic.title { text-transform: none; font-size: 16px; text-align: left; }
 
 
 /*.main_with_hidden{ position: relative; display: inline-block; margin: 0; padding: 0; width: 100%; overflow: hidden; }
