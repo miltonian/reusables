@@ -52,12 +52,14 @@ class Modal {
 	{
 		Structure::start($identifier . "_outer_structure", "modal_background");
         	Wrapper::start($identifier . "_wrapper");
-	        	Structure::start($identifier . "_inner_structure", "main_with_hidden");
+	        	// Structure::start($identifier . "_inner_structure", "main_with_hidden");
+        	Structure::start($identifier, "main_with_hidden");
 	}
 
 	public static function end( $identifier )
 	{
-				Structure::end($identifier . "_inner_structure", "main_with_hidden");
+				// Structure::end($identifier . "_inner_structure", "main_with_hidden");
+				Structure::end($identifier, "main_with_hidden");
 	        Wrapper::end($identifier . "_wrapper");
         Structure::end($identifier . "_outer_structure", "modal_background");
 	}

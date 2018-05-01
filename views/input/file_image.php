@@ -29,13 +29,27 @@ if( $size == "" ) {
 }
 $sizeclass = "size_" . $size;
 
+$help_modal = Data::getValue( $viewoptions, "help_modal" );
+if( $help_modal != "" ) {
+	$help_modal = $help_modal["modalclass"];
+}
+
+$labeltext = Data::getValue( $viewdict, "labeltext" );
+if( $labeltext == "" ) {
+	$labeltext = Data::getValue( $viewoptions, "labeltext" );
+}
+
 ?>
 
 <style>
 </style>
 
 <div class="viewtype_input <?php echo $identifier ?> file_image <?php echo $sizeclass ?>">
-	<label style="margin-bottom: -5px; /* font-weight: 700; font-size: 11px; */"><?php echo Data::getValue( $viewdict, "labeltext") ?></label>
+	<?php 
+		Data::addData( ["title" => $labeltext], $identifier . "_label" );
+		Data::addOption( $help_modal, "help_modal", $identifier . "_label" );
+		echo Header::make( "basic_label", $identifier . "_label" ); 
+	?>
 	<label class="file_image" id='imglabel' for='<?php echo $identifier ?>_field_value' style="background-image: url('<?php echo Data::getValue( $viewdict,'background-image') ?>');"></label>
 	<input type="file" class="field_value" id="<?php echo $identifier ?>_field_value" value="<?php echo Data::getValue( $viewdict,'field_value') ?>" name="fieldimage[<?php echo Data::getValue( $viewdict,'field_index') ?>][field_value]" style="visibility: hidden; z-index: -1;">
 	<input type="hidden" class="field_type" name="fieldimage[<?php echo Data::getValue( $viewdict,'field_index') ?>][field_type]" value="image_<?php echo Data::getValue( $viewdict,'field_index') ?>" style="visibility: hidden; z-index: -1;">

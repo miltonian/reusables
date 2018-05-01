@@ -72,6 +72,11 @@ if( sizeof($options) == 0 ) {
 	}
 }
 
+$help_modal = Data::getValue( $viewoptions, "help_modal" );
+if( $help_modal != "" ) {
+	$help_modal = $help_modal["modalclass"];
+}
+
 ?>
 
 <style>
@@ -80,7 +85,11 @@ if( sizeof($options) == 0 ) {
 </style>
 
 <div class="viewtype_input <?php echo $identifier ?> select <?php echo $sizeclass ?>">
-	<label style="margin-bottom: -5px; /* font-weight: 700; font-size: 11px; */"><?php echo $labeltext ?></label>
+	<?php 
+		Data::addData( ["title" => $labeltext], $identifier . "_label" );
+		Data::addOption( $help_modal, "help_modal", $identifier . "_label" );
+		echo Header::make( "basic_label", $identifier . "_label" ); 
+	?>
 
 		<select class="field_value" name="<?php echo $field_name ?>" >
 			<?php foreach($options as $o ) { ?>

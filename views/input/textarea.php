@@ -66,8 +66,10 @@ if( !$is_smart ) {
 	}
 }
 
-// exit( json_encode( $identifier ) );
-
+$help_modal = Data::getValue( $viewoptions, "help_modal" );
+if( $help_modal != "" ) {
+	$help_modal = $help_modal["modalclass"];
+}
 
 ?>
 
@@ -75,7 +77,11 @@ if( !$is_smart ) {
 </style>
 
 <div class="viewtype_input <?php echo $identifier ?> textarea <?php echo $sizeclass ?>">
-	<label style="margin-bottom: -5px; /* font-weight: 700; font-size: 11px; */"><?php echo $labeltext ?></label>
+	<?php 
+		Data::addData( ["title" => $labeltext], $identifier . "_label" );
+		Data::addOption( $help_modal, "help_modal", $identifier . "_label" );
+		echo Header::make( "basic_label", $identifier . "_label" ); 
+	?>
 	<textarea class="field_value" name="<?php echo $field_name ?>"><?php echo $field_value ?></textarea>
 	
 	<?php if( $is_smart ) { ?>

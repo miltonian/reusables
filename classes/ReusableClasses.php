@@ -485,7 +485,7 @@ if($multiple_updates){
 			$i=0;
 			foreach ($actiondict as $action) {
 				// exit( json_encode( $action ) );
-				if( isset( $action['modal'] ) ){
+				if( isset( $action['modal'] ) || isset( $action['help_modal'] ) ){
 					$actiondict[$i]['type'] = "modal";
 					$actionmodal = Data::getValue( $action, 'modal' );
 					if( !is_array( $actionmodal ) && $actionmodal != "" ){
@@ -493,12 +493,17 @@ if($multiple_updates){
 							"parentclass" => $actionmodal . "_wrapper", 
 							"modalclass" => $actionmodal
 						];
-						$actiondict[$i]['modal'] = $new_actionmodal;
+						if( isset( $action['help_modal'] ) ) {
+							$actiondict[$i]['help_modal'] = $new_actionmodal;
+						} else {
+							$actiondict[$i]['modal'] = $new_actionmodal;
+						}
 					}
 				}
 				$i++;
 			}
 		}else {
+
 				if( isset( $actiondict['modal'] ) ){
 					$actiondict['type'] = "modal";
 					$actionmodal = Data::getValue( $actiondict, 'modal' );
@@ -507,7 +512,20 @@ if($multiple_updates){
 							"parentclass" => $actionmodal . "_wrapper", 
 							"modalclass" => $actionmodal
 						];
+
 						$actiondict['modal'] = $new_actionmodal;
+					}
+				} else if( isset( $actiondict['help_modal'] ) ) {
+					$actiondict['type'] = "modal";
+					$actionmodal = Data::getValue( $actiondict, 'help_modal' );
+					if( !is_array( $actionmodal ) && $actionmodal != "" ){
+						$new_actionmodal = [
+							"parentclass" => $actionmodal . "_wrapper", 
+							"modalclass" => $actionmodal
+						];
+
+						$actiondict['help_modal'] = $new_actionmodal;
+
 					}
 				}
 		}

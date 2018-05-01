@@ -85,6 +85,11 @@ foreach ($viewoptions as $key => $value) {
 	}
 }
 
+$help_modal = Data::getValue( $viewoptions, "help_modal" );
+if( $help_modal != "" ) {
+	$help_modal = $help_modal["modalclass"];
+}
+
 ?>
 
 <style>
@@ -95,7 +100,11 @@ foreach ($viewoptions as $key => $value) {
 
 <div class="viewtype_input <?php echo $identifier ?> timepicker <?php echo $sizeclass ?>">
 	<?php if( !$is_hidden ){ ?>
-		<label style="margin-bottom: -5px; /* font-weight: 700; font-size: 11px; */"><?php echo $labeltext ?></label>
+		<?php 
+			Data::addData( ["title" => $labeltext], $identifier . "_label" );
+			Data::addOption( $help_modal, "help_modal", $identifier . "_label" );
+			echo Header::make( "basic_label", $identifier . "_label" ); 
+		?>
 	<?php } ?>
 	<?php if( $is_currency != "" ){ ?>
 		<span class="input_groupaddon">$</span>

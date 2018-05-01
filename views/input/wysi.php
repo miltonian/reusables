@@ -54,6 +54,11 @@ if( !isset($viewdict['field_conditions'] ) ){
 	$viewdict['field_conditions'] = [];
 }
 
+$help_modal = Data::getValue( $viewoptions, "help_modal" );
+if( $help_modal != "" ) {
+	$help_modal = $help_modal["modalclass"];
+}
+
 ?>
 
 <style>
@@ -61,7 +66,11 @@ if( !isset($viewdict['field_conditions'] ) ){
 </style>
 
 <div class="viewtype_input <?php echo $identifier ?> wysi <?php echo $sizeclass ?>">
-	<label style="margin-bottom: 0px; /* font-weight: 700; font-size: 11px; */"><?php echo $labeltext ?></label>
+	<?php 
+		Data::addData( ["title" => $labeltext], $identifier . "_label" );
+		Data::addOption( $help_modal, "help_modal", $identifier . "_label" );
+		echo Header::make( "basic_label", $identifier . "_label" ); 
+	?>
 	<!-- <input type="text" class="field_value" placeholder="<?php /*echo $viewdict['placeholder']*/ ?>" value="<?php /*echo $viewdict['field_value']*/ ?>" name="fieldarray[<?php /*echo $viewdict['field_index']*/ ?>][field_value]"> -->
 	<textarea class="field_value" name='<?php echo $field_name ?>' id='<?php echo $field_id ?>' rows='10' cols='80'>
 		<?php /*echo $viewdict['field_value']*/ ?>

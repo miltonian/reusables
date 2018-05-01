@@ -1,0 +1,8 @@
+.basic_label.main { position: relative; display: inline-block; padding: 5px 0px; margin: 0; }
+	.basic_label.main .basic_label.title { display: inline-block; position: relative; margin: 0px 0px; padding: 0; width: 100%; color: #333333; font-size: 13px; font-weight: 400; }
+@media (min-width: 0px) {
+	.basic_label.main .basic_label.title { text-align: center; }
+}
+@media (min-width: 768px) {
+
+}
