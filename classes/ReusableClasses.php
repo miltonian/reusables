@@ -573,23 +573,18 @@ if($multiple_updates){
 	public static function setUpEditingForSection( $viewdict, $viewoptions, $identifier, $alwayseditable=false )
 	{
 
-
-		// echo " <script> ";
-			ReusableClasses::makeViewEditing( $viewdict, $viewoptions, $identifier, $alwayseditable );
-		// echo " </script> ";
-
-		// $dict = [
-		// 	'identifier' => $identifier,
-		// 	'viewdict' => $viewdict,
-		// 	'viewoptions' => $viewoptions,
-		// 	'viewtype' => 'View'
-		// ];
-		// array_push(self::$editableviews, $dict);
-		
-
+		ReusableClasses::makeViewEditing( $viewdict, $viewoptions, $identifier, $alwayseditable );
 	}
 
-
+	public static function clickToEditSection( $viewdict, $viewoptions, $identifier, $filename, $alwayseditable=false )
+	{
+		$filename = basename($filename, ".php");
+		echo "<script> ";
+			echo "$('.".$identifier." ." . $filename . ".clicktoedit').click(function(e){ ";
+				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+			echo "}); ";
+		echo "</script>";
+	}
 
 
 

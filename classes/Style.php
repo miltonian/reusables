@@ -17,7 +17,7 @@ class Style {
 				if( $currentversion ){
 					$parent_dir = PROJECT_ROOT . "/vendor/miltonian/custom/" . $currentversion . "/css/views/";
 				}else{
-					$parent_dir = PROJECT_ROOT . "/vendor/miltonian/custom/css/views/";
+					$parent_dir = PROJECT_ROOT . Page::$customviewscss;
 				}
 
 			}else if( $parent_dir == "customreusableview" ){

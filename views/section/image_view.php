@@ -1,50 +1,23 @@
 <?php
 
 namespace Reusables;
-
-	Views::setParams( 
-		[ "imagepath", "slug" ], 
-		[],
-		$identifier
-	);
-
-	$viewdict = Data::convertKeys( $viewdict );
-
-	if( isset( $viewdict['value'] ) ){ 
-		$data_id = $identifier;
-	}
-	if( isset($viewdict['editing']) ){ $isediting=1; }else{ $isediting=0; }
 	
-
-	$linkpath = Data::getValue( $viewoptions, 'pre_slug' ) . Data::getValue( $viewdict, 'slug' );
-	if( $linkpath == "" ) {
-		$linkpath = "#";
-	}
-	$optiontype = Data::getValue( $viewoptions, 'type' );
-	$fullarray = Data::getFullArray( $viewdict );
-	
-	if( isset( $viewdict[$identifier]['value'] ) ) {
-		$fullviewdict = Data::getFullArray( $viewdict )[$identifier]['value'];
-	}else{
-		$fullviewdict = $viewdict;
-	}
-
-
+extract( Views::setUp( $identifier ) );
 
 ?>
 
+<div class="viewtype_section image_view main <?php echo $identifier ?>">
 
-<div class="viewtype_section image_view clicktoedit main <?php echo $identifier ?>">
-	<img class="image_view image" src="<?php echo Data::getValue($viewdict, 'imagepath') ?>">
+	<?php $i=0; ?>
+	<?php foreach ($viewvalues as $key => $value) {  ?>
+		<img class="image_view image index_<?php echo $i ?> clicktoedit" src="<?php echo Data::getValue($value, 'imagepath', $identifier) ?>">
+		<?php $i++; ?>
+	<?php } ?>
 </div>
 
-<script>
-
-		$('.<?php echo $identifier ?>.image_view.clicktoedit').click(function(e){
-			<?php
-				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
-			?>
-		})
 
 
-</script>
+
+
+<?php ReusableClasses::clickToEditSection( $viewdict, $viewoptions, $identifier, __FILE__ ); ?>
+

@@ -2,43 +2,7 @@
 
 namespace Reusables;
 
-	/*
-		$viewdict = [
-			"featured_imagepath"=>"",
-			"logo_imagepath"=>"",
-			"title"=>"",
-			"adposition"=>0,
-			"desc"=>""
-		]
-	*/
-	Views::setParams( 
-		[ "imagepath", "logo", "title", "slug" ], 
-		[],
-		$identifier
-	);
-
-	$viewdict = Data::convertKeys( $viewdict );
-
-	if( isset( $viewdict['value'] ) ){ 
-		$data_id = $identifier;
-	}
-	if( isset($viewdict['editing']) ){ $isediting=1; }else{ $isediting=0; }
-	
-
-	$linkpath = Data::getValue( $viewoptions, 'pre_slug' ) . Data::getValue( $viewdict, 'slug' );
-	if( $linkpath == "" ) {
-		$linkpath = "#";
-	}
-	$optiontype = Data::getValue( $viewoptions, 'type' );
-	$fullarray = Data::getFullArray( $viewdict );
-	
-	if( isset( $viewdict[$identifier]['value'] ) ) {
-		$fullviewdict = Data::getFullArray( $viewdict )[$identifier]['value'];
-	}else{
-		$fullviewdict = $viewdict;
-	}
-
-
+extract( Views::setUp( $identifier ) );
 
 ?>
 
@@ -53,24 +17,18 @@ namespace Reusables;
 	<?php } ?>
 </style>
 
-<div class="viewtype_section jumbotron_bottomtext <?php echo $identifier ?> main clicktoedit">
-		<div class="backgroundimage" style="background-image: url('<?php echo Data::getValue( $viewdict, 'imagepath' ) ?>');">
+<div class="viewtype_section jumbotron_bottomtext <?php echo $identifier ?> main">
+	<?php foreach ($viewvalues as $key => $value) { ?>
+	
+		<div class="backgroundimage index_<?php echo $key ?> clicktoedit" style="background-image: url('<?php echo Data::getValue( $value, 'imagepath', $identifier ) ?>');">
 			<div class="gradient"></div>
 		</div>
 		<div class="header">
-			<img id="logo" src="<?php echo Data::getValue( $viewdict, 'logo' ) ?>">
-			<h3 id="title"><?php echo Data::getValue( $viewdict, 'title' ) ?></h3>
+			<img id="logo" src="<?php echo Data::getValue( $value, 'logo', $identifier ) ?>">
+			<h3 id="title"><?php echo Data::getValue( $value, 'title', $identifier ) ?></h3>
 		</div>
-	<a class="jumbotron_bottomtext link" href="<?php echo $linkpath ?>"></a>
+		<a class="jumbotron_bottomtext link" href="<?php echo Data::getValue( $value, 'linkpath', $identifier) ?>"></a>
+	<?php } ?>
 </div>
 
-<script>
-
-		$('.<?php echo $identifier ?>.jumbotron_bottomtext.clicktoedit').click(function(e){
-			<?php
-				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
-			?>
-		})
-
-
-</script>
+<?php ReusableClasses::clickToEditSection( $viewvalues, $viewoptions, $identifier, __FILE__ ) ?>

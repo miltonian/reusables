@@ -285,6 +285,16 @@ class Data {
 							$table_identifier = str_replace("_cell_".$cellindex, "", $dict['data_id']);
 							$tablename = Data::getDefaultTableNameWithID($table_identifier);
 						}
+					} else if($identifier != "") {
+						$info = Data::retrieveInfoWithID( $identifier );
+
+						if( strtolower($info['viewtype']) == "cell" ) {
+							$cellindex = Data::getValue( $dict, 'index' );
+							$table_identifier = str_replace("_cell_".$cellindex, "", $identifier);
+							$tablename = Data::getDefaultTableNameWithID($table_identifier);
+						} else {
+							$tablename = Data::getDefaultTableNameWithID($identifier);
+						}
 					}
 				}
 				

@@ -8,13 +8,37 @@ if( !defined( 'PROJECT_ROOT' ) ){
 
 class Page {
 
-	public static $customdir="custom/views/";
-	protected static $page_in_html=false;
+	public static $customdir = "custom/views/";
+	public static $custompagescss = '/vendor/miltonian/custom/css/pages/';
+	public static $customviewscss = '/vendor/miltonian/custom/css/views/';
+	public static $custompagesjs = '/vendor/miltonian/custom/js/pages/';
+	public static $customviewsjs = '/vendor/miltonian/custom/js/views/';
+	protected static $page_in_html = false;
 
 
 	public static function setCustomDir( $dir )
 	{
 		Page::$customdir = $dir;
+	}
+
+	public static function setCustomCSSDir( $dir )
+	{
+		Page::$custompagescss = $dir;
+	}
+
+	public static function setCustomCSSViews( $dir )
+	{
+		Page::$customviewscss = $dir;
+	}
+
+	public static function setCustomJSDir( $dir )
+	{
+		Page::$custompagesjs = $dir;
+	}
+
+	public static function setCustomJSViews( $dir )
+	{
+		Page::$customviewsjs = $dir;
 	}
 
 	public static function reusables($a)
@@ -76,28 +100,28 @@ class Page {
 		}
 		$page = rtrim($page, ".php");
 		
-		if( file_exists( BASE_DIR . '/vendor/miltonian/custom/css/pages/header.css' ) ){
-			echo "<link rel='stylesheet' type='text/css' href='" . PROJECT_ROOT . "/vendor/miltonian/custom/css/pages/header.css'>";
+		if( file_exists( BASE_DIR . self::$custompagescss . 'header.css' ) ) {
+			echo "<link rel='stylesheet' type='text/css' href='" . PROJECT_ROOT . self::$custompagescss . "header.css'>";
 		}
-		if( file_exists( BASE_DIR . '/vendor/miltonian/custom/css/pages/footer.css' ) ){
-			echo "<link rel='stylesheet' type='text/css' href='" . PROJECT_ROOT . "/vendor/miltonian/custom/css/pages/footer.css'>";
+		if( file_exists( BASE_DIR . self::$custompagescss . 'footer.css' ) ){
+			echo "<link rel='stylesheet' type='text/css' href='" . PROJECT_ROOT . self::$custompagescss . "footer.css'>";
 		}
 
 		if( $parent_dir == ""){
 			// exit( json_encode( PROJECT_ROOT . "/vendor/miltonian/custom/css/pages/" . basename($page, '.php') . ".css'>" ) );
-			echo "<link rel='stylesheet' type='text/css' href='" . PROJECT_ROOT . "/vendor/miltonian/custom/css/pages/" . basename($page, '.php') . ".css'>";
+			echo "<link rel='stylesheet' type='text/css' href='" . PROJECT_ROOT . self::$custompagescss . basename($page, '.php') . ".css'>";
 			if( file_exists( BASE_DIR . '/vendor/miltonian/custom/js/pages/before/' . basename($page, '.php') . ".js" ) ){
-				echo "<script type='text/javascript' src='" . PROJECT_ROOT . "" . '/vendor/miltonian/custom/js/pages/before/' . basename($page, '.php') . ".js" . "'></script>";
+				echo "<script type='text/javascript' src='" . PROJECT_ROOT . "" . self::$customviewsjs . 'before/' . basename($page, '.php') . ".js" . "'></script>";
 			}
 		}else{
 			// exit(json_encode( PROJECT_ROOT . "/vendor/miltonian/custom/css/pages/" . $parent_dir . "/" . basename($page, '.php') . ".css'>" ) );
-			if( file_exists(BASE_DIR . "/vendor/miltonian/custom/css/pages/" . $parent_dir . "/" . basename($page, '.php') . ".css'>") ) {
-
-				echo "<link rel='stylesheet' type='text/css' href='" . PROJECT_ROOT . "/vendor/miltonian/custom/css/pages/" . $parent_dir . "/" . basename($page, '.php') . ".css'>";
+			if( file_exists(BASE_DIR . self::$custompagescss . $parent_dir . "/" . basename($page, '.php') . ".css") ) {
+				// exit( json_encode( "<link rel='stylesheet' type='text/css' href='" . BASE_DIR . "/vendor/miltonian/custom/css/pages/" . $parent_dir . "/" . basename($page, '.php') . ".css'>" ) );
+				echo "<link rel='stylesheet' type='text/css' href='" . PROJECT_ROOT . self::$custompagescss . $parent_dir . "/" . basename($page, '.php') . ".css'>";
 			}
 
-			if( file_exists( BASE_DIR . "/vendor/miltonian/custom/js/pages/before/" . $parent_dir . "/" . basename($page, '.php') . ".js" ) ){
-				echo "<script type='text/javascript' src='" . PROJECT_ROOT . "" . '/vendor/miltonian/custom/js/pages/before/' . $parent_dir . '/' . basename($page, '.php') . ".js" . "'></script>";
+			if( file_exists( BASE_DIR . self::$custompagesjs . "before/" . $parent_dir . "/" . basename($page, '.php') . ".js" ) ){
+				echo "<script type='text/javascript' src='" . PROJECT_ROOT . "" . self::$custompagesjs . 'before/' . $parent_dir . '/' . basename($page, '.php') . ".js" . "'></script>";
 			}
 		}
 		// echo "<link rel='stylesheet' type='text/css' href='/vendor/miltonian/custom/css/pages/" . basename($page, '.php') . ".css'>";

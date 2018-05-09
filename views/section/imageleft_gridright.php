@@ -2,13 +2,6 @@
 
 namespace Reusables;
 
-	Views::setParams( 
-		[ ["imagepath", "slug", "title"] ], 
-		[],
-		$identifier,
-		4
-	);
-
 
 if( isset($viewdict['value']) ){
 	$images = $viewdict['value'];
@@ -26,13 +19,8 @@ foreach ($images as $im) {
 	$i++;
 }
 
-
-// $images = Data::getValue( $viewdict, 'value' );
-// $images = Data::convertKeys( $images, $identifier );
-// exit( json_encode( $images[2] ) );
-// $linkpath = Data::getValue( $viewoptions, 'pre_slug' ) . Data::getValue( $viewdict, 'slug' );
 foreach ($images as $im) {
-	// exit( json_encode( $viewdict ) );
+
 	if( isset( $viewoptions['pre_slug'] ) ) {
 		$preslug = Data::getValue( $viewoptions, 'pre_slug' );
 	}
@@ -47,7 +35,6 @@ if( isset( $viewdict[$identifier]['value'] ) ) {
 }
 
 $optiontype = Data::getValue( $viewoptions, 'type' );
-// exit( json_encode( $fullviewdict ) );
 
 ?>
 
@@ -87,13 +74,4 @@ $optiontype = Data::getValue( $viewoptions, 'type' );
 	</div>
 </div>
 
-<script>
-
-		$('.imageleft_gridright.clicktoedit').click(function(e){
-			<?php
-				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
-			?>
-		})
-
-
-</script>
+<?php ReusableClasses::clickToEditSection( $viewdict, $viewoptions, $identifier, __FILE__ ) ?>

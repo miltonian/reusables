@@ -2,33 +2,7 @@
 
 namespace Reusables;
 
-	Views::setParams( 
-		[ "imagepath", "title", "subtitle", "slug" ], 
-		[],
-		$identifier
-	);
-
-	$viewdict = Data::convertKeys( $viewdict );
-
-	if( isset( $viewdict['value'] ) ){ 
-		$data_id = $identifier;
-	}
-	if( isset($viewdict['editing']) ){ $isediting=1; }else{ $isediting=0; }
-	
-
-	$slug = Data::getValue( $viewoptions, 'pre_slug' ) . Data::getValue( $viewdict, 'slug' );
-	if( $slug == "" ) {
-		$slug = "#";
-	}
-	$optiontype = Data::getValue( $viewoptions, 'type' );
-	$fullarray = Data::getFullArray( $viewdict );
-	
-	if( isset( $viewdict[$identifier]['value'] ) ) {
-		$fullviewdict = Data::getFullArray( $viewdict )[$identifier]['value'];
-	}else{
-		$fullviewdict = $viewdict;
-	}
-
+extract( Views::setUp( $identifier ) );
 
 
 ?>
@@ -39,30 +13,24 @@ namespace Reusables;
 			.hero:hover { opacity: 0.8; }
 	<?php } ?>
 		.hero.link { position: absolute; display: inline-block; margin: 0; padding: 0; width: 100%; height: 100%; }
-	<?php if( $slug == "" && $optiontype == "") { ?>
+	<?php if( $linkpath == "" && $optiontype == "") { ?>
 		/*.hero.link { display: none; }*/
 	<?php } ?>
 </style>
 
-<div class="viewtype_section hero <?php echo $identifier ?> main clicktoedit">
-		<div class="hero backgroundimage" style="background-image: url('<?php echo Data::getValue( $viewdict, 'imagepath' ) ?>');">
+<div class="viewtype_section hero <?php echo $identifier ?> main">
+	<?php foreach ($viewvalues as $key => $value) { ?>
+		
+		<div class="hero backgroundimage index_<?php echo $key ?> clicktoedit" style="background-image: url('<?php echo Data::getValue( $value, 'imagepath' ) ?>');">
 			<div class="hero overlay"></div>
 			<div class="hero header">
-				<img class="hero" id="logo" src="<?php echo Data::getValue( $viewdict, 'logo' ) ?>">
-				<h3 class="hero" id="title"><?php echo Data::getValue( $viewdict, 'title' ) ?></h3>
-				<h3 class="hero" id="subtitle"><?php echo Data::getValue( $viewdict, 'subtitle' ) ?></h3>
+				<img class="hero" id="logo" src="<?php echo Data::getValue( $value, 'logo', $identifier ) ?>">
+				<h3 class="hero" id="title"><?php echo Data::getValue( $value, 'title', $identifier ) ?></h3>
+				<h3 class="hero" id="subtitle"><?php echo Data::getValue( $value, 'subtitle', $identifier ) ?></h3>
 			</div>
 		</div>
-	<a class="hero link" href="<?php echo Data::getValue( $slug ) ?>"></a>
+		<a class="hero link" href="<?php echo Data::getValue( $value, "linkpath", $identifier ) ?>"></a>
+	<?php } ?>
 </div>
 
-<script>
-
-		$('.<?php echo $identifier ?>.hero.clicktoedit').click(function(e){
-			<?php
-				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
-			?>
-		})
-
-
-</script>
+<?php ReusableClasses::clickToEditSection( $viewdict, $viewoptions, $identifier, __FILE__ ) ?>

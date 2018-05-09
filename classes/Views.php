@@ -680,4 +680,52 @@ return;
 	    return substr($string, $ini, $len);
 	}
 
+	public static function setUp( $identifier ) {
+
+		$viewdict = Data::retrieveDataWithID( $identifier );
+		$viewoptions = Data::retrieveOptionsWithID( $identifier );
+
+		if( isset( $viewdict['value'] ) ) {
+
+			unset($viewdict['value']['data_id']);
+			if( Data::isAssoc( $viewdict['value'] ) ) {
+				
+				$viewdict['value'] = [$viewdict['value']];
+			} 
+			$original_arr = $viewdict['value'];
+		} else {
+			unset($viewdict['data_id']);
+			if( Data::isAssoc( $viewdict ) ) {
+
+				$viewdict = [$viewdict];
+			}
+			$original_arr = $viewdict;
+		}
+
+		$viewvalues = [];
+		foreach ($original_arr as $key => $value) {
+
+			$dict = Data::convertKeysInTable( $identifier, $value );
+			if( isset($dict['editing']) ){ $isediting=1; }else{ $isediting=0; }
+			
+
+			$linkpath = Data::getValue( $viewoptions, 'pre_slug' ) . Data::getValue( $dict, 'slug' );
+			if( $linkpath == "" ) {
+				$linkpath = "#";
+			}
+			$dict['linkpath'] = $linkpath;
+			$optiontype = Data::getValue( $viewoptions, 'type' );
+			$fullarray = Data::getFullArray( $dict );
+			
+			if( isset( $dict[$identifier]['value'] ) ) {
+				$fullviewdict = Data::getFullArray( $dict )[$identifier]['value'];
+			}else{
+				$fullviewdict = $dict;
+			}
+
+			array_push( $viewvalues, $dict );
+		}
+		return ["viewvalues" => $viewvalues, "linkpath"=>$linkpath, "data_id"=>$identifier];
+	}
+
 }
