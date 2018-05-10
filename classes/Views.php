@@ -725,7 +725,25 @@ return;
 
 			array_push( $viewvalues, $dict );
 		}
+		if( !isset( $linkpath ) ) {
+			$linkpath = "#";
+		}
 		return ["viewvalues" => $viewvalues, "linkpath"=>$linkpath, "data_id"=>$identifier];
+	}
+
+	public static function setContainerClass($file, $identifier)
+	{
+		echo " " . $identifier;
+		echo " main";
+		echo " " . basename($file, ".php"); 
+		echo " viewtype_" . ReusableClasses::parentDir($file);
+		echo " ";
+
+	}
+
+	public static function defaultStyling($file, $identifier, $viewvalues)
+	{
+		echo " .viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".inner { display: inline-block; position: relative; margin: 0; padding: 0; float: left; background-size: cover; background-repeat: no-repeat; background-position: center; width: ". ((1.0/sizeof($viewvalues)) * 100) . "%; } ";
 	}
 
 }

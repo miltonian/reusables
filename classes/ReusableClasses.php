@@ -19,6 +19,21 @@ class ReusableClasses {
 	//public static $PDO;
 	private $cryptKey = "Rxp45dn142etvQk9e17Oo3nx2xJKfkZs"; // Encryption Key
 
+	public static function parentDir($file)
+	{
+		$parentdir = ReusableClasses::dirname_r($file, 1);
+		$parentdir = basename($parentdir);
+		return $parentdir;
+	}
+	public static function dirname_r($path, $count=1)
+	{
+	    if ($count > 1){
+	       return dirname(ReusableClasses::dirname_r($path, --$count));
+	    }else{
+	       return dirname($path);
+	    }
+	}
+
 	public static function addfile( $parent_dir, $file )
 	{
 		array_push( self::$includedfiles, [ "parent_dir" => $parent_dir, "file" => $file ] );
