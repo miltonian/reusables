@@ -300,10 +300,13 @@ class CustomCode {
 	public static function addOptions( $output, $matches, $str, $index, $view_inputs, $identifier) 
 	{
 		foreach ($view_inputs as $key => $value) {
+
 			$value = ltrim($value, ' ');
 	        $value = rtrim($value, ' ');
 	        $value = ltrim($value, '\"');
 	        $value = rtrim($value, '\"');
+	        $value = trim($value);
+	        $key = trim($key);
 			Data::addOption( $value, $key, $identifier );
 		}
 		$output = str_replace($matches[$index], "", $output );
