@@ -162,7 +162,7 @@ class CustomCode {
 		$i=0;
 		foreach ($values as $v) {
 
-			$v = explode(":", $v);
+			$v = explode(":", $v, 2);
 			if( isset($v[1]) ) {
 				$view_inputs[$v[0]] = $v[1];
 			} else {
@@ -264,7 +264,7 @@ class CustomCode {
 		// exit( json_encode( $view_inputs ) );
 		$thisdata = [];
 		foreach ($view_inputs as $key => $value) {
-			// exit( json_encode( $key));
+
 			if( is_numeric($key) ) {
 
 				$value = ltrim($value, ' ');
@@ -278,19 +278,19 @@ class CustomCode {
 		        $key = rtrim($key, ' ');
 		        $key = ltrim($key, '\"');
 		        $key = rtrim($key, '\"');
+				$key = trim($key, ' ');
 
 		        $value = ltrim($value, ' ');
 		        $value = rtrim($value, ' ');
 		        $value = ltrim($value, '\"');
 		        $value = rtrim($value, '\"');
+		        
 		        $thisdata[$key] = $value;
 			}
 			// $key = str_replace("\"", "", $key);
 			// array_push( $thisdata, $value );
 		}
 		// $view_inputs = json_decode($view_inputs, true);
-		// exit( json_encode( [$thisdata, $identifier] ) );
-		// exit( json_encode( [["asdf", "second"], $identifier] ) );
 		Data::addData( $thisdata, $identifier );
 		$output = str_replace($matches[$index], "", $output );
 
@@ -299,14 +299,17 @@ class CustomCode {
 
 	public static function addOptions( $output, $matches, $str, $index, $view_inputs, $identifier) 
 	{
-		foreach ($view_inputs as $key => $value) {
 
+		foreach ($view_inputs as $key => $value) {
 			$value = ltrim($value, ' ');
 	        $value = rtrim($value, ' ');
 	        $value = ltrim($value, '\"');
 	        $value = rtrim($value, '\"');
 	        $value = trim($value);
 	        $key = trim($key);
+	        if( $key == "text_color" ) {
+// exit(json_encode( $value ) );
+	        }
 			Data::addOption( $value, $key, $identifier );
 		}
 		$output = str_replace($matches[$index], "", $output );

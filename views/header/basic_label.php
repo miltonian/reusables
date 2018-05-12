@@ -40,11 +40,14 @@ if( $help_modal != "" ) {
 
 <script>
 
-	$('.<?php echo $identifier ?> .basic_label.help_button').click(function(e){
-		e.preventDefault()
-		$("div.viewtype_structure.<?php echo $modal_name ?>_outer_structure.modal_background.main").css({"display": "inline-block"})
-		$("div.viewtype_structure.<?php echo $modal_name ?>_outer_structure.modal_background.main .<?php echo $modal_parent ?>").css({"display": "inline-block"})
-	})
+	<?php if( isset($modal_name) ) { ?>
+
+		$('.<?php echo $identifier ?> .basic_label.help_button').click(function(e){
+			e.preventDefault()
+			$("div.viewtype_structure.<?php echo $modal_name ?>_outer_structure.modal_background.main").css({"display": "inline-block"})
+			$("div.viewtype_structure.<?php echo $modal_name ?>_outer_structure.modal_background.main .<?php echo $modal_parent ?>").css({"display": "inline-block"})
+		})
+	<?php } ?>
 
 	$('.<?php echo $identifier ?>.basic_label.clicktoedit').click(function(e){
 		<?php

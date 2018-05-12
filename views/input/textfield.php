@@ -83,7 +83,8 @@ if( !$is_smart ) {
 $keys = array_keys( $viewoptions );
 $attributes = "";
 foreach ($viewoptions as $key => $value) {
-	$key = $keys[$i];
+	if( !isset( $keys[$key] ) ){ continue; }
+	$key = $keys[$key];
 	if( $key != "is_smart" && $key != "is_currency" && $key != "is_hidden" && $key != "size" && $key != "labeltext" && $key != "placeholder" && $key != "field_value" ) {
 		if( $key == "" && is_numeric($value) ) {
 			continue;

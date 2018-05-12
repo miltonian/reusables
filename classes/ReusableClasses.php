@@ -438,7 +438,7 @@ if($multiple_updates){
 		var type = " . json_encode( $optiontype ) . ";";
 		echo "console.log( JSON.stringify( ".json_encode( $optiontype )." ) );";
 
-		if( $optiontype == "modal" ){ 
+		if( $optiontype == "modal" && isset($viewoptions['modal']['modalclass']) ){ 
 			// extract( Input::convertInputKeys( $identifier . "_form" ));
 			// 	echo ' ' . Form::addJSClassToForm( $identifier . "_form", $viewdict, $input_onlykeys, $identifier . "_form" ) . '; ';
 			// 	echo " /*asdf*/ ";

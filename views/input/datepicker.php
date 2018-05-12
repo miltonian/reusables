@@ -66,7 +66,7 @@ if( !$is_smart ) {
 $keys = array_keys( $viewoptions );
 $attributes = "";
 foreach ($viewoptions as $key => $value) {
-	$key = $keys[$i];
+	if( !isset( $keys[$key] ) ){ continue; }
 	if( $key != "is_smart" && $key != "is_currency" && $key != "is_hidden" && $key != "size" && $key != "labeltext" && $key != "placeholder" && $key != "field_value" ) {
 		if( $key == "" && is_numeric($value) ) {
 			continue;
@@ -134,7 +134,7 @@ if( $help_modal != "" ) {
 		$( "."+identifier+".datepicker #"+identifier+"_datepicker" ).datepicker();
 	} );
 
-var identifier = "<?php echo $identifier ?>";
+	var identifier = "<?php echo $identifier ?>";
 		identifier = identifier.replace('.', '\\.')
 	$('.'+identifier+'.datepicker #'+identifier+'_datepicker').datepicker({
 	    //comment the beforeShow handler if you want to see the ugly overlay
@@ -144,7 +144,6 @@ var identifier = "<?php echo $identifier ?>";
 	        }, 0);
 	    }
 	});
-
 
 
 </script>
