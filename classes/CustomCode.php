@@ -117,7 +117,6 @@ class CustomCode {
 			$output = CustomCode::str_replace_first($matches[$index], "", $output );
 			return $output;
 		}
-
 		$id_arr = explode("(", $str);
 		$str_arr = $id_arr;
 		$identifier_arr = $str_arr[0];
@@ -125,6 +124,7 @@ class CustomCode {
 		$identifier = $identifier_arr[0];
 		$identifier = str_replace(" ", "", $identifier);
 		$isoptions = false;
+		$isview = false;
 		if( sizeof($identifier_arr) == 2 ) {
 			$data_type = str_replace(" ", "", $identifier_arr[1]);
 			if( $data_type == "options" ) {
@@ -136,6 +136,13 @@ class CustomCode {
 			$data_type = str_replace(" ", "", $identifier_arr[1]);
 			if( $data_type == "data" ) {
 				$isdata=true;
+			}
+		}
+		$isview = false;
+		if( sizeof($identifier_arr) == 2 ) {
+			$data_type = str_replace(" ", "", $identifier_arr[1]);
+			if( $data_type == "view" ) {
+				$isview=true;
 			}
 		}
 		$is_start = false;
@@ -158,6 +165,7 @@ class CustomCode {
 		}
 		$other = str_replace(");", "", $other);
 		$values = explode(",", $other);
+
 		$view_inputs = [];
 		$i=0;
 		foreach ($values as $v) {
@@ -192,12 +200,12 @@ class CustomCode {
 				self::$dataSet[$identifier] = [];
 			}
 
-			if( isset(self::$dataSet[$identifier][array_keys($view_inputs)[0]] ) ) {
-				$output = str_replace($matches[$index], "", $output );
-				return;
-			} else {
+			// if( isset(self::$dataSet[$identifier][array_keys($view_inputs)[0]] ) ) {
+			// 	$output = str_replace($matches[$index], "", $output );
+			// 	return;
+			// } else {
 				self::$dataSet[$identifier][array_keys($view_inputs)[0]] = true;
-			}
+			// }
 		} else if( $is_start ) {
 			// if( !isset( self::$startSet[$identifier] ) ) {
 			// 	self::$startSet[$identifier] = [];
@@ -210,10 +218,16 @@ class CustomCode {
 				self::$startSet[$identifier] = $view_inputs[0];
 			}
 		}
-		
+
 		$after_string = $output;
-		if( isset($view_inputs['view']) ) {
-			$after_string = CustomCode::placeView( $output, $matches, $str, $index, $view_inputs, $identifier);
+		if( ( isset($view_inputs['view']) ) || $isview ) {
+			if( !isset($view_inputs['view']) ) {
+				$new_viewinputs = [];
+				$new_viewinputs['view'] = $view_inputs[0];
+			} else {
+				$new_viewinputs = $view_inputs;
+			}
+			$after_string = CustomCode::placeView( $output, $matches, $str, $index, $new_viewinputs, $identifier);
 		}
 		if( $isoptions ) {
 			$after_string = CustomCode::addOptions( $output, $matches, $str, $index, $view_inputs, $identifier);
@@ -291,6 +305,15 @@ class CustomCode {
 			// array_push( $thisdata, $value );
 		}
 		// $view_inputs = json_decode($view_inputs, true);
+		$current_data = Data::retrieveDataWithID($identifier);
+		if( $current_data != null ) {
+			$newdata = [];
+			if( Data::isAssoc($current_data) ) {
+				$current_data = [$current_data];
+			}
+			array_push($current_data, $thisdata);
+			$thisdata = $current_data;
+		}
 		Data::addData( $thisdata, $identifier );
 		$output = str_replace($matches[$index], "", $output );
 
@@ -307,9 +330,6 @@ class CustomCode {
 	        $value = rtrim($value, '\"');
 	        $value = trim($value);
 	        $key = trim($key);
-	        if( $key == "text_color" ) {
-// exit(json_encode( $value ) );
-	        }
 			Data::addOption( $value, $key, $identifier );
 		}
 		$output = str_replace($matches[$index], "", $output );

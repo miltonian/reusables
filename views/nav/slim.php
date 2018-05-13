@@ -4,7 +4,27 @@ namespace Reusables;
 
 if(!isset($isadmin)){ $isadmin=false; }
 
-$navbuttons = Data::getValue( $viewdict, 'pages' );
+extract( Views::setUp( $identifier ) );
+$navbuttons = [];
+if( isset( $viewvalues[0]['pages'] ) ) {
+	$navbuttons = $viewvalues[0]['pages'];
+} else {
+	if( sizeof($viewvalues) > 0 ) {
+		if( $viewvalues[0] > 0 ) {
+
+			foreach ($viewvalues[0] as $key => $value) {
+				if( $key == "linkpath" ) {
+					continue;
+				}
+				$dict = ["title"=>$key, "slug"=>$value];
+				array_push( $navbuttons, $dict );
+			}
+		}
+	}
+}
+
+// exit( json_encode( $navbuttons ) );
+// $navbuttons = Data::getValue( $viewdict, 'pages' );
 if($navbuttons == "") {
 	$navbuttons = [];
 }
@@ -17,22 +37,46 @@ $required = array(
 
 if (!isset($viewdict['logolink'])) { $viewdict['logolink'] = ""; }
 
-// ReusableClasses::checkRequired( "navbar", $viewdict, $required );
-
-Views::setParams( 
-	["logolink", "logo", "brandname", "pages"=>["slug", "imagepath", "emoji", "name"]], 
-	["type", "modal", "attached", "link"],
-	$identifier
-);
-
 $dropdown_fullwidth = Data::getValue( $viewoptions, "dropdown_fullwidth" );
 if( $dropdown_fullwidth == "" ) {
 	$dropdown_fullwidth = false;
 }
 
+$position = Data::getValue( $viewoptions, "position" );
+$height = Data::getValue( $viewoptions, "height" );
+if( $height == "" ) {
+	$height = "60px";
+}
+$shadow = Data::getValue( $viewoptions, "shadow" );
+
+$dark = Data::getValue( $viewoptions, "dark" );
+
+$logo = Data::getValue( $viewoptions, "logo" );
+$title = Data::getValue( $viewdict, 'brandname' );
+if( $title == "" ) {
+	$title = Data::getValue( $viewoptions, "title" );
+}
 ?>
 
 <style>
+	<?php if( $position != "fixed" ) { ?>
+		.<?php echo $identifier ?> .slim.spacing { display: none; }
+		.<?php echo $identifier ?> .navbar.slim { position: relative; }
+	<?php } ?>
+	.<?php echo $identifier ?> { min-height: <?php echo $height ?>; }
+	.viewtype_nav.slim.<?php echo $identifier ?> .<?php echo $identifier ?>.slim.main.desktopnav { height: <?php echo $height ?>; }
+	<?php if( $shadow == "false" ) { ?>
+		.<?php echo $identifier ?>.slim.main { box-shadow: none; }
+	<?php } ?>
+	<?php if( $dark == true || $dark == "true" ) { ?>
+		.<?php echo $identifier ?> { background-color: #333; }
+		.navbar.slim.main { background-color: #333; color: white; }
+		.slim.desktopnav .slim.wrapper a { color: white; }
+		.slim.logo-div h3 { color: white; }
+	<?php } ?>
+	<?php if( $logo != "" && $title == "" ) { ?>
+		.slim.desktopnav .slim.topbarlogo { transform: translate(-50%, -50%); pointer-events: none; left: 50%; }
+	<?php } ?>
 
 </style>
 
@@ -41,11 +85,13 @@ if( $dropdown_fullwidth == "" ) {
 	<a class="slim" id="brandlink" href='/<?php echo Data::getValue( $viewdict, 'logolink' ) ?>'>
 		<?php if(isset($viewdict['logo'])){ ?>
 			<img class='slim topbarlogo' src='<?php echo Data::getValue( $viewdict, 'logo' ) ?>' width="auto" height="auto">
-		<?php }else{ ?>
+		<?php } else if( $logo != "" ) { ?>
+			<img class='slim topbarlogo' src='<?php echo $logo ?>' width="auto" height="auto">
+		<?php } else{ ?>
 			<h3 class="slim" id="brandname"><?php echo Data::getValue( $viewdict, 'brandname' ) ?></h3>
 		<?php } ?>
 	</a>
-	<?php if( sizeof( $viewdict['pages'] ) > 0 ){ ?>
+	<?php if( sizeof( $navbuttons ) > 0 ){ ?>
 		<img class='slim dropdown menubtn' src='https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png' style='width: auto; margin-right: 30px;'>
 	<?php } ?>
 	<div class='slim dropdown-content'>
@@ -59,8 +105,10 @@ if( $dropdown_fullwidth == "" ) {
 	<a href='/<?php echo $viewdict['logolink'] ?>' class='slim logo-div'>
 		<?php if(isset($viewdict['logo'])){ ?>
 			<img class='slim topbarlogo' src='<?php echo  Data::getValue( $viewdict, 'logo' ) ?>' width="auto" height="auto">
+		<?php } else if( $logo != "" ) { ?>
+			<img class='slim topbarlogo' src='<?php echo $logo ?>' width="auto" height="auto">
 		<?php } ?>
-			<h3><?php echo  Data::getValue( $viewdict, 'brandname' ) ?></h3>
+			<h3><?php echo $title ?></h3>
 
 	</a>
 	<?php

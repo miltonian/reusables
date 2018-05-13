@@ -751,24 +751,29 @@ return;
 		$viewoptions = Data::retrieveOptionsWithID( $identifier );
 		$text_color = Data::getValue( $viewoptions, "text_color" );
 		$background_color = Data::getValue( $viewoptions, "background_color" );
+		$image_size = Data::getValue( $viewoptions, "image_size" );
+		if( $image_size == "" ) {
+			$image_size = "cover";
+		}
 
 echo " <style> ";
-		echo " ." . $identifier . ".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".inner { display: inline-block; position: relative; margin: 0; padding: 0; float: left; background-size: cover; background-repeat: no-repeat; background-position: center; width: ". ((1.0/sizeof($viewvalues)) * 100) . "%; } ";
+	echo " ." . $identifier . ".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".inner { display: inline-block; position: relative; margin: 0; padding: 0; float: left; background-size: ".$image_size."; background-repeat: no-repeat; background-position: center; width: ". ((1.0/sizeof($viewvalues)) * 100) . "%; } ";
+		echo " ." . $identifier . ".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".image { display: inline-block; position: relative; margin: 0; padding: 0; float: left; background-size: ".$image_size."; background-repeat: no-repeat; background-position: center; } ";
 
 		if( Data::getValue( $viewoptions, "dark") == "true" || Data::getValue( $viewoptions, "dark") == true ) {
 			$text_color = "#fff"; $background_color = "#333";
 		}
 		if( $text_color != "" ) {
-			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".title { color: ".$text_color." !important; } ";
-			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".subtitle { color: ".$text_color." !important; } ";
-			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .description { color: ".$text_color." !important; } ";
+			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".title { color: ".$text_color." ; } ";
+			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".subtitle { color: ".$text_color." ; } ";
+			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .description { color: ".$text_color."; } ";
 		} else {
-			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".title { color: #333 !important; } ";
-			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".subtitle { color: #333 !important; } ";
-			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .description { color: #333 !important; } ";
+			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".title { color: #333 ; } ";
+			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".subtitle { color: #333 ; } ";
+			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .description { color: #333; } ";
 		}
 		if( $background_color != "" ) {
-			echo " .viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." { background-color: ".$background_color." !important; } ";
+			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." { background-color: ".$background_color."; } ";
 		}
 		echo " </style> ";
 	}
