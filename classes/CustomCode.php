@@ -8,6 +8,7 @@ class CustomCode {
 	public static $optionsSet = [];
 	public static $dataSet = [];
 	public static $startSet = [];
+	public static $fontSet = [];
 
 	public static function place( $code )
 	{
@@ -155,6 +156,13 @@ class CustomCode {
 				$is_end=true;
 			}
 		}
+		$isfont = false;
+		if( sizeof($identifier_arr) == 2 ) {
+			$data_type = str_replace(" ", "", $identifier_arr[1]);
+			if( $data_type == "font" ) {
+				$isfont = true;
+			}
+		}
 
 		if( !isset($id_arr[1]) ) {
 			return;
@@ -217,6 +225,13 @@ class CustomCode {
 			} else {
 				self::$startSet[$identifier] = $view_inputs[0];
 			}
+		} else if( $isfont ) {
+
+			if( !isset( self::$fontSet[$identifier] ) ) {
+				self::$fontSet[$identifier] = [];
+			}
+
+			self::$dataSet[$identifier][array_keys($view_inputs)[0]] = true;
 		}
 
 		$after_string = $output;
@@ -240,6 +255,9 @@ class CustomCode {
 		}
 		if( $is_end ) {
 			$after_string = CustomCode::addEnd( $output, $matches, $str, $index, $view_inputs, $identifier);
+		}
+		if( $isfont ) {
+			$after_string = CustomCode::addFont( $output, $matches, $str, $index, $view_inputs, $identifier );
 		}
 
 
@@ -374,6 +392,46 @@ class CustomCode {
 			call_user_func_array("\\Reusables\\Modal::end", [$identifier] );
 			return $after_string;
 		}
+		$output = str_replace($matches[$index], "", $output );
+
+		return $output;
+	}
+
+	public static function addFont( $output, $matches, $str, $index, $view_inputs, $identifier )
+	{
+		$linkvalue = "";
+		$fontfamily = "";
+		$fonttype = "";
+		$fontother = "";
+		$familyi=100;
+
+		$i=0;
+		foreach ($view_inputs as $key => $value) {
+			if( $key == "link" ) {
+				$linkvalue = $value;
+			} else if( $key == "font-family" ) {
+				$fontfamily = $value;
+				$familyi=$i;
+			} else if( $i>$familyi ) {
+				$fontfamily = $fontfamily . ", " . $value;
+			} else {
+				$fontother .= ", " . $value;
+			}
+			$i++;
+		}
+		$fontfamily = $fontfamily . $fontother;
+		$fontfamily = str_replace(";", "", $fontfamily);
+		echo "<link href=\"".$linkvalue."\" rel=\"stylesheet\">";
+		$thisoutput = "<style>";
+			if( $identifier == "all" ) {
+				$thisoutput .= " body, h1, h2, h3, h4, h5, h6, p, label, button, input, div";
+			}
+			$thisoutput .= "{ ";
+				$thisoutput .= " font-family: " . $fontfamily . ";";
+			$thisoutput .= " } ";
+		$thisoutput .= "</style>";
+echo $thisoutput;
+
 		$output = str_replace($matches[$index], "", $output );
 
 		return $output;
