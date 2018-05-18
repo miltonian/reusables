@@ -3,7 +3,7 @@
 namespace Reusables;
 
 
-$mainheaderdict = [ "title"=>$structuredict['title'] ];
+$mainheaderdict = [ "title"=>Data::getValue( $structuredict, "title") ];
 
 	$step1dict = ["steps" => Data::getValue( $structuredict, 'steps' ) ];
 
