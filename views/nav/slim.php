@@ -28,12 +28,6 @@ if( isset( $viewvalues[0]['pages'] ) ) {
 if($navbuttons == "") {
 	$navbuttons = [];
 }
-// exit( json_encode( $navbuttons ) );
-
-$required = array(
-	"pages"=>array("slug", "name|imagepath|emoji"), 
-	"logo|brandname"=>"",  
-);
 
 if (!isset($viewdict['logolink'])) { $viewdict['logolink'] = ""; }
 
@@ -68,7 +62,7 @@ if( $title == "" ) {
 	<?php if( $shadow == "false" ) { ?>
 		.<?php echo $identifier ?>.slim.main { box-shadow: none; }
 	<?php } ?>
-	<?php if( $dark == true || $dark == "true" ) { ?>
+	<?php if( ($dark == true && $dark != "false") || $dark == "true" ) { ?>
 		.<?php echo $identifier ?> { background-color: #333; }
 		.navbar.slim.main { background-color: #333; color: white; }
 		.slim.desktopnav .slim.wrapper a { color: white; }

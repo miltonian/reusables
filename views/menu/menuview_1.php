@@ -3,13 +3,26 @@
 namespace Reusables;
 
 	if(!isset($categoriesmodalarray)){ $categoriesmodalarray=array(); }
-	// exit( json_encode( $viewdict ) );
 
-	Views::setParams( 
-		[ "pages"=>["name", "slug"] ], 
-		[],
-		$identifier
-	);
+extract( Views::setUp( $identifier ) );
+$navbuttons = [];
+if( isset( $viewvalues[0]['pages'] ) ) {
+	$navbuttons = $viewvalues[0]['pages'];
+} else {
+	if( sizeof($viewvalues) > 0 ) {
+		if( $viewvalues[0] > 0 ) {
+
+			foreach ($viewvalues[0] as $key => $value) {
+				if( $key == "linkpath" ) {
+					continue;
+				}
+				$dict = ["title"=>$key, "slug"=>$value];
+				array_push( $navbuttons, $dict );
+			}
+		}
+	}
+}
+
 ?>
 
 <style>
@@ -22,28 +35,18 @@ namespace Reusables;
 			<button class="close">&#x2715;</button>
 		</div>
 		<ul>
-		<?php foreach ($viewdict['pages'] as $p) { ?>
+		<?php foreach ($navbuttons as $p) { ?>
 			<?php if( isset( $p[ 'buttons' ] )){ ?>
-				<a href="#" class="drop-down"><li><label><?php echo $p['name'] ?></label></li></a>
+				<a href="#" class="drop-down"><li><label><?php echo $p['title'] ?></label></li></a>
 				<ul class="tags-drop">
 					<?php foreach ($p['buttons'] as $c) { ?>
-						<a href="<?php echo $c['slug'] ?>"><li><label><?php echo $c['name'] ?></label></li></a>
+						<a href="<?php echo $c['slug'] ?>"><li><label><?php echo $c['title'] ?></label></li></a>
 					<?php } ?>
 				</ul>
 			<?php }else{ ?>
-				<a href="<?php echo $p['slug']; ?>"><li><label><?php echo $p['name'] ?></label></li></a>
+				<a href="<?php echo $p['slug']; ?>"><li><label><?php echo $p['title'] ?></label></li></a>
 			<?php } ?>
 		<?php } ?>
-			<!-- <a href="/"><li><label>HOME</label></li></a>
-			<a href="/about"><li><label>CONTACT US / ABOUT</label></li></a>
-			<a href="/partnerwithus"><li><label>PARTNER WITH US</label></li></a>
-			<a href="/contribute"><li><label>CONTRIBUTE</label></li></a>
-			<a class="tags drop-down" href=""><li><label>TAGS</label></li></a> -->
-			<!-- <ul class="tags-drop">
-				<?php for($i=0;$i<sizeof($categoriesmodalarray);$i++){ ?>
-					<a href="/category/c/<?php echo $categoriesmodalarray[$i]['id'] ?>/<?php echo preg_replace('/\PL/u', '', $categoriesmodalarray[$i]['name']) ?>"><li><label><?php echo $categoriesmodalarray[$i]['name'] ?></label></li></a>
-				<?php } ?>
-			</ul> -->
 		</ul>
 	</div>
 </div>

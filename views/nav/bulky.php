@@ -2,27 +2,43 @@
 
 namespace Reusables;
 
-Views::setParams( 
-	["socialpages", "logo", "brandname", "pages"=>[], "categories"=>["id", "name"] ], 
-	[],
-	$identifier
-);
-
 if(!isset($navtype)){ $navtype=1; }
 if(!isset($isadmin)){ $isadmin=false; }
 if(!isset($navbar2categoryfeatured)){ $navbar2categoryfeatured=false; }
 if(isset($isadmin)){ if($isadmin){ $navbar2categoryfeatured = true; } }
 if(!isset($tagline)){ $tagline=""; }
 
-$pages = Data::getValue($viewdict, 'pages' );
-if( $pages == "" ) {
-	$pages = [];
+// $pages = Data::getValue($viewdict, 'pages' );
+// if( $pages == "" ) {
+// 	$pages = [];
+// }
+// $menudict = [ "pages" => $pages ];
+extract( Views::setUp( $identifier ) );
+$navbuttons = [];
+if( isset( $viewvalues[0]['pages'] ) ) {
+	$navbuttons = $viewvalues[0]['pages'];
+} else {
+	if( sizeof($viewvalues) > 0 ) {
+		if( $viewvalues[0] > 0 ) {
+
+			foreach ($viewvalues[0] as $key => $value) {
+				if( $key == "linkpath" ) {
+					continue;
+				}
+				$dict = ["title"=>$key, "slug"=>$value];
+				array_push( $navbuttons, $dict );
+			}
+		}
+	}
 }
-$menudict = [ "pages" => $pages ];
+
+if($navbuttons == "") {
+	$navbuttons = [];
+}
 
 $categories = Data::getValue( $viewoptions, 'categories' );
 
-Data::addData( $menudict, "menuview1" );
+Data::addData( ["pages"=>$navbuttons], "menuview1" );
 echo Menu::make( "menuview_1", "menuview1");
 
 
@@ -34,12 +50,42 @@ if ( $socialbuttons == "" ) {
 }
 
 
+$position = Data::getValue( $viewoptions, "position" );
+$height = Data::getValue( $viewoptions, "height" );
+if( $height == "" ) {
+	$height = "60px";
+}
+$shadow = Data::getValue( $viewoptions, "shadow" );
+
+$dark = Data::getValue( $viewoptions, "dark" );
+
+$logo = Data::getValue( $viewoptions, "logo" );
+$title = Data::getValue( $viewdict, 'brandname' );
+if( $title == "" ) {
+	$title = Data::getValue( $viewoptions, "title" );
+}
+
 ?>
 
 <style>
+<?php if( $position != "fixed" ) { ?>
+		.bulky.spacing { display: none; }
+		.<?php echo $identifier ?> .navbar.bulky { position: relative; }
+	<?php } else { ?>
+		.<?php echo $identifier ?>.main.bulky { position: fixed; }
+	<?php } ?>
+
+	<?php if( ($dark == true && $dark != "false") || $dark == "true" ) { ?>
+		.<?php echo $identifier ?> { background-color: #333; }
+		.navbar.bulky.main { background-color: #333; color: white; }
+		.bulky.main-content, .bulky.subnav { background-color: transparent; }
+		.bulky.wrapper a { color: white; }
+		.bulky.logo-div h3 { color: white; }
+		.<?php echo $identifier ?> .hamburger label { color: white; }
+	<?php } ?>
 </style>
 
-<div class="viewtype_nav  bulky main <?php echo $identifier ?>" >
+<div class="viewtype_nav  bulky main <?php echo $identifier ?>" style="z-index: 98">
 	<div class="bulky container">
 		<div class="bulky main-content">
 			<div class="bulky socialbtns-container">
@@ -76,10 +122,10 @@ if ( $socialbuttons == "" ) {
 			</div>
 			<a href="/">
 				<div class="bulky logo-div">
-					<?php if(isset($viewdict['logo'])){ ?>
-						<img src=<?php echo Data::getValue( $viewdict, 'logo' ) ?> width="auto" height="auto">
+					<?php if( $logo != ""){ ?>
+						<img src="<?php echo $logo ?>" width="auto" height="auto" style="max-height: 50px">
 					<?php }else{ ?>
-						<h3><?php echo Data::getValue( $viewdict,'brandname' ) ?></h3>
+						<h3><?php echo $title ?></h3>
 					<?php } ?>
 				</div>
 				<h6 class="bulky tagline"><?php echo $tagline ?></h6>
@@ -160,6 +206,10 @@ if ( $socialbuttons == "" ) {
 			</div>
 		</div>
 	</div>
+</div>
+
+<div class="bulky spacing" style="height: 131px"></div>
+
 </div>
 
 <?php 
