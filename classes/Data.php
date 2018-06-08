@@ -242,6 +242,18 @@ class Data {
 		return $tablenames[$allkeys[0]];
 	}
 
+	public static function getDefaultTableNameWithData( $data )
+	{
+
+		if( !isset($data['db_info']) ){
+			return "";
+		}
+		$tablenames = $data['db_info']['tablenames'];
+
+		$allkeys = array_keys($tablenames);
+		return $tablenames[$allkeys[0]];
+	}
+
 
 	public static function getValue( $dict, $key=-1, $identifier="" )
 	{

@@ -4,7 +4,16 @@ namespace Reusables;
 
 $viewdict = Data::convertKeys( $viewdict );
 
-$togglearray = Data::getValue( $viewdict, 'data_array' );
+$togglearray = [];
+foreach ($viewdict as $key => $value) {
+
+	if( $key == "data_id" && !is_numeric($key) ) {
+		continue;
+	} 
+	$togglearray[$key] = $value;
+}
+
+// $togglearray = Data::getValue( $viewdict, 'data_array' );
 $underline_index = Data::getValue( $viewoptions, 'underline_index' );
 if( $underline_index == "" ) {
 	$underline_index = 0;
@@ -25,13 +34,18 @@ if( $underline_index == "" ) {
 <div class="toggle viewtype_header main clicktoedit <?php echo $identifier ?>">
 	<div class="toggle wrapper">
 		<?php $i=0; ?>
-		<?php foreach ($togglearray as $dict) { ?>
+		<?php foreach ($togglearray as $key => $value) { ?>
+			<?php $dict = $togglearray[$key]; ?>
 		<?php $borderright = "";
 			if ( $i==sizeof($togglearray)-1 ) {
 				$borderright = "style='border-right-width: 0px;'";
 			} ?>
 			<a href="<?php echo Data::getValue( $dict, 'link' ) ?>" class="toggle link index_<?php echo $i ?>" <?php echo $borderright ?>>
-				<label class="toggle label"><?php echo Data::getValue( $dict, 'title' ) ?></label>
+				<?php if( is_numeric($key) ) { ?>
+					<label class="toggle label"><?php echo $value ?></label>
+				<?php } else { ?>
+					<label class="toggle label"><?php echo $key ?></label>
+				<?php } ?>
 			</a>
 			<div class="toggle underline_container">
 				<div class="toggle underline"></div>
@@ -51,26 +65,41 @@ if( $underline_index == "" ) {
 	})
 
 	$('.<?php echo $identifier ?> .toggle.link').click(function(e){
+
 		var index = Reusable.getIndexFromClass( 'index_', this )
 		let togglearray = <?php echo json_encode( $togglearray) ?>;
-		let dict = togglearray[index]
-		let link = dict['link']
+		var array_keys = []
+		$.each(togglearray, function(key, value) {
+		      array_keys.push(key)
+		})
+
+		let dict = togglearray[array_keys[index]]
 		
-		if( link == "" || typeof link === "undefined" ) {
+		// let link = dict['link']
+		
+		// if( link == "" || typeof link === "undefined" ) {
 			e.preventDefault()
 			changetoggle(index)
-		}
+		// }
 	})
 
 	function changetoggle( index ) {
 
 		let togglearray = <?php echo json_encode( $togglearray) ?>;
-		for(var i=0; i<togglearray.length;i++) {
-			let dict = togglearray[i]
-			let viewlink = dict['viewlink']
+		let togglearraysize = <?php echo json_encode( sizeof($togglearray ) ); ?>;
+
+		for(var i=0; i<togglearraysize;i++) {
+			var array_keys = []
+			$.each(togglearray, function(key, value) {
+			      array_keys.push(key)
+			})
+
+			let dict = togglearray[array_keys[i]]
+			// let viewlink = dict['viewlink']
+			let viewlink = dict
 			if( i == index ) {
 				$('.'+viewlink+'').css({'display': 'inline-block'})
-				let percentage = (parseFloat(i) / parseFloat(togglearray.length)) * 100
+				let percentage = (parseFloat(i) / parseFloat(togglearraysize)) * 100
 				$('.<?php echo $identifier ?> .toggle.underline_container').animate({'left': percentage+'%'}, 300)
 			} else {
 				$('.'+viewlink+'').css({'display': 'none'})
