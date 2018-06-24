@@ -12,6 +12,15 @@ namespace Reusables;
 	);
 	// exit(json_encode($viewdict));
 	// ReusableClasses::checkRequired( $identifier, $viewdict, $required );
+
+$is_smart = Data::getValue( $viewoptions, "is_smart" );
+
+if( $is_smart == "" ) {
+	$is_smart = true;
+} else if( $is_smart == "0" ) {
+	$is_smart = false;
+}
+
 if( !isset($viewdict['field_conditions'] ) ){
 	$viewdict['field_conditions'] = [];
 }else if( $viewdict['field_conditions'] == "" ){
@@ -39,6 +48,21 @@ if( $labeltext == "" ) {
 	$labeltext = Data::getValue( $viewoptions, "labeltext" );
 }
 
+
+// $field_name = "fieldarray[" . Data::getValue( $viewdict, 'field_index') . "][field_value]";
+$field_name = "fieldimage[" . Data::getValue( $viewdict, 'field_index') . "][field_value]";
+if( !$is_smart ) {
+	if( Data::getValue( $viewdict, 'field_name' ) != "" || Data::getValue( $viewoptions, 'field_name' ) ) {
+		$field_name = Data::getValue( $viewdict, 'field_name' );
+		if( $field_name == "" ) {
+			$field_name = Data::getValue( $viewoptions, 'field_name' );
+			if( $field_name == "" ) {
+				$field_name = $identifier;
+			}
+		}
+	}
+}
+
 ?>
 
 <style>
@@ -51,7 +75,7 @@ if( $labeltext == "" ) {
 		echo Header::make( "basic_label", $identifier . "_label" ); 
 	?>
 	<label class="file_image" id='imglabel' for='<?php echo $identifier ?>_field_value' style="background-image: url('<?php echo Data::getValue( $viewdict,'background-image') ?>');"></label>
-	<input type="file" class="field_value" id="<?php echo $identifier ?>_field_value" value="<?php echo Data::getValue( $viewdict,'field_value') ?>" name="fieldimage[<?php echo Data::getValue( $viewdict,'field_index') ?>][field_value]" style="visibility: hidden; z-index: -1;">
+	<input type="file" class="field_value" id="<?php echo $identifier ?>_field_value" value="<?php echo Data::getValue( $viewdict,'field_value') ?>" name="<?php echo $field_name ?>" style="visibility: hidden; z-index: -1;">
 	<input type="hidden" class="field_type" name="fieldimage[<?php echo Data::getValue( $viewdict,'field_index') ?>][field_type]" value="image_<?php echo Data::getValue( $viewdict,'field_index') ?>" style="visibility: hidden; z-index: -1;">
 	<input type="hidden" class="tablename" value="<?php echo Data::getValue( $viewdict,'field_table') ?>" name="fieldimage[<?php echo Data::getValue( $viewdict,'field_index') ?>][tablename]">
 	<input type="hidden" class="col_name" value="<?php echo Data::getValue( $viewdict,'field_colname') ?>" name="fieldimage[<?php echo Data::getValue( $viewdict,'field_index') ?>][col_name]">

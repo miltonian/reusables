@@ -458,7 +458,9 @@ class Data {
 		if( isset( $viewdict['index'] ) ) {
 			// echo " <script> alert( JSON.stringify( " . json_encode( $viewdict['index'] ) . " ) ) </script> ";
 			if( isset( $viewdict['index'] ) ) {
-				$dataid = $viewdict[$allkeys[0]]['data_id'];
+				if( isset($viewdict[$allkeys[0]]['data_id']) ) {
+					$dataid = $viewdict[$allkeys[0]]['data_id'];
+				}
 			}else{
 				if( isset( $viewdict['data_id'] ) ) {
 					$dataid = $viewdict['data_id'];
