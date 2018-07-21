@@ -27,7 +27,7 @@ class Data {
 		$defaultdata = [];
 		$fetcheddata = [];
 		$type = "in_dict";
-		
+
 		if( self::isAssoc( self::$alldata[$dataid]['value'] ) ){
 			$fetcheddata = self::$alldata[$dataid]['value'];
 		}else{
@@ -72,7 +72,7 @@ class Data {
 		if( !is_array( $data ) ){
 			$data = Data::retrieveDataWithID( $data );
 		}
-		
+
 		// if ( !isset( self::$alldata[ $identifier ] ) ) {
 			$data['data_id'] = $identifier;
 			self::$alldata[ $identifier ] = $data;
@@ -90,7 +90,7 @@ class Data {
 		if( !is_array( $data ) ){
 			$data = Data::retrieveDataWithID( $data );
 		}
-		
+
 		// if ( !isset( self::$alldata[ $identifier ] ) ) {
 			$data['data_id'] = $identifier;
 			self::$alldata[ $identifier ] = $data;
@@ -106,7 +106,7 @@ class Data {
 	// public static function addInputKey( $input_key, $identifier )
 	// {
 	// 	$viewoptions = Data::retrieveOptionsWithID( $identifier );
-		
+
 	// 	array_merge( $viewoptions['input_keys'], $input_key );
 	// }
 
@@ -145,7 +145,7 @@ class Data {
 		if( !isset( self::$alloptions[ $identifier ] ) ) {
 			self::$alloptions[ $identifier ] = $data;
 		}
-		
+
 	}
 
 
@@ -215,7 +215,7 @@ class Data {
 		}else{
 			return "";
 		}
-		
+
 	}
 
 	public static function getDefaultConditionsWithID( $identifier )
@@ -273,7 +273,7 @@ class Data {
 				$thevalue[$key] = $keyvalue;
 			}
 			return $thevalue;
-			
+
 		}else if( isset($dict[ $key ]) ){
 			$pair = $dict[ $key ];
 		}else{
@@ -281,9 +281,9 @@ class Data {
 				$pair = $dict['value'][ $key ];
 			}else{
 				$tablename = "";
-				
+
 				if( isset($dict['db_info']) ) {
-					
+
 					if( isset($dict['db_info']['tablenames']) ) {
 						$firstkey = array_keys($dict['db_info']['tablenames'])[0];
 						$tablename = $dict['db_info']['tablenames'][$firstkey];
@@ -309,7 +309,7 @@ class Data {
 						}
 					}
 				}
-				
+
 				if($tablename != "") {
 					$key = $tablename.".".$key;
 					if( isset($dict[ $key ]) ){
@@ -326,13 +326,13 @@ class Data {
 		}
 
 		$hasindex = false;
-		if( !isset( $pair['data_id'] ) ){ 
-			// echo "<script>console.log(JSON.stringify( 'retrieve data is missing data_id' + " . $pair . " ) );</script>"; 
-			return $pair; 
+		if( !isset( $pair['data_id'] ) ){
+			// echo "<script>console.log(JSON.stringify( 'retrieve data is missing data_id' + " . $pair . " ) );</script>";
+			return $pair;
 		}
-		if( !isset( $pair['key'] ) ){ 
-			// echo "<script>console.log(JSON.stringify( 'retrieve data is missing data_id' ) );</script>"; 
-			return $pair; 
+		if( !isset( $pair['key'] ) ){
+			// echo "<script>console.log(JSON.stringify( 'retrieve data is missing data_id' ) );</script>";
+			return $pair;
 		}
 		if( isset( $pair['index'] ) ){ $hasindex = true; }
 
@@ -360,7 +360,7 @@ class Data {
 		}
 
 		Data::addDefaultInputKeys( $key, $identifier );
-		
+
 		return $thevalue;
 	}
 
@@ -395,22 +395,39 @@ class Data {
 	{
 		if( !isset( $pair['data_id'] ) ){ return ""; }
 		if( !isset( $pair['key'] ) ){ return ""; }
-		
-		$conditions = self::retrieveDataWithID( $pair['data_id'] )['db_info'][ "conditions" ];
+
+		if(!isset(self::retrieveDataWithID( $pair['data_id'] )['db_info'])){
+			$data = self::retrieveDataWithID( $pair['data_id'] )[0];
+			$defaultTableName = self::getDefaultTableNameWithData( $data );
+			$pair['key'] = $defaultTableName . $pair['key'];
+			$db_info = self::retrieveDataWithID( $pair['data_id'] )[0]['db_info'];
+		}else {
+			$db_info = self::retrieveDataWithID( $pair['data_id'] )['db_info'];
+		}
+
+		$conditions = $db_info[ "conditions" ];
 
 		return $conditions;
 	}
 
 	public static function getColName( $pair )
-	{
+	{//asdfasdfasdf
 		if( !isset( $pair['data_id'] ) ){ return ""; }
 		if( !isset( $pair['key'] ) ){ return ""; }
-		$colnames = self::retrieveDataWithID( $pair['data_id'] )['db_info'][ "colnames" ];
-		$tablenames = self::retrieveDataWithID( $pair['data_id'] )['db_info'][ "tablenames" ];
+		if(!isset(self::retrieveDataWithID( $pair['data_id'] )['db_info'])){
+			$data = self::retrieveDataWithID( $pair['data_id'] )[0];
+			$defaultTableName = self::getDefaultTableNameWithData( $data );
+			$pair['key'] = $defaultTableName . $pair['key'];
+			$db_info = self::retrieveDataWithID( $pair['data_id'] )[0]['db_info'];
+		}else {
+			$db_info = self::retrieveDataWithID( $pair['data_id'] )['db_info'];
+		}
+		$colnames = $db_info[ "colnames" ];
+		$tablenames = $db_info[ "tablenames" ];
 
 		$key = $pair['key'];
 
-		if( !isset(self::retrieveDataWithID( $pair['data_id'] )['db_info'][ "colnames" ][$pair['key']]) ) {
+		if( !isset($db_info[ "colnames" ][$pair['key']]) ) {
 
 			$colname_fromkey_arr = explode( '.', $key );
 			if( sizeof( $colname_fromkey_arr ) != 2 ) {
@@ -418,18 +435,18 @@ class Data {
 			}
 
 			$colname_fromkey = $colname_fromkey_arr[1];
-			if( !isset(self::retrieveDataWithID( $pair['data_id'] )['db_info'][ "colnames" ][$colname_fromkey]) ) {
+			if( !isset($db_info[ "colnames" ][$colname_fromkey]) ) {
 				return null;
 			}
 
-			$colname = self::retrieveDataWithID( $pair['data_id'] )['db_info'][ "colnames" ][$colname_fromkey];
-			$tablenames = self::retrieveDataWithID( $pair['data_id'] )['db_info'][ "tablenames" ];
+			$colname = $db_info[ "colnames" ][$colname_fromkey];
+			$tablenames = $db_info[ "tablenames" ];
 			// exit( json_encode( $tablenames ) );
 			return $colname;
 
 			return null;
 		}
-		$colname = self::retrieveDataWithID( $pair['data_id'] )['db_info'][ "colnames" ][$pair['key']];
+		$colname = $db_info[ "colnames" ][$pair['key']];
 
 		return $colname;
 	}
@@ -445,14 +462,14 @@ class Data {
 		// foreach ($allkeys as $k) {
 		// 	$dataid = $viewdict[$k]['data_id'];
 		// 	if ($dataid != null) {
-		// 		if( !isset( $dataidarray[ $dataid ] ) ){ 
-		// 			$dataidarray[ $dataid ] = self::retrieveDataWithID( $dataid ); 
+		// 		if( !isset( $dataidarray[ $dataid ] ) ){
+		// 			$dataidarray[ $dataid ] = self::retrieveDataWithID( $dataid );
 		// 		}
 		// 	}
 		// }
 // echo "<script>alert( JSON.stringify( " . json_encode( $viewdict ) . " ) );</script>";
 		// if( $viewdict['data_id'] != "admin_insertview_view_id_button_3" ) {
-			
+
 		// }
 		$dataid = false;
 		if( isset( $viewdict['index'] ) ) {
@@ -474,12 +491,12 @@ class Data {
 
 		if( $dataid ){
 			// $dataid = $viewdict['data_id'];
-			
+
 
 			if( $dataid ){
 				if ($dataid != null) {
-					if( !isset( $dataidarray[ $dataid ] ) ){ 
-						$dataidarray[ $dataid ] = Data::retrieveDataWithID( $dataid ); 
+					if( !isset( $dataidarray[ $dataid ] ) ){
+						$dataidarray[ $dataid ] = Data::retrieveDataWithID( $dataid );
 					}
 				}
 			}
@@ -493,8 +510,8 @@ class Data {
 							// echo "<script>alert( JSON.stringify( " . json_encode( $dataid ) . " ) );</script>";
 				if( $dataid ){
 					if ($dataid != null) {
-						if( !isset( $dataidarray[ $dataid ] ) ){ 
-							$dataidarray[ $dataid ] = Data::retrieveDataWithID( $dataid ); 
+						if( !isset( $dataidarray[ $dataid ] ) ){
+							$dataidarray[ $dataid ] = Data::retrieveDataWithID( $dataid );
 						}
 					}
 				}
@@ -502,7 +519,7 @@ class Data {
 		}
 
 
-		
+
 
 		return $dataidarray;
 	}
@@ -551,16 +568,16 @@ class Data {
 		if( $convertkeys == "" ){
 			return $data;
 		}
-		if( !isset( $convertkeys ) ){ 
-			$convertkeys = false; 
-		}else { 
-			$convertkeys = $convertkeys; 
+		if( !isset( $convertkeys ) ){
+			$convertkeys = false;
+		}else {
+			$convertkeys = $convertkeys;
 		}
 		$convertdict = $data;
 		if( isset( $data['value'] ) ){
 			$convertdict = $data['value'];
 		}
-		
+
 		$sectionkeys = array_keys( $convertdict );
 		foreach ( $sectionkeys as $k ) {
 			$k_no_table = $k;
@@ -570,13 +587,13 @@ class Data {
 			}
 // exit( json_encode( $convertkeys ) );
 			// if( isset( $convertkeys[$k] ) ){ $convertdict[$convertkeys[$k]] = $convertdict[$k]; }
-			if( isset( $convertkeys[$k_no_table] ) ){ 
+			if( isset( $convertkeys[$k_no_table] ) ){
 				if( is_array( $convertkeys[$k_no_table] ) ){
 					foreach ($convertkeys[$k_no_table] as $ck) {
 						$convertdict[$ck] = $convertdict[$k];
 					}
 				}else{
-					$convertdict[$convertkeys[$k_no_table]] = $convertdict[$k]; 
+					$convertdict[$convertkeys[$k_no_table]] = $convertdict[$k];
 				}
 			}
 		}
@@ -586,7 +603,7 @@ class Data {
 		}else{
 			$data = $convertdict;
 		}
-		
+
 		return $data;
 	}
 
@@ -595,10 +612,10 @@ class Data {
 		$data = Data::retrieveDataWithID( $identifier );
 		$options = Data::retrieveOptionsWithID( $identifier );
 
-		if( !isset($options['convert_keys'])){ 
-			$convertkeys = false; 
-		}else { 
-			$convertkeys = $options['convert_keys']; 
+		if( !isset($options['convert_keys'])){
+			$convertkeys = false;
+		}else {
+			$convertkeys = $options['convert_keys'];
 		}
 
 		$postkeys = array_keys($post);
@@ -609,14 +626,14 @@ class Data {
 			if( sizeof($k_arr) == 2 ) {
 				$k_no_table = $k_arr[1];
 			}
-			if( isset( $convertkeys[$k_no_table] ) ){ 
+			if( isset( $convertkeys[$k_no_table] ) ){
 				if( is_array( $convertkeys[$k_no_table] ) ){
 					foreach ($convertkeys[$k_no_table] as $ck) {
 						$post[$ck] = $post[$k];
 					}
 				}else{
 					// exit( json_encode($post[$k]));
-					$post[$convertkeys[$k_no_table]] = $post[$k]; 
+					$post[$convertkeys[$k_no_table]] = $post[$k];
 				}
 				// $post[$convertkeys[$k] ]['key'] = $convertkeys[$k];
 			}
@@ -629,7 +646,7 @@ class Data {
 	{
 		$data = Data::retrieveDataWithID( $identifier );
 		$options = Data::retrieveOptionsWithID( $identifier );
-		
+
 		$linkpath = "";
 		$linkpath .= Data::getValue( $options, 'pre_slug' );
 		$optionalslug = Data::getValue( $options, 'slug' );

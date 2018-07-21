@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Reusables;
 
@@ -15,7 +15,7 @@ class Input {
 		}
 
 		Views::addToQueue( "Input", $file, $identifier );
-		
+
 		if( $in_html ) {
 			CustomCode::start();
 		}
@@ -77,7 +77,7 @@ class Input {
 
 	public static function getInputFieldType( $identifier )
 	{
-		
+
 		if( !isset( self::$input_field_types[$identifier] ) ) {
 			return "textfield";
 		}
@@ -107,7 +107,7 @@ class Input {
 		if( !$type ){
 			$type = Input::getInputType( $key, $multiple_updates, $multipleupdate_i );
 		}
-		
+
 		$iscurrency = false;
 		$isbutton = false;
 		$ishidden = false;
@@ -192,7 +192,7 @@ class Input {
 		// exit( json_encode( $stuff . $key . "_input" ) );
 		$dataexists = Data::retrieveDataWithID( $stuff . $key . "_input_" . $index );
 		if( $dataexists ) {
-			for ($b=0; $b < 100; $b++) { 
+			for ($b=0; $b < 100; $b++) {
 				$index++;
 				$dataexists = Data::retrieveDataWithID( $stuff . $key . "_input_" . $index );
 				if( $dataexists == null ) {
@@ -217,8 +217,8 @@ class Input {
 			}
 			return [ Input::make( $type, $stuff . $key . "_input_" . $index ), Button::make( "basic", $stuff . $key . "_button_" . $index ) ];
 		}
-		return Input::make( 
-			$type, 
+		return Input::make(
+			$type,
 			$stuff . $key . "_input_" . $index
 		);
 	}
@@ -325,13 +325,12 @@ class Input {
 		$inputs = [];
 
 
-		if( !isset( $options['input_keys'] ) && !isset( $options['default_input_keys'] ) ) { 
-
+		if( !isset( $options['input_keys'] ) && !isset( $options['default_input_keys'] ) ) {
 			$input_keys = [];
 			return Input::convertInputKeys2( $input_keys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys );
 		}else{
 			$input_keys = [];
-			if( isset( $options['input_keys'] ) ) { 
+			if( isset( $options['input_keys'] ) ) {
 				$input_keys = $options['input_keys'];
 			} else {
 				$input_keys = $options['default_input_keys'];
@@ -343,9 +342,11 @@ class Input {
 						if( sizeof($v_arr ) == 1 ) {
 							$v = $default_tablename . "." . $v;
 						}
+
 						$input_keys[$k] = $v;
 					}
 				} else {
+
 					if( is_string($k) ) {
 						$newk = "";
 						$k_arr = explode(".", $k);
@@ -353,7 +354,9 @@ class Input {
 							$newk = $default_tablename . "." . $k;
 						}
 						if( $newk != "" ) {
-							$input_keys[$newk] = $k;
+
+							// $input_keys[$newk] = $k;
+							$input_keys[$newk] = $v;
 							unset($input_keys[$k]);
 						}
 					}
@@ -397,14 +400,16 @@ class Input {
 		// }else{
 
 		// }
-		
+
 
 	}
 
 	public static function convertInputKeys2( $input_keys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys, $multiple_updates=false )
 	{
+
+		// $asdf++;
 // Input::setInputFieldType( $t );
-		if( sizeof($input_keys) == 0 ){ 
+		if( sizeof($input_keys) == 0 ){
 			if( isset( $data['value'] ) ){
 				if ( !Data::isAssoc( $data['value'] ) ) {
 					$input_keys = array_keys( $data['value'][0] );
@@ -412,7 +417,7 @@ class Input {
 					$input_keys = array_keys( $data['value'] );
 				}
 			}else{
-				$input_keys = array_keys( $data ); 
+				$input_keys = array_keys( $data );
 			}
 			$input_keydicts = [];
 		}else{
@@ -420,9 +425,11 @@ class Input {
 			$input_keys = array_keys($input_keys);
 		}
 
+$asdf = 0;
 		$multipleupdate_i = $i;
 		foreach ($input_keys as $ik) {
 // exit( json_encode( $ik ) );
+
 			$placeholder = null; $labeltext = null; $type = null;
 			if( isset( $input_keydicts[ $ik ]['step'] ) ){ $steps = $input_keydicts[ $ik ]['step']; }
 			if( isset( $input_keydicts[ $ik ]['placeholder'] ) ){ $placeholder = $input_keydicts[ $ik ]['placeholder']; }else{ $placeholder = null; }
@@ -443,16 +450,16 @@ class Input {
 				ReusableClasses::setFormInputIndex( $identifier, $i );
 
 				$theinput = Input::fill( $data, $thekey, $i, $type, $placeholder, $labeltext, $size, $identifier, $selectoptions, $multiple_updates, $multipleupdate_i );
-				
+
 				if( sizeof( $theinput ) == 2 ) {
-					array_push( 
-						$input_fields, 
+					array_push(
+						$input_fields,
 						$theinput[0]
 					);
 					$theinput = $theinput[1];
 				}
-				array_push( 
-					$input_fields, 
+				array_push(
+					$input_fields,
 					$theinput
 				);
 				$inputs['c' . $s] = $input_fields;

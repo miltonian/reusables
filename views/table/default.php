@@ -3,10 +3,10 @@
 namespace Reusables;
 
 // exit( json_encode( $viewoptions ) );
-	if( !isset($viewoptions['sortable'])){ 
-		$sortable = false; 
-	}else { 
-		$sortable = $viewoptions['sortable']; 
+	if( !isset($viewoptions['sortable'])){
+		$sortable = false;
+	}else {
+		$sortable = $viewoptions['sortable'];
 	}
 // exit( json_encode( $sortable ) );
 
@@ -16,7 +16,7 @@ namespace Reusables;
 		$tablearray = $viewdict;
 	}
 
-	$temp_tablearray = $tablearray; 
+	$temp_tablearray = $tablearray;
 	// exit( json_encode( $temp_tablearray ) );
 	unset( $temp_tablearray['data_id'] );
 
@@ -55,13 +55,13 @@ namespace Reusables;
 <?php if($sortable){ ?>
 	<ul id="sortable" style="background-color: transparent;">
 <?php } ?>
-		<?php 
-			for ($i=0; $i < sizeof( $temp_tablearray ); $i++) { 
+		<?php
+			for ($i=0; $i < sizeof( $temp_tablearray ); $i++) {
 				if($sortable){
 					?>
 
 					<li id="<?php echo $i ?>" class="ui-state-default" style="background-color: transparent; border: 0;">
-					<?php 
+					<?php
 				}
 
 				if( isset($viewdict['value']) ){
@@ -84,7 +84,7 @@ namespace Reusables;
 				if( Data::getValue( $viewoptions, 'attached' ) != "" ) {
 					$postoptions['attached'] = Data::getValue( $viewoptions, 'attached' );
 				}
-				
+
 				// exit( json_encode( Data::getValue( $viewdict ) ) );
 				if( isset( $viewoptions['celldict'] ) ) {
 					$post = array_merge( $post, $viewoptions['celldict'] );
@@ -95,9 +95,10 @@ namespace Reusables;
 // exit(json_encode( $postoptions ) );
 				Data::addData( $post, $identifier . "_cell_" . $i );
 				Data::addOptions( $postoptions, $identifier . "_cell_" . $i );
-				if( isset( $post['cellname'] ) ) {
-					$cellname = Data::getValue( $post, 'cellname' );
-				}else { 
+				$post_cellname = Data::getValue( $post, 'cellname', $identifier );
+				if( $post_cellname != "" ) {
+					$cellname = Data::getValue( $post, 'cellname', $identifier );
+				}else {
 					$cellname = Data::getValue( $viewoptions, 'cellname' );
 					if( $cellname == "" ){
 						// default cell
@@ -117,7 +118,7 @@ namespace Reusables;
 				}
 				if($sortable){ ?>
 					</li>
-				<?php } 
+				<?php }
 			}
 		?>
 		<?php if($sortable){ ?>
@@ -143,7 +144,7 @@ namespace Reusables;
 			    disabled: true,
 			    helper: 'clone',
 			  update: function( event, ui ) {
-				
+
 				},
 				start: function( event, ui ) {
 
@@ -189,7 +190,7 @@ namespace Reusables;
 
 	class <?php echo $identifier ?>Classes {
 		populateview( index=null ){
-			
+
 		}
 	}
 </script>

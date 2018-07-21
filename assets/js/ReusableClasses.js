@@ -8,23 +8,64 @@ var editingon = false
 			alert("reached testing")
 		}
 
+		getInputDBInfo(thisdict, index) {
+			var db_info = []
+			if(index == null || index == ""){
+				db_info = thisdict['db_info'];
+			}else if(typeof thisdict['value'] !== 'undefined') {
+				db_info = thisdict['db_info'];
+			} else {
+				db_info = thisdict[index]['db_info'];
+			}
+			return db_info
+		}
+
+		getInputDictValue(thisdict, index) {
+			var thisdictvalue = []
+			if(index == null || index == ""){
+				thisdictvalue = thisdict['value'];
+			}else if(typeof thisdict['value'] !== 'undefined') {
+				thisdictvalue = thisdict['value'][index];
+			} else {
+				thisdictvalue = thisdict[index]['value'];
+			}
+			return thisdictvalue
+		}
+
+		getValidKey(db_info, key) {
+
+			let defaultTableName = Reusable.getDefaultTableName(db_info)
+			if(key.startsWith(".")){
+				key = defaultTableName+key
+			}
+			return key
+		}
+
 		updateTextField( dataarray, identifier, data_id, key, inputclass, db_key, index=null )
 		{
 			var thisdict = [];
 				var thisdictvalue = [];
 				thisdict = dataarray[data_id];
 
-				if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
+				if(thisdict == null ){ return; }
+				var db_info = Reusable.getInputDBInfo(thisdict, index)
+				var thisdictvalue = Reusable.getInputDictValue(thisdict, index)
+
+				var key = Reusable.getValidKey(db_info, key)
+
+				if(typeof thisdictvalue === 'undefined'){
+					return
+				}
 
 			$('.' + identifier + ' .' + inputclass + ' input.field_value').val( thisdictvalue[key] );
-				$('.' + identifier + ' .' + inputclass + ' input.tablename').val( thisdict['db_info']['tablenames'][key] );
+				$('.' + identifier + ' .' + inputclass + ' input.tablename').val( db_info['tablenames'][key] );
 				$('.' + identifier + ' .' + inputclass + ' input.col_name').val( db_key );
-				for (var i = 0; i < thisdict['db_info']['conditions'].length; i++) {
-					var conditions = thisdict['db_info']['conditions'];
+				for (var i = 0; i < db_info['conditions'].length; i++) {
+					var conditions = db_info['conditions'];
 					if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
-						conditions[i]['value'] = key; 
+						conditions[i]['value'] = key;
 					}else{
-						conditions[i]['value'] = thisdictvalue[conditions[i]['key']]; 
+						conditions[i]['value'] = thisdictvalue[conditions[i]['key']];
 						// alert(JSON.stringify(thisdictvalue));
 					}
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
@@ -44,21 +85,25 @@ var editingon = false
 				var thisdictvalue = [];
 				thisdict = dataarray[data_id];
 
-				if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
-
-				
 				if(thisdict == null ){ return; }
-				if(index == null || index == ""){ if(thisdict == null ){ return; } thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
+				var db_info = Reusable.getInputDBInfo(thisdict, index)
+				var thisdictvalue = Reusable.getInputDictValue(thisdict, index)
+
+				var key = Reusable.getValidKey(db_info, key)
+
+				if(typeof thisdictvalue === 'undefined'){
+					return
+				}
 
 			$('.' + identifier + ' .' + inputclass + ' input.field_value').val( thisdictvalue[key] );
-				$('.' + identifier + ' .' + inputclass + ' input.tablename').val( thisdict['db_info']['tablenames'][key] );
+				$('.' + identifier + ' .' + inputclass + ' input.tablename').val( db_info['tablenames'][key] );
 				$('.' + identifier + ' .' + inputclass + ' input.col_name').val( db_key );
-				for (var i = 0; i < thisdict['db_info']['conditions'].length; i++) {
-					var conditions = thisdict['db_info']['conditions'];
+				for (var i = 0; i < db_info['conditions'].length; i++) {
+					var conditions = db_info['conditions'];
 					if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
-						conditions[i]['value'] = key; 
+						conditions[i]['value'] = key;
 					}else{
-						conditions[i]['value'] = thisdictvalue[conditions[i]['key']]; 
+						conditions[i]['value'] = thisdictvalue[conditions[i]['key']];
 						// alert(JSON.stringify(thisdictvalue));
 					}
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
@@ -75,21 +120,25 @@ var editingon = false
 				var thisdictvalue = [];
 				thisdict = dataarray[data_id];
 
-				if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
-
-				
 				if(thisdict == null ){ return; }
-				if(index == null || index == ""){ if(thisdict == null ){ return; } thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
+				var db_info = Reusable.getInputDBInfo(thisdict, index)
+				var thisdictvalue = Reusable.getInputDictValue(thisdict, index)
+
+				var key = Reusable.getValidKey(db_info, key)
+
+				if(typeof thisdictvalue === 'undefined'){
+					return
+				}
 
 			$('.' + identifier + ' .' + inputclass + ' input.field_value').val( thisdictvalue[key] );
-				$('.' + identifier + ' .' + inputclass + ' input.tablename').val( thisdict['db_info']['tablenames'][key] );
+				$('.' + identifier + ' .' + inputclass + ' input.tablename').val( db_info['tablenames'][key] );
 				$('.' + identifier + ' .' + inputclass + ' input.col_name').val( db_key );
-				for (var i = 0; i < thisdict['db_info']['conditions'].length; i++) {
-					var conditions = thisdict['db_info']['conditions'];
+				for (var i = 0; i < db_info['conditions'].length; i++) {
+					var conditions = db_info['conditions'];
 					if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
-						conditions[i]['value'] = key; 
+						conditions[i]['value'] = key;
 					}else{
-						conditions[i]['value'] = thisdictvalue[conditions[i]['key']]; 
+						conditions[i]['value'] = thisdictvalue[conditions[i]['key']];
 						// alert(JSON.stringify(thisdictvalue));
 					}
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
@@ -107,17 +156,24 @@ var editingon = false
 				thisdict = dataarray[data_id];
 
 				if(thisdict == null ){ return; }
-				if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
+				var db_info = Reusable.getInputDBInfo(thisdict, index)
+				var thisdictvalue = Reusable.getInputDictValue(thisdict, index)
+
+				var key = Reusable.getValidKey(db_info, key)
+
+				if(typeof thisdictvalue === 'undefined'){
+					return
+				}
 
 			$('.' + identifier + ' .' + inputclass + ' .field_value').val(thisdictvalue[key]);
-				$('.' + identifier + ' .' + inputclass + ' input.tablename').val(thisdict['db_info']['tablenames'][key]);
+				$('.' + identifier + ' .' + inputclass + ' input.tablename').val(db_info['tablenames'][key]);
 				$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);
-				for (var i = 0; i < thisdict['db_info']['conditions'].length; i++) {
-					var conditions = thisdict['db_info']['conditions'];
+				for (var i = 0; i < db_info['conditions'].length; i++) {
+					var conditions = db_info['conditions'];
 					if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
-						conditions[i]['value'] = key; 
+						conditions[i]['value'] = key;
 					}else{
-						conditions[i]['value'] = thisdictvalue[conditions[i]['key']]; 
+						conditions[i]['value'] = thisdictvalue[conditions[i]['key']];
 						// alert(JSON.stringify(thisdictvalue));
 					}
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
@@ -129,25 +185,31 @@ var editingon = false
 
 		updateFileImage( dataarray, identifier, data_id, key, inputclass, db_key, index=null )
 		{
-			var thisdict = [];
-				var thisdictvalue = [];
+				var thisdict = [];
+
 				thisdict = dataarray[data_id];
 
 				if(thisdict == null ){ return; }
-				if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
-// console.log("IMAGE IS: "+JSON.stringify(thisdictvalue))
+				var db_info = Reusable.getInputDBInfo(thisdict, index)
+				var thisdictvalue = Reusable.getInputDictValue(thisdict, index)
+				var key = Reusable.getValidKey(db_info, key)
+
+				if(typeof thisdictvalue === 'undefined'){
+					return
+				}
+
 			$('.' + identifier + ' .' + inputclass + ' #imglabel').css({'background-image': 'url("'+thisdictvalue[key]+'")'});
 				$('.' + identifier + ' .' + inputclass + ' .fieldvalue').val("");
-				$('.' + identifier + ' .' + inputclass + ' input.tablename').val(thisdict['db_info']['tablenames'][key]);
+				$('.' + identifier + ' .' + inputclass + ' input.tablename').val(db_info['tablenames'][key]);
 				$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);
-				for (var i = 0; i < thisdict['db_info']['conditions'].length; i++) {
-					var conditions = thisdict['db_info']['conditions'];
+				for (var i = 0; i < db_info['conditions'].length; i++) {
+					var conditions = db_info['conditions'];
 					// alert(JSON.stringify(conditions));
 					if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
-						conditions[i]['value'] = key; 
+						conditions[i]['value'] = key;
 					}else{
 						// alert(JSON.stringify(thisdictvalue))
-						conditions[i]['value'] = thisdictvalue[conditions[i]['key']]; 
+						conditions[i]['value'] = thisdictvalue[conditions[i]['key']];
 					}
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionvalue_' + i ).val( conditions[i]['value'] );
@@ -161,7 +223,15 @@ var editingon = false
 			thisdict = dataarray[data_id];
 
 			if(thisdict == null ){ return; }
-			if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
+			var db_info = Reusable.getInputDBInfo(thisdict, index)
+			var thisdictvalue = Reusable.getInputDictValue(thisdict, index)
+
+			var key = Reusable.getValidKey(db_info, key)
+
+			if(typeof thisdictvalue === 'undefined'){
+				return
+			}
+
 			var name = 'fieldarray_' + inputclass + '[' + fieldindex + '][field_value]'
 			var thisvalue = thisdictvalue[key]
 			if( thisvalue == "" ) {
@@ -170,17 +240,17 @@ var editingon = false
 
 			var normalname = name.replace('\\.', '.')
 			if( typeof CKEDITOR.instances[normalname] !== "undefined" ) {
-				CKEDITOR.instances[normalname].setData( thisvalue ); 
+				CKEDITOR.instances[normalname].setData( thisvalue );
 			}
 
-			$('.' + identifier + ' .' + inputclass + ' input.tablename').val(thisdict['db_info']['tablenames'][db_key]);
+			$('.' + identifier + ' .' + inputclass + ' input.tablename').val(db_info['tablenames'][db_key]);
 			$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);
-			for (var i = 0; i < thisdict['db_info']['conditions'].length; i++) {
-				var conditions = thisdict['db_info']['conditions'];
+			for (var i = 0; i < db_info['conditions'].length; i++) {
+				var conditions = db_info['conditions'];
 				if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
-					conditions[i]['value'] = key; 
+					conditions[i]['value'] = key;
 				}else{
-					conditions[i]['value'] = thisdictvalue[conditions[i]['key']]; 
+					conditions[i]['value'] = thisdictvalue[conditions[i]['key']];
 				}
 				$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
 				$( '.' + identifier + ' .' + inputclass + ' input.conditionvalue_' + i ).val( conditions[i]['value'] );
@@ -192,21 +262,25 @@ var editingon = false
 			var thisdict = [];
 				var thisdictvalue = [];
 				thisdict = dataarray[data_id];
-				if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
+
+				if(thisdict == null ){ return; }
+				var db_info = Reusable.getInputDBInfo(thisdict, index)
+				var thisdictvalue = Reusable.getInputDictValue(thisdict, index)
+
 			// $('.' + identifier + ' .' + inputclass + ' input.field_value').val(thisdictvalue[key]);
 	var colorvalue = "#"+thisdictvalue[key];
 
 			$('.' + identifier + ' .' + inputclass + ' .field_value').spectrum({
 				color: colorvalue
 			});
-				$('.' + identifier + ' .' + inputclass + ' input.tablename').val(thisdict['db_info']['tablenames'][key]);
+				$('.' + identifier + ' .' + inputclass + ' input.tablename').val(db_info['tablenames'][key]);
 				$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);
-				for (var i = 0; i < thisdict['db_info']['conditions'].length; i++) {
-					var conditions = thisdict['db_info']['conditions'];
+				for (var i = 0; i < db_info['conditions'].length; i++) {
+					var conditions = db_info['conditions'];
 					if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
-						conditions[i]['value'] = key; 
+						conditions[i]['value'] = key;
 					}else{
-						conditions[i]['value'] = thisdictvalue[conditions[i]['key']]; 
+						conditions[i]['value'] = thisdictvalue[conditions[i]['key']];
 						// alert(JSON.stringify(thisdictvalue));
 					}
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
@@ -223,17 +297,19 @@ var editingon = false
 				var thisdictvalue = [];
 				thisdict = dataarray[data_id];
 
-				if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
+				if(thisdict == null ){ return; }
+				var db_info = Reusable.getInputDBInfo(thisdict, index)
+				var thisdictvalue = Reusable.getInputDictValue(thisdict, index)
 
 			$('.' + identifier + ' .' + inputclass + ' input.field_value').val( thisdictvalue[key] );
-				$('.' + identifier + ' .' + inputclass + ' input.tablename').val( thisdict['db_info']['tablenames'][key] );
+				$('.' + identifier + ' .' + inputclass + ' input.tablename').val( db_info['tablenames'][key] );
 				$('.' + identifier + ' .' + inputclass + ' input.col_name').val( db_key );
-				for (var i = 0; i < thisdict['db_info']['conditions'].length; i++) {
-					var conditions = thisdict['db_info']['conditions'];
+				for (var i = 0; i < db_info['conditions'].length; i++) {
+					var conditions = db_info['conditions'];
 					if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
-						conditions[i]['value'] = key; 
+						conditions[i]['value'] = key;
 					}else{
-						conditions[i]['value'] = thisdictvalue[conditions[i]['key']]; 
+						conditions[i]['value'] = thisdictvalue[conditions[i]['key']];
 						// alert(JSON.stringify(thisdictvalue));
 					}
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
@@ -259,7 +335,7 @@ var editingon = false
 		{
 
 			// index is the button's index, not the cell's
-			
+
 			var identifier = ""
 			var type = "";
 			if( typeof type === 'undefined' ) {
@@ -267,7 +343,7 @@ var editingon = false
 				if( type == 'modal' ) {
 					identifier = button['modal']['modalclass']
 				}
-				
+
 			}
 			if( viewoptions ) {
 				if( typeof viewoptions['type'] !== 'undefined' ) {
@@ -294,8 +370,8 @@ var editingon = false
 				e.preventDefault();
 
 				var cellindex = null;
-				if( view ){ 
-					// theid=view.id 
+				if( view ){
+					// theid=view.id
 					// var Reusable = new ReusableClasses();
 					var cellindex = Reusable.getIndexFromClass( "index_", view )
 					// alert( JSON.stringify( "testing: "+cellindex ) );
@@ -423,9 +499,9 @@ var editingon = false
 		readthisURL(input, previewobj, newwidth, newheight) {
 		    if (input.files && input.files[0]) {
 		        var reader = new FileReader();
-		        
-		        var extension = input.files[0].name.split('.').pop().toLowerCase(); 
-		        var type = ''; 
+
+		        var extension = input.files[0].name.split('.').pop().toLowerCase();
+		        var type = '';
 		        var previewit = false;
 		        if(extension == 'mp3' || extension == 'mp4' || extension == 'wma' || extension == 'm4v' ||  extension == 'mov' || extension == 'wmv' || extension == 'avi' || extension == 'mpg' || extension == 'ogv' || extension == '3gp' || extension == '3g2'){
 		            previewit = true;
@@ -441,7 +517,7 @@ var editingon = false
 		                }else if( previewobj.is( "label" ) ) {
 		                    $(previewobj).css('background-image', 'url('+e.target.result+')');
 		                }
-		                
+
 		                $(previewobj).css('width', newwidth);
 		                $(previewobj).css('height', newheight);
 		             }
@@ -451,7 +527,7 @@ var editingon = false
 		}
 
 		addSortable(){
-			
+
 		}
 
 		addJQuery(){
@@ -462,47 +538,47 @@ var editingon = false
 					// warning, global var
 					thisPageUsingOtherJSLibrary = true;
 				}
-				
+
 				function getScript(url, success) {
-				
+
 					var script     = document.createElement('script');
 					     script.src = url;
-					
+
 					var head = document.getElementsByTagName('head')[0],
 					done = false;
-					
+
 					// Attach handlers for all browsers
 					script.onload = script.onreadystatechange = function() {
-					
+
 						if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) {
-						
+
 						done = true;
-							
+
 							// callback function provided as param
 							success();
-							
+
 							script.onload = script.onreadystatechange = null;
 							head.removeChild(script);
-							
+
 						};
-					
+
 					};
-					
+
 					head.appendChild(script);
-				
+
 				};
-				
+
 				getScript('http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js', function() {
-				
+
 					if (typeof jQuery=='undefined') {
-					
+
 						// Super failsafe - still somehow failed...
-					
+
 					} else {
-					
+
 						// jQuery loaded! Make sure to use .noConflict just in case
 						fancyCode();
-						
+
 						if (thisPageUsingOtherJSLibrary) {
 
 							// Run your jQuery Code
@@ -512,27 +588,27 @@ var editingon = false
 							// Use .noConflict(), then run your jQuery Code
 
 						}
-					
+
 					}
-				
+
 				});
-				
+
 			} else { // jQuery was already loaded
-				
+
 				// Run your jQuery Code
 
 			};
 		}
 
 		addDropzone( classname, callback=null, paramname=null ){
-			
+
 			if(!paramname){
 				paramname='file';
 			}
-			$(classname).dropzone({ 
-				url: "/file/post", 
+			$(classname).dropzone({
+				url: "/file/post",
 				paramName: paramname,
-				drop: function(){ 
+				drop: function(){
 
 				},
 				thumbnail: function(imgdict){
@@ -548,13 +624,38 @@ var editingon = false
 
 		}
 
+		getDefaultTableName(db_info) {
+			if(typeof db_info === 'undefined'){
+				return ""
+			}
+			var tablenames = db_info['tablenames']
+			let firstkey = Object.keys(tablenames)[0]
+			let defaultTableName = tablenames[firstkey]
+
+			return defaultTableName
+		}
+
 		setinputvalues( sectiondict, input_keys, identifier, typearray, dataarray, formatteddata, index, multiple_updates=false ) {
 
 			var multipleupdate_type_count = 0
 			var multipleupdate_type_i = 0
 			for (var i = 0; i < input_keys.length; i++) {
 				var key = input_keys[i];
-				var colname = formatteddata['db_info']['colnames'][key];
+				var db_info = []
+				if( typeof formatteddata['db_info'] === 'undefined' ) {
+					db_info = formatteddata[0]['db_info']
+				} else {
+					db_info = formatteddata['db_info']
+				}
+				let defaultTableName = Reusable.getDefaultTableName(db_info)
+				// console.log(JSON.stringify(formatteddata[0]['db_info']))
+				var colname = ""
+				if( typeof db_info['colnames'][key] === 'undefined' ) {
+					colname = db_info['colnames'][defaultTableName+key];
+				} else {
+					colname = db_info['colnames'][key];
+				}
+
 				var type = typearray[i];
 				// console.log("fieldindex: "+JSON.stringify(type['value_string'][20]))
 				// console.log("AHHHH_"+i+": "+JSON.stringify(type))
@@ -630,7 +731,7 @@ var editingon = false
 			}
 		}
 
-		
+
 		switchEditing( turnOn ) {
 			editingon = turnOn
 
@@ -653,7 +754,7 @@ var editingon = false
 
 		isEditing() {
 			return editingon
-		}	
+		}
 
 
 
