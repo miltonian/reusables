@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Reusables;
 
@@ -57,10 +57,16 @@ class Views {
 			if( !isset($viewoptions["editable_dynamic"] ) ) { $viewoptions["editable_dynamic"] = false; }
 			if( !isset($viewoptions["insertonly_dynamic"] ) ) { $viewoptions["insertonly_dynamic"] = false; }
 			if( !isset($viewoptions["modal_table"] ) ) { $viewoptions["modal_table"] = false; }
-			if( $viewoptions["editable"] == true || $viewoptions["insertonly"] == true || $viewoptions["editable_dynamic"] == true || $viewoptions["insertonly_dynamic"] == true ) {
+
+			if(
+				$viewoptions["editable"] == true || $viewoptions["editable"] == "true" ||
+				$viewoptions["insertonly"] == true || $viewoptions["insertonly"] == "true" ||
+				$viewoptions["editable_dynamic"] == true || $viewoptions["editable_dynamic"] == "true" ||
+				$viewoptions["insertonly_dynamic"] == true || $viewoptions["insertonly_dynamic"] == "true"
+			) {
 
 				$viewdata = Data::retrieveDataWithID( $identifier );
-				
+
 				Data::addOption( "modal", "type", $identifier );
 				Data::addOption( $identifier . "_form", "modal", $identifier );
 
@@ -113,7 +119,7 @@ class Views {
 					if( $viewoptions["modal_table"] == true ) {
 						if( !isset($viewoptions["modal_table_array"]) ) {
 							exit( "missing modal_table_array" );
-						} 
+						}
 						Data::addData( $viewoptions['modal_table_array'], $identifier . "_form" );
 					}
 					$formdata = Data::retrieveDataWithID( $identifier . "_form" );
@@ -140,7 +146,7 @@ class Views {
 						}
 						Data::addOption( $input_keys, "input_keys", $identifier . "_form" );
 					}
-					
+
 					// exit(json_encode([$input_keys]));
 				}
 				$formoptions = Data::retrieveOptionsWithID($identifier . "_form");
@@ -208,7 +214,7 @@ class Views {
 			ReusableClasses::addfile( $viewtype, $file );
 
 			$lowercased_viewtype = strtolower( $viewtype );
-			
+
 			if( substr($lowercased_viewtype, 0, strlen("custom")) === "custom" ) {
 				$arr = explode("/", $viewtype);
 				$viewtype = $arr[1];
@@ -245,10 +251,10 @@ class Views {
 					}
 				}
 			}
-			
+
 			Data::addData( $data, $identifier );
 			$options = ReusableClasses::convertViewActions( $options );
-			
+
 			$View->set( 'viewdict', $data );
 			$View->set( 'viewoptions', $options );
 			if( $viewtype == "section" ){
@@ -281,7 +287,7 @@ class Views {
 				echo Views::makeView( $file, $identifier, $viewtype, $tablenames, $children=[] );
 			}
 
-			
+
 
 			// return $View->render();
 			// echo $View->render();
@@ -303,7 +309,7 @@ class Views {
 				$identifier = $dict["identifier"];
 				$tablenames = $dict["tablenames"];
 				$children = $dict["children"];
-				
+
 
 				echo Views::makeView( $file, $identifier, $viewtype, $tablenames, $children=[] );
 			}
@@ -329,7 +335,7 @@ class Views {
 		// Views::analyzeView( $identifier );
 
 	}
-	
+
 	public static function getDataParams( $identifier )
 	{
 		if( !isset( self::$viewparams[$identifier]['data'] ) ) {
@@ -443,7 +449,7 @@ return;
 				}
 			}
 		}
-				
+
 
 		// if( isset( $data[$paramkey] ) && !isset( $data[$datakey] ) ) {
 		// 	if( !is_int( array_search($paramkey, $dataparams) ) && is_int( array_search($datakey, $dataparams) ) ) {
@@ -480,22 +486,22 @@ return;
 		Data::addInfo( $identifier, 'identifier', $identifier );
 
 		// if( $viewtype == "Section" && ($file == "smartform_inmodal" || $file == "smartform") ) {
-		// 	array_push( 
-		// 		self::$formqueue, 
+		// 	array_push(
+		// 		self::$formqueue,
 		// 		[
-		// 			"viewtype" => $viewtype, 
-		// 			"file" => $file, 
+		// 			"viewtype" => $viewtype,
+		// 			"file" => $file,
 		// 			"identifier" => $identifier,
 		// 			"data"=>$data
 		// 		]
 		// 	);
 		// } else {
 		// exit( json_encode( [$viewtype, $file, $identifier] ) );
-			array_push( 
-				self::$queue, 
+			array_push(
+				self::$queue,
 				[
-					"viewtype" => $viewtype, 
-					"file" => $file, 
+					"viewtype" => $viewtype,
+					"file" => $file,
 					"identifier" => $identifier,
 					"data"=>$data
 				]
@@ -545,7 +551,7 @@ return;
 	public static function setForms()
 	{
 		ob_start();
-		
+
 		foreach (self::$formqueue as $v) {
 			if( $v["viewtype"] == "CustomCode" ) {
 				array_push( self::$bufferedviews, $v );
@@ -580,10 +586,10 @@ return;
 
 	public static function addCustomCodeToQueue( $code )
 	{
-		array_push( 
-			self::$queue, 
+		array_push(
+			self::$queue,
 			[
-				"viewtype" => "CustomCode", 
+				"viewtype" => "CustomCode",
 				"code" => $code
 			]
 		);
@@ -663,7 +669,7 @@ return;
 					}
 				}
 			}
-			
+
 		}
 
 
@@ -689,9 +695,9 @@ return;
 
 			unset($viewdict['value']['data_id']);
 			if( Data::isAssoc( $viewdict['value'] ) ) {
-				
+
 				$viewdict['value'] = [$viewdict['value']];
-			} 
+			}
 			$original_arr = $viewdict['value'];
 		} else {
 			unset($viewdict['data_id']);
@@ -707,7 +713,7 @@ return;
 
 			$dict = Data::convertKeysInTable( $identifier, $value );
 			if( isset($dict['editing']) ){ $isediting=1; }else{ $isediting=0; }
-			
+
 
 			$linkpath = Data::getValue( $viewoptions, 'pre_slug' ) . Data::getValue( $dict, 'slug' );
 			if( $linkpath == "" ) {
@@ -716,7 +722,7 @@ return;
 			$dict['linkpath'] = $linkpath;
 			$optiontype = Data::getValue( $viewoptions, 'type' );
 			$fullarray = Data::getFullArray( $dict );
-			
+
 			if( isset( $dict[$identifier]['value'] ) ) {
 				$fullviewdict = Data::getFullArray( $dict )[$identifier]['value'];
 			}else{
@@ -739,7 +745,7 @@ return;
 	{
 		echo " " . $identifier;
 		echo " main";
-		echo " " . basename($file, ".php"); 
+		echo " " . basename($file, ".php");
 		echo " viewtype_" . ReusableClasses::parentDir($file);
 		echo " ";
 

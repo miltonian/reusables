@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Reusables;
 
@@ -28,7 +28,7 @@ class CustomCode {
 		// preg_match_all("/\\{\\{\s(.*)\\}\\}/", $output, $matches);
 		// preg_match("/\\{\\{\s(.*)\\}\\}/", $output, $matches);
 		CustomCode::checkForViews($output);
-		
+
 
 		// $dict = [ "viewtype" => "CustomCode", "code" => $output ];
 		// CustomCode::place( $output );
@@ -40,7 +40,7 @@ class CustomCode {
 	{
 		// preg_match("/\\{\\{\s(.*)\\}\\}/", $output, $foundreusables);
 		preg_match('/\\{\\{(.*)\\}\\}/sU', $output, $foundreusables);
-		if( isset($foundreusables) && $foundreusables && !empty($foundreusables) ) {	
+		if( isset($foundreusables) && $foundreusables && !empty($foundreusables) ) {
 			// $foundreusables = str_replace("\n", "", $foundreusables[0]);
 			$foundreusables = $foundreusables[0];
 			$arr = explode(");", $foundreusables);
@@ -94,7 +94,7 @@ class CustomCode {
 				CustomCode::checkForViews( $output );
 			}
 			// return;
-			
+
 		}
 	}
 
@@ -282,7 +282,7 @@ class CustomCode {
 			call_user_func_array('\\Reusables\\'.ucfirst($view_array[1]) . "::cplace", [$view_array[2], $identifier] );
 		} else {
 			call_user_func_array('\\Reusables\\'.ucfirst($view_array[0]) . "::place", [$view_array[1], $identifier] );
-			if( strtolower($view_array[0]) == "input" ){ 
+			if( strtolower($view_array[0]) == "input" ){
 				Data::addOption( "0", "is_smart", $identifier );
 			}
 		}
@@ -290,7 +290,7 @@ class CustomCode {
 		return $after_string;
 	}
 
-	public static function addData( $output, $matches, $str, $index, $view_inputs, $identifier) 
+	public static function addData( $output, $matches, $str, $index, $view_inputs, $identifier)
 	{
 		// $view_inputs = str_replace(", replace, subject)
 		// exit( json_encode( $view_inputs ) );
@@ -316,7 +316,7 @@ class CustomCode {
 		        $value = rtrim($value, ' ');
 		        $value = ltrim($value, '\"');
 		        $value = rtrim($value, '\"');
-		        
+
 		        $thisdata[$key] = $value;
 			}
 			// $key = str_replace("\"", "", $key);
@@ -338,7 +338,7 @@ class CustomCode {
 		return $output;
 	}
 
-	public static function addOptions( $output, $matches, $str, $index, $view_inputs, $identifier) 
+	public static function addOptions( $output, $matches, $str, $index, $view_inputs, $identifier)
 	{
 
 		foreach ($view_inputs as $key => $value) {
@@ -355,7 +355,7 @@ class CustomCode {
 		return $output;
 	}
 
-	public static function addStart( $output, $matches, $str, $index, $view_inputs, $identifier) 
+	public static function addStart( $output, $matches, $str, $index, $view_inputs, $identifier)
 	{
 		foreach ($view_inputs as $key => $value) {
 			$value = ltrim($value, ' ');
@@ -372,6 +372,16 @@ class CustomCode {
 				CustomCode::place( $before_string );
 				call_user_func_array("\\Reusables\\Modal::start", [$identifier] );
 				return $after_string;
+			} else if( strtolower($value) == "structure" ) {
+				// Modal::start($identifier);
+				$beforeafter_string = explode($matches[$index], $output);
+				$before_string = $beforeafter_string[0];
+				$after_string = $beforeafter_string[1];
+				$before_string = str_replace( $matches[$index], "", $before_string );
+				$after_string = str_replace( $matches[$index], "", $after_string );
+				CustomCode::place( $before_string );
+				call_user_func_array("\\Reusables\\Structure::start", [$identifier, "default"] );
+				return $after_string;
 			}
 		}
 		$output = str_replace($matches[$index], "", $output );
@@ -379,9 +389,11 @@ class CustomCode {
 		return $output;
 	}
 
-	public static function addEnd( $output, $matches, $str, $index, $view_inputs, $identifier) 
+	public static function addEnd( $output, $matches, $str, $index, $view_inputs, $identifier)
 	{
-		if( strtolower(self::$startSet[$identifier]) == "modal" ) {
+		$type = strtolower(self::$startSet[$identifier]);
+		$type = str_replace("\"", "", $type);
+		if( $type == "modal" ) {
 			// Modal::end($identifier);
 			$beforeafter_string = explode($matches[$index], $output);
 			$before_string = $beforeafter_string[0];
@@ -390,6 +402,15 @@ class CustomCode {
 			$after_string = str_replace( $matches[$index], "", $after_string );
 			CustomCode::place( $before_string );
 			call_user_func_array("\\Reusables\\Modal::end", [$identifier] );
+			return $after_string;
+		} else if( $type == "structure" ) {
+			$beforeafter_string = explode($matches[$index], $output);
+			$before_string = $beforeafter_string[0];
+			$after_string = $beforeafter_string[1];
+			$before_string = str_replace( $matches[$index], "", $before_string );
+			$after_string = str_replace( $matches[$index], "", $after_string );
+			CustomCode::place( $before_string );
+			call_user_func_array("\\Reusables\\Structure::end", [$identifier, "default"] );
 			return $after_string;
 		}
 		$output = str_replace($matches[$index], "", $output );
@@ -447,5 +468,3 @@ echo $thisoutput;
 		return substr($string, $ini, $len);
 	}
 }
-
-
