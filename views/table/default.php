@@ -27,6 +27,11 @@ namespace Reusables;
 
 	$options_cellname = Data::getValue( $viewoptions, 'cellname' );
 
+	$num_of_columns = Data::getValue( $viewoptions, "num_of_columns" );
+	if( $num_of_columns != "" ) {
+		$num_of_columns = floatval($num_of_columns);
+	}
+
 ?>
 
 <style>
@@ -36,6 +41,10 @@ namespace Reusables;
 		li.ui-state-default.ui-sortable-handle { width: 100%; left: 0; }
 		li.ui-state-default.ui-sortable-helper { left: 30px; }
 		.ui-state-default { display: inline-block; }
+<?php } ?>
+<?php if( $num_of_columns != "" ) { ?>
+
+	.viewtype_cell.main { width: <?php echo (100.0 / $num_of_columns) ?>%  !important; }
 <?php } ?>
 </style>
 
