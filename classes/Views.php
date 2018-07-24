@@ -738,7 +738,28 @@ return;
 		$text_color = Data::getValue( $viewoptions, "text_color" );
 		$background_color = Data::getValue( $viewoptions, "background_color" );
 
-		return ["viewvalues" => $viewvalues, "linkpath"=>$linkpath, "data_id"=>$identifier, "text_color"=>$text_color, "background_color"=>$background_color];
+		$description = Data::getValue( $value, "html_text", $identifier );
+		if( $description == "" ) {
+			$description = Data::getValue( $value, "description", $identifier );
+		}
+		$preview = Data::getValue( $viewoptions, "preview", $identifier );
+		$description_limit = Data::getValue( $viewoptions, "description_limit", $identifier );
+
+		if( $preview == "true" || $preview ) {
+			$description = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9 ]/', ' ', urldecode(html_entity_decode(strip_tags($description))))));
+			if($description_limit ==  ""){
+				$description_limit = 300;
+			} else {
+				$description_limit = intval($description_limit);
+			}
+			$description = Data::substrwords($description, $description_limit);
+		} else {
+			if($description_limit != ""){
+				$description = Data::substrwords($description, intval($description_limit));
+			}
+		}
+
+		return ["viewvalues" => $viewvalues, "linkpath"=>$linkpath, "data_id"=>$identifier, "text_color"=>$text_color, "background_color"=>$background_color, "description"=>$description];
 	}
 
 	public static function setContainerClass($file, $identifier)
