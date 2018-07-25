@@ -756,9 +756,18 @@ return;
 				}
 			}
 
+			$title = Data::getValue( $value, "title", $identifier );
+			$title_limit = Data::getValue( $viewoptions, "title_limit" );
+			if( $title_limit != "" && $title != "" ) {
+				$title = Data::substrwords($title, intval($title_limit));
+			}
+
 if( $description != "" ) {
 	$dict['description'] = $description;
 	$dict['html_text'] = $description;
+}
+if( $title != "" ) {
+	$dict['title'] = $title;
 }
 
 			array_push( $viewvalues, $dict );
@@ -792,8 +801,12 @@ if( $description != "" ) {
 		$text_color = Data::getValue( $viewoptions, "text_color" );
 		$background_color = Data::getValue( $viewoptions, "background_color" );
 		$image_size = Data::getValue( $viewoptions, "image_size" );
+		$image_corner_radius = Data::getvalue( $viewoptions, "image_corner_radius" );
 		if( $image_size == "" ) {
 			$image_size = "cover";
+		}
+		if( $image_corner_radius == "" ) {
+			$image_corner_radius = 0;
 		}
 		$height = Data::getValue( $viewoptions, "height" );
 
@@ -809,7 +822,7 @@ echo " <style> ";
 				echo "height: ".$height.";";
 			}
 		echo " } ";
-		echo " ." . $identifier . ".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".image { display: inline-block; position: relative; margin: 0; padding: 0; float: left; background-size: ".$image_size."; background-repeat: no-repeat; background-position: center; } ";
+		echo " ." . $identifier . ".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".image { display: inline-block; position: relative; margin: 0; padding: 0; float: left; background-size: ".$image_size."; background-repeat: no-repeat; background-position: center; border-radius: ".$image_corner_radius." } ";
 
 		if( Data::getValue( $viewoptions, "dark") == "true" || Data::getValue( $viewoptions, "dark") == true ) {
 			$text_color = "#fff"; $background_color = "#333";
