@@ -717,7 +717,17 @@ return;
 			if( isset($dict['editing']) ){ $isediting=1; }else{ $isediting=0; }
 
 
-			$linkpath = Data::getValue( $viewoptions, 'pre_slug' ) . Data::getValue( $dict, 'slug' );
+			$slug = Data::getValue( $value, "slug", $identifier );
+			if( $slug == "" ) {
+				$slug = Data::getValue( $value, "link", $identifier );
+			}
+
+			$pre_slug = Data::getValue( $viewoptions, "pre_slug" );
+			if( $pre_slug == "" ) {
+				$pre_slug = Data::getValue( $viewoptions, "pre_link" );
+			}
+
+			$linkpath = $pre_slug . $slug;
 			if( $linkpath == "" ) {
 				$linkpath = "#";
 			}
@@ -762,13 +772,15 @@ return;
 				$title = Data::substrwords($title, intval($title_limit));
 			}
 
-if( $description != "" ) {
-	$dict['description'] = $description;
-	$dict['html_text'] = $description;
-}
-if( $title != "" ) {
-	$dict['title'] = $title;
-}
+			if( $description != "" ) {
+				$dict['description'] = $description;
+				$dict['html_text'] = $description;
+			}
+			if( $title != "" ) {
+				$dict['title'] = $title;
+			}
+
+
 
 			array_push( $viewvalues, $dict );
 		}
