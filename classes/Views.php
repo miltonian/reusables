@@ -791,20 +791,23 @@ return;
 
 		$text_color = Data::getValue( $viewoptions, "text_color" );
 		$background_color = Data::getValue( $viewoptions, "background_color" );
-		$padding_arr = Views::getPadding( $identifier );
+		$padding_arr = Views::getPaddingOrMargin( $identifier );
 		$padding = $padding_arr[0];
 		$padding_width = $padding_arr[1];
+		$margin_arr = Views::getPaddingOrMargin( $identifier, "margin" );
+		$margin = $margin_arr[0];
+		$margin_width = $margin_arr[1];
 
 
-		return ["viewvalues" => $viewvalues, "linkpath"=>$linkpath, "data_id"=>$identifier, "text_color"=>$text_color, "background_color"=>$background_color, "padding"=>$padding, "padding_width"=>$padding_width];
+		return ["viewvalues" => $viewvalues, "linkpath"=>$linkpath, "data_id"=>$identifier, "text_color"=>$text_color, "background_color"=>$background_color, "padding"=>$padding, "padding_width"=>$padding_width, "margin"=>$margin, "margin_width"=>$margin_width];
 	}
 
-	public static function getPadding( $identifier )
+	public static function getPaddingOrMargin( $identifier, $type="padding" )
 	{
 
 		$viewoptions = Data::retrieveOptionsWithID($identifier);
 
-		$padding = Data::getValue( $viewoptions, "padding" );
+		$padding = Data::getValue( $viewoptions, $type );
 		if( $padding == "" ) {
 		  $padding = "0";
 		}
