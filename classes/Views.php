@@ -791,10 +791,120 @@ return;
 
 		$text_color = Data::getValue( $viewoptions, "text_color" );
 		$background_color = Data::getValue( $viewoptions, "background_color" );
+		$padding_arr = Views::getPadding( $identifier );
+		$padding = $padding_arr[0];
+		$padding_width = $padding_arr[1];
 
 
+		return ["viewvalues" => $viewvalues, "linkpath"=>$linkpath, "data_id"=>$identifier, "text_color"=>$text_color, "background_color"=>$background_color, "padding"=>$padding, "padding_width"=>$padding_width];
+	}
 
-		return ["viewvalues" => $viewvalues, "linkpath"=>$linkpath, "data_id"=>$identifier, "text_color"=>$text_color, "background_color"=>$background_color];
+	public static function getPadding( $identifier )
+	{
+
+		$viewoptions = Data::retrieveOptionsWithID($identifier);
+
+		$padding = Data::getValue( $viewoptions, "padding" );
+		if( $padding == "" ) {
+		  $padding = "0";
+		}
+		$padding_width = "0";
+		// if( $identifier == "structure_left" ) {
+
+		  $padding_arr = explode( " ", $padding );
+		  switch (sizeof($padding_arr)) {
+		    case 0:
+		      $padding_width = "0";
+		      break;
+		    case 1:
+		      $padding_width = $padding_arr[0];
+		      $measurement = "px";
+		      if (strpos($padding_width, 'px') !== false) {
+		        $measurement = "px";
+		      } else if (strpos($padding_width, '%') !== false) {
+		        $measurement = "%";
+		      } else if (strpos($padding_width, 'em') !== false) {
+		        $measurement = "em";
+		      }
+		      $padding_width = str_replace("px", "", $padding_width);
+		      $padding_width = str_replace("%", "", $padding_width);
+		      $padding_width = str_replace("em", "", $padding_width);
+		      $padding_width = intval($padding_width);
+		      $padding_width = $padding_width*2;
+		      $padding_width = strval($padding_width);
+		      $padding_width = $padding_width . $measurement;
+
+		      break;
+		    case 2:
+		    $padding_width = $padding_arr[1];
+		    $measurement = "px";
+		    if (strpos($padding_width, 'px') !== false) {
+		      $measurement = "px";
+		    } else if (strpos($padding_width, '%') !== false) {
+		      $measurement = "%";
+		    } else if (strpos($padding_width, 'em') !== false) {
+		      $measurement = "em";
+		    }
+		    $padding_width = str_replace("px", "", $padding_width);
+		    $padding_width = str_replace("%", "", $padding_width);
+		    $padding_width = str_replace("em", "", $padding_width);
+		    $padding_width = intval($padding_width);
+		    $padding_width = $padding_width*2;
+		    $padding_width = strval($padding_width);
+		    $padding_width = $padding_width . $measurement;
+		      break;
+		    case 3:
+		    $padding_width = $padding_arr[1];
+		    $measurement = "px";
+		    if (strpos($padding_width, 'px') !== false) {
+		      $measurement = "px";
+		    } else if (strpos($padding_width, '%') !== false) {
+		      $measurement = "%";
+		    } else if (strpos($padding_width, 'em') !== false) {
+		      $measurement = "em";
+		    }
+		    $padding_width = str_replace("px", "", $padding_width);
+		    $padding_width = str_replace("%", "", $padding_width);
+		    $padding_width = str_replace("em", "", $padding_width);
+		    $padding_width = intval($padding_width);
+		    $padding_width = $padding_width*2;
+		    $padding_width = strval($padding_width);
+		    $padding_width = $padding_width . $measurement;
+		      break;
+		    case 4:
+		    $padding_width_left = $padding_arr[1];
+		    $padding_width_right = $padding_arr[3];
+		    $measurement = "px";
+		    if (strpos($padding_width_left, 'px') !== false) {
+		      $measurement = "px";
+		    } else if (strpos($padding_width_left, '%') !== false) {
+		      $measurement = "%";
+		    } else if (strpos($padding_width_left, 'em') !== false) {
+		      $measurement = "em";
+		    }
+		    $padding_width_left = str_replace("px", "", $padding_width_left);
+		    $padding_width_left = str_replace("%", "", $padding_width_left);
+		    $padding_width_left = str_replace("em", "", $padding_width_left);
+		    $padding_width_left = intval($padding_width_left);
+
+		    $padding_width_right = str_replace("px", "", $padding_width_right);
+		    $padding_width_right = str_replace("%", "", $padding_width_right);
+		    $padding_width_right = str_replace("em", "", $padding_width_right);
+		    $padding_width_right = intval($padding_width_right);
+
+
+		    $padding_width = $padding_width_left + $padding_width_right;
+		    $padding_width = strval($padding_width);
+		    $padding_width = $padding_width . $measurement;
+		      break;
+
+		    default:
+		      $padding_width = "0";
+		      break;
+		  }
+
+			return [$padding, $padding_width];
+		// }
 	}
 
 	public static function setContainerClass($file, $identifier)
