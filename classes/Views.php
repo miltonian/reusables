@@ -717,9 +717,10 @@ return;
 			if( isset($dict['editing']) ){ $isediting=1; }else{ $isediting=0; }
 
 
-			$slug = Data::getValue( $value, "slug", $identifier );
+			$slug = Data::getValue( $dict, "slug", $identifier );
+
 			if( $slug == "" ) {
-				$slug = Data::getValue( $value, "link", $identifier );
+				$slug = Data::getValue( $dict, "link", $identifier );
 			}
 
 			$pre_slug = Data::getValue( $viewoptions, "pre_slug" );
@@ -741,9 +742,9 @@ return;
 				$fullviewdict = $dict;
 			}
 
-			$description = Data::getValue( $value, "html_text", $identifier );
+			$description = Data::getValue( $dict, "html_text", $identifier );
 			if( $description == "" ) {
-				$description = Data::getValue( $value, "description", $identifier );
+				$description = Data::getValue( $dict, "description", $identifier );
 			}
 			$preview = Data::getValue( $viewoptions, "preview", $identifier );
 			$description_limit = Data::getValue( $viewoptions, "description_limit", $identifier );
@@ -766,7 +767,7 @@ return;
 				}
 			}
 
-			$title = Data::getValue( $value, "title", $identifier );
+			$title = Data::getValue( $dict, "title", $identifier );
 			$title_limit = Data::getValue( $viewoptions, "title_limit" );
 			if( $title_limit != "" && $title != "" ) {
 				$title = Data::substrwords($title, intval($title_limit));
