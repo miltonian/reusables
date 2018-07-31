@@ -937,12 +937,19 @@ return;
 		$height = Data::getValue( $viewoptions, "height" );
 
 echo " <style> ";
-	echo " ." . $identifier . ".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".inner { display: inline-block; position: relative; margin: 0; padding: 0; float: left; background-size: ".$image_size."; background-repeat: no-repeat; background-position: center; width: ". ((1.0/sizeof($viewvalues)) * 100) . "%; ";
+	echo " ." . $identifier . ".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".inner { display: inline-block; position: relative; margin: 0; padding: 0; float: left; background-size: ".$image_size."; background-repeat: no-repeat; background-position: center; ";
 		if( $height != "" ) {
 			// echo "height: ".$height.";";
 		}
 
 		echo " } ";
+		echo " @media( min-width: 0px) { ";
+			echo " ." . $identifier . ".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".inner { width: 100%; }";
+		echo " } ";
+		echo " @media( min-width: 768px) { ";
+			echo " ." . $identifier . ".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".inner { width: ". ((1.0/sizeof($viewvalues)) * 100) . "%; }";
+		echo " } ";
+
 		echo " ." . $identifier . ".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php").".main {";
 			if( $height != "" ) {
 				echo "height: ".$height.";";
