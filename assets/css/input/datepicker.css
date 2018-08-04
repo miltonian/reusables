@@ -1,4 +1,5 @@
 .datepicker { display: inline-block; position: relative; margin: 0; padding: 0; float: left; /*width: 100%;*/ text-align: left; }
+	.datepicker .basic_label.main .basic_label.title { padding-top: 20px; }
 	.datepicker label { display: inline-block; position: relative; margin: 0; padding: 6px 0; width: calc(100% - 0px); font-weight: 600; font-size: 14px; }
 	.datepicker input { display: inline-block; position: relative; margin: 0; padding: 6px; width: calc(100% - 0px); font-size: 14px; font-weight: 300; color: #333333; background-color: white; border: 1px solid #e0e0e0; border-radius: 5px; }
 

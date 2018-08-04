@@ -1,4 +1,5 @@
 .checkbox { display: inline-block; position: relative; margin: 0; padding: 0; /*width: 100%;*/ text-align: left; }
+	.checkbox .basic_label.main .basic_label.title { padding-top: 20px; }
 	.checkbox label { display: inline-block; position: relative; margin: 0; padding: 10px 0; width: calc(100% - 0px); font-weight: 600; font-size: 16px; }
 
 .checkbox input.checkbox_inner { position: relative; margin-left: 0; margin-right: 10px; }

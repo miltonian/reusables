@@ -1,5 +1,7 @@
 .file_image { display: inline-block; position: relative; margin: 0; padding: 0; float: left; /*width: 100%;*/ text-align: left; }
-	.file_image label { display: inline-block; position: relative; margin: 0; padding: 10px 0; width: calc(100% - 0px); font-weight: 600; font-size: 16px; }
+	.file_image .basic_label.main { width: 100%; }
+	.file_image .basic_label.main .basic_label.title { text-align: left; padding-top: 20px; }
+	.file_image label { display: inline-block; position: relative; margin: 0; padding: 10px 0; width: calc(100% - 0px); font-weight: 600; font-size: 16px; text-align: left; }
 	.file_image input { display: inline-block; position: relative; margin: 0; padding: 10px; width: calc(100% - 20px); font-size: 14px; font-weight: 400; color: #333333; background-color: white; border: 1px solid #e0e0e0; border-radius: 5px; }
 	.file_image#imglabel { width: calc(50% - 0px); padding-bottom: 50%; background-color: #e3e3e9; border-radius: 5px; overflow: hidden; cursor: pointer; background-size: cover; background-position: center; background-repeat: no-repeat; }
 
