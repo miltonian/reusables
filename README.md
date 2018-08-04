@@ -1,12 +1,25 @@
 # Reusables
 
-### Setting Up
-- In terminal, go to your project's root directory
-- Enter: composer require miltonian/reusables
-- After that loads cd to the miltonian/reusables directory
-- Enter: sh prepare_reusables.sh 
+Reusables is an open sourced PHP framework for reusing views and various features across one or multiple sites to increase the speed and robustness of websites. 
 
-### Creating a WebPage
+## Installation
+### New Project
+- Create a new directory, then navigate to that directory in your terminal. Then enter:
+```sh
+$ composer require miltonian/reusables
+$ sh vendor/miltonian/reusables/prepare_fromscratch.sh 
+```
+### Add to Existing Project
+- In terminal, go to your project's root directory. Enter:
+```sh
+$ composer require miltonian/reusables
+$ sh vendor/miltonian/reusables/prepare_reusables.sh 
+```
+
+## License
+[MIT License](https://github.com/miltonian/reusables/blob/master/License)
+
+## Creating a WebPage
 
 Add your start and end functions:
 
@@ -26,7 +39,7 @@ Reusables\Page::end(__FILE__);
 
 ```
 
-### View Layout
+## View Layout
 
 In between the start and end functions, you can start adding views. 
 
@@ -63,7 +76,7 @@ featured_image.view(custom/section/imagetext_full);
 - custom/section
 - table
 
-#### Adding Data 
+### Adding Data 
 
 The format for adding data:
 
@@ -79,7 +92,7 @@ An example of this in action:
 about_us_section.data(title: “Value”, subtitle: “Value”, description: “Value”, imagepath: “Value”);
 }}
 ```
-#### Adding Options
+### Adding Options
 
 The format for adding options: 
 ```sh
