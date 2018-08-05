@@ -46,7 +46,7 @@ In between the start and end functions, you can start adding views. 
 
 There are 3 main elements when adding views. Type, View, Identifier. The Type is essentially a category of a view. These can be preceded with “custom/” to indicate a custom type and view. The View indicates the specific look of the view. The Identifier must be unique as it defines a specific view on the page and allows you to add options and data to it. We’ll go over that more later. 
 
-In order for Vibrant to find the views you add you must place them in between two double brackets:
+In order for Reusables to find the views you add you must place them in between two double brackets:
 
 ```sh
 {{
