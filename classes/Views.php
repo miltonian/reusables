@@ -935,6 +935,8 @@ return;
 		$title_color = Data::getValue( $viewoptions, "title_color" );
 		$subtitle_color = Data::getValue( $viewoptions, "subtitle_color" );
 		$description_color = Data::getValue( $viewoptions, "description_color" );
+		$text_offset_x = Data::getValue( $viewoptions, "text_offset_x" );
+		$text_offset_y = Data::getValue( $viewoptions, "text_offset_y" );
 
 		if( $image_size == "" ) {
 			$image_size = "cover";
@@ -983,6 +985,14 @@ echo " <style> ";
 			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".title { text-align: ".$text_align." !important ; } ";
 			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".subtitle { text-align: ".$text_align." !important ; } ";
 			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .description { text-align: ".$text_align." !important; } ";
+		}
+
+		if( $text_offset_x != "" ) {
+			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".content_container { margin-left: ".$text_offset_x." !important ; } ";
+		}
+
+		if( $text_offset_y != "" ) {
+			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".content_container { margin-top: ".$text_offset_y." !important ; } ";
 		}
 
 		if( $title_size != "" ) {
