@@ -176,7 +176,7 @@ class CustomCode {
 			return;
 		}
 		$other = $id_arr[1];
-		if( !$isdata && !$isoptions ) {
+		if( !$isdata && !$isoptions && !$is_links ) {
 			$other = str_replace(" ", "", $other);
 		}
 		$other = str_replace(");", "", $other);
@@ -484,8 +484,8 @@ class CustomCode {
 	{
 		$links = [];
 		foreach ($view_inputs as $key => $value) {
-			$value = ltrim($value, ' ');
-	        $value = rtrim($value, ' ');
+			// $value = ltrim($value, ' ');
+	        // $value = rtrim($value, ' ');
 	        $value = ltrim($value, '\"');
 	        $value = rtrim($value, '\"');
 					// exit(json_encode($key));
