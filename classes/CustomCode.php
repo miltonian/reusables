@@ -9,6 +9,7 @@ class CustomCode {
 	public static $dataSet = [];
 	public static $startSet = [];
 	public static $fontSet = [];
+	public static $linksSet = [];
 
 	public static function place( $code )
 	{
@@ -163,6 +164,13 @@ class CustomCode {
 				$isfont = true;
 			}
 		}
+		$is_links = false;
+		if( sizeof($identifier_arr) == 2 ) {
+			$data_type = str_replace(" ", "", $identifier_arr[1]);
+			if( $data_type == "links" ) {
+				$is_links = true;
+			}
+		}
 
 		if( !isset($id_arr[1]) ) {
 			return;
@@ -178,7 +186,10 @@ class CustomCode {
 		$i=0;
 		foreach ($values as $v) {
 
-			$v = explode(":", $v, 2);
+			// $v = explode(":", $v, 2);
+
+			$v = preg_split('/\:(?![^http]\/)/', $v);
+
 			if( isset($v[1]) ) {
 				$view_inputs[$v[0]] = $v[1];
 			} else {
@@ -188,10 +199,10 @@ class CustomCode {
 			$i++;
 		}
 
-		if( isset( self::$viewsSet[$identifier] ) && !$isoptions && !$isdata && !$is_start && !$is_end ) {
+		if( isset( self::$viewsSet[$identifier] ) && !$isoptions && !$isdata && !$is_start && !$is_end && !$is_links ) {
 			$output = str_replace( $matches[$index], "", $output );
 			return;
-		} else if( !$isoptions && !$isdata && !$is_start && !$is_end ) {
+		} else if( !$isoptions && !$isdata && !$is_start && !$is_end && !$is_links ) {
 			self::$viewsSet[$identifier] = true;
 		} else if( $isoptions ) {
 			if( !isset( self::$optionsSet[$identifier] ) ) {
@@ -232,6 +243,14 @@ class CustomCode {
 			}
 
 			self::$dataSet[$identifier][array_keys($view_inputs)[0]] = true;
+		} else if( $is_links ) {
+
+			if( isset(self::$linksSet[$identifier] ) ) {
+				$output = str_replace($matches[$index], "", $output );
+				return;
+			} else {
+				self::$linksSet[$identifier] = array_keys($view_inputs)[0];
+			}
 		}
 
 		$after_string = $output;
@@ -258,6 +277,9 @@ class CustomCode {
 		}
 		if( $isfont ) {
 			$after_string = CustomCode::addFont( $output, $matches, $str, $index, $view_inputs, $identifier );
+		}
+		if( $is_links ) {
+			$after_string = CustomCode::addLinks( $output, $matches, $str, $index, $view_inputs, $identifier);
 		}
 
 
@@ -293,7 +315,6 @@ class CustomCode {
 	public static function addData( $output, $matches, $str, $index, $view_inputs, $identifier)
 	{
 		// $view_inputs = str_replace(", replace, subject)
-		// exit( json_encode( $view_inputs ) );
 		$thisdata = [];
 		foreach ($view_inputs as $key => $value) {
 
@@ -324,6 +345,7 @@ class CustomCode {
 		}
 		// $view_inputs = json_decode($view_inputs, true);
 		$current_data = Data::retrieveDataWithID($identifier);
+
 		if( $current_data != null ) {
 			$newdata = [];
 			if( Data::isAssoc($current_data) ) {
@@ -451,7 +473,26 @@ class CustomCode {
 				$thisoutput .= " font-family: " . $fontfamily . ";";
 			$thisoutput .= " } ";
 		$thisoutput .= "</style>";
-echo $thisoutput;
+		echo $thisoutput;
+
+		$output = str_replace($matches[$index], "", $output );
+
+		return $output;
+	}
+
+	public static function addLinks( $output, $matches, $str, $index, $view_inputs, $identifier)
+	{
+		$links = [];
+		foreach ($view_inputs as $key => $value) {
+			$value = ltrim($value, ' ');
+	        $value = rtrim($value, ' ');
+	        $value = ltrim($value, '\"');
+	        $value = rtrim($value, '\"');
+					// exit(json_encode($key));
+					$links[$key] = $value ;
+		}
+
+		Data::addOption($links, "links", $identifier);
 
 		$output = str_replace($matches[$index], "", $output );
 

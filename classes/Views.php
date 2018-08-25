@@ -710,6 +710,8 @@ return;
 			$original_arr = $viewdict;
 		}
 
+		$links = Data::getValue($viewoptions, "links");
+
 		$viewvalues = [];
 		foreach ($original_arr as $key => $value) {
 
@@ -722,6 +724,7 @@ return;
 			if( $slug == "" ) {
 				$slug = Data::getValue( $dict, "link", $identifier );
 			}
+
 
 			$pre_slug = Data::getValue( $viewoptions, "pre_slug" );
 			if( $pre_slug == "" ) {
@@ -799,7 +802,7 @@ return;
 		$margin_width = $margin_arr[1];
 
 
-		return ["viewvalues" => $viewvalues, "linkpath"=>$linkpath, "data_id"=>$identifier, "text_color"=>$text_color, "background_color"=>$background_color, "padding"=>$padding, "padding_width"=>$padding_width, "margin"=>$margin, "margin_width"=>$margin_width];
+		return ["viewvalues" => $viewvalues, "linkpath"=>$linkpath, "data_id"=>$identifier, "text_color"=>$text_color, "background_color"=>$background_color, "padding"=>$padding, "padding_width"=>$padding_width, "margin"=>$margin, "margin_width"=>$margin_width, "links"=>$links];
 	}
 
 	public static function getPaddingOrMargin( $identifier, $type="padding" )
@@ -974,6 +977,7 @@ echo " <style> ";
 			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".title { color: ".$text_color." ; } ";
 			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".subtitle { color: ".$text_color." ; } ";
 			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .description { color: ".$text_color."; } ";
+			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .link { color: ".$text_color."; } ";
 		} else {
 			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".title { color: #333 ; } ";
 			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".subtitle { color: #333 ; } ";
@@ -981,7 +985,6 @@ echo " <style> ";
 		}
 
 		if( $text_align != "" ) {
-
 			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".title { text-align: ".$text_align." !important ; } ";
 			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".subtitle { text-align: ".$text_align." !important ; } ";
 			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .description { text-align: ".$text_align." !important; } ";
