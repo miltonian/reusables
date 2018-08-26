@@ -643,6 +643,9 @@ var editingon = false
 				var key = input_keys[i];
 				var db_info = []
 				if( typeof formatteddata['db_info'] === 'undefined' ) {
+					if( typeof formatteddata[0] === 'undefined' ) {
+						return
+					}
 					db_info = formatteddata[0]['db_info']
 				} else {
 					db_info = formatteddata['db_info']
