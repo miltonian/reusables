@@ -484,8 +484,8 @@ class CustomCode {
 	{
 		$links = [];
 		foreach ($view_inputs as $key => $value) {
-			// $value = ltrim($value, ' ');
-	        // $value = rtrim($value, ' ');
+			$value = ltrim($value, ' ');
+	        $value = rtrim($value, ' ');
 	        $value = ltrim($value, '\"');
 	        $value = rtrim($value, '\"');
 					// exit(json_encode($key));
