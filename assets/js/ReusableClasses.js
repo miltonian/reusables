@@ -332,7 +332,7 @@ var editing_options_on = false
 
 		}
 
-		addAction( button, editingfunctions, index, dataarray=null, view=null, e, viewoptions=null, formviewoptions=null, identifier="" )
+		addAction( button, editingfunctions, index, dataarray=null, view=null, e, viewoptions=null, formviewoptions=null, identifier="", is_options=false )
 		{
 
 			// index is the button's index, not the cell's
@@ -341,16 +341,28 @@ var editing_options_on = false
 			var type = "";
 			if( typeof type === 'undefined' ) {
 				type = button['type']
+				if(is_options) {
+					type = button['options_type']
+				}
 				if( type == 'modal' ) {
 					identifier = button['modal']['modalclass']
+				}
+				if( type == 'options_modal' ) {
+					identifier = button['options_modal']['modalclass']
 				}
 
 			}
 			if( viewoptions ) {
 				if( typeof viewoptions['type'] !== 'undefined' ) {
 					type = viewoptions['type']
+					if(is_options) {
+						type = viewoptions['options_type']
+					}
 					if( type == 'modal' ) {
 						identifier = viewoptions['modal']['modalclass']
+					}
+					if( type == 'options_modal' ) {
+						identifier = viewoptions['options_modal']['modalclass']
 					}
 				}
 			}
@@ -367,7 +379,7 @@ var editing_options_on = false
 				// }
 				// alert( JSON.stringify( linkpath ) )
 				// window.open( linkpath );
-			}else if( type == "modal" ){
+			}else if( type == "modal" || type == "options_modal" ){
 				e.preventDefault();
 
 				var cellindex = null;
@@ -744,6 +756,8 @@ var editing_options_on = false
 		}
 
 		toggleEditing() {
+
+			editing_options_on = false
 			if( editingon ) {
 				editingon = false
 				$('div.horizontal.main.adminbar.desktopnav.navbar-shadow').css({'background-color': '#ffffff'})
@@ -763,6 +777,8 @@ var editing_options_on = false
 		}
 
 		toggleEditingOptions() {
+
+			editingon = false
 			if( editing_options_on ) {
 				editing_options_on = false
 				$('div.horizontal.main.adminbar.desktopnav.navbar-shadow').css({'background-color': '#ffffff'})

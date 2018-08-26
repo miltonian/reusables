@@ -104,6 +104,7 @@ class Input {
 
 	public static function fill( $dict, $key, $index, $type=null, $placeholder=null, $labeltext=null, $size=null, $parentclass=null, $selectoptions="", $multiple_updates=false, $multipleupdate_i=-1 )
 	{
+
 		if( !$type ){
 			$type = Input::getInputType( $key, $multiple_updates, $multipleupdate_i );
 		}
@@ -126,19 +127,22 @@ class Input {
 			$type = "timepicker";
 		}
 		Input::setInputType( $key, $type, $multiple_updates, $multipleupdate_i );
-		// echo "<script> console.log( 'ASDF: '+JSON.stringify( ".json_encode( [$key, $type, $multiple_updates, $multipleupdate_i] ) ." ) ); </script>";
-		// exit( json_encode( $key ) );
+
 		$raw_key_arr = explode( '.', $key );
 		if( sizeof( $raw_key_arr ) != 2 ) {
+			// return null;
+			$raw_key = $key;
+		} else {
+			$raw_key = $raw_key_arr[1];
+		}
+
+		if($raw_key == "data_id"){
 			return null;
 		}
 
-		$raw_key = $raw_key_arr[1];
 
 		if( !$placeholder ){ $placeholder = ucfirst( str_replace("_", " ", $raw_key) ); }
 		if( !$labeltext ){ $labeltext = ucfirst( str_replace("_", " ", $raw_key) ); }
-		// if( !$size ){ $size = ucfirst( $key ); }
-// exit( json_encode( $key ) );
 		if( isset( $dict[$key]['data_id'] ) ){
 			$dataid = $dict[$key]['data_id'];
 			$options = Data::retrieveOptionsWithID($dataid);
@@ -146,7 +150,7 @@ class Input {
 			$dataid = $dict['data_id'];
 			$options = Data::retrieveOptionsWithID($dataid);
 		}
-		// exit( json_encode( $dataid ) );
+
 		if( isset( $options['input_keys'] ) ) {
 			$input_keys = $options['input_keys'];
 			if( isset( $input_keys[$key] ) ) {
@@ -159,13 +163,16 @@ class Input {
 
 		// exit( json_encode( Data::getColName( ["data_id"=>$dataid, "key" => $key] ) ) );
 		if( ( Data::getColName( ["data_id"=>$dataid, "key" => $key] ) ) == null ) {
-			return null;
+			// return null;
+			$tablename = "";
+		} else {
+
+			$tablename = Data::getDefaultTableNameWithID( $dataid, $key );
 		}
 
 
 // exit( json_encode( $dict['db_info']['tablenames']['client_status'] ) );
 		// $tablename = Data::getDefaultTableNameWithID( $dataid, $raw_key );
-		$tablename = Data::getDefaultTableNameWithID( $dataid, $key );
 
 		$inputdict = [
 			"placeholder"=>$placeholder,
@@ -228,6 +235,7 @@ class Input {
 		if($key == "value_string"){
 			// echo " console.log( 'haha: '+JSON.stringify('".json_encode( self::$inputtypes ) . "')); ";
 		}
+
 		if( isset( self::$inputtypes[$key] ) ){
 			if( $multiple_updates ) {
 				if( is_array( self::$inputtypes[$key] ) ) {
@@ -340,7 +348,9 @@ class Input {
 					if( is_string($v) ) {
 						$v_arr = explode(".", $v);
 						if( sizeof($v_arr ) == 1 ) {
-							$v = $default_tablename . "." . $v;
+							if($default_tablename != ""){
+								$v = $default_tablename . "." . $v;
+							}
 						}
 
 						$input_keys[$k] = $v;
@@ -351,7 +361,9 @@ class Input {
 						$newk = "";
 						$k_arr = explode(".", $k);
 						if( sizeof($k_arr ) == 1 ) {
-							$newk = $default_tablename . "." . $k;
+							if($default_tablename != ""){
+								$newk = $default_tablename . "." . $k;
+							}
 						}
 						if( $newk != "" ) {
 
@@ -407,7 +419,6 @@ class Input {
 	public static function convertInputKeys2( $input_keys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys, $multiple_updates=false )
 	{
 
-		// $asdf++;
 // Input::setInputFieldType( $t );
 		if( sizeof($input_keys) == 0 ){
 			if( isset( $data['value'] ) ){
@@ -425,10 +436,9 @@ class Input {
 			$input_keys = array_keys($input_keys);
 		}
 
-$asdf = 0;
+
 		$multipleupdate_i = $i;
 		foreach ($input_keys as $ik) {
-// exit( json_encode( $ik ) );
 
 			$placeholder = null; $labeltext = null; $type = null;
 			if( isset( $input_keydicts[ $ik ]['step'] ) ){ $steps = $input_keydicts[ $ik ]['step']; }
@@ -450,6 +460,7 @@ $asdf = 0;
 				ReusableClasses::setFormInputIndex( $identifier, $i );
 
 				$theinput = Input::fill( $data, $thekey, $i, $type, $placeholder, $labeltext, $size, $identifier, $selectoptions, $multiple_updates, $multipleupdate_i );
+				//asdfasdf
 
 				if( sizeof( $theinput ) == 2 ) {
 					array_push(
@@ -468,6 +479,7 @@ $asdf = 0;
 			}
 			$multipleupdate_i++;
 		}
+
 		return [
 			"input_keys" => $input_keys,
 			"input_keydicts" => $input_keydicts,

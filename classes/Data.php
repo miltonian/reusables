@@ -397,6 +397,10 @@ class Data {
 		if( !isset( $pair['key'] ) ){ return ""; }
 
 		if(!isset(self::retrieveDataWithID( $pair['data_id'] )['db_info'])){
+			$pairdata = self::retrieveDataWithID( $pair['data_id']);
+			if( !isset($pairdata[0] ) ){
+				return false;
+			}
 			$data = self::retrieveDataWithID( $pair['data_id'] )[0];
 			$defaultTableName = self::getDefaultTableNameWithData( $data );
 			$pair['key'] = $defaultTableName . $pair['key'];
@@ -411,10 +415,15 @@ class Data {
 	}
 
 	public static function getColName( $pair )
-	{//asdfasdfasdf
+	{
 		if( !isset( $pair['data_id'] ) ){ return ""; }
 		if( !isset( $pair['key'] ) ){ return ""; }
 		if(!isset(self::retrieveDataWithID( $pair['data_id'] )['db_info'])){
+
+$pairdata = self::retrieveDataWithID( $pair['data_id']);
+			if( !isset($pairdata[0] ) ){
+				return false;
+			}
 			$data = self::retrieveDataWithID( $pair['data_id'] )[0];
 			$defaultTableName = self::getDefaultTableNameWithData( $data );
 			$pair['key'] = $defaultTableName . $pair['key'];

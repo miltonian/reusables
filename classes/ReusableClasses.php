@@ -276,7 +276,7 @@ if($multiple_updates){
 		return $typearray;
 	}
 
-	public static function getEditingFunctionsJS( $dict )
+	public static function getEditingFunctionsJS( $dict, $is_options=false )
 	{
 
 		$action_key = ReusableClasses::getViewActionKey( $dict );
@@ -287,7 +287,6 @@ if($multiple_updates){
 		if( $multiple ) {
 			$i=0;
 			foreach ( $actiondict as $ca ) {
-				$ca_type = Data::getValue( $ca, 'type' );
 				if( $ca_type == "modal" ){
 					if( isset( $ca_type[ 'modal' ] ) ) {
 						echo "var thismodalclass = new " . $ca['modal']['modalclass'] . "Classes();
@@ -295,13 +294,17 @@ if($multiple_updates){
 					} else{
 						echo 'editingfunctions.push( "nothing" );';
 					}
-				}else{
+				} else {
 					echo 'editingfunctions.push( "nothing" );';
 				}
 				$i++;
 			}
 		}else{
-			$ca_type = Data::getValue( $actiondict, 'type' );
+			if($is_options){
+				$ca_type = Data::getValue( $actiondict, 'options_type' );
+			} else {
+				$ca_type = Data::getValue( $actiondict, 'type' );
+			}
 			if( $ca_type == "modal" ){
 				if( isset( $actiondict[ 'modal' ] ) ) {
 					echo "var thismodalclass = new " . $actiondict['modal']['modalclass'] . "Classes();
@@ -309,7 +312,14 @@ if($multiple_updates){
 				} else{
 					echo 'editingfunctions.push( "nothing" );';
 				}
-			}else{
+			} else if( $ca_type == "options_modal" ) {
+				if( isset( $actiondict[ 'options_modal' ] ) ) {
+					echo "var thismodalclass = new " . $actiondict['options_modal']['modalclass'] . "Classes();
+					editingfunctions.push( thismodalclass );";
+				} else{
+					echo 'editingfunctions.push( "nothing" );';
+				}
+			} else {
 				echo 'editingfunctions.push( "nothing" );';
 			}
 		}
@@ -387,6 +397,7 @@ if($multiple_updates){
 	public static function makeViewEditing( $viewdict, $viewoptions, $identifier, $alwayseditable=false ) {
 
 		echo " let alwayseditable = " . json_encode( $alwayseditable ) . "; ";
+
 		echo " if( Reusable.isEditing() || alwayseditable ) { ";
 				Data::makeViewEditing( $viewdict, $viewoptions, $identifier, $alwayseditable );
 		echo " } ";
@@ -443,6 +454,17 @@ if($multiple_updates){
 						}
 					}
 				}
+				if( isset( $action['options_modal'] ) ){
+					$actiondict[$i]['options_type'] = "options_modal";
+					$actionmodal = Data::getValue( $action, 'options_modal' );
+					if( !is_array( $actionmodal ) && $actionmodal != "" ){
+						$new_actionmodal = [
+							"parentclass" => $actionmodal . "_wrapper",
+							"modalclass" => $actionmodal
+						];
+						$actiondict[$i]['options_modal'] = $new_actionmodal;
+					}
+				}
 				$i++;
 			}
 		}else {
@@ -468,6 +490,20 @@ if($multiple_updates){
 						];
 
 						$actiondict['help_modal'] = $new_actionmodal;
+
+					}
+				}
+
+				if( isset( $actiondict['options_modal'] ) ) {
+					$actiondict['options_type'] = "options_modal";
+					$actionmodal = Data::getValue( $actiondict, 'options_modal' );
+					if( !is_array( $actionmodal ) && $actionmodal != "" ){
+						$new_actionmodal = [
+							"parentclass" => $actionmodal . "_wrapper",
+							"modalclass" => $actionmodal
+						];
+
+						$actiondict['options_modal'] = $new_actionmodal;
 
 					}
 				}

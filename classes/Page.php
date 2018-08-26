@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Reusables;
 
@@ -52,7 +52,7 @@ class Page {
 			// CustomCode::end();
 			return self::$page_in_html;
 		}
-		
+
 	}
 
 	public static function start( $in_html=false )
@@ -75,7 +75,7 @@ class Page {
 
 		// Views::makeViews();
 
-		
+
 		// $output = ob_get_contents();
 		// ob_end_clean();
 
@@ -99,7 +99,7 @@ class Page {
 			$i++;
 		}
 		$page = rtrim($page, ".php");
-		
+
 		if( file_exists( BASE_DIR . self::$custompagescss . 'header.css' ) ) {
 			echo "<link rel='stylesheet' type='text/css' href='" . PROJECT_ROOT . self::$custompagescss . "header.css'>";
 		}
@@ -134,7 +134,7 @@ class Page {
 		ReusableClasses::addjs();
 
 		echo "
-			<script> 
+			<script>
 				if( typeof Reusable === 'undefined' ) {
 					var Reusable = new ReusableClasses();
 				}
@@ -149,6 +149,11 @@ class Page {
 				$('.horizontal.main.adminbar.desktopnav.navbar-shadow .horizontal.button.edit_switch.wrapper  a.horizontal.topbar-button').click(function(e){
 					e.preventDefault()
 					Reusable.toggleEditing()
+				})
+
+				$('.horizontal.main.adminbar.desktopnav.navbar-shadow .horizontal.button.edit_options_switch.wrapper  a.horizontal.topbar-button').click(function(e){
+					e.preventDefault()
+					Reusable.toggleEditingOptions()
 				})
 
 			</script>

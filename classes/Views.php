@@ -70,6 +70,9 @@ class Views {
 				Data::addOption( "modal", "type", $identifier );
 				Data::addOption( $identifier . "_form", "modal", $identifier );
 
+				Data::addOption( "options_modal", "type", $identifier );
+				Data::addOption( $identifier . "_options_form", "options_modal", $identifier );
+
 				if( $viewoptions["insertonly"] == true ) {
 					if( !isset( $viewoptions["tb"] ) ) {
 						exit( "insertonly option needs a tablename option as well. the key to pass the tablename is 'tb'" );
@@ -128,6 +131,7 @@ class Views {
 					}
 
 					$formoptions = Data::retrieveOptionsWithID( $identifier . "_form" );
+					$options_formoptions = Data::retrieveOptionsWithID( $identifier . "_options_form" );
 					if( !isset($formoptions['input_keys']) ) {
 
 						$viewtype = $viewinfo['viewtype'];
@@ -145,6 +149,33 @@ class Views {
 							$input_keys = Views::getViewInputs( $viewtype, $filename );
 						}
 						Data::addOption( $input_keys, "input_keys", $identifier . "_form" );
+					}
+					if( !isset($formoptions['input_keys']) ) {//asdfasdf
+
+						$text_color = Data::getValue( $viewoptions, "text_color" );
+						$background_color = Data::getValue( $viewoptions, "background_color" );
+						$image_size = Data::getValue( $viewoptions, "image_size" );
+						$image_corner_radius = Data::getValue( $viewoptions, "image_corner_radius" );
+						$text_align = Data::getValue( $viewoptions, "text_align" );
+						$title_size = Data::getValue( $viewoptions, "title_size" );
+						$subtitle_size = Data::getValue( $viewoptions, "subtitle_size" );
+						$description_size = Data::getValue( $viewoptions, "description_size" );
+						$title_color = Data::getValue( $viewoptions, "title_color" );
+						$subtitle_color = Data::getValue( $viewoptions, "subtitle_color" );
+						$description_color = Data::getValue( $viewoptions, "description_color" );
+						$text_offset_x = Data::getValue( $viewoptions, "text_offset_x" );
+						$text_offset_y = Data::getValue( $viewoptions, "text_offset_y" );
+						$editable_options = [
+							"text_color", "background_color", "image_size", "image_corner_radius",
+							"text_align", "title_size", "subtitle_size", "description_size", "title_color",
+							"subtitle_color", "description_color", "text_offset_x", "text_offset_y"
+						];
+						$input_keys = [];
+						foreach ($editable_options as $editable_option) {
+							$input_keys[$editable_option] = ["type"=>"textfield", "field_value"=>Data::getValue( $viewoptions, $editable_option )];
+						}
+
+						Data::addOption( $input_keys, "input_keys", $identifier . "_options_form" );
 					}
 
 					// exit(json_encode([$input_keys]));
@@ -177,7 +208,15 @@ class Views {
 						"children"=>[]
 					];
 				}
+				$options_form_dict = [
+					"file"=>"smartform_inmodal",
+					"identifier"=>$identifier . "_options_form",
+					"viewtype"=>"section",
+					"tablenames"=>[],
+					"children"=>[]
+				];
 				array_push( self::$bufferedviews, $form_dict );
+				array_push( self::$bufferedviews, $options_form_dict );
 
 			}
 		}
@@ -1025,6 +1064,12 @@ echo " <style> ";
 		if( $background_color != "" ) {
 			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." { background-color: ".$background_color."; } ";
 		}
+
+		// $options_form_inputs = [
+		// 	"text_color"=>["field_value"=>$text_color]
+		// ];
+		// 		Data::addOptions($options_form_inputs, "input_keys", $identifier . "_options_form");
+
 		echo " </style> ";
 	}
 

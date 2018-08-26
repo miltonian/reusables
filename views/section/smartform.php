@@ -53,7 +53,6 @@ extract( CustomView::makeFormVars( $viewdict, "viewdict" ) );
 extract( Input::convertInputKeys( $identifier ) );
 // exit( json_encode( $inputs ) );
 
-
 ?>
 
 
@@ -92,17 +91,17 @@ extract( Input::convertInputKeys( $identifier ) );
 		<?php foreach ($added_inputs as $ai) { ?>
 			<input class="added_inputs" type="<?php echo Data::getValue( $ai, 'type' ); ?>" name="<?php echo Data::getValue( $ai, 'name' ); ?>" value="<?php echo Data::getValue( $ai, 'value' ); ?>" >
 		<?php } ?>
-			<?php 
+			<?php
 
-				echo Structure::make( 
+				echo Structure::make(
 					"one_column",
 					[
 						"maincolumn" => $inputs[ 'c' . $onstep ]
-						
+
 					],
 					$identifier . "_onstep_" . $onstep . "_main_structure smartform"
 				);
-			
+
 			?>
 		<!-- <button class="smartform modalinner_1 save custombutton">Save</button> -->
 		<?php if( $steps > 1 ){ ?>
@@ -124,6 +123,7 @@ extract( Input::convertInputKeys( $identifier ) );
 		var viewdict = <?php echo json_encode($viewdict) ?>;
 		var input_keys = <?php echo json_encode($input_onlykeys) ?>;
 		var typearray = <?php echo json_encode( ReusableClasses::getTypeArray( $input_onlykeys ) ) ?>;
+
 		var dataarray = <?php echo json_encode( Data::getFullArray( $viewdict ) ) ?>;
 		var formatteddata = <?php echo json_encode( Data::retrieveDataWithID( $original_data_id ) ) ?>;
 		var identifier = "<?php echo $identifier ?>";
@@ -141,4 +141,3 @@ extract( Input::convertInputKeys( $identifier ) );
 
 // alert()
 </script>
-	
