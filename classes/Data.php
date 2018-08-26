@@ -695,4 +695,107 @@ class Data {
 
 
 
+
+
+
+
+
+
+	public static function makeCellEditing( $identifier, $fullviewdict, $celltype ) {
+
+		$viewdict = Data::retrieveDataWithID( $identifier );
+		$viewoptions = Data::retrieveOptionsWithID( $identifier );
+
+		echo 'var viewdict = ' . json_encode($viewdict) . ';
+		var viewoptions = ' . json_encode( $viewoptions ) . ';';
+		$formid = substr($identifier, 0, strpos($identifier, "_cell_")) . "_form";
+		$formviewoptions = Data::retrieveOptionsWithID($formid);
+		echo '
+		var formviewoptions = ' . json_encode( $formviewoptions ) . ';';
+			if( $celltype == "modal" ) {
+				echo 'thismodalclass = new ' . $viewoptions['modal']['modalclass'] . 'Classes();';
+				echo 'var dataarray = ' . json_encode( $fullviewdict ) . ';';
+			}else if( $celltype == "attached" ) {
+				echo 'var dataarray = ' . json_encode( $fullviewdict ) . ';';
+			}
+			echo '
+			var celltype = ' . json_encode( $celltype) . ';
+			if( celltype == "modal" || celltype == "dropdown" ) {
+				e.preventDefault();
+				if( typeof dataarray === "undefined" ) {
+					dataarray = []
+				}
+				Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions, formviewoptions );
+			}else if( celltype == "attached" ){
+				e.preventDefault();
+				dataarray = ' . json_encode( $fullviewdict ) . ';
+				if( typeof dataarray === "undefined" ) {
+					dataarray = []
+				}
+				var firstkey = ' . json_encode( array_keys($viewdict)[0] ) . ';
+				var theindex = parseInt( viewdict[firstkey]["index"] )
+				Reusable.addAction( viewdict, [], theindex, dataarray, this, e, viewoptions );
+			}';
+
+			ReusableClasses::getEditingFunctionsJS( $viewoptions ) ;
+
+
+			// echo 'if( typeof dataarray === "undefined" ) {
+			// 	dataarray = []
+			// }
+			// var viewdict = ' . json_encode($viewdict) . ';';
+			// echo 'var viewoptions = ' . json_encode( $viewoptions ) . ';
+			// Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );';
+		echo '}';
+	}
+
+	public static function makeViewEditing( $viewdict, $viewoptions, $identifier, $alwayseditable=false )
+	{
+
+		$fullarray = Data::getFullArray( $viewdict );
+		if( isset( $viewdict[$identifier]['value'] ) ) {
+			$fullviewdict = Data::getFullArray( $viewdict )[$identifier]['value'];
+		}else{
+			$fullviewdict = $viewdict;
+		}
+
+		$optiontype = Data::getValue( $viewoptions, 'type' );
+
+		echo "var viewdict = " . json_encode( $viewdict ) . ";
+		var viewoptions = " . json_encode( $viewoptions ) . ";
+
+		var thismodalclass = '';
+
+		var type = " . json_encode( $optiontype ) . ";";
+		echo "console.log( JSON.stringify( ".json_encode( $optiontype )." ) );";
+
+		if( $optiontype == "modal" && isset($viewoptions['modal']['modalclass']) ){
+			// extract( Input::convertInputKeys( $identifier . "_form" ));
+			// 	echo ' ' . Form::addJSClassToForm( $identifier . "_form", $viewdict, $input_onlykeys, $identifier . "_form" ) . '; ';
+			// 	echo " /*asdf*/ ";
+			echo "thismodalclass = new " . $viewoptions['modal']['modalclass'] . "Classes();
+			var dataarray = " . json_encode( $fullviewdict ) . ";";
+		}
+		echo "
+		var optiontype = " . json_encode($optiontype) . ";";
+		$formid = $identifier . "_form";
+		$formviewoptions = Data::retrieveOptionsWithID($formid);
+		echo '
+		var formviewoptions = ' . json_encode( $formviewoptions ) . ";
+		var identifier = " . json_encode( $identifier ) . ";
+
+		if( optiontype == 'modal' || optiontype == 'dropdown' ) {
+			e.preventDefault();
+			if( typeof dataarray === 'undefined' ) {
+				dataarray = []
+			}
+
+			Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions, formviewoptions, identifier );
+		}";
+
+		ReusableClasses::getEditingFunctionsJS( $viewoptions ) ;
+	}
+
+
+
 }

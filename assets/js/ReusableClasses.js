@@ -2,6 +2,7 @@ if ( typeof ReusableClasses !== 'function' )
 {
 var editingorder = false;
 var editingon = false
+var editing_options_on = false
 	class ReusableClasses {
 
 		testing(){
@@ -746,17 +747,39 @@ var editingon = false
 			if( editingon ) {
 				editingon = false
 				$('div.horizontal.main.adminbar.desktopnav.navbar-shadow').css({'background-color': '#ffffff'})
-				$('.horizontal.button.edit_switch.wrapper.buttonindex_1  .horizontal.topbar-button label').html('Edit: On/<b>Off</b>');
+				$('.horizontal.button.edit_switch.wrapper  .horizontal.topbar-button label').html('Edit Data: On/<b>Off</b>');
 			}else{
 				editingon = true
 				$('div.horizontal.main.adminbar.desktopnav.navbar-shadow').css({'background-color': '#FFF8E0'})
-				$('.horizontal.button.edit_switch.wrapper.buttonindex_1  .horizontal.topbar-button label').html('Edit: <b style=\"color: green\">On</b>/Off');
+				$('.horizontal.button.edit_switch.wrapper  .horizontal.topbar-button label').html('Edit Data: <b style=\"color: green\">On</b>/Off');
 			}
+		}
 
+		switchEditingOptions( turnOn ) {
+			editing_options_on = turnOn
+
+			$('div.horizontal.main.adminbar.desktopnav.navbar-shadow').css({'background-color': '#FFF8E0'})
+				$('.horizontal.button.edit_options_switch.wrapper .horizontal.topbar-button label').html('Edit: <b style=\"color: green\">On</b>/Off');
+		}
+
+		toggleEditingOptions() {
+			if( editing_options_on ) {
+				editing_options_on = false
+				$('div.horizontal.main.adminbar.desktopnav.navbar-shadow').css({'background-color': '#ffffff'})
+				$('.horizontal.button.edit_options_switch.wrapper .horizontal.topbar-button label').html('Edit Options: On/<b>Off</b>');
+			}else{
+				editing_options_on = true
+				$('div.horizontal.main.adminbar.desktopnav.navbar-shadow').css({'background-color': '#D7FAFE'})
+				$('.horizontal.button.edit_options_switch.wrapper .horizontal.topbar-button label').html('Edit Options: <b style=\"color: green\">On</b>/Off');
+			}
 		}
 
 		isEditing() {
 			return editingon
+		}
+
+		isEditingOptions() {
+			return editing_options_on
 		}
 
 

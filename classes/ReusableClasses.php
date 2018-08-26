@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Reusables;
 
@@ -7,7 +7,7 @@ if( !defined( 'PROJECT_ROOT' ) ){
 }
 
 class ReusableClasses {
-	
+
 	public $PDO; // PHP Data Object
 	protected static $includedfiles = array();
 	protected static $forminputlastindexes = [];
@@ -79,7 +79,7 @@ class ReusableClasses {
 
 		// Views::makeViews();
 
-		
+
 		// $output = ob_get_contents();
 		// ob_end_clean();
 
@@ -90,7 +90,7 @@ class ReusableClasses {
 
 		// exit( json_encode( $page ) );
 		$page = rtrim($page, ".php");
-		
+
 		if( file_exists( BASE_DIR . '/vendor/miltonian/custom/css/pages/header.css' ) ){
 			echo "<link rel='stylesheet' type='text/css' href='" . PROJECT_ROOT . "/vendor/miltonian/custom/css/pages/header.css'>";
 		}
@@ -120,7 +120,7 @@ class ReusableClasses {
 		ReusableClasses::addjs();
 
 		echo "
-			<script> 
+			<script>
 				if( typeof Reusable === 'undefined' ) {
 					var Reusable = new ReusableClasses();
 				}
@@ -135,6 +135,11 @@ class ReusableClasses {
 				$('.horizontal.main.adminbar.desktopnav.navbar-shadow .horizontal.button.edit_switch.wrapper  a.horizontal.topbar-button').click(function(e){
 					e.preventDefault()
 					Reusable.toggleEditing()
+				});
+
+				$('.horizontal.main.adminbar.desktopnav.navbar-shadow .horizontal.button.edit_options_switch.wrapper  a.horizontal.topbar-button').click(function(e){
+					e.preventDefault()
+					Reusable.toggleEditingOptions()
 				})
 
 			</script>
@@ -148,7 +153,7 @@ class ReusableClasses {
 			echo "
 				Reusable.switchEditing(true)
 				$('div.horizontal.main.adminbar.desktopnav.navbar-shadow').css({'background-color': '#FFF8E0'})
-				$('.horizontal.button.edit_switch.wrapper.buttonindex_1  .horizontal.topbar-button label').html('Edit: <b style=\"color: green\">On</b>/Off');
+				$('.horizontal.button.edit_switch.wrapper.buttonindex_1  .horizontal.topbar-button label').html('Edit Data: <b style=\"color: green\">On</b>/Off');
 			";
 		}
 	}
@@ -361,7 +366,7 @@ if($multiple_updates){
 			// echo ' } ';
 			// }
 			echo 'thismodalclass = new ' . $viewoptions['modal']['modalclass'] . 'Classes();';
-			
+
 			echo 'var dataarray = ' . json_encode( $fullviewdict ) . ';';
 		}else if( $celltype == "attached" ) {
 			echo 'var dataarray = ' . json_encode( $fullviewdict ) . ';';
@@ -372,47 +377,10 @@ if($multiple_updates){
 		var viewoptions = ' . json_encode( $viewoptions ) . ';
 		$(".' . $identifier . '").off().click(function(e){ ';
 		echo " if( Reusable.isEditing() ) { ";
-		echo 'var viewdict = ' . json_encode($viewdict) . ';
-		var viewoptions = ' . json_encode( $viewoptions ) . ';';
-		$formid = substr($identifier, 0, strpos($identifier, "_cell_")) . "_form";
-		$formviewoptions = Data::retrieveOptionsWithID($formid);
-		echo '
-		var formviewoptions = ' . json_encode( $formviewoptions ) . ';';
-			if( $celltype == "modal" ) {
-				echo 'thismodalclass = new ' . $viewoptions['modal']['modalclass'] . 'Classes();';
-				echo 'var dataarray = ' . json_encode( $fullviewdict ) . ';';
-			}else if( $celltype == "attached" ) {
-				echo 'var dataarray = ' . json_encode( $fullviewdict ) . ';';
-			}
-			echo '
-			var celltype = ' . json_encode( $celltype) . ';
-			if( celltype == "modal" || celltype == "dropdown" ) { 
-				e.preventDefault();
-				if( typeof dataarray === "undefined" ) { 
-					dataarray = []
-				}
-				Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions, formviewoptions );
-			}else if( celltype == "attached" ){
-				e.preventDefault();
-				dataarray = ' . json_encode( $fullviewdict ) . ';
-				if( typeof dataarray === "undefined" ) { 
-					dataarray = []
-				}
-				var firstkey = ' . json_encode( array_keys($viewdict)[0] ) . ';
-				var theindex = parseInt( viewdict[firstkey]["index"] )
-				Reusable.addAction( viewdict, [], theindex, dataarray, this, e, viewoptions );
-			}';
-			
-			ReusableClasses::getEditingFunctionsJS( $viewoptions ) ;
-
-
-			// echo 'if( typeof dataarray === "undefined" ) {
-			// 	dataarray = []
-			// }
-			// var viewdict = ' . json_encode($viewdict) . ';';
-			// echo 'var viewoptions = ' . json_encode( $viewoptions ) . ';
-			// Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );';
-		echo '}';
+				Data::makeCellEditing( $identifier, $fullviewdict, $celltype );
+		echo '});';
+		echo " if( Reusable.isEditingOptions() ) { ";
+				Options::makeCellEditing( $identifier, $fullviewdict, $celltype );
 		echo '});';
 	}
 
@@ -420,50 +388,10 @@ if($multiple_updates){
 
 		echo " let alwayseditable = " . json_encode( $alwayseditable ) . "; ";
 		echo " if( Reusable.isEditing() || alwayseditable ) { ";
-
-		$fullarray = Data::getFullArray( $viewdict );
-		if( isset( $viewdict[$identifier]['value'] ) ) {
-			$fullviewdict = Data::getFullArray( $viewdict )[$identifier]['value'];
-		}else{
-			$fullviewdict = $viewdict;
-		}
-
-		$optiontype = Data::getValue( $viewoptions, 'type' );
-
-		echo "var viewdict = " . json_encode( $viewdict ) . ";
-		var viewoptions = " . json_encode( $viewoptions ) . ";
-
-		var thismodalclass = '';
-
-		var type = " . json_encode( $optiontype ) . ";";
-		echo "console.log( JSON.stringify( ".json_encode( $optiontype )." ) );";
-
-		if( $optiontype == "modal" && isset($viewoptions['modal']['modalclass']) ){ 
-			// extract( Input::convertInputKeys( $identifier . "_form" ));
-			// 	echo ' ' . Form::addJSClassToForm( $identifier . "_form", $viewdict, $input_onlykeys, $identifier . "_form" ) . '; ';
-			// 	echo " /*asdf*/ ";
-			echo "thismodalclass = new " . $viewoptions['modal']['modalclass'] . "Classes();
-			var dataarray = " . json_encode( $fullviewdict ) . ";";
-		}
-		echo "
-		var optiontype = " . json_encode($optiontype) . ";";
-		$formid = $identifier . "_form";
-		$formviewoptions = Data::retrieveOptionsWithID($formid);
-		echo '
-		var formviewoptions = ' . json_encode( $formviewoptions ) . ";
-		var identifier = " . json_encode( $identifier ) . ";
-
-		if( optiontype == 'modal' || optiontype == 'dropdown' ) { 
-			e.preventDefault();
-			if( typeof dataarray === 'undefined' ) { 
-				dataarray = []
-			}
-
-			Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions, formviewoptions, identifier );
-		}";
-
-		ReusableClasses::getEditingFunctionsJS( $viewoptions ) ;
-
+				Data::makeViewEditing( $viewdict, $viewoptions, $identifier, $alwayseditable );
+		echo " } ";
+		echo " if( Reusable.isEditingOptions() ) { ";
+				Options::makeViewEditing( $viewdict, $viewoptions, $identifier, $alwayseditable );
 		echo " } ";
 	}
 
@@ -471,7 +399,7 @@ if($multiple_updates){
 	{
 		$action_key = ReusableClasses::getViewActionKey( $dict );
 		if( $action_key == '' ){ return []; }
-		
+
 		echo "var dropdownfunctions = [];";
 		$i=0;
 		foreach ( $dict[$action_key] as $ca ) {
@@ -495,7 +423,7 @@ if($multiple_updates){
 		$action_key = ReusableClasses::getViewActionKey( $dict );
 		$multiple = false;
 		if( $action_key == '' ){ $actiondict = $dict; }else{ $actiondict = $dict[$action_key]; $multiple = true; }
-		
+
 		if( $multiple ) {
 			$i=0;
 			foreach ($actiondict as $action) {
@@ -505,7 +433,7 @@ if($multiple_updates){
 					$actionmodal = Data::getValue( $action, 'modal' );
 					if( !is_array( $actionmodal ) && $actionmodal != "" ){
 						$new_actionmodal = [
-							"parentclass" => $actionmodal . "_wrapper", 
+							"parentclass" => $actionmodal . "_wrapper",
 							"modalclass" => $actionmodal
 						];
 						if( isset( $action['help_modal'] ) ) {
@@ -524,7 +452,7 @@ if($multiple_updates){
 					$actionmodal = Data::getValue( $actiondict, 'modal' );
 					if( !is_array( $actionmodal ) && $actionmodal != "" ){
 						$new_actionmodal = [
-							"parentclass" => $actionmodal . "_wrapper", 
+							"parentclass" => $actionmodal . "_wrapper",
 							"modalclass" => $actionmodal
 						];
 
@@ -535,7 +463,7 @@ if($multiple_updates){
 					$actionmodal = Data::getValue( $actiondict, 'help_modal' );
 					if( !is_array( $actionmodal ) && $actionmodal != "" ){
 						$new_actionmodal = [
-							"parentclass" => $actionmodal . "_wrapper", 
+							"parentclass" => $actionmodal . "_wrapper",
 							"modalclass" => $actionmodal
 						];
 
@@ -708,7 +636,7 @@ if($multiple_updates){
 			"postarray"=>$postarray,
 			"children"=>array(["filename"=>"underline_edit", "viewtype"=>"header", "data"=>[] ], ["filename"=>"table_1", "viewtype"=>"table", "data"=>[] ])
 		);
-		for ($i=0; $i < sizeof($testarray['children']); $i++) { 
+		for ($i=0; $i < sizeof($testarray['children']); $i++) {
 			$testarray['children'][$i]['data'] = $testarray;
 		}
 		$sectiondict1 = [
@@ -803,7 +731,7 @@ if($multiple_updates){
 		return $sendback;
 	}
 
-	
+
 		public static function getPosts_tablenames($postarray){
 			// make dict for tablenames
 			$tablenames = [];
@@ -813,7 +741,7 @@ if($multiple_updates){
 			}
 			return $tablenames;
 		}
-	
+
 		public static function getMainCategories_tablenames( $categories )
 		{
 			// make dict for tablenames
@@ -825,7 +753,7 @@ if($multiple_updates){
 			return $tablenames;
 		}
 
-	
+
 
 	public static function toValueAndDBInfo( $result, $conditions, $default_table, $customcolname=null )
 	{
@@ -922,7 +850,7 @@ if($multiple_updates){
 		return $returningdict;
 	}
 
-	
+
 		public static function getNetworkInfo_db($networkinfo){
 			// make dict for tablenames
 			$array_for_db = [];
@@ -953,9 +881,9 @@ if($multiple_updates){
 			foreach ($keys as $k) {
 				if( isset( $viewdict[$k] ) ){ $found=true; }
 			}
-			
-			if( !$found ){ 
-				$missing=true; echo $filename . " is missing " . $r . "<br>"; 
+
+			if( !$found ){
+				$missing=true; echo $filename . " is missing " . $r . "<br>";
 			}
 		}
 
@@ -980,7 +908,7 @@ if($multiple_updates){
 	private function encryptIt( $x ) { return( str_replace( '/', '', base64_encode( mcrypt_encrypt( MCRYPT_RIJNDAEL_256, md5( self::$cryptKey ), $x, MCRYPT_MODE_CBC, md5( md5( self::$cryptKey ) ) ) ) ) ); }
 	// Function to return decrypted version of $x:
 	private function decryptIt( $x ) { return( rtrim( mcrypt_decrypt( MCRYPT_RIJNDAEL_256, md5( self::$cryptKey ), base64_decode( $x ), MCRYPT_MODE_CBC, md5( md5( self::$cryptKey ) ) ), "\0") ); }
-	
+
 	public function __destruct()
 	{
 		if( isset( $this->PDO ) ) unset( $this->PDO );
