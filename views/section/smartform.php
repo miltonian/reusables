@@ -2,6 +2,12 @@
 
 namespace Reusables;
 
+if( !isset( $viewoptions['is_option_form'] ) ) {
+	$is_option_form = false;
+} else {
+	$is_option_form = true;
+}
+
 if( !isset( $viewoptions['ifnone_insert'] ) ){
 	$ifnone_insert = false;
 }else{
@@ -21,7 +27,12 @@ if( !isset( $viewoptions['multiple_updates'] ) ){
 }
 
 if( !isset( $viewoptions['formaction'] ) ){
-	$formaction = '/edit_view.php';
+	if( $is_option_form ) {
+		$formaction = '/edit_page_options.php';
+	} else {
+		$formaction = '/edit_view.php';
+
+	}
 }else{
 	$formaction = $viewoptions['formaction'];
 }
@@ -51,7 +62,6 @@ if( $added_inputs == "" ) {
 
 extract( CustomView::makeFormVars( $viewdict, "viewdict" ) );
 extract( Input::convertInputKeys( $identifier ) );
-// exit( json_encode( $inputs ) );
 
 ?>
 

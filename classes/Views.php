@@ -72,6 +72,7 @@ class Views {
 
 				Data::addOption( "options_modal", "type", $identifier );
 				Data::addOption( $identifier . "_options_form", "options_modal", $identifier );
+				Data::addOption( "1", "is_option_form", $identifier . "_options_form" );
 
 				if( $viewoptions["insertonly"] == true ) {
 					if( !isset( $viewoptions["tb"] ) ) {
@@ -175,7 +176,7 @@ class Views {
 							if( $editable_option == "identifier" ) {
 								$input_keys[$editable_option] = ["type"=>"hidden", "field_value"=>$identifier];
 							} else {
-								$input_keys[$editable_option] = ["type"=>"textfield", "field_value"=>Data::getValue( $viewoptions, $editable_option )];
+								$input_keys[$editable_option] = ["type"=>"textfield", "field_value"=>Data::getValue( $viewoptions, $editable_option ), "field_name"=>$editable_option];
 							}
 						}
 

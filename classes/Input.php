@@ -174,11 +174,14 @@ class Input {
 // exit( json_encode( $dict['db_info']['tablenames']['client_status'] ) );
 		// $tablename = Data::getDefaultTableNameWithID( $dataid, $raw_key );
 
+		$input_name = $key;
+
 		$inputdict = [
 			"placeholder"=>$placeholder,
 			"labeltext"=>$labeltext,
 			"background-image"=>"",
 			"field_value"=>$field_value,
+			"input_name"=>$input_name,
 			"field_index"=>$index,
 			"field_table"=>$tablename,
 			"field_colname"=>Data::getColName( ["data_id"=>$dataid, "key" => $key] ),

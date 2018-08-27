@@ -1,7 +1,7 @@
 <?php
 
 namespace Reusables;
-	
+
 	$required = array(
 		"placeholder"=>"",
 		"field_value"=>"",
@@ -63,11 +63,7 @@ if( $size == "" ) {
 $sizeclass = "size_" . $size;
 
 
-// exit( json_encode( [$viewdict['field_colname'], $viewdict['field_conditions']] ) );
 $field_table = Data::getValue( $viewdict, 'field_table' );
-if( $field_table != "new_apps_client_information" ) {
-	// exit( json_encode( $field_table ) );
-}
 
 $field_name = "fieldarray[" . Data::getValue( $viewdict, 'field_index') . "][field_value]";
 if( !$is_smart ) {
@@ -79,6 +75,8 @@ if( !$is_smart ) {
 		}
 	}
 }
+
+$input_name = Data::getValue($viewdict, 'input_name');
 
 $keys = array_keys( $viewoptions );
 $attributes = "";
@@ -113,10 +111,10 @@ if( $help_modal != "" ) {
 
 <div class="viewtype_input <?php echo $identifier ?> textfield <?php echo $sizeclass ?>">
 	<?php if( !$is_hidden ){ ?>
-		<?php 
+		<?php
 			Data::addData( ["title" => $labeltext], $identifier . "_label" );
 			Data::addOption( $help_modal, "help_modal", $identifier . "_label" );
-			echo Header::make( "basic_label", $identifier . "_label" ); 
+			echo Header::make( "basic_label", $identifier . "_label" );
 		?>
 	<?php } ?>
 	<?php if( $is_currency != "" ){ ?>
@@ -132,6 +130,7 @@ if( $help_modal != "" ) {
 		<input type="hidden" class="field_type" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_type]" value="text" style="visibility: hidden; z-index: -1;">
 		<input type="hidden" class="tablename" value="<?php echo Data::getValue( $viewdict, 'field_table') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][tablename]">
 		<input type="hidden" class="col_name" value="<?php echo Data::getValue( $viewdict, 'field_colname') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][col_name]">
+		<input type="hidden" class="field_name" value="<?php echo $input_name ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_name]">
 		<?php $i=0; ?>
 		<?php if( sizeof( $viewdict['field_conditions'] ) > 0 ){
 			foreach ($viewdict['field_conditions'] as $c) { ?>
@@ -141,7 +140,7 @@ if( $help_modal != "" ) {
 			<?php } ?>
 		<?php } ?>
 	<?php } ?>
-	
+
 </div>
 
 <script>

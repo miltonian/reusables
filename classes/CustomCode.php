@@ -42,7 +42,20 @@ class CustomCode {
 	public static function checkForViews( $output )
 	{
 		// preg_match("/\\{\\{\s(.*)\\}\\}/", $output, $foundreusables);
+
 		preg_match('/\\{\\{(.*)\\}\\}/sU', $output, $foundreusables);
+		// preg_match_all('/\\{\\{(.*)\\}\\}/sU', $output, $found_reusables_arr);
+// $foundreusables = $found_reusables_arr[0];
+		// if( sizeof($found_reusables_arr) > 0 ) {
+		// 	$foundreusables = [];
+		// 	foreach ($found_reusables_arr as $foundreusables_single) {
+		// 		// foreach ($foundreusables_single as $foundreusables_single_str) {
+		// 			$foundreusables = array_merge($foundreusables, $foundreusables_single);
+		// 		// }
+		// 	}
+		// }
+		// exit(json_encode($foundreusables));
+
 		if( isset($foundreusables) && $foundreusables && !empty($foundreusables) ) {
 			// $foundreusables = str_replace("\n", "", $foundreusables[0]);
 			$foundreusables = $foundreusables[0];
@@ -62,7 +75,8 @@ class CustomCode {
 		} else {
 			// CustomCode::place( $output );
 		}
-
+		// $foundreusables = array_merge($found_reusables_array, $foundreusables);
+// exit(json_encode($foundreusables));
 		return [
 			"output"=>$output,
 			"found_reusables"=>$foundreusables
@@ -86,13 +100,7 @@ class CustomCode {
 				$str = $str;
 
 				if( is_string($matches[$index]) && $matches[$index] != null ) {
-					// exit( json_encode( $str ) );
-					$check_arr = explode(".", $str);
-					if( sizeof($check_arr) == 2 ) {
-						if( strtolower($check_arr[0]) == "form" ) {
-							// echo "<form>";
-						}
-					}
+
 					$new_output = CustomCode::convertToView($output, $matches, $str, $index);
 					if( $new_output != null ) {
 						$output = $new_output;
@@ -109,10 +117,17 @@ class CustomCode {
 		}
 	}
 
-	public static function replaceViewOption( $output, $matches )
+	public static function replaceViewOption( $output, $matches, $identifier, $option_name, $option_value, $recursive_output=null )
 	{
 
+		if( $recursive_output == null ) {
+			$recursive_output = $output;
+		} else {
+			$matches = CustomCode::checkForViews( $recursive_output )['found_reusables'];
+		}
+		$found=false;
 		if( isset($matches) && $matches && !empty($matches) ) {
+
 			foreach ($matches as $index => $matchdict) {
 				$str = str_replace("{{", "", $matches[$index]);
 				$str = str_replace("}}", "", $str);
@@ -121,17 +136,66 @@ class CustomCode {
 				$str = $str;
 
 				if( is_string($matches[$index]) && $matches[$index] != null ) {
-//asdfasdf
-					$new_output = CustomCode::convertToView($output, $matches, $str, $index);
-					if( $new_output != null ) {
-						$output = $new_output;
+					//asdfasdf
+					$attribute_identifier = CustomCode::getIdentifierFromShortHand($str);
+
+					$attribute = CustomCode::detectShortHandAttribute($str);
+					// if( $attribute_identifier == $identifier && $attribute == "options" ) {
+					if($attribute_identifier != $identifier || $attribute != "options") {
+						$recursive_output = str_replace($matches[$index], "", $recursive_output );
+						// if( $index > 0 && $attribute_identifier != "navbar" && $str != "" && $attribute != "data" ) {
+						//
+						// 	exit(json_encode([$identifier, $attribute_identifier, $attribute]));
+						// }
+					} else if( $attribute_identifier == $identifier && $attribute == "options" ) {
+
+						$found = true;
+						$matching_options = explode(".options(", $matches[$index])[1];
+						$matching_options = str_replace(");", "", $matching_options);
+						$matching_options = explode(",", $matching_options);
+
+						$found_specific = false;
+						foreach ($matching_options as $this_option) {
+							$this_option_arr = explode(":", $this_option);
+							$this_option_arr_key = $this_option_arr[0];
+							$this_option_arr_key = str_replace(" ", "", $this_option_arr_key);
+							if($this_option_arr_key == $option_name){
+								$found_specific=true;
+								$updated_option = str_replace($this_option, " ".$option_name . ": " . $option_value, $matches[$index]);
+								$output = str_replace($matches[$index], $updated_option, $output);
+							}
+						}
+						if( !$found_specific ) {
+							$updated_option = str_replace(");", ", ".$option_name . ": " . $option_value . ");", $matches[$index]);
+							$output = str_replace($matches[$index], $updated_option, $output);
+						}
+						break;
 					}
+
+					// }
+					// $new_output = CustomCode::convertToView($output, $matches, $str, $index);
+					// if( $new_output != null ) {
+					// 	$output = $new_output;
+					// }
 
 				}
 
 			}
 
+			if( $found ) {
+				// exit("found: ".json_encode($identifier));
+				return $output;
+			} else {
+				if ( !isset($matches) || !$matches || empty($matches) ) {
+					exit(json_encode($recursive_output));
+				} else {
+					CustomCode::replaceViewOption( $output, $matches, $identifier, $option_name, $option_value, $recursive_output );
+				}
+			}
+
 		}
+
+
 	}
 
 	public static function str_replace_first($from, $to, $content)
@@ -165,6 +229,11 @@ class CustomCode {
 
 	public static function detectShortHandAttribute( $str )
 	{
+		$str = str_replace("{{", "", $str);
+		$str = str_replace("}}", "", $str);
+		$str = str_replace("\n", "", $str);
+		$str = str_replace("\t", "", $str);
+		$str = $str;
 
 		$id_arr = explode("(", $str);
 		$str_arr = $id_arr;
