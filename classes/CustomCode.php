@@ -28,7 +28,9 @@ class CustomCode {
 
 		// preg_match_all("/\\{\\{\s(.*)\\}\\}/", $output, $matches);
 		// preg_match("/\\{\\{\s(.*)\\}\\}/", $output, $matches);
-		CustomCode::checkForViews($output);
+		// CustomCode::checkForViews($output);
+		$checkForViews_result = CustomCode::checkForViews( $output );
+		CustomCode::replaceViews($checkForViews_result["output"], $checkForViews_result["found_reusables"]);
 
 
 		// $dict = [ "viewtype" => "CustomCode", "code" => $output ];
@@ -55,15 +57,25 @@ class CustomCode {
 				array_push($new_arr, $value);
 			}
 			$foundreusables = $new_arr;
-			// exit( json_encode( ($foundreusables[5]) ) );
-			CustomCode::replaceViews( $output, $foundreusables );
+
+			// CustomCode::replaceViews( $output, $foundreusables );
 		} else {
-			CustomCode::place( $output );
+			// CustomCode::place( $output );
 		}
+
+		return [
+			"output"=>$output,
+			"found_reusables"=>$foundreusables
+		];
 	}
 
 	public static function replaceViews( $output, $matches )
 	{
+
+		if( !isset($matches) || !$matches || empty($matches) ) {
+			CustomCode::place( $output );
+			return;
+		}
 
 		if( isset($matches) && $matches && !empty($matches) ) {
 			foreach ($matches as $index => $matchdict) {
@@ -85,16 +97,39 @@ class CustomCode {
 					if( $new_output != null ) {
 						$output = $new_output;
 					}
-					// CustomCode::checkForViews( $output );
-					// return;
-					// continue;
+
 				}
 
 			}
 			if( $output ) {
-				CustomCode::checkForViews( $output );
+				$checkForViews_result = CustomCode::checkForViews( $output );
+				CustomCode::replaceViews($checkForViews_result["output"], $checkForViews_result["found_reusables"]);
 			}
-			// return;
+
+		}
+	}
+
+	public static function replaceViewOption( $output, $matches )
+	{
+
+		if( isset($matches) && $matches && !empty($matches) ) {
+			foreach ($matches as $index => $matchdict) {
+				$str = str_replace("{{", "", $matches[$index]);
+				$str = str_replace("}}", "", $str);
+				$str = str_replace("\n", "", $str);
+				$str = str_replace("\t", "", $str);
+				$str = $str;
+
+				if( is_string($matches[$index]) && $matches[$index] != null ) {
+//asdfasdf
+					$new_output = CustomCode::convertToView($output, $matches, $str, $index);
+					if( $new_output != null ) {
+						$output = $new_output;
+					}
+
+				}
+
+			}
 
 		}
 	}
@@ -106,77 +141,110 @@ class CustomCode {
 	    return preg_replace($from, $to, $content, 1);
 	}
 
-	public static function convertToView( $output, $matches, $str, $index )
+	public static function checkForBlankView($matches, $index)
 	{
-		$str_orig = $str;
-		// $str = str_replace(" ", "", $str);
 		$checkingforblankstring = str_replace("}}", "", $matches[$index]);
 		$checkingforblankstring = str_replace("\n", "", $checkingforblankstring);
 		$checkingforblankstring = str_replace("\t", "", $checkingforblankstring);
 		$checkingforblankstring = str_replace(" ", "", $checkingforblankstring);
 		if( $checkingforblankstring == "" ) {
-			// $output = str_replace($matches[$index], "", $output );
-			$output = CustomCode::str_replace_first($matches[$index], "", $output );
-			return $output;
+			return true;
 		}
+	}
+
+	public static function getIdentifierFromShortHand($str)
+	{
 		$id_arr = explode("(", $str);
 		$str_arr = $id_arr;
 		$identifier_arr = $str_arr[0];
 		$identifier_arr = explode(".", $identifier_arr);
 		$identifier = $identifier_arr[0];
 		$identifier = str_replace(" ", "", $identifier);
-		$isoptions = false;
-		$isview = false;
+		return $identifier;
+	}
+
+	public static function detectShortHandAttribute( $str )
+	{
+
+		$id_arr = explode("(", $str);
+		$str_arr = $id_arr;
+		$identifier_arr = $str_arr[0];
+		$identifier_arr = explode(".", $identifier_arr);
+
+		$attribute = "";
 		if( sizeof($identifier_arr) == 2 ) {
 			$data_type = str_replace(" ", "", $identifier_arr[1]);
 			if( $data_type == "options" ) {
-				$isoptions=true;
-			}
-		}
-		$isdata = false;
-		if( sizeof($identifier_arr) == 2 ) {
-			$data_type = str_replace(" ", "", $identifier_arr[1]);
-			if( $data_type == "data" ) {
-				$isdata=true;
-			}
-		}
-		$isview = false;
-		if( sizeof($identifier_arr) == 2 ) {
-			$data_type = str_replace(" ", "", $identifier_arr[1]);
-			if( $data_type == "view" ) {
-				$isview=true;
-			}
-		}
-		$is_start = false;
-		$is_end = false;
-		if( sizeof($identifier_arr) == 2 ) {
-			$data_type = str_replace(" ", "", $identifier_arr[1]);
-			if( $data_type == "start" ) {
-				$is_start=true;
-			} else if( $data_type == "end" ) {
-				$is_end=true;
-			}
-		}
-		$isfont = false;
-		if( sizeof($identifier_arr) == 2 ) {
-			$data_type = str_replace(" ", "", $identifier_arr[1]);
-			if( $data_type == "font" ) {
-				$isfont = true;
-			}
-		}
-		$is_links = false;
-		if( sizeof($identifier_arr) == 2 ) {
-			$data_type = str_replace(" ", "", $identifier_arr[1]);
-			if( $data_type == "links" ) {
-				$is_links = true;
+				$attribute = "options";
 			}
 		}
 
-		if( !isset($id_arr[1]) ) {
+		if( sizeof($identifier_arr) == 2 ) {
+			$data_type = str_replace(" ", "", $identifier_arr[1]);
+			if( $data_type == "data" ) {
+				$attribute = "data";
+			}
+		}
+
+		if( sizeof($identifier_arr) == 2 ) {
+			$data_type = str_replace(" ", "", $identifier_arr[1]);
+			if( $data_type == "view" ) {
+				$attribute = "view";
+			}
+		}
+
+
+		if( sizeof($identifier_arr) == 2 ) {
+			$data_type = str_replace(" ", "", $identifier_arr[1]);
+			if( $data_type == "start" ) {
+				$attribute = "start";
+			} else if( $data_type == "end" ) {
+				$attribute = "end";
+			}
+		}
+
+		if( sizeof($identifier_arr) == 2 ) {
+			$data_type = str_replace(" ", "", $identifier_arr[1]);
+			if( $data_type == "font" ) {
+				$attribute = "font";
+			}
+		}
+
+		if( sizeof($identifier_arr) == 2 ) {
+			$data_type = str_replace(" ", "", $identifier_arr[1]);
+			if( $data_type == "links" ) {
+				$attribute = "links";
+			}
+		}
+
+		return $attribute;
+	}
+
+	public static function convertToView( $output, $matches, $str, $index )
+	{
+
+		$str_orig = $str;
+
+		if( CustomCode::checkForBlankView( $matches, $index ) ) {
+			$output = CustomCode::str_replace_first($matches[$index], "", $output );
+			return $output;
+		}
+
+		$identifier = CustomCode::getIdentifierFromShortHand($str);
+
+		$id_arr = explode("(", $str);
+		$str_arr = $id_arr;
+		$identifier_arr = $str_arr[0];
+		$identifier_arr = explode(".", $identifier_arr);
+
+		$attribute = CustomCode::detectShortHandAttribute( $str );
+
+		if( $attribute == "" ) {
 			return;
 		}
+
 		$other = $id_arr[1];
-		if( !$isdata && !$isoptions && !$is_links ) {
+		if( $attribute != "data" && $attribute != "options" && $attribute != "links" ) {
 			$other = str_replace(" ", "", $other);
 		}
 		$other = str_replace(");", "", $other);
@@ -187,101 +255,114 @@ class CustomCode {
 		foreach ($values as $v) {
 
 			// $v = explode(":", $v, 2);
-
 			$v = preg_split('/\:(?![^http]\/)/', $v);
 
 			if( isset($v[1]) ) {
+
 				$view_inputs[$v[0]] = $v[1];
 			} else {
-				// $view_inputs[$v[0]] = "";
+
 				$view_inputs[$i] = $v[0];
 			}
 			$i++;
 		}
 
-		if( isset( self::$viewsSet[$identifier] ) && !$isoptions && !$isdata && !$is_start && !$is_end && !$is_links ) {
+		if( isset( self::$viewsSet[$identifier] ) && $attribute != "options" && $attribute != "data" && $attribute != "start" && $attribute != "end" && $attribute != "links" ) {
+
 			$output = str_replace( $matches[$index], "", $output );
 			return;
-		} else if( !$isoptions && !$isdata && !$is_start && !$is_end && !$is_links ) {
+		} else if( $attribute != "options" && $attribute != "data" && $attribute != "start" && $attribute != "end" && $attribute != "links" ) {
+
 			self::$viewsSet[$identifier] = true;
-		} else if( $isoptions ) {
+		} else if( $attribute == "options" ) {
+
 			if( !isset( self::$optionsSet[$identifier] ) ) {
 				self::$optionsSet[$identifier] = [];
 			}
 			if( isset(self::$optionsSet[$identifier][array_keys($view_inputs)[0]] ) ) {
+
 				$output = str_replace($matches[$index], "", $output );
 				return;
 			} else {
+
 				self::$optionsSet[$identifier][array_keys($view_inputs)[0]] = true;
 			}
-		} else if( $isdata ) {
+		} else if( $attribute == "data" ) {
+
 			if( !isset( self::$dataSet[$identifier] ) ) {
+
 				self::$dataSet[$identifier] = [];
 			}
 
-			// if( isset(self::$dataSet[$identifier][array_keys($view_inputs)[0]] ) ) {
-			// 	$output = str_replace($matches[$index], "", $output );
-			// 	return;
-			// } else {
 				self::$dataSet[$identifier][array_keys($view_inputs)[0]] = true;
-			// }
-		} else if( $is_start ) {
-			// if( !isset( self::$startSet[$identifier] ) ) {
-			// 	self::$startSet[$identifier] = [];
-			// }
+		} else if( $attribute == "start" ) {
 
 			if( isset(self::$startSet[$identifier] ) ) {
+
 				$output = str_replace($matches[$index], "", $output );
 				return;
 			} else {
+
 				self::$startSet[$identifier] = $view_inputs[0];
 			}
-		} else if( $isfont ) {
+		} else if( $attribute == "font" ) {
 
 			if( !isset( self::$fontSet[$identifier] ) ) {
+
 				self::$fontSet[$identifier] = [];
 			}
 
 			self::$dataSet[$identifier][array_keys($view_inputs)[0]] = true;
-		} else if( $is_links ) {
+		} else if( $attribute == "links" ) {
 
 			if( isset(self::$linksSet[$identifier] ) ) {
+
 				$output = str_replace($matches[$index], "", $output );
 				return;
 			} else {
+
 				self::$linksSet[$identifier] = array_keys($view_inputs)[0];
 			}
 		}
 
 		$after_string = $output;
-		if( ( isset($view_inputs['view']) ) || $isview ) {
+		if( ( isset($view_inputs['view']) ) || $attribute == "view" ) {
+
 			if( !isset($view_inputs['view']) ) {
+
 				$new_viewinputs = [];
 				$new_viewinputs['view'] = $view_inputs[0];
 			} else {
+
 				$new_viewinputs = $view_inputs;
 			}
 			$after_string = CustomCode::placeView( $output, $matches, $str, $index, $new_viewinputs, $identifier);
 		}
-		if( $isoptions ) {
-			$after_string = CustomCode::addOptions( $output, $matches, $str, $index, $view_inputs, $identifier);
-		}
-		if( $isdata ) {
-			$after_string = CustomCode::addData( $output, $matches, $str, $index, $view_inputs, $identifier);
-		}
-		if( $is_start ) {
-			$after_string = CustomCode::addStart( $output, $matches, $str, $index, $view_inputs, $identifier);
-		}
-		if( $is_end ) {
-			$after_string = CustomCode::addEnd( $output, $matches, $str, $index, $view_inputs, $identifier);
-		}
-		if( $isfont ) {
-			$after_string = CustomCode::addFont( $output, $matches, $str, $index, $view_inputs, $identifier );
-		}
-		if( $is_links ) {
-			$after_string = CustomCode::addLinks( $output, $matches, $str, $index, $view_inputs, $identifier);
-		}
 
+		switch ($attribute) {
+			case 'options':
+				$after_string = CustomCode::addOptions( $output, $matches, $str, $index, $view_inputs, $identifier);
+				break;
+			case 'data':
+				$after_string = CustomCode::addData( $output, $matches, $str, $index, $view_inputs, $identifier);
+				break;
+			case 'start':
+				$after_string = CustomCode::addStart( $output, $matches, $str, $index, $view_inputs, $identifier);
+				break;
+			case 'end':
+				$after_string = CustomCode::addEnd( $output, $matches, $str, $index, $view_inputs, $identifier);
+				break;
+			case 'font':
+				$after_string = CustomCode::addFont( $output, $matches, $str, $index, $view_inputs, $identifier );
+				break;
+			case 'links':
+				$after_string = CustomCode::addLinks( $output, $matches, $str, $index, $view_inputs, $identifier);
+				break;
+
+			default:
+
+				break;
+		}
 
 		return $after_string;
 	}

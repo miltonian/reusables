@@ -166,13 +166,17 @@ class Views {
 						$text_offset_x = Data::getValue( $viewoptions, "text_offset_x" );
 						$text_offset_y = Data::getValue( $viewoptions, "text_offset_y" );
 						$editable_options = [
-							"text_color", "background_color", "image_size", "image_corner_radius",
+							"identifier", "text_color", "background_color", "image_size", "image_corner_radius",
 							"text_align", "title_size", "subtitle_size", "description_size", "title_color",
 							"subtitle_color", "description_color", "text_offset_x", "text_offset_y"
 						];
 						$input_keys = [];
 						foreach ($editable_options as $editable_option) {
-							$input_keys[$editable_option] = ["type"=>"textfield", "field_value"=>Data::getValue( $viewoptions, $editable_option )];
+							if( $editable_option == "identifier" ) {
+								$input_keys[$editable_option] = ["type"=>"hidden", "field_value"=>$identifier];
+							} else {
+								$input_keys[$editable_option] = ["type"=>"textfield", "field_value"=>Data::getValue( $viewoptions, $editable_option )];
+							}
 						}
 
 						Data::addOption( $input_keys, "input_keys", $identifier . "_options_form" );
