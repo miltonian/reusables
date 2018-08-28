@@ -42,19 +42,7 @@ class CustomCode {
 	public static function checkForViews( $output )
 	{
 		// preg_match("/\\{\\{\s(.*)\\}\\}/", $output, $foundreusables);
-
 		preg_match('/\\{\\{(.*)\\}\\}/sU', $output, $foundreusables);
-		// preg_match_all('/\\{\\{(.*)\\}\\}/sU', $output, $found_reusables_arr);
-// $foundreusables = $found_reusables_arr[0];
-		// if( sizeof($found_reusables_arr) > 0 ) {
-		// 	$foundreusables = [];
-		// 	foreach ($found_reusables_arr as $foundreusables_single) {
-		// 		// foreach ($foundreusables_single as $foundreusables_single_str) {
-		// 			$foundreusables = array_merge($foundreusables, $foundreusables_single);
-		// 		// }
-		// 	}
-		// }
-		// exit(json_encode($foundreusables));
 
 		if( isset($foundreusables) && $foundreusables && !empty($foundreusables) ) {
 			// $foundreusables = str_replace("\n", "", $foundreusables[0]);
@@ -75,11 +63,38 @@ class CustomCode {
 		} else {
 			// CustomCode::place( $output );
 		}
-		// $foundreusables = array_merge($found_reusables_array, $foundreusables);
-// exit(json_encode($foundreusables));
+
 		return [
 			"output"=>$output,
 			"found_reusables"=>$foundreusables
+		];
+	}
+
+	public static function checkForViewSetData( $output )
+	{
+
+		preg_match('/ViewData\\:\\:set(.*)\\);/sU', $output, $viewSetData);
+		if( isset($viewSetData) && $viewSetData && !empty($viewSetData) ) {
+
+			$viewSetData = $viewSetData[0];
+			$arr = explode(");", $viewSetData);
+			$new_arr = [];
+			foreach ($arr as $key => $value) {
+
+				if( $key < sizeof($arr)-1 ) {
+					$value = "" . $value . ");";
+				}
+				if($value != ""){
+					array_push($new_arr, $value);
+				}
+			}
+			$viewSetData = $new_arr;
+
+		}
+
+		return [
+			"output"=>$output,
+			"view_set_data"=>$viewSetData
 		];
 	}
 
@@ -136,7 +151,7 @@ class CustomCode {
 				$str = $str;
 
 				if( is_string($matches[$index]) && $matches[$index] != null ) {
-					//asdfasdf
+
 					$attribute_identifier = CustomCode::getIdentifierFromShortHand($str);
 
 					$attribute = CustomCode::detectShortHandAttribute($str);
@@ -194,7 +209,69 @@ class CustomCode {
 			}
 
 		}
+	}
 
+	public static function replaceViewSetData( $output, $matches, $identifier, $viewsetdata_name, $viewsetdata_value, $recursive_output=null )
+	{
+
+		if( $recursive_output == null ) {
+			$recursive_output = $output;
+		} else {
+			$matches = CustomCode::checkForViewSetData( $recursive_output )['view_set_data'];
+		}
+		$found=false;
+
+		if( isset($matches) && $matches && !empty($matches) ) {
+
+			foreach ($matches as $index => $matchdict) {
+				$str = str_replace("ViewData::set(", "", $matches[$index]);
+				$str = str_replace(");", "", $str);
+				$str = str_replace("\n", "", $str);
+				$str = str_replace("\t", "", $str);
+				$str = $str;
+
+				if( is_string($matches[$index]) && $matches[$index] != null ) {
+					//asdfasdf
+					$viewset_identifier = CustomCode::getIdentifierFromViewSetData($str);
+
+					if($viewset_identifier != $identifier) {
+
+						$recursive_output = str_replace($matches[$index], "", $recursive_output );
+					} else if( $viewsetdata_name == "number_of_columns" || $viewsetdata_name == "data_type" ) {
+
+						$found = true;
+						$str_arr = explode(",", $str);
+
+						if( $viewsetdata_name == "number_of_columns" ) {
+							$str_arr[2] = $viewsetdata_value;
+						} else if( $viewsetdata_name == "data_type" ) {
+							$str_arr[3] = json_encode($viewsetdata_value);
+						}
+						$str = implode(",", $str_arr);
+						$str = rtrim($str, ", ");
+						$str = rtrim($str, ",");
+
+
+						$output = str_replace($matches[$index], "ViewData::set(" . $str . ");", $output);
+
+						break;
+					}
+
+				}
+
+			}
+
+			if( $found ) {
+				return $output;
+			} else {
+				if ( !isset($matches) || !$matches || empty($matches) ) {
+					exit(json_encode($recursive_output));
+				} else {
+					CustomCode::replaceViewSetData( $output, $matches, $identifier, $viewsetdata_name, $viewsetdata_value, $recursive_output );
+				}
+			}
+
+		}
 
 	}
 
@@ -287,6 +364,16 @@ class CustomCode {
 		}
 
 		return $attribute;
+	}
+
+	public static function getIdentifierFromViewSetData($str)
+	{
+		$str_arr = explode(",", $str);
+		$identifier = $str_arr[0];
+		$identifier = str_replace("\"", "", $identifier);
+		$identifier = str_replace(" ", "", $identifier);
+
+		return $identifier;
 	}
 
 	public static function convertToView( $output, $matches, $str, $index )

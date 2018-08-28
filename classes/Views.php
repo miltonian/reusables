@@ -167,7 +167,7 @@ class Views {
 						$text_offset_x = Data::getValue( $viewoptions, "text_offset_x" );
 						$text_offset_y = Data::getValue( $viewoptions, "text_offset_y" );
 						$editable_options = [
-							"identifier", "text_color", "background_color", "image_size", "image_corner_radius",
+							"identifier", "number_of_columns", "data_type", "text_color", "background_color", "image_size", "image_corner_radius",
 							"text_align", "title_size", "subtitle_size", "description_size", "title_color",
 							"subtitle_color", "description_color", "text_offset_x", "text_offset_y", "overlay", "reverse"
 						];
@@ -183,7 +183,6 @@ class Views {
 						Data::addOption( $input_keys, "input_keys", $identifier . "_options_form" );
 					// }
 
-					// exit(json_encode([$input_keys]));
 				}
 				$formoptions = Data::retrieveOptionsWithID($identifier . "_form");
 					$goto = Data::getValue( $formoptions, "goto" );
