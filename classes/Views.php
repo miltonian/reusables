@@ -151,7 +151,7 @@ class Views {
 						}
 						Data::addOption( $input_keys, "input_keys", $identifier . "_form" );
 					}
-					if( !isset($formoptions['input_keys']) ) {//asdfasdf
+					// if( !isset($formoptions['input_keys']) ) {//asdfasdf
 
 						$text_color = Data::getValue( $viewoptions, "text_color" );
 						$background_color = Data::getValue( $viewoptions, "background_color" );
@@ -169,7 +169,7 @@ class Views {
 						$editable_options = [
 							"identifier", "text_color", "background_color", "image_size", "image_corner_radius",
 							"text_align", "title_size", "subtitle_size", "description_size", "title_color",
-							"subtitle_color", "description_color", "text_offset_x", "text_offset_y"
+							"subtitle_color", "description_color", "text_offset_x", "text_offset_y", "overlay", "reverse"
 						];
 						$input_keys = [];
 						foreach ($editable_options as $editable_option) {
@@ -181,7 +181,7 @@ class Views {
 						}
 
 						Data::addOption( $input_keys, "input_keys", $identifier . "_options_form" );
-					}
+					// }
 
 					// exit(json_encode([$input_keys]));
 				}
