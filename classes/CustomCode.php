@@ -30,7 +30,9 @@ class CustomCode {
 		// preg_match("/\\{\\{\s(.*)\\}\\}/", $output, $matches);
 		// CustomCode::checkForViews($output);
 		$checkForViews_result = CustomCode::checkForViews( $output );
-		CustomCode::replaceViews($checkForViews_result["output"], $checkForViews_result["found_reusables"]);
+		// exit(json_encode($checkForViews_result['found_reusables']));
+
+		CustomCode::replaceAllViews($checkForViews_result["output"], $checkForViews_result['found_reusables']);
 
 
 		// $dict = [ "viewtype" => "CustomCode", "code" => $output ];
@@ -42,33 +44,40 @@ class CustomCode {
 	public static function checkForViews( $output )
 	{
 		// preg_match("/\\{\\{\s(.*)\\}\\}/", $output, $foundreusables);
-		preg_match('/\\{\\{(.*)\\}\\}/sU', $output, $foundreusables);
+		// preg_match('/\\{\\{(.*)\\}\\}/sU', $output, $foundreusables);
+		preg_match_all('/\\{\\{(.*)\\}\\}/sU', $output, $foundreusables_arr);
+		$foundreusables_arr = $foundreusables_arr[0];
 
-		if( isset($foundreusables) && $foundreusables && !empty($foundreusables) ) {
-			// $foundreusables = str_replace("\n", "", $foundreusables[0]);
-			$foundreusables = $foundreusables[0];
-			$arr = explode(");", $foundreusables);
-			$new_arr = [];
-			foreach ($arr as $key => $value) {
-				// $value = str_replace("{{", "", $value);
-				// $value = str_replace("}}", "", $value);
-				if( $key < sizeof($arr)-1 ) {
-					$value = "" . $value . ");";
+		$foundreusables_return = [];
+		foreach ($foundreusables_arr as $foundreusables) {
+			if( isset($foundreusables) && $foundreusables && !empty($foundreusables) ) {
+				// $foundreusables = str_replace("\n", "", $foundreusables[0]);
+
+
+				// $foundreusables = $foundreusables[0];
+				$arr = explode(");", $foundreusables);
+				$new_arr = [];
+				foreach ($arr as $key => $value) {
+					// $value = str_replace("{{", "", $value);
+					// $value = str_replace("}}", "", $value);
+					if( $key < sizeof($arr)-1 ) {
+						$value = "" . $value . ");";
+					}
+					array_push($new_arr, $value);
 				}
-				array_push($new_arr, $value);
+				$foundreusables = $new_arr;
+				array_push($foundreusables_return, $foundreusables);
+				// CustomCode::replaceViews( $output, $foundreusables );
+			} else {
+				// CustomCode::place( $output );
 			}
-			$foundreusables = $new_arr;
 
-			// CustomCode::replaceViews( $output, $foundreusables );
-		} else {
-			// CustomCode::place( $output );
-		}
-
-		return [
-			"output"=>$output,
-			"found_reusables"=>$foundreusables
-		];
 	}
+	return [
+		"output"=>$output,
+		"found_reusables"=>$foundreusables_return
+	];
+}
 
 	public static function checkForViewSetData( $output )
 	{
@@ -125,10 +134,21 @@ class CustomCode {
 
 			}
 			if( $output ) {
-				$checkForViews_result = CustomCode::checkForViews( $output );
-				CustomCode::replaceViews($checkForViews_result["output"], $checkForViews_result["found_reusables"]);
+				// $checkForViews_result = CustomCode::checkForViews( $output );
+				// CustomCode::replaceViews($checkForViews_result["output"], $checkForViews_result["found_reusables"]);
 			}
 
+		}
+		return $output;
+	}
+
+	public static function replaceAllViews($output, $reusable_views)
+	{
+
+		foreach ($reusable_views as $reusable_view) {
+
+			$checkForViews_result = CustomCode::checkForViews( $output );
+			$output = CustomCode::replaceViews($checkForViews_result["output"], $reusable_view);
 		}
 	}
 
@@ -150,7 +170,7 @@ class CustomCode {
 				$str = str_replace("\t", "", $str);
 				$str = $str;
 
-				if( is_string($matches[$index]) && $matches[$index] != null ) {
+				if( is_string($str) && $str != null ) {
 
 					$attribute_identifier = CustomCode::getIdentifierFromShortHand($str);
 
@@ -197,17 +217,43 @@ class CustomCode {
 
 			}
 
-			if( $found ) {
-				// exit("found: ".json_encode($identifier));
-				return $output;
-			} else {
-				if ( !isset($matches) || !$matches || empty($matches) ) {
-					exit(json_encode($recursive_output));
-				} else {
-					CustomCode::replaceViewOption( $output, $matches, $identifier, $option_name, $option_value, $recursive_output );
-				}
-			}
+			return $output;
+			// if( $found ) {
+			//
+			// 	return $output;
+			// } else {
+			// 	if ( !isset($matches) || !$matches || empty($matches) ) {
+			// 		exit(json_encode($recursive_output));
+			// 	} else {
+			// 		CustomCode::replaceViewOption( $output, $matches, $identifier, $option_name, $option_value, $recursive_output );
+			// 	}
+			// }
 
+		}
+	}
+
+	public static function replaceAllViewOptions( $output, $identifier, $options_to_update )
+	{
+		foreach ($options_to_update as $key => $value) {
+
+		  $checkForViews_result = CustomCode::checkForViews( $output );
+			$found_reusables = $checkForViews_result['found_reusables'];
+			foreach ($found_reusables as $found_reusable) {
+				$new_output = CustomCode::replaceViewOption( $output, $found_reusable, $identifier, $key, $value );
+			  if( $new_output != null && $new_output != "" ) {
+
+			    $output = $new_output;
+			  }
+			}
+		}
+
+		return $output;
+
+
+		foreach ($reusable_views as $reusable_view) {
+
+			$checkForViews_result = CustomCode::checkForViews( $output );
+			$output = CustomCode::replaceViewOption( $output, $matches, $identifier, $option_name, $option_value, $recursive_output );
 		}
 	}
 
