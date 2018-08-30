@@ -167,7 +167,7 @@ class Views {
 						$text_offset_x = Data::getValue( $viewoptions, "text_offset_x" );
 						$text_offset_y = Data::getValue( $viewoptions, "text_offset_y" );
 						$editable_options = [
-							"identifier", "number_of_columns", "data_type", "text_color", "background_color", "image_size", "image_corner_radius",
+							"identifier", "number_of_columns", "data_type", "text_color", "padding", "margin", "background_color", "image_size", "image_corner_radius",
 							"text_align", "title_size", "subtitle_size", "description_size", "title_color",
 							"subtitle_color", "description_color", "text_offset_x", "text_offset_y", "overlay", "reverse"
 						];
@@ -983,6 +983,10 @@ return;
 		$description_color = Data::getValue( $viewoptions, "description_color" );
 		$text_offset_x = Data::getValue( $viewoptions, "text_offset_x" );
 		$text_offset_y = Data::getValue( $viewoptions, "text_offset_y" );
+		$padding = Data::getValue( $viewoptions, "padding" );
+		$margin = Data::getValue( $viewoptions, "margin" );
+		$width = Data::getValue( $viewoptions, "width" );
+		$height = Data::getValue( $viewoptions, "height" );
 
 		if( $image_size == "" ) {
 			$image_size = "cover";
@@ -990,7 +994,6 @@ return;
 		if( $image_corner_radius == "" ) {
 			$image_corner_radius = 0;
 		}
-		$height = Data::getValue( $viewoptions, "height" );
 
 echo " <style> ";
 	echo " ." . $identifier . ".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".inner { display: inline-block; position: relative; margin: 0; padding: 0; float: left; background-size: ".$image_size."; background-repeat: no-repeat; background-position: center; ";
@@ -1031,6 +1034,7 @@ echo " <style> ";
 			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".title { text-align: ".$text_align." !important ; } ";
 			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".subtitle { text-align: ".$text_align." !important ; } ";
 			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .description { text-align: ".$text_align." !important; } ";
+			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." p, .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." h1, .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." h2, .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." h3, .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." h4, .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." h5, .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." h6 { text-align: ".$text_align." !important; } ";
 		}
 
 		if( $text_offset_x != "" ) {
@@ -1068,6 +1072,25 @@ echo " <style> ";
 		if( $background_color != "" ) {
 			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." { background-color: ".$background_color."; } ";
 		}
+
+		$padding_arr = Views::getPaddingOrMargin( $identifier );
+		$padding = $padding_arr[0];
+		$padding_width = $padding_arr[1];
+		$margin_arr = Views::getPaddingOrMargin( $identifier, "margin" );
+		$margin = $margin_arr[0];
+		$margin_width = $margin_arr[1];
+
+		if( $width == "" ) {
+			$width = "100%";
+		}
+		echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." { margin: 0; padding: 0; }
+	  @media(min-width: 0px) {
+	    .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." { padding: 0 !important; margin: 0 !important; width: 100%; }
+	  }
+
+	  @media(min-width: 768px) {
+	    .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." { padding: ".$padding . " !important; margin: ". $margin ." !important; width: calc(". $width ." - ". $padding_width ." - ". $margin_width ."); }
+	  }";
 
 		// $options_form_inputs = [
 		// 	"text_color"=>["field_value"=>$text_color]
