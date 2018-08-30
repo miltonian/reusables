@@ -232,6 +232,51 @@ class CustomCode {
 		}
 	}
 
+	public static function replaceViewTypeAndView( $output, $identifier, $viewtype, $view)
+	{
+
+		$recursive_output = $output;
+
+		$checkForViews_result = CustomCode::checkForViews( $output );
+		$found_reusables = $checkForViews_result['found_reusables'];
+		foreach ($found_reusables as $found_reusable) {
+
+			$found=false;
+			if( isset($found_reusable) && $found_reusable && !empty($found_reusable) ) {
+
+				foreach ($found_reusable as $index => $matchdict) {
+					$str = str_replace("{{", "", $found_reusable[$index]);
+					$str = str_replace("}}", "", $str);
+					$str = str_replace("\n", "", $str);
+					$str = str_replace("\t", "", $str);
+					$str = $str;
+
+					if( is_string($str) && $str != null ) {
+						$attribute_identifier = CustomCode::getIdentifierFromShortHand($str);
+
+						$attribute = CustomCode::detectShortHandAttribute($str);
+
+						if($attribute_identifier != $identifier || $attribute != "view") {
+							$recursive_output = str_replace($found_reusable[$index], "", $recursive_output );
+						} else if( $attribute_identifier == $identifier && $attribute == "view" ) {
+
+							$old_view = explode(".view(", $found_reusable[$index])[1];
+							$old_view = str_replace(");", "", $old_view);
+							$new_view = $viewtype . "/" . $view;
+							$new_view = str_replace($old_view, $new_view, $found_reusable[$index]);
+							$output = str_replace($found_reusable[$index], $new_view, $output);
+
+							break;
+						}
+
+					}
+				}
+			}
+		}
+
+		return $output;
+	}
+
 	public static function replaceAllViewOptions( $output, $identifier, $options_to_update )
 	{
 		foreach ($options_to_update as $key => $value) {
@@ -277,7 +322,7 @@ class CustomCode {
 				$str = $str;
 
 				if( is_string($matches[$index]) && $matches[$index] != null ) {
-					//asdfasdf
+
 					$viewset_identifier = CustomCode::getIdentifierFromViewSetData($str);
 
 					if($viewset_identifier != $identifier) {

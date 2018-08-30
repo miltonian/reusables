@@ -1,7 +1,7 @@
 <?php
 
 namespace Reusables;
-	
+
 if( !isset($viewdict['field_conditions'] ) ){
 	$viewdict['field_conditions'] = [];
 }else if( $viewdict['field_conditions'] == "" ){
@@ -51,8 +51,9 @@ if( !$is_smart ) {
 			$field_name = $identifier;
 		}
 	}
-
 }
+
+$input_name = Data::getValue($viewdict, 'input_name');
 
 if( sizeof($options) == 0 ) {
 
@@ -85,10 +86,10 @@ if( $help_modal != "" ) {
 </style>
 
 <div class="viewtype_input <?php echo $identifier ?> select <?php echo $sizeclass ?>">
-	<?php 
+	<?php
 		Data::addData( ["title" => $labeltext], $identifier . "_label" );
 		Data::addOption( $help_modal, "help_modal", $identifier . "_label" );
-		echo Header::make( "basic_label", $identifier . "_label" ); 
+		echo Header::make( "basic_label", $identifier . "_label" );
 	?>
 
 		<select class="field_value" name="<?php echo $field_name ?>" >
@@ -101,6 +102,7 @@ if( $help_modal != "" ) {
 		<input type="hidden" class="field_type" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_type]" value="text" style="visibility: hidden; z-index: -1;">
 		<input type="hidden" class="tablename" value="<?php echo Data::getValue( $viewdict, 'field_table') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][tablename]">
 		<input type="hidden" class="col_name" value="<?php echo Data::getValue( $viewdict, 'field_colname') ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][col_name]">
+		<input type="hidden" class="field_name" value="<?php echo $input_name ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_name]">
 		<?php $i=0; ?>
 		<?php foreach ($viewdict['field_conditions'] as $c) { ?>
 			<input type="hidden" class="conditionkey_<?php echo $i ?>" value="<?php echo $c['key'] ?>" name="fieldarray[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_conditions][<?php echo $i ?>][key]">

@@ -167,7 +167,7 @@ class Views {
 						$text_offset_x = Data::getValue( $viewoptions, "text_offset_x" );
 						$text_offset_y = Data::getValue( $viewoptions, "text_offset_y" );
 						$editable_options = [
-							"identifier", "number_of_columns", "data_type", "text_color", "padding", "margin", "background_color", "image_size", "image_corner_radius",
+							"identifier", "view", "number_of_columns", "data_type", "text_color", "padding", "margin", "background_color", "image_size", "image_corner_radius",
 							"text_align", "title_size", "subtitle_size", "description_size", "title_color",
 							"subtitle_color", "description_color", "text_offset_x", "text_offset_y", "overlay", "reverse"
 						];
@@ -175,6 +175,8 @@ class Views {
 						foreach ($editable_options as $editable_option) {
 							if( $editable_option == "identifier" ) {
 								$input_keys[$editable_option] = ["type"=>"hidden", "field_value"=>$identifier];
+							} else if($editable_option == "view") {
+								$input_keys[$editable_option] = ["type"=>"select", "options"=>[["title"=>"custom/section/imagetext_full", "value"=>"custom/section/imagetext_full"], ["title"=>"custom/section/imagetext_inline", "value"=>"custom/section/imagetext_inline"], ["title"=>"custom/section/imagetext_inside", "value"=>"custom/section/imagetext_inside"]]];
 							} else {
 								$input_keys[$editable_option] = ["type"=>"textfield", "field_value"=>Data::getValue( $viewoptions, $editable_option ), "field_name"=>$editable_option];
 							}
