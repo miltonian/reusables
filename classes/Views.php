@@ -1039,10 +1039,12 @@ echo " <style> ";
 
 		if( $text_offset_x != "" ) {
 			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".content_container { margin-left: ".$text_offset_x." !important ; } ";
+			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".text_container { margin-left: ".$text_offset_x." !important ; } ";
 		}
 
 		if( $text_offset_y != "" ) {
 			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".content_container { margin-top: ".$text_offset_y." !important ; } ";
+			echo " .".$identifier.".viewtype_".ReusableClasses::parentDir($file).".".basename($file, ".php")." .".basename($file, ".php").".text_container { margin-top: ".$text_offset_y." !important ; } ";
 		}
 
 		if( $title_size != "" ) {
