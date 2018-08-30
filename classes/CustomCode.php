@@ -342,7 +342,6 @@ class CustomCode {
 						$str = rtrim($str, ", ");
 						$str = rtrim($str, ",");
 
-
 						$output = str_replace($matches[$index], "ViewData::set(" . $str . ");", $output);
 
 						break;
@@ -358,7 +357,7 @@ class CustomCode {
 				if ( !isset($matches) || !$matches || empty($matches) ) {
 					exit(json_encode($recursive_output));
 				} else {
-					CustomCode::replaceViewSetData( $output, $matches, $identifier, $viewsetdata_name, $viewsetdata_value, $recursive_output );
+					return CustomCode::replaceViewSetData( $output, $matches, $identifier, $viewsetdata_name, $viewsetdata_value, $recursive_output );
 				}
 			}
 
