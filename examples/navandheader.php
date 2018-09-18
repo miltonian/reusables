@@ -11,8 +11,8 @@ $navdict = [
 $headerdict = [ "title"=>"This is a Header!" ];
 
 // DATA
-Reusables\Data::addData( $navdict, "navbar" );
-Reusables\Data::addData( $headerdict, "main_header" );
+Reusables\Data::add( $navdict, "navbar" );
+Reusables\Data::add( $headerdict, "main_header" );
 
 Reusables\ReusableClasses::startpage( __FILE__ );
 

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Reusables;
 
@@ -6,16 +6,7 @@ class Footer {
 
 	public static function place( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Footer", $file, $identifier );
-		
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::place( "Footer", $file, $identifier );
 	}
 
 	public static function set( $file, $identifier )
@@ -23,14 +14,9 @@ class Footer {
 		Views::setDefaultViewInfo( $file, $identifier, "footer" );
 	}
 
-	public static function setincontainer( $file, $identifier )
+	public static function setInContainer( $file, $identifier )
 	{
-		Data::addInfo( 'Footer', 'viewtype', $identifier );
-		Data::addInfo( $file, 'file', $identifier );
-		Data::addInfo( $identifier, 'identifier', $identifier );
-
-		Views::addEditableParts( $identifier );
-		return Footer::make( $file, $identifier );
+		return View::setInContainer( "Footer", $file, $identifier );
 	}
 
 	public static function make( $file, $identifier )
@@ -40,9 +26,9 @@ class Footer {
 
 	// public static function make( $file, $identifier )
 	// {
-	// 	ReusableClasses::addfile( "footer", $file );
+	// 	Page::addAssetFile( "footer", $file );
 	// 	$View = View::factory( 'reusables/views/footer/' . $file );
-	// 	$data = Data::retrieveDataWithID( $identifier );
+	// 	$data = Data::get( $identifier );
 	// 	$View->set( 'footerdict', $data );
 	// 	$View->set( 'identifier', $identifier );
 	// 	return $View->render();
@@ -63,16 +49,7 @@ class Footer {
 
 	public static function cplace( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Custom/Footer", $file, $identifier );
-
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::cplace( "Footer", $file, $identifier );
 	}
 
 	public static function cset( $file, $identifier )

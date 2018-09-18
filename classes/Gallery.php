@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Reusables;
 
@@ -6,16 +6,7 @@ class Gallery {
 
 	public static function place( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Gallery", $file, $identifier );
-
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::place( "Gallery", $file, $identifier );
 	}
 
 	public static function set( $file, $identifier )
@@ -23,14 +14,9 @@ class Gallery {
 		Views::setDefaultViewInfo( $file, $identifier, "gallery" );
 	}
 
-	public static function setincontainer( $file, $identifier )
+	public static function setInContainer( $file, $identifier )
 	{
-		Data::addInfo( 'Gallery', 'viewtype', $identifier );
-		Data::addInfo( $file, 'file', $identifier );
-		Data::addInfo( $identifier, 'identifier', $identifier );
-
-		Views::addEditableParts( $identifier );
-		return Gallery::make( $file, $identifier );
+		return View::setInContainer( "Gallery", $file, $identifier );
 	}
 
 	public static function make( $file, $identifier )
@@ -40,9 +26,9 @@ class Gallery {
 
 	// public static function make( $file, $identifier )
 	// {
-	// 	ReusableClasses::addfile( "gallery", $file );
+	// 	Page::addAssetFile( "gallery", $file );
 	// 	$View = View::factory( 'reusables/views/gallery/' . $file );
-	// 	$data = Data::retrieveDataWithID( $identifier );
+	// 	$data = Data::get( $identifier );
 	// 	$View->set( 'gallerydict', $data );
 	// 	$View->set( 'identifier', $identifier );
 	// 	return $View->render();
@@ -55,16 +41,7 @@ class Gallery {
 
 	public static function cplace( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Custom/Gallery", $file, $identifier );
-
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::cplace( "Gallery", $file, $identifier );
 	}
 
 	public static function cset( $file, $identifier )

@@ -38,7 +38,7 @@ if($navbuttons == "") {
 
 $categories = Data::getValue( $viewoptions, 'categories' );
 
-Data::addData( ["pages"=>$navbuttons], "menuview1" );
+Data::add( ["pages"=>$navbuttons], "menuview1" );
 echo Menu::make( "menuview_1", "menuview1");
 
 
@@ -132,7 +132,7 @@ if( $title == "" ) {
 			</a>
 			<div class="bulky search-container" style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%);">
 				<?php 
-					Data::addData( [], $identifier . "_search" );
+					Data::add( [], $identifier . "_search" );
 					echo Button::make( "search", $identifier . "_search" ); 
 				?>
 			</div>
@@ -140,7 +140,7 @@ if( $title == "" ) {
 		<div class="bulky subnav">
 			<div style="display: inline-block; position: absolute; float: left; margin-left: 8px; left: 8px;">
 				<?php 
-					Data::addData( [], $identifier . "_menubtn");
+					Data::add( [], $identifier . "_menubtn");
 					echo Button::make( "hamburger", $identifier . "_menubtn" ); 
 				?>
 			</div>

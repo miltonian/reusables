@@ -1,12 +1,7 @@
-<?php 
+<?php
 
 namespace Reusables;
 
-$required = array(
-	"steps"=>[]
-);
-
-// ReusableClasses::checkRequired( $identifier, $viewdict, $required );
 
 $steps = Data::getValue( $viewdict, 'steps' );
 if( $steps == "" ){
@@ -14,8 +9,8 @@ if( $steps == "" ){
 }
 
 
-	Views::setParams( 
-		[ "steps"=>["title", "subtitle"] ], 
+	Views::setParams(
+		[ "steps"=>["title", "subtitle"] ],
 		[],
 		$identifier
 	);

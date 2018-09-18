@@ -8,10 +8,45 @@ if( !defined( 'PROJECT_ROOT' ) ){
 
 class Options {
 
+	protected static $alloptions = [];
+
+	public static function get($identifier)
+	{
+		if (is_array($identifier)) {
+			return null;
+		}
+		if (!isset(Options::$alloptions[ $identifier ])) {
+			return null;
+		} else {
+			return Options::$alloptions[ $identifier ];
+		}
+	}
+
+	public static function add($data, $key, $identifier)
+	{
+			if (!isset(Options::$alloptions[ $identifier ])) {
+					Options::$alloptions[ $identifier ] = [];
+			}
+			if ($key == "input_keys") {
+					if (isset(Options::$alloptions[ $identifier ][ $key ])) {
+							$arr = Options::$alloptions[ $identifier ][ $key ];
+							$data = array_merge($arr, $data);
+					}
+			}
+			Options::$alloptions[ $identifier ][ $key ] = $data;
+	}
+
+	public static function addOptions($data, $identifier)
+	{
+			if (!isset(Options::$alloptions[ $identifier ])) {
+					Options::$alloptions[ $identifier ] = $data;
+			}
+	}
+
   public static function makeCellEditing( $identifier, $fullviewdict, $celltype ) {
 
-    $viewdict = Data::retrieveDataWithID( $identifier );
-    $viewoptions = Data::retrieveOptionsWithID( $identifier );
+    $viewdict = Data::get( $identifier );
+    $viewoptions = Options::get( $identifier );
 
 
   }
@@ -34,7 +69,6 @@ class Options {
 		var thismodalclass = '';
 
 		var type = " . json_encode( $optiontype ) . ";";
-		echo "console.log( JSON.stringify( ".json_encode( $optiontype )." ) );";
 
 		if( $optiontype == "options_modal" && isset($viewoptions['options_modal']['modalclass']) ){
 			// extract( Input::convertInputKeys( $identifier . "_form" ));
@@ -46,7 +80,7 @@ class Options {
 		echo "
 		var optiontype = " . json_encode($optiontype) . ";";
 		$formid = $identifier . "_options_form";
-		$formviewoptions = Data::retrieveOptionsWithID($formid);
+		$formviewoptions = Options::get($formid);
 		echo '
 		var formviewoptions = ' . json_encode( $formviewoptions ) . ";
 		var identifier = " . json_encode( $identifier ) . ";
@@ -60,7 +94,7 @@ class Options {
 			Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions, formviewoptions, identifier, true );
 		}";
 
-		ReusableClasses::getEditingFunctionsJS( $viewoptions, true ) ;
+		Editing::getEditingFunctionsJS( $viewoptions, true ) ;
 	}
 
 }

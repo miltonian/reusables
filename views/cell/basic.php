@@ -1,15 +1,15 @@
-<?php 
+<?php
 
 	namespace Reusables;
 
-	Views::setParams( 
+	Views::setParams(
 		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "cellindex", "html_text", "celldate", "celltype", "featured_imagepath", "title", "slug" ],
 		[],
 		$identifier
 	);
 
-	$viewdict = Data::convertKeysInTable( $identifier, $viewdict );
-	
+	$viewdict = Convert::keysInTable( $identifier, $viewdict );
+
 
 
 	extract( Cell::prepareCell( $identifier ) );
@@ -30,7 +30,7 @@
 <script>
 
 	<?php
-		ReusableClasses::addEditingToCell( $identifier, $fullviewdict, $celltype );
+		Editing::addEditingToCell( $identifier, $fullviewdict, $celltype );
 	?>;
-	
+
 </script>

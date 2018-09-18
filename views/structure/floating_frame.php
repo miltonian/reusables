@@ -2,13 +2,6 @@
 
 namespace Reusables;
 
-	$required = array(
-		"maincolumn"=>"",
-		"left"=>"",
-		"top"=>""
-	);
-
-	ReusableClasses::checkRequired( "floating_frame", $structuredict, $required );
 ?>
 
 <style>
@@ -17,7 +10,7 @@ namespace Reusables;
 
 <div class="viewtype_structure <?php echo $identifier ?> floating_frame main">
 	<div class="floating_frame maincolumn">
-		<?php 
+		<?php
 			foreach ($structuredict['maincolumn'] as $view) {
 				echo $view;
 			}

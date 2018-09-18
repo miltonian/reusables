@@ -33,7 +33,7 @@ if( isset($fieldimages ) ) {
 	$filesarray = array();
 	$indexes = array_keys( $_FILES['fieldimage']['name']);
 	$didfind = false;
-	for ($i=0; $i < sizeof($_FILES['fieldimage']['name']); $i++) { 
+	for ($i=0; $i < sizeof($_FILES['fieldimage']['name']); $i++) {
 		if( $_FILES['fieldimage']['size'][ $indexes[$i] ]['field_value'] > 0 ){;
 			$filedict = [];
 			$filedict['name'] = $_FILES['fieldimage']['name'][ $indexes[$i] ]['field_value'];
@@ -57,7 +57,8 @@ if( isset($fieldimages ) ) {
 			continue;
 		}
 		if( $_FILES['fieldimage']['name'][$indexes[$i]]['field_value'] != "" ) {
-			$imagepath = Reusables\Shortcuts::uploadImage( $file );
+			// $imagepath = Reusables\Shortcuts::uploadImage( $file );
+			$imagepath = Reusables\Media::uploadImage( $file );
 			$fieldimages[$indexes[$i]]['field_value'] = $imagepath;
 		}
 		$i++;
@@ -98,7 +99,7 @@ if( isset($fieldimages ) ) {
 			if( $conditions ) {
 				$whereclause = "";
 				$conditionvalues = [];
-				for ($a=0; $a < sizeof($conditions); $a++) { 
+				for ($a=0; $a < sizeof($conditions); $a++) {
 					$conditionkey = $conditions[$a]['key'];
 					$conditionkey_arr = explode(".", $conditionkey);
 					if( sizeof($conditionkey_arr) != 2 ) {
@@ -149,7 +150,7 @@ if( isset($fieldimages ) ) {
 
 
 		if( isset( $_POST['ifnone_insert'] ) && sizeof($filesarray[0])>0  ){
-			if( $_POST['ifnone_insert'] == "1" ){ 
+			if( $_POST['ifnone_insert'] == "1" ){
 				$sizeofarraystoinsert = 0;
 				$keys_found = [];
 
@@ -172,7 +173,7 @@ if( isset($fieldimages ) ) {
 				if( isset( $_POST['multiple_inserts'] ) ){
 					if( $_POST['multiple_inserts'] == "1" ) {
 						// exit( json_encode( sizeof($indexes) ) );
-						for ($i=0; $i < (sizeof($indexes)); $i++) { 
+						for ($i=0; $i < (sizeof($indexes)); $i++) {
 							// if( !isset($fieldimages) ){
 							// 	$fieldimages = [];
 							// }
@@ -197,7 +198,7 @@ if( isset($fieldimages ) ) {
 						}
 					}
 				}else{
-					
+
 					foreach ($tablenames_array as $table=>$bool) {
 						$fieldarray = insertimage( $indexes, $fieldarray, $fieldimages, $table );
 						// $fieldarray = insertimage( $indexes, $fieldarray, $fieldimages, $tablename );
@@ -265,7 +266,7 @@ if ( sizeof($fieldarray) > 0 ) {
 				$conditionkey = $conditionkey_arr[1];
 			}
 			if($conditionkey=="id" && $conditions[0]['value']=="" && $lastinsertid==true && $lastinsertid!=0 ){ $conditions[0]['value'] = $lastinsertid; }
-			for ($i=0; $i < sizeof($conditions); $i++) { 
+			for ($i=0; $i < sizeof($conditions); $i++) {
 				$conditionkey = $conditions[$i]['key'];
 				$conditionkey_arr = explode(".", $conditionkey);
 				if( sizeof($conditionkey_arr) != 2 ) {
@@ -302,7 +303,7 @@ if ( sizeof($fieldarray) > 0 ) {
 	// exit( "5" );
 				// exit( json_encode( array( $query, $values, $type ) ) );
 				$result = Reusables\CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
-				
+
 			}
 		}
 		$testi++;
@@ -311,7 +312,7 @@ if ( sizeof($fieldarray) > 0 ) {
 	if( !$didfind ) {
 		// exit( json_encode( $_POST['ifnone_insert'] ) );
 		if( isset( $_POST['ifnone_insert'] ) ){
-			if( $_POST['ifnone_insert'] == "1" ){ 
+			if( $_POST['ifnone_insert'] == "1" ){
 				$sizeofarraystoinsert = 0;
 				$keys_found = [];
 
@@ -334,7 +335,7 @@ if ( sizeof($fieldarray) > 0 ) {
 				if( isset( $_POST['multiple_inserts'] ) ){
 					if( $_POST['multiple_inserts'] == "1" ) {
 						// exit( json_encode( $sizeofarraystoinsert ) );
-						for ($i=0; $i < (sizeof($indexes)); $i++) { 
+						for ($i=0; $i < (sizeof($indexes)); $i++) {
 							if( !isset($fieldimages) ){
 								$fieldimages = null;
 							}else if( sizeof($fieldimages) == 0 ) {
@@ -371,7 +372,7 @@ if ( sizeof($fieldarray) > 0 ) {
 					}
 
 				}
-				
+
 				// exit("done");
 			}
 		}
@@ -407,7 +408,7 @@ function insertnonimage( $indexes, $fieldarray, $fieldimages, $tablename, $start
 	if( $sizeofarraystoinsert == -1 ) {
 		$sizeofarraystoinsert = sizeof($indexes);
 	}
-	for ($i=$starting_i; $i < $starting_i+$sizeofarraystoinsert; $i++) { 
+	for ($i=$starting_i; $i < $starting_i+$sizeofarraystoinsert; $i++) {
 		if( $i < sizeof( $indexes ) ) {
 			$arrayorimages = $fieldarray;
 
@@ -478,7 +479,7 @@ function insertimage( $indexes, $fieldarray, $fieldimages, $tablename, $starting
 		$sizeofarraystoinsert = sizeof($indexes);
 	}
 
-	for ($i=$starting_i; $i < $starting_i+$sizeofarraystoinsert; $i++) { 
+	for ($i=$starting_i; $i < $starting_i+$sizeofarraystoinsert; $i++) {
 		if( $i < sizeof( $indexes ) ) {
 			$colname = $fieldimages[ $indexes[$i] ]['col_name'];
 				$colname_arr = explode('.', $colname);
@@ -500,7 +501,7 @@ function insertimage( $indexes, $fieldarray, $fieldimages, $tablename, $starting
 				$query .= $colname;
 				$questionmarks .= "?";
 			}
-			
+
 			if( $multiple_inserts ) {
 				$dict = [
 					["field_value" => $fieldimages[ $indexes[$i] ]['field_value'],
@@ -532,7 +533,7 @@ function insertimage( $indexes, $fieldarray, $fieldimages, $tablename, $starting
 	$result = Reusables\CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
 	$lastinsertid = $result[1];
 	if( $multiple_inserts ) {
-		
+
 	}else{
 		for ( $i=0; $i < sizeof($fieldarray); $i++ ) {
 			$fieldarray[$i]['field_conditions'] = [ ["key"=>"id", "value"=>$lastinsertid ] ];

@@ -3,808 +3,457 @@
 namespace Reusables;
 
 /*
-	some instruction:
-		- Data::addData( $entry, $identifier )
-			- adds data (usually from sql query) to a data_id
-		- Data::retrieveDataWithID( $identifier )
-			- retrieves the full array of this data_id ( $identifier holds the data_id value in this case )
-		- Data::formatForDefaultData( $dataid )
-			- arranges the data into the format in which the views understand
-		- Data::getValue( $pair )
-			- retrieves the value of a specified key from a default data set
+    some instruction:
+        - Data::add( $entry, $identifier )
+            - adds data (usually from sql query) to a data_id
+        - Data::get( $identifier )
+            - retrieves the full array of this data_id ( $identifier holds the data_id value in this case )
+        - RFormat::formatForDefaultData( $dataid )
+            - arranges the data into the format in which the views understand
+        - Data::getValue( $pair )
+            - retrieves the value of a specified key from a default data set
 
 */
 
-class Data {
+class Data
+{
+    protected static $alldata = array();
 
-	protected static $alldata = array();
-	protected static $alloptions = array();
-	protected static $allinfo = array();
+		// Data::add() is deprecated -- use Data::add() instead
+    public static function addData($data, $identifier)
+    {
+        Data::add($data, $identifier);
+    }
 
+		public static function add($data, $identifier)
+		{
+			if (!is_array($data)) {
+					$data = Data::get($data);
+			}
 
-	public static function formatForDefaultData( $dataid )
-	{
-		$defaultdata = [];
-		$fetcheddata = [];
-		$type = "in_dict";
-
-		if( self::isAssoc( self::$alldata[$dataid]['value'] ) ){
-			$fetcheddata = self::$alldata[$dataid]['value'];
-		}else{
-			$fetcheddata = self::$alldata[$dataid]['value'][0];
-			$type = "in_array";
-		}
-
-		foreach ( $fetcheddata as $k=>$v ) {
-			$defaultdata[ $k ] = [ "data_id" => $dataid, "key" => $k, "type" => $type ];
-		}
-
-		return $defaultdata;
-	}
-
-	public static function formatCellWithDefaultData( $data_id, $index )
-	{
-		$data = self::retrieveDataWithID( $data_id );
-		if( !isset( $data['value'][$index] ) ){
-			return null;
-		}
-		$dict = $data['value'][$index];
-		$allkeys = array_keys( $dict );
-		$cell = [];
-		foreach ($allkeys as $k) {
-			$cell[$k] = [ "data_id"=>$data_id, "key"=>$k, "index"=>$index ];
-		}
-		$cell['index'] = $index;
-		// exit( json_encode( $cell ) );
-		$cell = Data::convertKeys( $cell );
-		// exit( json_encode( Data::getValue( $cell, 'slug' ) ) );
-		return $cell;
-	}
-
-	public static function isAssoc(array $arr)
-	{
-	    if (array() === $arr) return false;
-	    return array_keys($arr) !== range(0, count($arr) - 1);
-	}
-
-	public static function addData( $data, $identifier )
-	{
-		if( !is_array( $data ) ){
-			$data = Data::retrieveDataWithID( $data );
-		}
-
-		// if ( !isset( self::$alldata[ $identifier ] ) ) {
 			$data['data_id'] = $identifier;
 			self::$alldata[ $identifier ] = $data;
 
-		// }else{
-			// exit( "Duplicate data id: '" . $identifier . "' entries. " );
-		// }
-
-		Views::addView( $identifier );
-
-	}
-
-	public static function overwriteData( $data, $identifier )
-	{
-		if( !is_array( $data ) ){
-			$data = Data::retrieveDataWithID( $data );
+			Views::addView($identifier);
 		}
 
-		// if ( !isset( self::$alldata[ $identifier ] ) ) {
-			$data['data_id'] = $identifier;
-			self::$alldata[ $identifier ] = $data;
+	// Options::add() is deprecated -- Use Options::add() instead
+    public static function addOption($data, $key, $identifier)
+    {
+        Options::add($data, $key, $identifier);
+    }
 
-		// }else{
-		// 	exit( "Duplicate data id: '" . $identifier . "' entries. " );
-		// }
+    // Data::addOptions() is deprecated -- Use Options::addOptions() instead
+    public static function addOptions($data, $identifier)
+    {
+        Options::addOptions($data, $identifier);
+    }
 
-		Views::addView( $identifier );
+    // Data::addInfo() is deprecated -- Use Info::add() instead
+    public static function addInfo($data, $key, $identifier)
+    {
+        Info::add($data, $key, $identifier);
+    }
 
-	}
+    // Data::getAllViewsInfo is deprecated -- Use Info::getAll() instead
+    public static function getAllViewsInfo()
+    {
+        return Info::getAll();
+    }
 
-	// public static function addInputKey( $input_key, $identifier )
-	// {
-	// 	$viewoptions = Data::retrieveOptionsWithID( $identifier );
+    public static function get($identifier)
+    {
+        if (is_array($identifier)) {
+            return null;
+        }
+        if (!isset(self::$alldata[ $identifier ])) {
+            return null;
+        } else {
+            return self::$alldata[ $identifier ];
+        }
+    }
 
-	// 	array_merge( $viewoptions['input_keys'], $input_key );
-	// }
+    // Data::retrieveDataWithID() is deprecated -- Use Data::get() instead
+    public static function retrieveDataWithID($identifier)
+    {
+        return Data::get( $identifier );
+    }
 
-	// public static function addInputKey( $input_key, $identifier )
-	// {
-	// 	$viewoptions = Data::retrieveOptionsWithID( $identifier );
-	// 	array_merge( $viewoptions['input_keys'], $input_key );
-	// }
+	// Options::retrieveOptionsWithID() is deprecated -- Use Options::get() instead
+    public static function retrieveOptionsWithID($identifier)
+    {
+        return Options::get($identifier);
+    }
 
-	public static function setKeyValue( $pair, $identifier )
-	{
-		if( !isset( self::$alldata[ $identifier ] ) ) {
-			return;
-		}else{
-			$key = array_keys( $pair )[0];
-			self::$alldata[ $identifier ]['value'][ $key ] = $pair[ $key ];
-		}
-	}
+    // Data::retrieveInfoWithID() is deprecated -- Use Info::get() instead
+    public static function retrieveInfoWithID($identifier)
+    {
+        return Info::get($identifier);
+    }
 
-	public static function addOption( $data, $key, $identifier )
-	{
-		if( !isset( self::$alloptions[ $identifier ] ) ) {
-			self::$alloptions[ $identifier ] = [];
-		}
-		if( $key == "input_keys" ) {
-			if( isset( self::$alloptions[ $identifier ][ $key ] ) ) {
-				$arr = self::$alloptions[ $identifier ][ $key ];
-				$data = array_merge($arr, $data);
-			}
-		}
-		self::$alloptions[ $identifier ][ $key ] = $data;
-	}
+    public static function getDefaultDataID($viewdict)
+    {
+        if (self::isAssoc($viewdict)) {
+            $dict = $viewdict;
+        } else {
+            $dict = $viewdict[0];
+        }
+        if (isset($viewdict['data_id'])) {
+            return $viewdict['data_id'];
+        }
+        $allkeys = array_keys($dict);
+        if (isset($dict[ $allkeys[0] ]['data_id'])) {
+            $data_id = $dict[ $allkeys[0] ]['data_id'];
+            return $data_id;
+        } else {
+            return "";
+        }
+    }
 
-	public static function addOptions( $data, $identifier )
-	{
-		if( !isset( self::$alloptions[ $identifier ] ) ) {
-			self::$alloptions[ $identifier ] = $data;
-		}
+    public static function getDefaultConditionsWithID($identifier)
+    {
+        $data = Data::get($identifier);
 
-	}
+        return $data['db_info']['conditions'];
+    }
 
+    public static function getDefaultTableNameWithID($identifier, $key="")
+    {
+        $data = Data::get($identifier);
+        if (!isset($data['db_info'])) {
+            return "";
+        }
+        $tablenames = $data['db_info']['tablenames'];
 
-	public static function addInfo( $data, $key, $identifier )
-	{
-		if( !isset( self::$allinfo[ $identifier ] ) ) {
-			self::$allinfo[ $identifier ] = [];
-		}
-		self::$allinfo[ $identifier ][ $key ] = $data;
-	}
+        if (isset($tablenames[$key])) {
+            if ($tablenames[$key] != "") {
+                return $tablenames[$key];
+            }
+        }
+        $allkeys = array_keys($tablenames);
+        return $tablenames[$allkeys[0]];
+    }
 
-	public static function getAllViewsInfo()
-	{
-		return self::$allinfo;
-	}
+    public static function getDefaultTableNameWithData($data)
+    {
+        if (!isset($data['db_info'])) {
+            return "";
+        }
+        $tablenames = $data['db_info']['tablenames'];
 
-	public static function retrieveDataWithID( $identifier )
-	{
-		if( is_array( $identifier ) ){
-			return null;
-		}
-		if ( !isset( self::$alldata[ $identifier ] ) ) {
-			return null;
-		}else{
-			return self::$alldata[ $identifier ];
-		}
-	}
-
-	public static function retrieveOptionsWithID( $identifier )
-	{
-		if( is_array( $identifier ) ){
-			return null;
-		}
-		if ( !isset( self::$alloptions[ $identifier ] ) ) {
-			return null;
-		}else{
-			return self::$alloptions[ $identifier ];
-		}
-	}
-
-	public static function retrieveInfoWithID( $identifier )
-	{
-		if( is_array( $identifier ) ){
-			return null;
-		}
-		if ( !isset( self::$allinfo[ $identifier ] ) ) {
-			return null;
-		}else{
-			return self::$allinfo[ $identifier ];
-		}
-	}
-
-	public static function getDefaultDataID( $viewdict )
-	{
-		if ( self::isAssoc($viewdict) ) {
-			$dict = $viewdict;
-		}else{
-			$dict = $viewdict[0];
-		}
-		if( isset( $viewdict['data_id'] ) ){
-			return $viewdict['data_id'];
-		}
-		$allkeys = array_keys( $dict );
-		if( isset($dict[ $allkeys[0] ]['data_id']) ){
-			$data_id = $dict[ $allkeys[0] ]['data_id'];
-			return $data_id;
-		}else{
-			return "";
-		}
-
-	}
-
-	public static function getDefaultConditionsWithID( $identifier )
-	{
-		$data = Data::retrieveDataWithID( $identifier );
-
-		return $data['db_info']['conditions'];
-	}
-
-	public static function getDefaultTableNameWithID( $identifier, $key="" )
-	{
-		$data = Data::retrieveDataWithID( $identifier );
-		if( !isset($data['db_info']) ){
-			return "";
-		}
-		$tablenames = $data['db_info']['tablenames'];
-
-		if( isset( $tablenames[$key] ) ) {
-			if( $tablenames[$key] != "" ) {
-				return $tablenames[$key];
-			}
-		}
-		$allkeys = array_keys($tablenames);
-		return $tablenames[$allkeys[0]];
-	}
-
-	public static function getDefaultTableNameWithData( $data )
-	{
-
-		if( !isset($data['db_info']) ){
-			return "";
-		}
-		$tablenames = $data['db_info']['tablenames'];
-
-		$allkeys = array_keys($tablenames);
-		return $tablenames[$allkeys[0]];
-	}
+        $allkeys = array_keys($tablenames);
+        return $tablenames[$allkeys[0]];
+    }
 
 
-	public static function getValue( $dict, $key=-1, $identifier="" )
-	{
-		if( is_string($dict) ) {
-			return $dict;
-		}
+    public static function getValue($dict, $key=-1, $identifier="")
+    {
+        if (is_string($dict)) {
+            return $dict;
+        }
 
-		if( !is_array( $dict ) ){
-			$dict = Data::retrieveDataWithID( $dict );
-		}
+        if (!is_array($dict)) {
+            $dict = Data::get($dict);
+        }
 
-		if( $key == -1 ){
-			$allkeys = array_keys($dict);
-			$thevalue = [];
-			foreach ($allkeys as $key) {
-				$keyvalue = Data::getValue( $dict, $key );
-				$thevalue[$key] = $keyvalue;
-			}
-			return $thevalue;
+        if ($key == -1) {
+            $allkeys = array_keys($dict);
+            $thevalue = [];
+            foreach ($allkeys as $key) {
+                $keyvalue = Data::getValue($dict, $key);
+                $thevalue[$key] = $keyvalue;
+            }
+            return $thevalue;
+        } elseif (isset($dict[ $key ])) {
+            $pair = $dict[ $key ];
+        } else {
+            if (isset($dict['value'][ $key ])) {
+                $pair = $dict['value'][ $key ];
+            } else {
+                $tablename = "";
 
-		}else if( isset($dict[ $key ]) ){
-			$pair = $dict[ $key ];
-		}else{
-			if( isset( $dict['value'][ $key ] )  ){
-				$pair = $dict['value'][ $key ];
-			}else{
-				$tablename = "";
+                if (isset($dict['db_info'])) {
+                    if (isset($dict['db_info']['tablenames'])) {
+                        $firstkey = array_keys($dict['db_info']['tablenames'])[0];
+                        $tablename = $dict['db_info']['tablenames'][$firstkey];
+                    }
+                } else {
+                    if (isset($dict['data_id'])) {
+                        $info = Info::get($dict['data_id']);
+                        if (strtolower($info['viewtype']) == "cell") {
+                            $cellindex = Data::getValue($dict, 'index');
+                            $table_identifier = str_replace("_cell_".$cellindex, "", $dict['data_id']);
+                            $tablename = Data::getDefaultTableNameWithID($table_identifier);
+                        }
+                    } elseif ($identifier != "") {
+                        $info = Info::get($identifier);
 
-				if( isset($dict['db_info']) ) {
+                        if (strtolower($info['viewtype']) == "cell") {
+                            $cellindex = Data::getValue($dict, 'index');
+                            $table_identifier = str_replace("_cell_".$cellindex, "", $identifier);
+                            $tablename = Data::getDefaultTableNameWithID($table_identifier);
+                        } else {
+                            $tablename = Data::getDefaultTableNameWithID($identifier);
+                        }
+                    }
+                }
 
-					if( isset($dict['db_info']['tablenames']) ) {
-						$firstkey = array_keys($dict['db_info']['tablenames'])[0];
-						$tablename = $dict['db_info']['tablenames'][$firstkey];
+                if ($tablename != "") {
+                    $key = $tablename.".".$key;
+                    if (isset($dict[ $key ])) {
+                        $pair = $dict[ $key ];
+                    } elseif (isset($dict['value'][ $key ])) {
+                        $pair = $dict['value'][ $key ];
+                    } else {
+                        return "";
+                    }
+                } else {
+                    return "";
+                }
+            }
+        }
 
-					}
-				} else {
-					if( isset($dict['data_id']) ) {
-						$info = Data::retrieveInfoWithID( $dict['data_id'] );
-						if( strtolower($info['viewtype']) == "cell" ) {
-							$cellindex = Data::getValue( $dict, 'index' );
-							$table_identifier = str_replace("_cell_".$cellindex, "", $dict['data_id']);
-							$tablename = Data::getDefaultTableNameWithID($table_identifier);
-						}
-					} else if($identifier != "") {
-						$info = Data::retrieveInfoWithID( $identifier );
+        $hasindex = false;
+        if (!isset($pair['data_id'])) {
+            return $pair;
+        }
+        if (!isset($pair['key'])) {
+            return $pair;
+        }
+        if (isset($pair['index'])) {
+            $hasindex = true;
+        }
 
-						if( strtolower($info['viewtype']) == "cell" ) {
-							$cellindex = Data::getValue( $dict, 'index' );
-							$table_identifier = str_replace("_cell_".$cellindex, "", $identifier);
-							$tablename = Data::getDefaultTableNameWithID($table_identifier);
-						} else {
-							$tablename = Data::getDefaultTableNameWithID($identifier);
-						}
-					}
-				}
+        if ($hasindex) {
+            $thevalue = self::retrieveDataWithID($pair['data_id']);
+            if ($thevalue) {
+                $thevalue = $thevalue['value'][ $pair['index'] ][ $pair['key'] ];
+            } else {
+                $thevalue = "";
+            }
+        } else {
+            $thevalue = self::retrieveDataWithID($pair['data_id']);
+            // exit( json_encode( $thevalue['value'][0]['id'] ) );
+            if ($thevalue) {
+                $thevalue = $thevalue['value'][ $pair['key'] ];
+            } else {
+                $thevalue = "";
+            }
+        }
 
-				if($tablename != "") {
-					$key = $tablename.".".$key;
-					if( isset($dict[ $key ]) ){
-						$pair = $dict[ $key ];
-					}else if( isset( $dict['value'][ $key ] )  ){
-						$pair = $dict['value'][ $key ];
-					}else{
-						return "";
-					}
-				} else {
-					return "";
-				}
-			}
-		}
+        if ($thevalue == null) {
+            // $thevalue = $pair;
+            $thevalue = "";
+        }
 
-		$hasindex = false;
-		if( !isset( $pair['data_id'] ) ){
-			// echo "<script>console.log(JSON.stringify( 'retrieve data is missing data_id' + " . $pair . " ) );</script>";
-			return $pair;
-		}
-		if( !isset( $pair['key'] ) ){
-			// echo "<script>console.log(JSON.stringify( 'retrieve data is missing data_id' ) );</script>";
-			return $pair;
-		}
-		if( isset( $pair['index'] ) ){ $hasindex = true; }
+        Form::addDefaultInputKeys($key, $identifier);
 
-		if( $hasindex ){
-			$thevalue = self::retrieveDataWithID( $pair['data_id'] );
-			if( $thevalue ){
-				$thevalue = $thevalue['value'][ $pair['index'] ][ $pair['key'] ];
-			}else{
-				$thevalue = "";
-			}
-		}else{
-			$thevalue = self::retrieveDataWithID( $pair['data_id'] );
-			// exit( json_encode( $thevalue['value'][0]['id'] ) );
-			if( $thevalue ){
-				$thevalue = $thevalue['value'][ $pair['key'] ];
-			}else{
-				$thevalue = "";
-			}
-		}
+        return $thevalue;
+    }
 
-		if($thevalue == null){
-			// echo "<script>console.log(JSON.stringify( ' thevalue is null' + " . json_encode( $pair ) . " ) );</script>";
-			// $thevalue = $pair;
-			$thevalue = "";
-		}
+    public static function getConditions($pair)
+    {
+        if (!isset($pair['data_id'])) {
+            return "";
+        }
+        if (!isset($pair['key'])) {
+            return "";
+        }
 
-		Data::addDefaultInputKeys( $key, $identifier );
+        if (!isset(self::retrieveDataWithID($pair['data_id'])['db_info'])) {
+            $pairdata = self::retrieveDataWithID($pair['data_id']);
+            if (!isset($pairdata[0])) {
+                return false;
+            }
+            $data = self::retrieveDataWithID($pair['data_id'])[0];
+            $defaultTableName = self::getDefaultTableNameWithData($data);
+            $pair['key'] = $defaultTableName . $pair['key'];
+            $db_info = self::retrieveDataWithID($pair['data_id'])[0]['db_info'];
+        } else {
+            $db_info = self::retrieveDataWithID($pair['data_id'])['db_info'];
+        }
 
-		return $thevalue;
-	}
+        $conditions = $db_info[ "conditions" ];
 
-	public static function addDefaultInputKeys( $key, $identifier ) {
-		if( $identifier != "" ) {
-			$viewoptions = Data::retrieveOptionsWithID( $identifier . "_form" );
-			$defaultinputkeys = Data::getValue( $viewoptions, "default_input_keys" );
-			if( $defaultinputkeys == "" ) {
-				$defaultinputkeys = [];
-				// exit( json_encode( $identifier."_form" ) );
-			}
-			$found = false;
-			foreach ($defaultinputkeys as $k) {
-				if( $k == $key ) {
-					$found = true;
-				}
-			}
-			if( !$found ) {
-				array_push( $defaultinputkeys, $key );
-			}
-			if( $identifier == "featured_table" ) {
-				if($key != "html_text"){
+        return $conditions;
+    }
 
-					// exit( json_encode( $identifier . "_form" ) );
-				}
-			}
-			Data::addOption( $defaultinputkeys, "default_input_keys", $identifier . "_form" );
-		}
-	}
+    public static function getColName($pair)
+    {
+        if (!isset($pair['data_id'])) {
+            return "";
+        }
+        if (!isset($pair['key'])) {
+            return "";
+        }
+        if (!isset(self::retrieveDataWithID($pair['data_id'])['db_info'])) {
+            $pairdata = self::retrieveDataWithID($pair['data_id']);
+            if (!isset($pairdata[0])) {
+                return false;
+            }
+            $data = self::retrieveDataWithID($pair['data_id'])[0];
+            $defaultTableName = self::getDefaultTableNameWithData($data);
+            $pair['key'] = $defaultTableName . $pair['key'];
+            $db_info = self::retrieveDataWithID($pair['data_id'])[0]['db_info'];
+        } else {
+            $db_info = self::retrieveDataWithID($pair['data_id'])['db_info'];
+        }
+        $colnames = $db_info[ "colnames" ];
+        $tablenames = $db_info[ "tablenames" ];
 
-	public static function getConditions( $pair )
-	{
-		if( !isset( $pair['data_id'] ) ){ return ""; }
-		if( !isset( $pair['key'] ) ){ return ""; }
+        $key = $pair['key'];
 
-		if(!isset(self::retrieveDataWithID( $pair['data_id'] )['db_info'])){
-			$pairdata = self::retrieveDataWithID( $pair['data_id']);
-			if( !isset($pairdata[0] ) ){
-				return false;
-			}
-			$data = self::retrieveDataWithID( $pair['data_id'] )[0];
-			$defaultTableName = self::getDefaultTableNameWithData( $data );
-			$pair['key'] = $defaultTableName . $pair['key'];
-			$db_info = self::retrieveDataWithID( $pair['data_id'] )[0]['db_info'];
-		}else {
-			$db_info = self::retrieveDataWithID( $pair['data_id'] )['db_info'];
-		}
+        if (!isset($db_info[ "colnames" ][$pair['key']])) {
+            $colname_fromkey_arr = explode('.', $key);
+            if (sizeof($colname_fromkey_arr) != 2) {
+                return null;
+            }
 
-		$conditions = $db_info[ "conditions" ];
+            $colname_fromkey = $colname_fromkey_arr[1];
+            if (!isset($db_info[ "colnames" ][$colname_fromkey])) {
+                return null;
+            }
 
-		return $conditions;
-	}
+            $colname = $db_info[ "colnames" ][$colname_fromkey];
+            $tablenames = $db_info[ "tablenames" ];
+            // exit( json_encode( $tablenames ) );
+            return $colname;
 
-	public static function getColName( $pair )
-	{
-		if( !isset( $pair['data_id'] ) ){ return ""; }
-		if( !isset( $pair['key'] ) ){ return ""; }
-		if(!isset(self::retrieveDataWithID( $pair['data_id'] )['db_info'])){
+            return null;
+        }
+        $colname = $db_info[ "colnames" ][$pair['key']];
 
-$pairdata = self::retrieveDataWithID( $pair['data_id']);
-			if( !isset($pairdata[0] ) ){
-				return false;
-			}
-			$data = self::retrieveDataWithID( $pair['data_id'] )[0];
-			$defaultTableName = self::getDefaultTableNameWithData( $data );
-			$pair['key'] = $defaultTableName . $pair['key'];
-			$db_info = self::retrieveDataWithID( $pair['data_id'] )[0]['db_info'];
-		}else {
-			$db_info = self::retrieveDataWithID( $pair['data_id'] )['db_info'];
-		}
-		$colnames = $db_info[ "colnames" ];
-		$tablenames = $db_info[ "tablenames" ];
+        return $colname;
+    }
 
-		$key = $pair['key'];
+    public static function getFullArray($viewdict)
+    {
+        if (!is_array($viewdict)) {
+            $viewdict = Data::get($viewdict);
+        }
+        $allkeys = array_keys($viewdict);
+        $dataidarray = array();
 
-		if( !isset($db_info[ "colnames" ][$pair['key']]) ) {
+        $dataid = false;
+        if (isset($viewdict['index'])) {
+            // echo " <script> alert( JSON.stringify( " . json_encode( $viewdict['index'] ) . " ) ) </script> ";
+            if (isset($viewdict['index'])) {
+                if (isset($viewdict[$allkeys[0]]['data_id'])) {
+                    $dataid = $viewdict[$allkeys[0]]['data_id'];
+                }
+            } else {
+                if (isset($viewdict['data_id'])) {
+                    $dataid = $viewdict['data_id'];
+                }
+            }
+        } else {
+            if (isset($viewdict['data_id'])) {
+                $dataid = $viewdict['data_id'];
+            }
+        }
 
-			$colname_fromkey_arr = explode( '.', $key );
-			if( sizeof( $colname_fromkey_arr ) != 2 ) {
-				return null;
-			}
+        if ($dataid) {
+            if ($dataid) {
+                if ($dataid != null) {
+                    if (!isset($dataidarray[ $dataid ])) {
+                        $dataidarray[ $dataid ] = Data::get($dataid);
+                    }
+                }
+            }
+        } else {
+            foreach ($allkeys as $k) {
+                $dataid=null;
+                if (isset($viewdict[$k]['data_id'])) {
+                    $dataid = $viewdict[$k]['data_id'];
+                }
+                // echo "<script>alert( JSON.stringify( " . json_encode( $dataid ) . " ) );</script>";
+                if ($dataid) {
+                    if ($dataid != null) {
+                        if (!isset($dataidarray[ $dataid ])) {
+                            $dataidarray[ $dataid ] = Data::get($dataid);
+                        }
+                    }
+                }
+            }
+        }
 
-			$colname_fromkey = $colname_fromkey_arr[1];
-			if( !isset($db_info[ "colnames" ][$colname_fromkey]) ) {
-				return null;
-			}
 
-			$colname = $db_info[ "colnames" ][$colname_fromkey];
-			$tablenames = $db_info[ "tablenames" ];
-			// exit( json_encode( $tablenames ) );
-			return $colname;
 
-			return null;
-		}
-		$colname = $db_info[ "colnames" ][$pair['key']];
 
-		return $colname;
-	}
+        return $dataidarray;
+    }
 
-	public static function getFullArray( $viewdict )
-	{
-		if( !is_array( $viewdict ) ){
-			$viewdict = Data::retrieveDataWithID( $viewdict );
-		}
-		$allkeys = array_keys($viewdict);
-		$dataidarray = array();
 
-		// foreach ($allkeys as $k) {
-		// 	$dataid = $viewdict[$k]['data_id'];
-		// 	if ($dataid != null) {
-		// 		if( !isset( $dataidarray[ $dataid ] ) ){
-		// 			$dataidarray[ $dataid ] = self::retrieveDataWithID( $dataid );
-		// 		}
-		// 	}
-		// }
-// echo "<script>alert( JSON.stringify( " . json_encode( $viewdict ) . " ) );</script>";
-		// if( $viewdict['data_id'] != "admin_insertview_view_id_button_3" ) {
 
-		// }
-		$dataid = false;
-		if( isset( $viewdict['index'] ) ) {
-			// echo " <script> alert( JSON.stringify( " . json_encode( $viewdict['index'] ) . " ) ) </script> ";
-			if( isset( $viewdict['index'] ) ) {
-				if( isset($viewdict[$allkeys[0]]['data_id']) ) {
-					$dataid = $viewdict[$allkeys[0]]['data_id'];
-				}
-			}else{
-				if( isset( $viewdict['data_id'] ) ) {
-					$dataid = $viewdict['data_id'];
-				}
-			}
-		}else{
-			if( isset( $viewdict['data_id'] ) ) {
-				$dataid = $viewdict['data_id'];
-			}
+
+
+
+
+
+
+    public static function makeViewEditing($viewdict, $viewoptions, $identifier, $alwayseditable=false)
+    {
+        $fullarray = Data::getFullArray($viewdict);
+        if (isset($viewdict[$identifier]['value'])) {
+            $fullviewdict = Data::getFullArray($viewdict)[$identifier]['value'];
+        } else {
+            $fullviewdict = $viewdict;
+        }
+
+        $optiontype = Data::getValue($viewoptions, 'type');
+
+        echo "var viewdict = " . json_encode($viewdict) . ";
+	var viewoptions = " . json_encode($viewoptions) . ";
+
+	var thismodalclass = '';
+
+	var type = " . json_encode($optiontype) . ";";
+
+        if ($optiontype == "modal" && isset($viewoptions['modal']['modalclass'])) {
+            // extract( Input::convertInputKeys( $identifier . "_form" ));
+            // 	echo ' ' . Form::addJSClassToForm( $identifier . "_form", $viewdict, $input_onlykeys, $identifier . "_form" ) . '; ';
+            // 	echo " /*asdf*/ ";
+            echo "thismodalclass = new " . $viewoptions['modal']['modalclass'] . "Classes();
+		var dataarray = " . json_encode($fullviewdict) . ";";
+        }
+        echo "
+	var optiontype = " . json_encode($optiontype) . ";";
+        $formid = $identifier . "_form";
+        $formviewoptions = Options::get($formid);
+        echo '
+	var formviewoptions = ' . json_encode($formviewoptions) . ";
+	var identifier = " . json_encode($identifier) . ";
+
+	if( optiontype == 'modal' || optiontype == 'dropdown' ) {
+		e.preventDefault();
+		if( typeof dataarray === 'undefined' ) {
+			dataarray = []
 		}
 
-		if( $dataid ){
-			// $dataid = $viewdict['data_id'];
+		Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions, formviewoptions, identifier );
+	}";
 
+        Editing::getEditingFunctionsJS($viewoptions) ;
+    }
 
-			if( $dataid ){
-				if ($dataid != null) {
-					if( !isset( $dataidarray[ $dataid ] ) ){
-						$dataidarray[ $dataid ] = Data::retrieveDataWithID( $dataid );
-					}
-				}
-			}
-
-		}else{
-			foreach ($allkeys as $k) {
-				$dataid=null;
-				if( isset( $viewdict[$k]['data_id'] ) ){
-					$dataid = $viewdict[$k]['data_id'];
-				}
-							// echo "<script>alert( JSON.stringify( " . json_encode( $dataid ) . " ) );</script>";
-				if( $dataid ){
-					if ($dataid != null) {
-						if( !isset( $dataidarray[ $dataid ] ) ){
-							$dataidarray[ $dataid ] = Data::retrieveDataWithID( $dataid );
-						}
-					}
-				}
-			}
-		}
-
-
-
-
-		return $dataidarray;
-	}
-
-	public static function convertDataForArray( $identifier, $index )
-	{
-
-		$dict = self::retrieveDataWithID( $identifier )['value'][$index];
-
-		$allkeys = array_keys( $dict );
-		$returningdict = [];
-		foreach ($allkeys as $k) {
-			$returningdict[$k] = [ "data_id"=>$identifier, "key"=>$k, "index"=>$index ];
-		}
-		$returningdict['index'] = $index;
-
-		return $returningdict;
-	}
-
-	public static function convertFromCustomTable( $data, $customkey, $customvalue )
-	{
-		$returningdict = [];
-		foreach ($data as $keyvalue) {
-			$returningdict[$keyvalue[$customkey]] = $keyvalue[$customvalue];
-		}
-
-		return $returningdict;
-	}
-
-	public static function convertKeys( $data, $identifier=null )
-	{
-		$testing=false;
-		if( !$identifier ) {
-			$identifier = Data::getDefaultDataID( $data );
-		}else{
-			$testing=true;
-		}
-		if( $testing ) {
-			exit( json_encode( $data ) );
-		}
-		// exit( json_encode( $identifier ) );
-		// $data = Data::retrieveDataWithID( $identifier );
-		$options = Data::retrieveOptionsWithID( $identifier );
-// exit( json_encode( $data ) );
-		$convertkeys = Data::getValue( $options, 'convert_keys' );
-		if( $convertkeys == "" ){
-			return $data;
-		}
-		if( !isset( $convertkeys ) ){
-			$convertkeys = false;
-		}else {
-			$convertkeys = $convertkeys;
-		}
-		$convertdict = $data;
-		if( isset( $data['value'] ) ){
-			$convertdict = $data['value'];
-		}
-
-		$sectionkeys = array_keys( $convertdict );
-		foreach ( $sectionkeys as $k ) {
-			$k_no_table = $k;
-			$k_arr = explode(".", $k);
-			if( sizeof($k_arr) == 2 ) {
-				$k_no_table = $k_arr[1];
-			}
-// exit( json_encode( $convertkeys ) );
-			// if( isset( $convertkeys[$k] ) ){ $convertdict[$convertkeys[$k]] = $convertdict[$k]; }
-			if( isset( $convertkeys[$k_no_table] ) ){
-				if( is_array( $convertkeys[$k_no_table] ) ){
-					foreach ($convertkeys[$k_no_table] as $ck) {
-						$convertdict[$ck] = $convertdict[$k];
-					}
-				}else{
-					$convertdict[$convertkeys[$k_no_table]] = $convertdict[$k];
-				}
-			}
-		}
-
-		if( isset( $data['value'] ) ){
-			$data['value'] = $convertdict;
-		}else{
-			$data = $convertdict;
-		}
-
-		return $data;
-	}
-
-	public static function convertKeysInTable( $identifier, $post )
-	{
-		$data = Data::retrieveDataWithID( $identifier );
-		$options = Data::retrieveOptionsWithID( $identifier );
-
-		if( !isset($options['convert_keys'])){
-			$convertkeys = false;
-		}else {
-			$convertkeys = $options['convert_keys'];
-		}
-
-		$postkeys = array_keys($post);
-
-		foreach ( $postkeys as $k ) {
-			$k_no_table = $k;
-			$k_arr = explode(".", $k);
-			if( sizeof($k_arr) == 2 ) {
-				$k_no_table = $k_arr[1];
-			}
-			if( isset( $convertkeys[$k_no_table] ) ){
-				if( is_array( $convertkeys[$k_no_table] ) ){
-					foreach ($convertkeys[$k_no_table] as $ck) {
-						$post[$ck] = $post[$k];
-					}
-				}else{
-					// exit( json_encode($post[$k]));
-					$post[$convertkeys[$k_no_table]] = $post[$k];
-				}
-				// $post[$convertkeys[$k] ]['key'] = $convertkeys[$k];
-			}
-		}
-
-		return $post;
-	}
-
-	public static function getViewLinkPath( $identifier )
-	{
-		$data = Data::retrieveDataWithID( $identifier );
-		$options = Data::retrieveOptionsWithID( $identifier );
-
-		$linkpath = "";
-		$linkpath .= Data::getValue( $options, 'pre_slug' );
-		$optionalslug = Data::getValue( $options, 'slug' );
-		if( $optionalslug != "" ) {
-			$linkpath .= $optionalslug;
-		}else{
-			$linkpath .= Data::getValue( $data, 'slug' );
-		}
-
-		return $linkpath;
-	}
-
-	public static function hasprefix( $input, $match )
-	{
-
-		if( substr( $input, 0, strlen($match) ) === $match ) {
-			return true;
-		}else {
-			return false;
-		}
-
-	}
-
-	public static function substrwords($text, $maxchar, $end='...') {
-	    if (strlen($text) > $maxchar || $text == '') {
-	        $words = preg_split('/\s/', $text);
-	        $output = '';
-	        $i      = 0;
-	        while (1) {
-	            $length = strlen($output)+strlen($words[$i]);
-	            if ($length > $maxchar) {
-	                break;
-	            }
-	            else {
-	                $output .= " " . $words[$i];
-	                ++$i;
-	            }
-	        }
-	        $output .= $end;
-	    }
-	    else {
-	        $output = $text;
-	    }
-	    return $output;
-	}
-
-
-
-
-
-
-
-
-
-	public static function makeCellEditing( $identifier, $fullviewdict, $celltype ) {
-
-		$viewdict = Data::retrieveDataWithID( $identifier );
-		$viewoptions = Data::retrieveOptionsWithID( $identifier );
-
-		echo 'var viewdict = ' . json_encode($viewdict) . ';
-		var viewoptions = ' . json_encode( $viewoptions ) . ';';
-		$formid = substr($identifier, 0, strpos($identifier, "_cell_")) . "_form";
-		$formviewoptions = Data::retrieveOptionsWithID($formid);
-		echo '
-		var formviewoptions = ' . json_encode( $formviewoptions ) . ';';
-			if( $celltype == "modal" ) {
-				echo 'thismodalclass = new ' . $viewoptions['modal']['modalclass'] . 'Classes();';
-				echo 'var dataarray = ' . json_encode( $fullviewdict ) . ';';
-			}else if( $celltype == "attached" ) {
-				echo 'var dataarray = ' . json_encode( $fullviewdict ) . ';';
-			}
-			echo '
-			var celltype = ' . json_encode( $celltype) . ';
-			if( celltype == "modal" || celltype == "dropdown" ) {
-				e.preventDefault();
-				if( typeof dataarray === "undefined" ) {
-					dataarray = []
-				}
-				Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions, formviewoptions );
-			}else if( celltype == "attached" ){
-				e.preventDefault();
-				dataarray = ' . json_encode( $fullviewdict ) . ';
-				if( typeof dataarray === "undefined" ) {
-					dataarray = []
-				}
-				var firstkey = ' . json_encode( array_keys($viewdict)[0] ) . ';
-				var theindex = parseInt( viewdict[firstkey]["index"] )
-				Reusable.addAction( viewdict, [], theindex, dataarray, this, e, viewoptions );
-			}';
-
-			ReusableClasses::getEditingFunctionsJS( $viewoptions ) ;
-
-
-			// echo 'if( typeof dataarray === "undefined" ) {
-			// 	dataarray = []
-			// }
-			// var viewdict = ' . json_encode($viewdict) . ';';
-			// echo 'var viewoptions = ' . json_encode( $viewoptions ) . ';
-			// Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );';
-		echo '}';
-	}
-
-	public static function makeViewEditing( $viewdict, $viewoptions, $identifier, $alwayseditable=false )
-	{
-
-		$fullarray = Data::getFullArray( $viewdict );
-		if( isset( $viewdict[$identifier]['value'] ) ) {
-			$fullviewdict = Data::getFullArray( $viewdict )[$identifier]['value'];
-		}else{
-			$fullviewdict = $viewdict;
-		}
-
-		$optiontype = Data::getValue( $viewoptions, 'type' );
-
-		echo "var viewdict = " . json_encode( $viewdict ) . ";
-		var viewoptions = " . json_encode( $viewoptions ) . ";
-
-		var thismodalclass = '';
-
-		var type = " . json_encode( $optiontype ) . ";";
-		echo "console.log( JSON.stringify( ".json_encode( $optiontype )." ) );";
-
-		if( $optiontype == "modal" && isset($viewoptions['modal']['modalclass']) ){
-			// extract( Input::convertInputKeys( $identifier . "_form" ));
-			// 	echo ' ' . Form::addJSClassToForm( $identifier . "_form", $viewdict, $input_onlykeys, $identifier . "_form" ) . '; ';
-			// 	echo " /*asdf*/ ";
-			echo "thismodalclass = new " . $viewoptions['modal']['modalclass'] . "Classes();
-			var dataarray = " . json_encode( $fullviewdict ) . ";";
-		}
-		echo "
-		var optiontype = " . json_encode($optiontype) . ";";
-		$formid = $identifier . "_form";
-		$formviewoptions = Data::retrieveOptionsWithID($formid);
-		echo '
-		var formviewoptions = ' . json_encode( $formviewoptions ) . ";
-		var identifier = " . json_encode( $identifier ) . ";
-
-		if( optiontype == 'modal' || optiontype == 'dropdown' ) {
-			e.preventDefault();
-			if( typeof dataarray === 'undefined' ) {
-				dataarray = []
-			}
-
-			Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions, formviewoptions, identifier );
-		}";
-
-		ReusableClasses::getEditingFunctionsJS( $viewoptions ) ;
-	}
-
-
-
+    public static function getUnformatted($identifier )
+    {
+        $viewdict = Data::get($identifier);
+        $viewoptions = Options::get($identifier);
+        
+        if (isset($viewdict['value'])) {
+            unset($viewdict['value']['data_id']);
+            if (Shortcuts::isAssoc($viewdict['value'])) {
+                $viewdict['value'] = [$viewdict['value']];
+            }
+            $unformatted_arr = $viewdict['value'];
+        } else {
+            unset($viewdict['data_id']);
+            if (Shortcuts::isAssoc($viewdict)) {
+                $viewdict = [$viewdict];
+            }
+            $unformatted_arr = $viewdict;
+        }
+        return $unformatted_arr;
+    }
 }

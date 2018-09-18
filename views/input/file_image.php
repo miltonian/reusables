@@ -1,17 +1,8 @@
 <?php
 
 namespace Reusables;
-	
-	$required = array(
-		"background-image"=>"",
-		"field_value"=>"",
-		"field_index"=>"",
-		"field_table"=>"",
-		"field_colname"=>"",
-		"field_conditions"=>[]
-	);
-	// exit(json_encode($viewdict));
-	// ReusableClasses::checkRequired( $identifier, $viewdict, $required );
+
+
 
 $is_smart = Data::getValue( $viewoptions, "is_smart" );
 
@@ -69,10 +60,10 @@ if( !$is_smart ) {
 </style>
 
 <div class="viewtype_input <?php echo $identifier ?> file_image <?php echo $sizeclass ?>">
-	<?php 
-		Data::addData( ["title" => $labeltext], $identifier . "_label" );
-		Data::addOption( $help_modal, "help_modal", $identifier . "_label" );
-		echo Header::make( "basic_label", $identifier . "_label" ); 
+	<?php
+		Data::add( ["title" => $labeltext], $identifier . "_label" );
+		Options::add( $help_modal, "help_modal", $identifier . "_label" );
+		echo Header::make( "basic_label", $identifier . "_label" );
 	?>
 	<label class="file_image" id='imglabel' for='<?php echo $identifier ?>_field_value' style="background-image: url('<?php echo Data::getValue( $viewdict,'background-image') ?>');"></label>
 	<input type="file" class="field_value" id="<?php echo $identifier ?>_field_value" value="<?php echo Data::getValue( $viewdict,'field_value') ?>" name="<?php echo $field_name ?>" style="visibility: hidden; z-index: -1;">

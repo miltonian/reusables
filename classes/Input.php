@@ -9,16 +9,7 @@ class Input {
 
 	public static function place( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Input", $file, $identifier );
-
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::place( "Input", $file, $identifier );
 	}
 
 	public static function set( $file, $identifier )
@@ -36,16 +27,7 @@ class Input {
 
 	public static function cplace( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Custom/Input", $file, $identifier );
-
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::cplace( "Input", $file, $identifier );
 	}
 
 	public static function cset( $file, $identifier )
@@ -94,9 +76,9 @@ class Input {
 
 	// public static function make( $file, $identifier )
 	// {
-	// 	ReusableClasses::addfile( "input", $file );
+	// 	Page::addAssetFile( "input", $file );
 	// 	$View = View::factory( 'reusables/views/input/' . $file );
-	// 	$data = Data::retrieveDataWithID( $identifier );
+	// 	$data = Data::get( $identifier );
 	// 	$View->set( 'inputdict', $data );
 	// 	$View->set( 'identifier', $identifier );
 	// 	return $View->render();
@@ -145,10 +127,10 @@ class Input {
 		if( !$labeltext ){ $labeltext = ucfirst( str_replace("_", " ", $raw_key) ); }
 		if( isset( $dict[$key]['data_id'] ) ){
 			$dataid = $dict[$key]['data_id'];
-			$options = Data::retrieveOptionsWithID($dataid);
+			$options = Options::get($dataid);
 		}else{
 			$dataid = $dict['data_id'];
-			$options = Data::retrieveOptionsWithID($dataid);
+			$options = Options::get($dataid);
 		}
 
 		if( isset( $options['input_keys'] ) ) {
@@ -200,28 +182,26 @@ class Input {
 		}
 
 		// exit( json_encode( $stuff . $key . "_input" ) );
-		$dataexists = Data::retrieveDataWithID( $stuff . $key . "_input_" . $index );
+		$dataexists = Data::get( $stuff . $key . "_input_" . $index );
 		if( $dataexists ) {
 			for ($b=0; $b < 100; $b++) {
 				$index++;
-				$dataexists = Data::retrieveDataWithID( $stuff . $key . "_input_" . $index );
+				$dataexists = Data::get( $stuff . $key . "_input_" . $index );
 				if( $dataexists == null ) {
-					Data::addData( $inputdict, $stuff . $key . "_input_" . $index );
-				// echo '<script>console.log(JSON.stringify('.json_encode($index) .') )</script>';
+					Data::add( $inputdict, $stuff . $key . "_input_" . $index );
 					break;
 				}
 			}
 		}else{
-			Data::addData( $inputdict, $stuff . $key . "_input_" . $index );
+			Data::add( $inputdict, $stuff . $key . "_input_" . $index );
 		}
 
-		// echo '<script>console.log(JSON.stringify('.json_encode($index) .') )</script>';
 
 		// echo $index . ", ";
 		// ReusableClasses::setFormInputIndex( $parentclass, $index );
 		if( $isbutton == "1" ) {
-			$buttondata = Data::retrieveDataWithID( $stuff . $key . "_button_" . $index );
-			$buttonoptions = Data::retrieveOptionsWithID( $stuff . $key . "_button_" . $index );
+			$buttondata = Data::get( $stuff . $key . "_button_" . $index );
+			$buttonoptions = Options::get( $stuff . $key . "_button_" . $index );
 			if( !$buttondata || !$buttonoptions ) {
 				exit( "You need to add Data and Options to identifier: \"" . $stuff . $key . "_button_" . $index . "\"" );
 			}
@@ -235,9 +215,6 @@ class Input {
 
 	public static function getInputType( $key, $multiple_updates=false, $field_index=-1 )
 	{
-		if($key == "value_string"){
-			// echo " console.log( 'haha: '+JSON.stringify('".json_encode( self::$inputtypes ) . "')); ";
-		}
 
 		if( isset( self::$inputtypes[$key] ) ){
 			if( $multiple_updates ) {
@@ -246,7 +223,6 @@ class Input {
 					foreach (self::$inputtypes[$key] as $key=>$value) {
 						$dict[$key] = $value;
 					}
-					// echo "console.log( JSON.stringify( ". json_encode( $dict ) . ") ); ";
 					if( isset( $dict[strval($field_index)] ) ) {
 						return $dict[strval($field_index)];
 					}else{
@@ -279,9 +255,7 @@ class Input {
 
 	public static function setInputType( $key, $type, $multiple_updates=false, $index=-1 )
 	{
-		// if($type == "file_image"){
-// echo "<script> console.log('FOUND: '+JSON.stringify(".json_encode(self::$inputtypes).")) </script>";
-		// }
+
 		if( $multiple_updates ) {
 			if( !isset( self::$inputtypes[$key] ) ) {
 				self::$inputtypes[$key] = [];
@@ -290,7 +264,6 @@ class Input {
 				self::$inputtypes[$key] = $type;
 			}else{
 				self::$inputtypes[$key][$index] = $type;
-				// echo "<script> console.log('FOUND: '+JSON.stringify(".json_encode([self::$inputtypes]).")) </script>";
 			}
 		}else{
 			self::$inputtypes[$key] = $type;
@@ -299,8 +272,8 @@ class Input {
 
 	public static function convertInputKeys( $identifier )
 	{
-		$data = Data::retrieveDataWithID( $identifier );
-		$options = Data::retrieveOptionsWithID( $identifier );
+		$data = Data::get( $identifier );
+		$options = Options::get( $identifier );
 		$default_tablename = Data::getDefaultTableNameWithID( $identifier );
 
 		$multiple_inserts = Data::getValue( $options, "multiple_inserts" );
@@ -425,7 +398,7 @@ class Input {
 // Input::setInputFieldType( $t );
 		if( sizeof($input_keys) == 0 ){
 			if( isset( $data['value'] ) ){
-				if ( !Data::isAssoc( $data['value'] ) ) {
+				if ( !Shortcuts::isAssoc( $data['value'] ) ) {
 					$input_keys = array_keys( $data['value'][0] );
 				}else{
 					$input_keys = array_keys( $data['value'] );

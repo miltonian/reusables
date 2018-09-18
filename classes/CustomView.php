@@ -8,15 +8,15 @@ class CustomView {
 
 	public static function make( $file, $identifier )
 	{
-		// ReusableClasses::addfile( "CustomView", $file );
+		// Page::addAssetFile( "CustomView", $file );
 		$custompath = 'custom/views/';
 		if( self::$currentversion ){
 			$custompath = 'custom/' . self::$currentversion . '/views/';
 		}
-		ReusableClasses::addfile( "custom", $file );
+		Page::addAssetFile( "custom", $file );
 		$View = View::factory( $custompath . $file );
-		$data = Data::retrieveDataWithID( $identifier );
-		$options = Data::retrieveOptionsWithID( $identifier );
+		$data = Data::get( $identifier );
+		$options = Options::get( $identifier );
 		$View->set( 'viewdict', $data );
 		$View->set( 'viewoptions', $options );
 		$View->set( 'identifier', $identifier );
@@ -40,11 +40,11 @@ class CustomView {
 		}else{
 			$data_id = $dict['data_id'];
 		}
-
+		
 		$default_tablename = Data::getDefaultTableNameWithID( $data_id );
 
 		if( isset($dict['index'] ) ){
-			$dict = Data::convertDataForArray( $data_id, $dict['index'] );
+			$dict = Convert::convertDataForArray( $data_id, $dict['index'] );
 		}
 		
 		if( $viewtypedict ){
@@ -53,5 +53,16 @@ class CustomView {
 			return [ "data_id"=>$data_id, "viewdict"=>$dict, "default_tablename"=>$default_tablename ];
 		}
 	}
+
+	// setContainerClass() Set the class names for the div that contains the rest of the view
+	// These classes are required in order to become a reusable view
+	public static function setContainerClass($file, $identifier)
+    {
+        echo " " . $identifier;
+        echo " main";
+        echo " " . basename($file, ".php");
+        echo " viewtype_" . ReusableClasses::parentDir($file);
+        echo " ";
+    }
 
 }

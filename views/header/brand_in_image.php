@@ -2,11 +2,11 @@
 
 namespace Reusables;
 
-$viewdict = Data::convertKeys( $viewdict );
+$viewdict = Convert::keys( $viewdict );
 	
 	if( isset( $viewdict['value'] ) ){ 
 		$data_id = Data::getDefaultDataID( $viewdict );
-		$viewdict = Data::formatForDefaultData( $data_id ); 
+		$viewdict = RFormat::formatForDefaultData( $data_id ); 
 	}
 
 

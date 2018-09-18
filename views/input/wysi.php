@@ -67,8 +67,8 @@ if( $help_modal != "" ) {
 
 <div class="viewtype_input <?php echo $identifier ?> wysi <?php echo $sizeclass ?>">
 	<?php 
-		Data::addData( ["title" => $labeltext], $identifier . "_label" );
-		Data::addOption( $help_modal, "help_modal", $identifier . "_label" );
+		Data::add( ["title" => $labeltext], $identifier . "_label" );
+		Options::add( $help_modal, "help_modal", $identifier . "_label" );
 		echo Header::make( "basic_label", $identifier . "_label" ); 
 	?>
 	<!-- <input type="text" class="field_value" placeholder="<?php /*echo $viewdict['placeholder']*/ ?>" value="<?php /*echo $viewdict['field_value']*/ ?>" name="fieldarray[<?php /*echo $viewdict['field_index']*/ ?>][field_value]"> -->

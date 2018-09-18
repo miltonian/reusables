@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Reusables;
 
@@ -6,16 +6,7 @@ class Section {
 
 	public static function place( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Section", $file, $identifier );
-
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::place( "Section", $file, $identifier );
 	}
 
 	public static function set( $file, $identifier )
@@ -23,15 +14,9 @@ class Section {
 		Views::setDefaultViewInfo( $file, $identifier, "section" );
 	}
 
-
-	public static function setincontainer( $file, $identifier )
+	public static function setInContainer( $file, $identifier )
 	{
-		Data::addInfo( 'Section', 'viewtype', $identifier );
-		Data::addInfo( $file, 'file', $identifier );
-		Data::addInfo( $identifier, 'identifier', $identifier );
-
-		Views::addEditableParts( $identifier );
-		return Section::make( $file, $identifier );
+		return View::setInContainer( "Section", $file, $identifier );
 	}
 
 	public static function make( $file, $identifier )
@@ -45,16 +30,7 @@ class Section {
 
 	public static function cplace( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Custom/Section", $file, $identifier );
-
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::cplace( "Section", $file, $identifier );
 	}
 
 	public static function cset( $file, $identifier )
@@ -64,5 +40,3 @@ class Section {
 	}
 
 }
-
-

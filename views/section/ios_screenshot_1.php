@@ -26,7 +26,7 @@ namespace Reusables;
 
 		$('.ios_screenshot_1.clicktoedit').click(function(e){
 			<?php
-				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+				Editing::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
 			?>
 		})
 

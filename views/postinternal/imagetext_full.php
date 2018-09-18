@@ -15,7 +15,7 @@ namespace Reusables;
 		$identifier
 	);
 
-	$viewdict = Data::convertKeys( $viewdict );
+	$viewdict = Convert::keys( $viewdict );
 	
 	$sharingdict = Data::getValue( $viewdict, 'sharingdict' );
 
@@ -33,7 +33,7 @@ namespace Reusables;
 	<div id="featuredimage" style="background-image: url('<?php echo Data::getValue( $viewdict, 'featured_imagepath' ); ?>');" ></div>
 	<?php
 		if( $sharingdict != "" ){
-			Data::addData( Data::getValue( $viewdict, 'sharingdict' ), $identifier . "_social_3d" );
+			Data::add( Data::getValue( $viewdict, 'sharingdict' ), $identifier . "_social_3d" );
 			echo Sharing::make( "social_3d", $identifier . "_social_3d" );
 		}
 	?>
@@ -46,7 +46,7 @@ namespace Reusables;
 
 		$('.imagetext_full.clicktoedit').click(function(e){
 			<?php
-				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+				Editing::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
 			?>
 		})
 

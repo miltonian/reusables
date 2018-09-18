@@ -15,7 +15,7 @@ namespace Reusables;
 		$identifier
 	);
 
-	$viewdict = Data::convertKeysInTable( $identifier, $viewdict );
+	$viewdict = Convert::keysInTable( $identifier, $viewdict );
 	
 
 
@@ -52,7 +52,7 @@ namespace Reusables;
 <script>
 
 	<?php
-		ReusableClasses::addEditingToCell( $identifier, $fullviewdict, $celltype );
+		Editing::addEditingToCell( $identifier, $fullviewdict, $celltype );
 	?>;
 	
 </script>

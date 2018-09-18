@@ -55,7 +55,7 @@ if(	isset($teamarray['value']) ) {
 		$('.team_inline.clicktoedit').off().click(function(e){ 
 
 			<?php
-				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+				Editing::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
 			?>
 
 			// if( typeof dataarray === "undefined" ) {

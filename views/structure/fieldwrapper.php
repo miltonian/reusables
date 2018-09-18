@@ -2,12 +2,6 @@
 
 namespace Reusables;
 	
-	$required = array(
-		"maincolumn"=>"",
-		"size"=>""
-	);
-
-	ReusableClasses::checkRequired( "fieldwrapper", $structuredict, $required );
 
 	if( $structuredict['size'] == "small" ){
 		$size = "33.33%";

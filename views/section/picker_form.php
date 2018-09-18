@@ -69,7 +69,7 @@ if( $cellname == "" ) {
 
 			<?php $i=0; ?>
 			<?php foreach ($tablearray as $v) { ?>
-				<?php Data::addData( $v, $identifier . "_cell_" . $i ); ?>
+				<?php Data::add( $v, $identifier . "_cell_" . $i ); ?>
 				<?php echo Cell::make( $cellname, $identifier . "_cell_" . $i ); ?>
 
 				<?php $i++; ?>
@@ -87,9 +87,9 @@ if( $cellname == "" ) {
 
 		var viewdict = <?php echo json_encode($viewdict) ?>;
 		var input_keys = <?php echo json_encode($input_onlykeys) ?>;
-		var typearray = <?php echo json_encode( ReusableClasses::getTypeArray( $input_onlykeys ) ) ?>;
+		var typearray = <?php echo json_encode( Form::getTypeArray( $input_onlykeys ) ) ?>;
 		var dataarray = <?php echo json_encode( Data::getFullArray( $viewdict ) ) ?>;
-		var formatteddata = <?php echo json_encode( Data::retrieveDataWithID( $original_data_id ) ) ?>;
+		var formatteddata = <?php echo json_encode( Data::get( $original_data_id ) ) ?>;
 		var identifier = "<?php echo $identifier ?>";
 		var index_clickedfirst = -1
 		var tablearray = <?php echo json_encode( $tablearray ) ?>;

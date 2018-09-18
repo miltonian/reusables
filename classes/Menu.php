@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Reusables;
 
@@ -6,17 +6,8 @@ class Menu {
 
 	public static function place( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
+		View::place( "Menu", $file, $identifier );
 
-		Views::addToQueue( "Menu", $file, $identifier );
-		
-		if( $in_html ) {
-			CustomCode::start();
-		}
-		
 	}
 
 	public static function set( $file, $identifier )
@@ -24,14 +15,9 @@ class Menu {
 		Views::setDefaultViewInfo( $file, $identifier, "menu" );
 	}
 
-	public static function setincontainer( $file, $identifier )
+	public static function setInContainer( $file, $identifier )
 	{
-		Data::addInfo( 'Menu', 'viewtype', $identifier );
-		Data::addInfo( $file, 'file', $identifier );
-		Data::addInfo( $identifier, 'identifier', $identifier );
-
-		Views::addEditableParts( $identifier );
-		return Menu::make( $file, $identifier );
+		return View::setInContainer( "Menu", $file, $identifier );
 	}
 
 	public static function make( $file, $identifier )
@@ -41,9 +27,9 @@ class Menu {
 
 	// public static function make( $file, $identifier )
 	// {
-	// 	ReusableClasses::addfile( "menu", $file );
+	// 	Page::addAssetFile( "menu", $file );
 	// 	$View = View::factory( 'reusables/views/menu/' . $file );
-	// 	$data = Data::retrieveDataWithID( $identifier );
+	// 	$data = Data::get( $identifier );
 	// 	$View->set( 'menudict', $data );
 	// 	$View->set( 'identifier', $identifier );
 	// 	return $View->render();
@@ -55,16 +41,7 @@ class Menu {
 
 	public static function cplace( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Custom/Menu", $file, $identifier );
-
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::cplace( "Menu", $file, $identifier );
 	}
 
 	public static function cset( $file, $identifier )

@@ -2,17 +2,7 @@
 
 namespace Reusables;
 
-	$required = array(
-		"placeholder"=>"",
-		"field_value"=>"",
-		"field_index"=>"",
-		"field_table"=>"",
-		"field_colname"=>"",
-		// "field_rowid"=>""
-		"field_conditions"=>[]
-	);
 
-	// ReusableClasses::checkRequired( "textfield", $viewdict, $required );
 /*
 <input type="hidden" class="row_id" value="<?php echo $viewdict['field_rowid'] ?>" name="fieldarray[<?php echo $viewdict['field_index'] ?>][row_id]">
 */
@@ -112,8 +102,8 @@ if( $help_modal != "" ) {
 <div class="viewtype_input <?php echo $identifier ?> textfield <?php echo $sizeclass ?>">
 	<?php if( !$is_hidden ){ ?>
 		<?php
-			Data::addData( ["title" => $labeltext], $identifier . "_label" );
-			Data::addOption( $help_modal, "help_modal", $identifier . "_label" );
+			Data::add( ["title" => $labeltext], $identifier . "_label" );
+			Options::add( $help_modal, "help_modal", $identifier . "_label" );
 			echo Header::make( "basic_label", $identifier . "_label" );
 		?>
 	<?php } ?>

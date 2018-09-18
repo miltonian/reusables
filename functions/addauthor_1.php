@@ -38,8 +38,6 @@ $extension = strtolower($extension);
 
 $uploadOk = 0;
 
-//console.log = '';
-//exit(json_encode($_FILES['authorimg']));
 
 if($_FILES["authorimg"]["name"] == null || $_FILES["authorimg"]["size"] == ""){
 	//exit("hello");
@@ -52,9 +50,9 @@ if($_FILES["authorimg"]["name"] == null || $_FILES["authorimg"]["size"] == ""){
 }else if (($_FILES["authorimg"]["size"] < 20000000)
 && in_array($extension, $allowedExts))
   {
-  
+
   $newname = time()."_".$_FILES["authorimg"]["name"];
-  
+
   if ($_FILES["authorimg"]["error"] > 0)
     {
     	//echo "Return Code: " . $_FILES["mediapath"]["error"] . "<br />";
@@ -86,7 +84,7 @@ else
   //echo "Invalid file";
   $uploadOk = 0;
   }
-  
+
   $success = false;
 
 
@@ -100,9 +98,9 @@ if($uploadOk != 0){
 	if( in_array($extension, $allowedVideoExts) ){
 		exit("cannot be video");
 	}else{
-		
+
 		$result = $MainClasses->insertAuthor( $authorname, $imagepath, $level );
-		
+
 	}
 
 
@@ -122,10 +120,7 @@ exit(json_encode($result[1]));
 	}else{
 		//header('Location: http://theanywherecard.com/entrenash/editing');
 	}
-	
+
 /*}else{
 	exit( "Error: Something went wrong" );
 }*/
-
-
-

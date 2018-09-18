@@ -6,7 +6,7 @@ namespace Reusables;
 // exit( json_encode( Data::getValue( $viewdict['otherusers'] ) ) );
 // exit( json_encode( sizeof( $viewdict['otherusers'] ) ) );
 
-// $otheruservalues = Data::retrieveDataWithID( "otherusers" )['value'];
+// $otheruservalues = Data::get( "otherusers" )['value'];
 
 $dropdownlist = $viewdict['list'];
 $dropdownlist_keydicts = $dropdownlist;
@@ -24,13 +24,7 @@ foreach ($dropdownlist_keys as $ik) {
 	$i++;
 }
 
-// exit( json_encode( $dropdownlist_keydicts ) );
 
-	Views::setParams( 
-		[ "title", "list"=["pre_slug", "slug"] ], 
-		[],
-		$identifier
-	);
 
 ?>
 

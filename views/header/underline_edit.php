@@ -2,7 +2,7 @@
 
 namespace Reusables;
 
-// $viewoptions = ReusableClasses::convertViewActions( $viewoptions );
+// $viewoptions = RFormat::convertViewActions( $viewoptions );
 
 if( isset($viewdict['editing']) ){ $isediting=1; }else{ $isediting=0; }
 
@@ -57,7 +57,7 @@ if( isset($viewoptions['buttons']) ){
 
 <?php if( isset( $viewoptions['buttons'] ) ){ ?>
 
-<?php ReusableClasses::getEditingFunctionsJS( $viewoptions ) ?>;
+<?php Editing::getEditingFunctionsJS( $viewoptions ) ?>;
 
 var viewdict = <?php echo json_encode($viewdict) ?>;
 var viewoptions = <?php echo json_encode($viewoptions) ?>;

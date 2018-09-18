@@ -4,10 +4,8 @@ namespace Reusables;
 
 if (!isset($viewdict['logolink'])) { $viewdict['logolink'] = ""; }
 
-// ReusableClasses::checkRequired( "navbar", $viewdict, $required );
-
-Views::setParams( 
-	["logolink", "logo", "brandname", "imagepath", "title"], 
+Views::setParams(
+	["logolink", "logo", "brandname", "imagepath", "title"],
 	["type", "modal", "attached", "link"],
 	$identifier
 );

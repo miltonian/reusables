@@ -65,7 +65,7 @@ if( $right_morelinks == "" ) {
 	
 	$('.imageinimage_inline.clicktoedit').click(function(e){
 		<?php
-			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+			Editing::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
 		?>
 	})
 	

@@ -15,7 +15,7 @@ foreach ($menubuttons as $b) {
 
 	// convert menu actions 
 	if( $type == "modal" ) {
-		$menubuttons[$i] = $options = ReusableClasses::convertViewActions( $menubuttons[$i] );
+		$menubuttons[$i] = $options = RFormat::convertViewActions( $menubuttons[$i] );
 	}
 	$i++;
 }
@@ -130,7 +130,7 @@ $fullviewdict = Data::getFullArray( $viewdict );
 			thismodalclass = new <?php echo $menubuttons[$i]['modal']['modalclass'] ?>Classes();
 			var dataarray = <?php echo json_encode( $fullviewdict ) ?>;
 			<?php 
-				ReusableClasses::getEditingFunctionsJS( $menubuttons[$i] ) 
+				Editing::getEditingFunctionsJS( $menubuttons[$i] ) 
 			?>;
 
 			$('.horizontal.main.<?php echo $identifier ?> .horizontal.button.<?php echo $menubuttons[$i]['classname'] ?>.wrapper.buttonindex_<?php echo $i ?>').off().click(function(e){

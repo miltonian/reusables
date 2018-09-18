@@ -2,11 +2,6 @@
 
 namespace Reusables;
 
-	$required = array(
-		"maincolumn"=>""
-	);
-
-	// ReusableClasses::checkRequired( "modal_background", $structuredict, $required );
 ?>
 
 <style>

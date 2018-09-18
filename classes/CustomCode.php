@@ -632,7 +632,7 @@ class CustomCode {
 		} else {
 			call_user_func_array('\\Reusables\\'.ucfirst($view_array[0]) . "::place", [$view_array[1], $identifier] );
 			if( strtolower($view_array[0]) == "input" ){
-				Data::addOption( "0", "is_smart", $identifier );
+				Options::add( "0", "is_smart", $identifier );
 			}
 		}
 
@@ -671,17 +671,17 @@ class CustomCode {
 			// array_push( $thisdata, $value );
 		}
 		// $view_inputs = json_decode($view_inputs, true);
-		$current_data = Data::retrieveDataWithID($identifier);
+		$current_data = Data::get($identifier);
 
 		if( $current_data != null ) {
 			$newdata = [];
-			if( Data::isAssoc($current_data) ) {
+			if( Shortcuts::isAssoc($current_data) ) {
 				$current_data = [$current_data];
 			}
 			array_push($current_data, $thisdata);
 			$thisdata = $current_data;
 		}
-		Data::addData( $thisdata, $identifier );
+		Data::add( $thisdata, $identifier );
 		$output = str_replace($matches[$index], "", $output );
 
 		return $output;
@@ -697,7 +697,7 @@ class CustomCode {
 	        $value = rtrim($value, '\"');
 	        $value = trim($value);
 	        $key = trim($key);
-			Data::addOption( $value, $key, $identifier );
+			Options::add( $value, $key, $identifier );
 		}
 		$output = str_replace($matches[$index], "", $output );
 
@@ -819,7 +819,7 @@ class CustomCode {
 					$links[$key] = $value ;
 		}
 
-		Data::addOption($links, "links", $identifier);
+		Options::add($links, "links", $identifier);
 
 		$output = str_replace($matches[$index], "", $output );
 

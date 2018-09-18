@@ -325,7 +325,7 @@ class View
         {
             $this->set_filename( $file );
         }
-        
+
         if( empty( $this->_file ) )
         {
             throw new View_Exception( 'You must set the file to use within your view before rendering' );
@@ -333,4 +333,224 @@ class View
         // Combine local and global data and capture the output
         return self::capture( $this->_file, $this->_data );
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static function place( $viewtype, $file, $identifier )
+  	{
+  		$in_html = Page::inhtml();
+  		if( $in_html ) {
+  			CustomCode::end();
+  		}
+
+  		Views::addToQueue( $viewtype, $file, $identifier );
+
+  		if( $in_html ) {
+  			CustomCode::start();
+  		}
+  	}
+
+    public static function cplace( $viewtype, $file, $identifier )
+  	{
+
+  		$in_html = Page::inhtml();
+  		if( $in_html ) {
+  			CustomCode::end();
+  		}
+
+  		Views::addToQueue( "Custom/" . $viewtype, $file, $identifier );
+
+  		if( $in_html ) {
+  			CustomCode::start();
+  		}
+  	}
+
+    public static function setInContainer( $viewtype, $file, $identifier )
+  	{
+  		Info::add( $viewtype, 'viewtype', $identifier );
+  		Info::add( $file, 'file', $identifier );
+  		Info::add( $identifier, 'identifier', $identifier );
+
+  		Views::addEditableParts( $identifier );
+  		// return Ad::make( $file, $identifier );
+      return Views::makeView( $file, $identifier, strtolower($viewtype) );
+    }
+
+    public static function getLink($identifier, $dict=null)
+    {
+        if($dict == null) {
+            $dict = Data::get($identifier);
+        }
+        $viewoptions = Options::get($identifier);
+
+        $link = Data::getValue($dict, "slug", $identifier);
+        if ($link == "") {
+            $link = Data::getValue($dict, "link", $identifier);
+        }
+
+        return $link;
+    }
+
+    public static function getPreLink($identifier, $dict=null)
+    {
+        if($dict == null) {
+            $dict = Data::get($identifier);
+        }
+        $viewoptions = Options::get($identifier);
+        
+        $pre_link = Data::getValue($viewoptions, "pre_slug");
+        if ($pre_link == "") {
+            $pre_link = Data::getValue($viewoptions, "pre_link");
+        }
+
+        return $pre_link;
+    }
+
+    public static function getFullLink($identifier, $dict=null)
+    {
+        if($dict == null) {
+            $dict = Data::get($identifier);
+        }
+        
+        $pre_link = View::getPreLink($identifier, $dict);
+        $link = View::getLink($identifier, $dict);
+
+        $full_link = $pre_link . $link;
+        if ($full_link == "") {
+            $full_link = "#";
+        }
+
+        return $full_link;
+    }
+
+    public static function getDescription($identifier, $dict=null)
+    {
+        if($dict == null) {
+            $dict = Data::get($identifier);
+        }
+        $viewoptions = Options::get($identifier);
+        
+        $description = Data::getValue($dict, "html_text", $identifier);
+        if ($description == "") {
+            $description = Data::getValue($dict, "description", $identifier);
+        }
+
+        return $description;
+    }
+
+    public static function start($file, $identifier)
+    {
+        $vars = Views::prepare($file, $identifier);
+
+        ob_start();
+        Views::setContainerClass($file, $identifier);
+        $output = ob_get_contents();
+        ob_end_clean();
+
+        echo "<div class=\"" . $output . "\">";
+
+        ob_start();
+        return $vars;
+    }
+
+    public static function end($viewdict, $viewoptions, $identifier, $file, $editable=false)
+    {
+
+        $output = ob_get_contents();
+        ob_end_clean();
+
+        extract(Convert::viewParamsToVars($identifier));
+        foreach ($viewvalues as $key => $value) {
+
+            $new_output = View::replaceReusableViews($output, $key, $value, $identifier);
+
+            echo $new_output;
+        }
+
+        echo "</div>";
+
+        if ($editable) {
+            Editing::clickToEditSection($viewdict, $viewoptions, $identifier, $file);
+        }
+    }
+
+    public static function searchForReusableValues($output)
+    {
+
+        preg_match_all('/\\{\\{(.*)\\}\\}/sU', $output, $reusable_values);
+        $reusable_values = $reusable_values[0];
+
+		return $reusable_values;
+
+    }
+
+    public static function replaceReusableViews($output, $index, $dict, $identifier)
+    {
+        $reusable_values = View::searchForReusableValues($output);
+        
+        foreach ($reusable_values as $reusable_value) {
+            
+            // Trim and remove brackets to find the value key
+            $value_key = str_replace("{{", "", $reusable_value);
+            $value_key = str_replace("}}", "", $value_key);
+            $value_key = trim($value_key, " ");
+
+            if ($value_key == "container") {
+                $output = str_replace($reusable_value, Info::file_name($identifier) . " inner index_".$index." clicktoedit", $output);
+            } else if ($value_key == "index") {
+                $output = str_replace($reusable_value, $index, $output);
+            } else if ($value_key == "links") {
+
+                $viewoptions = Options::get($identifier);
+
+                // Get the links
+                $links = Data::getValue($viewoptions, "links");
+
+                $links_html = "";
+                
+                // Generate html for links
+                if( $links != "" ) {
+                    $links_html = "<div class=\"imagetext_inside links\">";
+                        foreach ($links as $link_key => $link_value) {
+                            $links_html .= "<a class=\"".Info::file_name($identifier)." link\" href=\"".$link_value."\">".$link_key."</a>";
+                        }
+                    $links_html .= "</div>";
+                }
+
+                $output = str_replace($reusable_value, $links_html, $output);
+            } else {
+                if( Data::getValue($dict, "linkpath", $identifier) != "#" || Data::getValue($dict, "linkpath", $identifier) != "" ) {
+                    $pre_link = "<a href=".Data::getValue($dict, "linkpath", $identifier)." style=\"text-decoration: none\">";
+                }
+                $output = str_replace($reusable_value, Data::getValue( $dict, $value_key, $identifier ), $output);
+                if( Data::getValue($dict, "linkpath", $identifier) != "#" || Data::getValue($dict, "linkpath", $identifier) != "" ) {
+                    $pre_link = "</a>";
+                }
+            }
+        }
+
+        return $output;
+        
+    }
+      
+
 }

@@ -52,7 +52,7 @@ namespace Reusables;
 
 		$('.images_title_inline.clicktoedit').click(function(e){
 			<?php
-				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+				Editing::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
 			?>
 		})
 

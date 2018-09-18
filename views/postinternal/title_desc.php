@@ -8,7 +8,7 @@ namespace Reusables;
 		$identifier
 	);
 
-	$viewdict = Data::convertKeys( $viewdict );
+	$viewdict = Convert::keys( $viewdict );
 
 ?>
 
@@ -28,7 +28,7 @@ namespace Reusables;
 <script>
 	$('.title_desc.clicktoedit').click(function(e){
 		<?php
-			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+			Editing::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
 		?>
 	})
 </script>

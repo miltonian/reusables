@@ -1,21 +1,12 @@
-<?php 
+<?php
 
 namespace Reusables;
 
 class Button {
-	
+
 	public static function place( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Button", $file, $identifier );
-		
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::place( "Button", $file, $identifier );
 	}
 
 	public static function set( $file, $identifier )
@@ -23,14 +14,9 @@ class Button {
 		Views::setDefaultViewInfo( $file, $identifier, "button" );
 	}
 
-	public static function setincontainer( $file, $identifier )
+	public static function setInContainer( $file, $identifier )
 	{
-		Data::addInfo( 'Button', 'viewtype', $identifier );
-		Data::addInfo( $file, 'file', $identifier );
-		Data::addInfo( $identifier, 'identifier', $identifier );
-
-		Views::addEditableParts( $identifier );
-		return Button::make( $file, $identifier );
+		return View::setInContainer( "Button", $file, $identifier );
 	}
 
 	public static function make( $file, $identifier )
@@ -39,30 +25,11 @@ class Button {
 		return Views::makeView( $file, $identifier, "button" );
 	}
 
-	// public static function make( $file, $identifier )
-	// {
-	// 	ReusableClasses::addfile( "button", $file );
-	// 	$View = View::factory( 'reusables/views/button/' . $file );
-	// 	$data = Data::retrieveDataWithID( $identifier );
-	// 	$View->set( 'buttondict', $data );
-	// 	$View->set( 'identifier', $identifier );
-	// 	return $View->render();
-	// }
-
 	// FOR CUSTOM VIEWS
 
 	public static function cplace( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Custom/Button", $file, $identifier );
-
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::cplace( "Button", $file, $identifier );
 	}
 
 	public static function cset( $file, $identifier )

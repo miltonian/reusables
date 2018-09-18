@@ -8,7 +8,7 @@
 		$identifier
 	);
 
-	$viewdict = Data::convertKeysInTable( $identifier, $viewdict );
+	$viewdict = Convert::keysInTable( $identifier, $viewdict );
 	
 
 
@@ -59,7 +59,7 @@
 <script>
 
 	<?php
-		ReusableClasses::addEditingToCell( $identifier, $fullviewdict, $celltype );
+		Editing::addEditingToCell( $identifier, $fullviewdict, $celltype );
 	?>;
 	
 </script>

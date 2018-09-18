@@ -220,9 +220,9 @@ if( $title == "" ) {
 
 	$('.<?php echo $identifier ?> .slim.clicktoedit').click(function(e){
 			<?php
-				// ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+				// Editing::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
 				// $fullviewdict = Data::getFullArray( $viewdict );
-				// ReusableClasses::addEditingToCell( $identifier, $fullviewdict, "modal" );
+				// Editing::addEditingToCell( $identifier, $fullviewdict, "modal" );
 			?>
 		})
 		

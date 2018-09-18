@@ -2,18 +2,10 @@
 
 namespace Reusables;
 
-	$required = array(
-		"title"=>"",
-		"c1"=>"",  
-		"c2"=>"",
-		"c3"=>""
-		// ...
-	);
-
 	$columns = array();
 	$allkeys = array_keys($structuredict);
 	$columncount=0;
-	
+
 
 	foreach ($allkeys as $k) {
 
@@ -22,12 +14,11 @@ namespace Reusables;
 		}
 		// $dict = [$k => $structuredict[$k] ];
 		array_push($columns, $structuredict[$k]);
-		
+
 	}
 
 	// exit(json_encode(sizeof($columns)));
 
-	// ReusableClasses::checkRequired( "main_with_hidden", $structuredict, $required );
 
 	// $step1dict = [
 	// 			"steps"=>array(
@@ -43,8 +34,8 @@ namespace Reusables;
 	// exit( json_encode( $structuredict ) );
 
 
-	Data::addData( $mainheaderdict, $identifier . "_main_header" );
-	Data::addData( $step1dict, $identifier . "_steps" );
+	Data::add( $mainheaderdict, $identifier . "_main_header" );
+	Data::add( $step1dict, $identifier . "_steps" );
 // exit( json_encode( $step1dict['steps'] ) );
 
 ?>
@@ -56,25 +47,25 @@ namespace Reusables;
 	<div class="main_with_hidden header">
 		<button class="main_with_hidden" id="close">&#10006;</button>
 		<?php echo Header::make( "basic", $identifier . "_main_header" ); ?>
-		<?php 
+		<?php
 			if( $step1dict['steps'] != "" ) {
-				echo Header::make( "steps", $identifier . "_steps" ); 
+				echo Header::make( "steps", $identifier . "_steps" );
 			}
 		?>
 	</div>
 	<div class="main_with_hidden body">
-	
-	<?php for ($i=0; $i < sizeof($columns); $i++) { 
+
+	<?php for ($i=0; $i < sizeof($columns); $i++) {
 		if( isset( $columns[$i] ) ) {
-			if( !is_string( $columns[$i] ) ) { 
+			if( !is_string( $columns[$i] ) ) {
 				$columncount++;
 				?>
 
 				<div class="main_with_hidden column c<?php echo ($i+1) ?>" id="main_with_hidden_<?php echo $i+1 ?>">
-					<?php 
+					<?php
 						foreach ($columns[$i] as $view) {
 							echo $view;
-						}		
+						}
 					?>
 				</div>
 

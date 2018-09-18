@@ -50,7 +50,7 @@ namespace Reusables;
 					<h2 class="imagetext_inline_funding" id="title" style=""><?php echo implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $viewdict, 'title' ))), 0, 20) ); ?></h2>
 				</a>
 				<label class="imagetext_inline_funding" id="desc"><?php echo implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $viewdict, 'html_text' ))), 0, 20) ); ?>... <a href="<?php echo $linkpath ?>">Learn More</a></label>
-				<?php Data::addData( $viewdict, $identifier . "_bargraph" ); ?>
+				<?php Data::add( $viewdict, $identifier . "_bargraph" ); ?>
 				<?php echo Section::make( "fundbar", $identifier . "_bargraph") ?>
 			</div>
 		</div>
@@ -59,7 +59,7 @@ namespace Reusables;
 <script>
 
 	<?php
-		ReusableClasses::addEditingToCell( $identifier, $fullviewdict, $celltype );
+		Editing::addEditingToCell( $identifier, $fullviewdict, $celltype );
 	?>;
 	
 </script>

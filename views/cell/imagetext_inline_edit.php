@@ -8,21 +8,16 @@ namespace Reusables;
 
 // exit( json_encode( Data::getValue( $identifier ) ) );
 
-$required = array(
-	"actions"=>array("backgroundimage", ""), 
-	"featured_imagepath"=>"",  
-	"title"=>"",
-	"index"=>""
-);
+
 $cellindex = Data::getValue( $viewdict, 'index' );
 // if($cellindex == 2){ exit("hey!" ); }
 
-// exit( json_encode( Data::retrieveDataWithID( Data::getValue( $viewdict, 'data_id' ) ) ) );
+// exit( json_encode( Data::get( Data::getValue( $viewdict, 'data_id' ) ) ) );
 
-$viewoptions = ReusableClasses::convertViewActions( $viewoptions );
+$viewoptions = RFormat::convertViewActions( $viewoptions );
 
-	Views::setParams( 
-		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "index", "html_text", "celldate", "celltype", "slug", "actions" ], 
+	Views::setParams(
+		[ "category", "data_id", "fullviewdict", "linkpath", "mediatype", "index", "html_text", "celldate", "celltype", "slug", "actions" ],
 		[],
 		$identifier
 	);
@@ -33,8 +28,6 @@ $viewoptions = ReusableClasses::convertViewActions( $viewoptions );
 </script>
 <?php
 
-// ReusableClasses::checkRequired( $identifier, $viewdict, $required );
-	
 	$cellactionshtml = "";
 	if( isset( $viewoptions['actions'] ) ){
 		$cellactionshtml .= "<div class='imagetext_inline_edit actions-div'>";
@@ -66,9 +59,9 @@ $viewoptions = ReusableClasses::convertViewActions( $viewoptions );
 					$cellactionshtml .= "</div>";
 				$cellactionshtml .= "</div>";
 
-				
 
-				// Data::addData( ["list" => $action['dropdown_array']], $identifier . "dropdown" );
+
+				// Data::add( ["list" => $action['dropdown_array']], $identifier . "dropdown" );
 				// Menu::make( "dropdown", $identifier . "dropdown" );
 			}else{
 				$cellactionshtml .= "<button id='" . Data::getValue( $viewdict, 'index' ) . "' class='imagetext_inline_edit action actionindex_" . $i . " index_" . $cellindex . "' style='background-image: url(" . $action['backgroundimage'] . ");'></button>";
@@ -86,9 +79,9 @@ $viewoptions = ReusableClasses::convertViewActions( $viewoptions );
 <style>
 </style>
 
-<?php 
+<?php
 	echo "<div class='imagetext_inline_edit main " . $identifier . " index_" . Data::getValue( $viewdict, 'index' ) . "' id=" . Data::getValue( $viewdict, 'view_id' ) . " >";
-		echo Wrapper::wrapper1( 
+		echo Wrapper::wrapper1(
 			[],
 			array(
 				Structure::make( "three_columns", [
@@ -119,10 +112,10 @@ $viewoptions = ReusableClasses::convertViewActions( $viewoptions );
 
 	var cellactions = <?php echo json_encode( $viewoptions['actions'] ) ?>;
 
-	
 
-	<?php 
-		ReusableClasses::getEditingFunctionsJS( $viewoptions ) 
+
+	<?php
+		Editing::getEditingFunctionsJS( $viewoptions )
 	?>;
 
 	function imagetext_inline_edit_start() {

@@ -71,7 +71,6 @@ var editing_options_on = false
 					}
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionvalue_' + i ).val( conditions[i]['value'] );
-					console.log(JSON.stringify( '.' + identifier + ' .' + inputclass + ' input.conditionvalue_' + i ))
 					// .testview_form .testview_form_new_apps_client_information.state_input_0 input.conditionvalue_0
 					// viewtype_input testview_form_new_apps_client_information.state_input_0 textfield size_large
 				}
@@ -664,7 +663,7 @@ var editing_options_on = false
 					db_info = formatteddata['db_info']
 				}
 				let defaultTableName = Reusable.getDefaultTableName(db_info)
-				// console.log(JSON.stringify(formatteddata[0]['db_info']))
+
 				var colname = ""
 				if( typeof db_info['colnames'][key] === 'undefined' ) {
 					colname = db_info['colnames'][defaultTableName+key];
@@ -673,8 +672,6 @@ var editing_options_on = false
 				}
 
 				var type = typearray[i];
-				// console.log("fieldindex: "+JSON.stringify(type['value_string'][20]))
-				// console.log("AHHHH_"+i+": "+JSON.stringify(type))
 				Reusable.fillinputvalues( type, dataarray, identifier, key, colname, index, i, multiple_updates, typearray )
 				if(multiple_updates){
 					break
@@ -698,12 +695,10 @@ var editing_options_on = false
 
 				for (var i = 0; i <= thisdata.length; i++) {
 					var type = typearray['value_string'][fieldindex]
-					console.log("THIS DATA_"+type+"_"+inputclass+": "+JSON.stringify(thisdict))
 					inputclass = identifier + "_" + key + "_input_" + fieldindex
 					var thisdict = dataarray
 					thisdict[identifier]['value'] = thisdata[i]
 					// var type = typearray[i]
-					// console.log("THIS DATA_"+typearray+"_"+inputclass+": "+JSON.stringify(thisdict))
 					if(type=="textarea"){
 						Reusable.updateTextArea( thisdict, identifier, identifier, key, inputclass, colname, 0 );
 					}else if(type=="wysi"){
@@ -722,7 +717,6 @@ var editing_options_on = false
 						Reusable.updateCopyButton( thisdict, identifier, identifier, key, inputclass, colname, 0 );
 					}
 					fieldindex = fieldindex+5;
-					// console.log("fieldindex: "+JSON.stringify(thisdata.length))
 				}
 			}else{
 				if( type == "textarea" ){

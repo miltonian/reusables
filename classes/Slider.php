@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Reusables;
 
@@ -6,16 +6,7 @@ class Slider {
 
 	public static function place( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Slider", $file, $identifier );
-		
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::place( "Slider", $file, $identifier );
 	}
 
 	public static function set( $file, $identifier )
@@ -30,9 +21,9 @@ class Slider {
 
 	// public static function make( $file, $identifier )
 	// {
-	// 	ReusableClasses::addfile( "slider", $file );
+	// 	Page::addAssetFile( "slider", $file );
 	// 	$View = View::factory( 'reusables/views/slider/' . $file );
-	// 	$data = Data::retrieveDataWithID( $identifier );
+	// 	$data = Data::get( $identifier );
 	// 	$View->set( 'sliderdict', $data );
 	// 	$View->set( 'identifier', $identifier );
 	// 	return $View->render();
@@ -43,16 +34,7 @@ class Slider {
 
 	public static function cplace( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Custom/Slider", $file, $identifier );
-
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::cplace( "Slider", $file, $identifier );
 	}
 
 	public static function cset( $file, $identifier )

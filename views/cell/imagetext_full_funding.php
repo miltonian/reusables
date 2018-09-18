@@ -8,7 +8,7 @@ namespace Reusables;
 		$identifier
 	);
 
-	$viewdict = Data::convertKeysInTable( $identifier, $viewdict );
+	$viewdict = Convert::keysInTable( $identifier, $viewdict );
 	
 
 
@@ -46,7 +46,7 @@ namespace Reusables;
 						</a>
 						<br>
 						<label class="imagetext_full_funding grey-label"><?php echo implode(' ', array_slice( explode(' ', strip_tags(Data::getValue( $viewdict, 'html_text' ))), 0, 10) ); ?>...</label>
-						<?php Data::addData( $viewdict, $identifier . "_bargraph" ); ?>
+						<?php Data::add( $viewdict, $identifier . "_bargraph" ); ?>
 						<?php echo Section::make( "fundbar", $identifier . "_bargraph") ?>
 					</div>
 				</div>
@@ -58,7 +58,7 @@ namespace Reusables;
 <script>
 
 	<?php
-		ReusableClasses::addEditingToCell( $identifier, $fullviewdict, $celltype );
+		Editing::addEditingToCell( $identifier, $fullviewdict, $celltype );
 	?>;
 	
 </script>

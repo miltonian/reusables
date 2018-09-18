@@ -18,7 +18,7 @@ namespace Reusables;
 		$convertkeys = $viewdict['convert_keys']; 
 	}
 // exit( json_encode( $viewdict[$identifier.'_posts'][1] ) );
-	$viewdict[$identifier . '_posts' ] = Data::retrieveDataWithID( $identifier . '_posts' );
+	$viewdict[$identifier . '_posts' ] = Data::get( $identifier . '_posts' );
 	if( isset($viewdict[ $identifier . '_posts' ]['value']) ){
 		$tablearray = $viewdict[ $identifier . '_posts' ]['value'];
 	}else{
@@ -74,7 +74,7 @@ namespace Reusables;
 				if( isset( $viewdict['slug'] ) ) { $post['slug'] = Data::getValue( $viewdict, 'slug' ); }
 				
 				if( isset( $viewdict['cellactions'] ) ){ $post['actions'] = $viewdict['cellactions']; }else{ $post['actions'] = array(); }
-				Data::addData( $post, $identifier . "_cell_" . $i );
+				Data::add( $post, $identifier . "_cell_" . $i );
 				if($i==0 || sizeof($tablearray) < 4 ){
 					echo Cell::make( $featured_cellname, $identifier . "_cell_" . $i );
 				}else{

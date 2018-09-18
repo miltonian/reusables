@@ -33,4 +33,4 @@ extract( Views::setUp( $identifier ) );
 	<?php } ?>
 </div>
 
-<?php ReusableClasses::clickToEditSection( $viewdict, $viewoptions, $identifier, __FILE__ ) ?>
+<?php Editing::clickToEditSection( $viewdict, $viewoptions, $identifier, __FILE__ ) ?>

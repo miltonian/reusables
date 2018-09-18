@@ -10,7 +10,7 @@ $mainheaderdict = [ "title"=>Data::getValue( $structuredict, "title") ];
 $main_header_text = Data::getValue( $viewoptions, "title" );
 if( $main_header_text != "" ) {
 
-	Data::addData( ["title" => $main_header_text], $identifier . "_main_header");
+	Data::add( ["title" => $main_header_text], $identifier . "_main_header");
 }
 ?>
 

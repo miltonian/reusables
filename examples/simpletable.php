@@ -24,11 +24,11 @@ $tablearray = array(
 
 
 // DATA
-Reusables\Data::addData( $headerdict, "page_header" );
-Reusables\Data::addData( $tablearray, "table" );
+Reusables\Data::add( $headerdict, "page_header" );
+Reusables\Data::add( $tablearray, "table" );
 
 // this is for the table's reusable view
-Reusables\Data::addOption( "imagetext_full", "cellname", "table" );
+Reusables\Options::add( "imagetext_full", "cellname", "table" );
 
 Reusables\ReusableClasses::startpage( __FILE__ );
 

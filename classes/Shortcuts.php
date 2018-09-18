@@ -3,7 +3,7 @@
 namespace Reusables;
 
 class Shortcuts {
-	
+
 	public static function changeURLForTesting($url){
 
 			$docroot;
@@ -56,12 +56,12 @@ class Shortcuts {
 
 
 		$uploadOk = 0;
-	
+
 		if( $file['name'] != null && $file['name'] != "" ){
 
 			if (($file["size"] < 20000000) && in_array($extension, $allowedExts)){
 
-		  
+
 				$newname = time()."_".$file["name"];
 				$newname = str_replace(" ", "_", $newname);
 				if ($file["error"] > 0)
@@ -103,7 +103,7 @@ class Shortcuts {
 	    // jpg, png, gif or bmp?
 	    //exit("hello");
 	    $exploded = explode('.',$originalImage);
-	    $ext = $exploded[count($exploded) - 1]; 
+	    $ext = $exploded[count($exploded) - 1];
 
 	    if (preg_match('/jpg|jpeg/i',$ext)){
 	        $imageTmp=imagecreatefromjpeg($originalImage);
@@ -129,7 +129,55 @@ class Shortcuts {
 		return substr($string, 0, strlen($prefix)) === $prefix;
 	}
 
+	public static function ordinal($number) {
+	    $ends = array('th','st','nd','rd','th','th','th','th','th','th');
+	    if ((($number % 100) >= 11) && (($number%100) <= 13))
+	        return $number. 'th';
+	    else
+	        return $number. $ends[$number % 10];
+	}
+
+	public static function substrwords($text, $maxchar, $end='...') {
+	    if (strlen($text) > $maxchar || $text == '') {
+	        $words = preg_split('/\s/', $text);
+	        $output = '';
+	        $i      = 0;
+	        while (1) {
+	            $length = strlen($output)+strlen($words[$i]);
+	            if ($length > $maxchar) {
+	                break;
+	            }
+	            else {
+	                $output .= " " . $words[$i];
+	                ++$i;
+	            }
+	        }
+	        $output .= $end;
+	    }
+	    else {
+	        $output = $text;
+	    }
+	    return $output;
+	}
+
+	public static function isAssoc(array $arr)
+	{
+			if (array() === $arr) {
+					return false;
+			}
+			return array_keys($arr) !== range(0, count($arr) - 1);
+	}
+
+	// public static function hasPrefix( $input, $match )
+	// {
+	//
+	// 	if( substr( $input, 0, strlen($match) ) === $match ) {
+	// 		return true;
+	// 	}else {
+	// 		return false;
+	// 	}
+	//
+	// }
+
 
 }
-
-?>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Reusables;
 
@@ -6,16 +6,7 @@ class Modal {
 
 	public static function place( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Modal", $file, $identifier );
-		
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::place( "Modal", $file, $identifier );
 	}
 
 	public static function set( $file, $identifier )
@@ -23,14 +14,9 @@ class Modal {
 		Views::setDefaultViewInfo( $file, $identifier, "modal" );
 	}
 
-	public static function setincontainer( $file, $identifier )
+	public static function setInContainer( $file, $identifier )
 	{
-		Data::addInfo( 'Modal', 'viewtype', $identifier );
-		Data::addInfo( $file, 'file', $identifier );
-		Data::addInfo( $identifier, 'identifier', $identifier );
-
-		Views::addEditableParts( $identifier );
-		return Modal::make( $file, $identifier );
+		return View::setInContainer( "Modal", $file, $identifier );
 	}
 
 	public static function make( $file, $identifier )
@@ -41,7 +27,7 @@ class Modal {
 	// public static function make( $file, $identifier )
 	// {
 	// 	$View = View::factory( 'reusables/views/modal/' . $file );
-	// 	$data = Data::retrieveDataWithID( $identifier );
+	// 	$data = Data::get( $identifier );
 	// 	$View->set( 'modaldict', $data );
 	// 	$View->set( 'identifier', $identifier );
 	// 	return $View->render();
@@ -75,16 +61,7 @@ class Modal {
 
 	public static function cplace( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Custom/Modal", $file, $identifier );
-
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::cplace( "Modal", $file, $identifier );
 	}
 
 	public static function cset( $file, $identifier )

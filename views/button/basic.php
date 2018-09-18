@@ -17,7 +17,7 @@ if( $title == "" ) {
 	}
 }
 
-$viewdict = Data::convertKeys( $viewdict );
+$viewdict = Convert::keys( $viewdict );
 
 $connectedto_smartform = true;
 
@@ -28,7 +28,7 @@ if( $modal != "" ) {
 	$modal_type = "modal";
 	$modal_name = $modal["modalclass"];
 	$modal_parent = $modal["parentclass"];
-	$info = Data::retrieveInfoWithID($modal_name);
+	$info = Info::get($modal_name);
 	if( $info["file"] != "smartform" && $info["file"] != "smartform_inmodal" ) {
 		$connectedto_smartform = false;
 	}
@@ -38,7 +38,7 @@ $is_editable = Data::getValue( $viewoptions, "is_editable" );
 	if( isset( $viewdict['value'] ) ){ 
 		$data_id = $identifier;
 		// exit( json_encode( $viewdict ) );
-		// $viewdict = Data::formatForDefaultData( $data_id );
+		// $viewdict = RFormat::formatForDefaultData( $data_id );
 	// exit( json_encode( Data::getValue( $viewdict, 'featured_imagepath' ) ) );
 		// SHOULD CONTROL DATA WITH ID NOT VAR
 	}
@@ -85,7 +85,7 @@ $classnames = Data::getValue( $viewoptions, "classnames" );
 			$("div.viewtype_structure.<?php echo $modal_name ?>_outer_structure.modal_background.main .<?php echo $modal_parent ?>").css({"display": "inline-block"})
 		} else {
 			<?php
-				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier, true );
+				Editing::setUpEditingForSection( $viewdict, $viewoptions, $identifier, true );
 			?>
 		}
 	})

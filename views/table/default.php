@@ -74,13 +74,13 @@ namespace Reusables;
 				}
 
 				if( isset($viewdict['value']) ){
-					$post = Data::formatCellWithDefaultData( $identifier , $i );
+					$post = RFormat::formatCellWithDefaultData( $identifier , $i );
 				}else{
 					$post = Data::getValue( $tablearray, $i );
 				}
 
 
-				$post = Data::convertKeysInTable( $identifier, $post );
+				$post = Convert::keysInTable( $identifier, $post );
 				$post['index'] = $i;
 				$postoptions['pre_slug'] = Data::getValue( $viewoptions, 'pre_slug' );
 				$postoptions['type'] = Data::getValue( $viewoptions, 'type' );
@@ -102,7 +102,7 @@ namespace Reusables;
 				if( isset( $viewoptions['slug'] ) ) { $postoptions['slug'] = Data::getValue( $viewoptions, 'slug' ); }
 				if( isset( $viewoptions['actions'] ) ){ $postoptions['actions'] = $viewoptions['actions']; }else{ /* $postoptions['actions'] = array(); */ }
 // exit(json_encode( $postoptions ) );
-				Data::addData( $post, $identifier . "_cell_" . $i );
+				Data::add( $post, $identifier . "_cell_" . $i );
 				Data::addOptions( $postoptions, $identifier . "_cell_" . $i );
 				$post_cellname = Data::getValue( $post, 'cellname', $identifier );
 				if( $post_cellname != "" ) {
@@ -114,11 +114,11 @@ namespace Reusables;
 						$cellname = "imagetext_full";
 					}
 				}
-				Data::addInfo( "Cell", 'viewtype', $identifier . "_cell_" . $i );
-				Data::addInfo( $cellname, 'file', $identifier . "_cell_" . $i );
-				Data::addInfo( $identifier . "_cell_" . $i, 'identifier', $identifier . "_cell_" . $i );
+				Info::add( "Cell", 'viewtype', $identifier . "_cell_" . $i );
+				Info::add( $cellname, 'file', $identifier . "_cell_" . $i );
+				Info::add( $identifier . "_cell_" . $i, 'identifier', $identifier . "_cell_" . $i );
 
-				if( Data::hasprefix( $cellname, "custom/" ) ) {
+				if( Shortcuts::hasPrefix( $cellname, "custom/" ) ) {
 					$filename = substr( $cellname, strlen( "custom/" ), strlen( $cellname ) );
 					// exit( json_encode( $filename ) );
 				    echo CustomView::make( $filename, $identifier . "_cell_" . $i );

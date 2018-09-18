@@ -8,7 +8,7 @@ namespace Reusables;
 		$identifier
 	);
 
-	$viewdict = Data::convertKeys( $viewdict );
+	$viewdict = Convert::keys( $viewdict );
 
 ?>
 
@@ -40,7 +40,7 @@ namespace Reusables;
 
 		$('.imagetext_inline.clicktoedit').click(function(e){
 			<?php
-				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+				Editing::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
 			?>
 		})
 

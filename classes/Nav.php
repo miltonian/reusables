@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Reusables;
 
@@ -6,16 +6,7 @@ class Nav {
 
 	public static function place( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Nav", $file, $identifier );
-		
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::place( "Nav", $file, $identifier );
 	}
 
 	public static function set( $file, $identifier )
@@ -24,14 +15,9 @@ class Nav {
 	}
 
 
-	public static function setincontainer( $file, $identifier )
+	public static function setInContainer( $file, $identifier )
 	{
-		Data::addInfo( 'Nav', 'viewtype', $identifier );
-		Data::addInfo( $file, 'file', $identifier );
-		Data::addInfo( $identifier, 'identifier', $identifier );
-
-		Views::addEditableParts( $identifier );
-		return Nav::make( $file, $identifier );
+		return View::setInContainer( "Nav", $file, $identifier );
 	}
 
 	public static function make( $file, $identifier )
@@ -41,9 +27,9 @@ class Nav {
 
 	// public static function make( $file, $identifier )
 	// {
-	// 	ReusableClasses::addfile( "nav", $file );
+	// 	Page::addAssetFile( "nav", $file );
 	// 	$View = View::factory( 'reusables/views/nav/' . $file );
-	// 	$data = Data::retrieveDataWithID( $identifier );
+	// 	$data = Data::get( $identifier );
 	// 	$View->set( 'navdict', $data );
 	// 	$View->set( 'identifier', $identifier );
 	// 	return $View->render();
@@ -54,16 +40,7 @@ class Nav {
 
 	public static function cplace( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Custom/Nav", $file, $identifier );
-
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::cplace( "Nav", $file, $identifier );
 	}
 
 	public static function cset( $file, $identifier )

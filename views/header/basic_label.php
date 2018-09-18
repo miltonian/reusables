@@ -20,7 +20,7 @@ if( $help_modal != "" ) {
 	$modal_type = "modal";
 	$modal_name = $help_modal["modalclass"];
 	$modal_parent = $help_modal["parentclass"];
-	$info = Data::retrieveInfoWithID($modal_name);
+	$info = Info::get($modal_name);
 	if( $info["file"] != "smartform" && $info["file"] != "smartform_inmodal" ) {
 		$connectedto_smartform = false;
 	}
@@ -51,7 +51,7 @@ if( $help_modal != "" ) {
 
 	$('.<?php echo $identifier ?>.basic_label.clicktoedit').click(function(e){
 		<?php
-			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+			Editing::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
 		?>
 	})
 

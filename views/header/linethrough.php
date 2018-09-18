@@ -1,15 +1,10 @@
-<?php 
+<?php
 
 namespace Reusables;
 
-$required = array(
-	"title" => ""
-);
-
-// ReusableClasses::checkRequired( $identifier, $viewdict, $required );
 
 
-	Views::setParams( 
+	Views::setParams(
 		[ "title" ],
 		[],
 		$identifier
@@ -31,7 +26,7 @@ $required = array(
 
 		$('.<?php echo $identifier ?>.linethrough.clicktoedit').click(function(e){
 			<?php
-				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+				Editing::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
 			?>
 		})
 

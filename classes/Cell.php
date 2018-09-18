@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Reusables;
 
@@ -6,16 +6,7 @@ class Cell {
 
 	public static function place( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Cell", $file, $identifier );
-		
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::place( "Cell", $file, $identifier );
 	}
 
 	public static function set( $file, $identifier )
@@ -28,23 +19,18 @@ class Cell {
 		return Views::makeView( $file, $identifier, "cell" );
 	}
 
-	public static function setincontainer( $file, $identifier )
+	public static function setInContainer( $file, $identifier )
 	{
-		Data::addInfo( 'Cell', 'viewtype', $identifier );
-		Data::addInfo( $file, 'file', $identifier );
-		Data::addInfo( $identifier, 'identifier', $identifier );
-
-		Views::addEditableParts( $identifier );
-		return Cell::make( $file, $identifier );
+		return View::setInContainer( "Cell", $file, $identifier );
 	}
 
 	public static function prepareCell( $identifier )
 	{
-		$data = Data::retrieveDataWithID( $identifier );
-		$options = Data::retrieveOptionsWithID( $identifier );
+		$data = Data::get( $identifier );
+		$options = Options::get( $identifier );
 
-		$info = Data::retrieveInfoWithID( $identifier );
-		
+		$info = Info::get( $identifier );
+
 		$viewpath = "";
 		$viewtype = Data::getValue( $info, "viewtype" );
 
@@ -53,8 +39,8 @@ class Cell {
 		if( !isset($options['type'])){ $options['type'] = ""; }
 		if( !isset($options['isfeatured']) ){ $options['isfeatured']=false; }
 		// if( !isset($isadmin) ){ $isadmin=false; }
-		
-		$linkpath = Data::getViewLinkPath( $identifier );
+
+		$linkpath = Translate::getViewLinkPath( $identifier );
 		$mediatype = Data::getValue( $data, 'mediatype' );
 		$cellindex = Data::getValue( $data, 'index' );
 		$table_identifier = str_replace("_cell_".$cellindex, "", $identifier);
@@ -100,16 +86,7 @@ class Cell {
 
 	public static function cplace( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Custom/Cell", $file, $identifier );
-
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::cplace( "Cell", $file, $identifier );
 	}
 
 	public static function cset( $file, $identifier )

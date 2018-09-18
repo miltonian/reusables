@@ -11,7 +11,7 @@ if( isset($viewdict['value']) ){
 $i=0;
 foreach ($images as $im) {
 	if( isset($viewdict['value']) ){
-		$image = Data::formatCellWithDefaultData( $identifier , $i );
+		$image = RFormat::formatCellWithDefaultData( $identifier , $i );
 	}else{
 		$image = Data::getValue( $images, $i );
 	}
@@ -74,4 +74,4 @@ $optiontype = Data::getValue( $viewoptions, 'type' );
 	</div>
 </div>
 
-<?php ReusableClasses::clickToEditSection( $viewdict, $viewoptions, $identifier, __FILE__ ) ?>
+<?php Editing::clickToEditSection( $viewdict, $viewoptions, $identifier, __FILE__ ) ?>

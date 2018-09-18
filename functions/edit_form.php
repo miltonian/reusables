@@ -31,7 +31,8 @@ $result = $MainClasses->querySQL( $query, $values, $type );
 
 if($_FILES[ 'formimg' ]['name'] != null && $_FILES[ 'formimg' ]['name'] != ""){
 	$file = $_FILES[ 'formimg' ];
-	$imagepath = Shortcuts::uploadImage($file);
+	// $imagepath = Shortcuts::uploadImage($file);
+	$imagepath = Media::uploadImage($file);
 }
 
 if( $result[0] == 1 ){
@@ -67,6 +68,3 @@ if( $result[0] == 1 ){
 // exit(json_encode($result));
 
 header( 'Location: ' . $baseurlminimal );
-
-
-

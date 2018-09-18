@@ -2,7 +2,7 @@
 
 namespace Reusables;
 
-$viewdict = Data::convertKeys( $viewdict );
+$viewdict = Convert::keys( $viewdict );
 
 $togglearray = [];
 foreach ($viewdict as $key => $value) {
@@ -111,7 +111,7 @@ if( $underline_index == "" ) {
 
 	$('.<?php echo $identifier ?>.toggle.clicktoedit').click(function(e){
 		<?php
-			ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+			Editing::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
 		?>
 	})
 

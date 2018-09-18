@@ -32,7 +32,8 @@ foreach ($_FILES as $key => $value) {
 		$keystrings = explode( "_", $key);
 		if($keystrings[0] == "name"){
 			array_push($keyarray, $keystrings[1]);
-		    array_push($valuearray, Shortcuts::uploadImage($value) );
+		    // array_push($valuearray, Shortcuts::uploadImage($value) );
+				array_push($valuearray, Media::uploadImage($value) );
 		}
 	}
 }
@@ -42,8 +43,8 @@ if(isset($_POST[ 'custompage_id' ])){ $custompageid = $_POST[ 'custompage_id' ];
 // if(isset($_POST[ 'fieldvalue' ])){ $fieldvalue = $_POST[ 'fieldvalue' ]; }else{ $fieldvalue = null; }
 
 //loop through each name/value pair
-for ($i=0; $i < sizeof($keyarray); $i++) { 
-	
+for ($i=0; $i < sizeof($keyarray); $i++) {
+
 	//look for match
 	$query = "SELECT id FROM custompage_values WHERE custompage_id=? AND fieldname=?";
 	$values = [$custompageid, $keyarray[$i]];

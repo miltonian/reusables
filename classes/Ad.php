@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Reusables;
 
@@ -8,16 +8,7 @@ class Ad {
 
 	public static function place( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Ad", $file, $identifier );
-		
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::place( "Ad", $file, $identifier );
 	}
 
 	public static function set( $file, $identifier )
@@ -25,14 +16,9 @@ class Ad {
 		Views::setDefaultViewInfo( $file, $identifier, "ad" );
 	}
 
-	public static function setincontainer( $file, $identifier )
+	public static function setInContainer( $file, $identifier )
 	{
-		Data::addInfo( 'Ad', 'viewtype', $identifier );
-		Data::addInfo( $file, 'file', $identifier );
-		Data::addInfo( $identifier, 'identifier', $identifier );
-
-		Views::addEditableParts( $identifier );
-		return Ad::make( $file, $identifier );
+		return View::setInContainer( "Ad", $file, $identifier );
 	}
 
 	public static function make( $file, $identifier )
@@ -89,38 +75,15 @@ class Ad {
 		}
 }
 
-
-	// public static function make( $file, $identifier )
-	// {
-	// 	ReusableClasses::addfile( "ad", $file );
-	// 	$View = View::factory( 'reusables/views/ad/' . $file );
-	// 	$data = Data::retrieveDataWithID( $identifier );
-	// 	$View->set( 'addict', $data );
-	// 	$View->set( 'identifier', $identifier );
-	// 	return $View->render();
-	// }
-
-
-
 // FOR CUSTOM VIEWS
 
 	public static function cplace( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Custom/Ad", $file, $identifier );
-
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::cplace( "Ad", $file, $identifier );
 	}
 
 	public static function cset( $file, $identifier )
 	{
-		// exit( json_encode( [$file, $identifier] ) );
 		Views::setDefaultViewInfo( $file, $identifier, "custom/ad" );
 	}
 

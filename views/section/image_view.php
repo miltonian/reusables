@@ -19,5 +19,5 @@ extract( Views::setUp( $identifier ) );
 
 
 
-<?php ReusableClasses::clickToEditSection( $viewdict, $viewoptions, $identifier, __FILE__ ); ?>
+<?php Editing::clickToEditSection( $viewdict, $viewoptions, $identifier, __FILE__ ); ?>
 

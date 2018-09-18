@@ -101,8 +101,8 @@ if( $help_modal != "" ) {
 <div class="viewtype_input <?php echo $identifier ?> timepicker <?php echo $sizeclass ?>">
 	<?php if( !$is_hidden ){ ?>
 		<?php 
-			Data::addData( ["title" => $labeltext], $identifier . "_label" );
-			Data::addOption( $help_modal, "help_modal", $identifier . "_label" );
+			Data::add( ["title" => $labeltext], $identifier . "_label" );
+			Options::add( $help_modal, "help_modal", $identifier . "_label" );
 			echo Header::make( "basic_label", $identifier . "_label" ); 
 		?>
 	<?php } ?>

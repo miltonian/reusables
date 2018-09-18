@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Reusables;
 
@@ -7,16 +7,7 @@ class Header {
 
 	public static function place( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Header", $file, $identifier );
-		
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::place( "Header", $file, $identifier );
 	}
 
 	public static function set( $file, $identifier )
@@ -24,14 +15,9 @@ class Header {
 		Views::setDefaultViewInfo( $file, $identifier, "header" );
 	}
 
-	public static function setincontainer( $file, $identifier )
+	public static function setInContainer( $file, $identifier )
 	{
-		Data::addInfo( 'Header', 'viewtype', $identifier );
-		Data::addInfo( $file, 'file', $identifier );
-		Data::addInfo( $identifier, 'identifier', $identifier );
-
-		Views::addEditableParts( $identifier );
-		return Header::make( $file, $identifier );
+		return View::setInContainer( "Header", $file, $identifier );
 	}
 
 	public static function make( $file, $identifier )
@@ -40,9 +26,9 @@ class Header {
 	}
 	// public static function make( $file, $identifier )
 	// {
-	// 	ReusableClasses::addfile( "header", $file );
+	// 	Page::addAssetFile( "header", $file );
 	// 	$View = View::factory( 'reusables/views/header/' . $file );
-	// 	$data = Data::retrieveDataWithID( $identifier );
+	// 	$data = Data::get( $identifier );
 	// 	$View->set( 'headerdict', $data );
 	// 	$View->set( 'identifier', $identifier );
 	// 	return $View->render();
@@ -53,16 +39,7 @@ class Header {
 
 	public static function cplace( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Custom/Header", $file, $identifier );
-
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::cplace( "Header", $file, $identifier );
 	}
 
 	public static function cset( $file, $identifier )

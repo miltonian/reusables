@@ -17,7 +17,7 @@ Views::setParams(
 	if( $dropdownarray == "" ) {
 		$dropdownarray = [];
 	}
-	Data::addData( $dropdownarray, $identifier . "_dropdown" );
+	Data::add( $dropdownarray, $identifier . "_dropdown" );
 	echo Menu::make( "dropdown", $identifier . "_dropdown" );
 ?>
 

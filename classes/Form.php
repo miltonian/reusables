@@ -2,352 +2,340 @@
 
 namespace Reusables;
 
+class Form
+{
+    public static function makeInsertOnly($tablename, $identifier, $ishtml=false)
+    {
+        // data needs to be from 'DESCRIBE tablename' SQL query
 
-class Form {
+        Form::prepareInsertOnly($tablename, $identifier);
 
-	public static function makeInsertOnly( $tablename, $identifier, $ishtml=false )
-	{
-		// data needs to be from 'DESCRIBE tablename' SQL query
+        Section::place("smartform_inmodal", $identifier, $ishtml);
+    }
 
-		Form::prepareInsertOnly( $tablename, $identifier );
+    public static function placeInsert($tablename, $identifier, $ishtml=false)
+    {
+        Form::prepareInsertOnly($tablename, $identifier);
 
-		Section::place( "smartform_inmodal", $identifier, $ishtml );
+        Section::place("smartform", $identifier, $ishtml);
+    }
 
-	}
+    public static function prepareInsert($tablename, $identifier)
+    {
+        Form::prepareInsertOnly($tablename, $identifier);
+    }
 
-	public static function placeInsert( $tablename, $identifier, $ishtml=false )
-	{
+    public static function prepareInsertOnly($tablename, $identifier)
+    {
+        $query = 'DESCRIBE ' . $tablename;
+        $values = [];
+        $type = 'select';
+        $data = CustomData::call("DBClasses", "querySQL", [$query, $values, $type])[1];
 
-		Form::prepareInsertOnly( $tablename, $identifier );
+        $converteddata = [];
+        foreach ($data as $r) {
+            if ($r['Field'] == "id") {
+                continue;
+            }
+            $converteddata[$r['Field']] = "";
+        }
 
-		Section::place( "smartform", $identifier, $ishtml );
+        $conditions = [[]];
+        $returningdict = RFormat::toValueAndDBInfo($converteddata, $conditions, $tablename);
+        // exit( json_encode( $returningdict ) );
 
-	}
+        $formwithsameid_dict = Data::get($identifier);
+        if ($formwithsameid_dict) {
+            if (isset($formwithsameid_dict['value'])) {
+                $formwithsameid_dict_real = $formwithsameid_dict['value'];
+                $returningdict_real = $returningdict['value'];
 
-	public static function prepareInsert( $tablename, $identifier )
-	{
+                $formwithsameid_dict_tablenames = $formwithsameid_dict['db_info']['tablenames'];
+                $returningdict_tablenames = $returningdict['db_info']['tablenames'];
 
-		Form::prepareInsertOnly( $tablename, $identifier );
+                $formwithsameid_dict_colnames = $formwithsameid_dict['db_info']['colnames'];
+                $returningdict_colnames = $returningdict['db_info']['colnames'];
 
-	}
+                $newdict_real = array_merge($formwithsameid_dict_real, $returningdict_real);
+                $newdict_tablenames = array_merge($formwithsameid_dict_tablenames, $returningdict_tablenames);
+                $newdict_colnames = array_merge($formwithsameid_dict_colnames, $returningdict_colnames);
+                $returningdict['value'] = $newdict_real;
+                $returningdict['db_info']['tablenames'] = $newdict_tablenames;
+                $returningdict['db_info']['colnames'] = $newdict_colnames;
+            }
+        }
 
-	public static function prepareInsertOnly( $tablename, $identifier )
-	{
+        Data::add($returningdict, $identifier);
+        Options::add(true, "ifnone_insert", $identifier);
+    }
 
-		$query = 'DESCRIBE ' . $tablename;
-		$values = [];
-		$type = 'select';
-		$data = CustomData::call( "DBClasses", "querySQL", [$query, $values, $type] )[1];
+    public static function makeDynamicInsertOnly($featured_content_id, $identifier, $user_id=0)
+    {
+        // data needs to be from 'DESCRIBE tablename' SQL query
 
-		$converteddata = [];
-		foreach ($data as $r) {
-			if( $r['Field'] == "id" ) {
-				continue;
-			}
-			$converteddata[$r['Field']] = "";
-		}
+        $query = 'DESCRIBE custom_data';
+        $values = [];
+        $type = 'select';
+        $data = CustomData::call("DBClasses", "querySQL", [$query, $values, $type])[1];
+        $conditions = [[]];
 
-		$conditions = [[]];
-		$returningdict = ReusableClasses::toValueAndDBInfo( $converteddata, $conditions, $tablename );
-		// exit( json_encode( $returningdict ) );
-
-		$formwithsameid_dict = Data::retrieveDataWithID( $identifier );
-		if( $formwithsameid_dict ) {
-			if( isset( $formwithsameid_dict['value'] ) ) {
-				$formwithsameid_dict_real = $formwithsameid_dict['value'];
-				$returningdict_real = $returningdict['value'];
-
-				$formwithsameid_dict_tablenames = $formwithsameid_dict['db_info']['tablenames'];
-				$returningdict_tablenames = $returningdict['db_info']['tablenames'];
-
-				$formwithsameid_dict_colnames = $formwithsameid_dict['db_info']['colnames'];
-				$returningdict_colnames = $returningdict['db_info']['colnames'];
-
-				$newdict_real = array_merge( $formwithsameid_dict_real, $returningdict_real );
-				$newdict_tablenames = array_merge( $formwithsameid_dict_tablenames, $returningdict_tablenames );
-				$newdict_colnames = array_merge( $formwithsameid_dict_colnames, $returningdict_colnames );
-				$returningdict['value'] = $newdict_real;
-				$returningdict['db_info']['tablenames'] = $newdict_tablenames;
-				$returningdict['db_info']['colnames'] = $newdict_colnames;
-			}
-		}
-
-		Data::addData( $returningdict, $identifier );
-			Data::addOption( true, "ifnone_insert", $identifier );
-	}
-
-	public static function makeDynamicInsertOnly( $featured_content_id, $identifier, $user_id=0 )
-	{
-		// data needs to be from 'DESCRIBE tablename' SQL query
-
-		$query = 'DESCRIBE custom_data';
-		$values = [];
-		$type = 'select';
-		$data = CustomData::call( "DBClasses", "querySQL", [$query, $values, $type] )[1];
-		$conditions = [[]];
-
-		// exit( json_encode( $returningdict ) );
+        // exit( json_encode( $returningdict ) );
 
 
-		//start new
+        //start new
 
-		$query = 'SELECT * FROM customdata_params WHERE featured_content_id=? ORDER BY customdata_params.custom_param_classid ASC';
-		$values = [ $featured_content_id ];
-		$type = 'select';
-		$customparamdict = CustomData::call( "DBClasses", "querySQL", [$query, $values, $type] )[1];
+        $query = 'SELECT * FROM customdata_params WHERE featured_content_id=? ORDER BY customdata_params.custom_param_classid ASC';
+        $values = [ $featured_content_id ];
+        $type = 'select';
+        $customparamdict = CustomData::call("DBClasses", "querySQL", [$query, $values, $type])[1];
 
-		$customparam_keyvalues = [];
-		foreach ($customparamdict as $key) {
-			if( !isset( $customparam_keyvalues[$key['custom_param_classid']] ) ) {
-				$customparam_keyvalues[$key['custom_param_classid']] = [];
-			}
-			array_push( $customparam_keyvalues[$key['custom_param_classid']], $key );
-		}
-		$customparam_i = 0;
-		$all_input_keys = [];
-		$inputs = [];
-		$keystrings = [];
-		$customparamclassid_grouped = [];
-		// exit( json_encode( $featured_content_id ) );
-		foreach ($customparam_keyvalues as $input) {
-			$input_keys = [];
-			$inputdict = [];
-			foreach ($input as $dict) {
-				if( $dict['key_string'] == "name" ) {
-					if( isset( $inputdict['name'] ) ) {
-						if( $inputdict['name'] != $dict['value_string'] ) {
-							array_push($keystrings, $dict['value_string']);
-						}
-					}else{
-						array_push($keystrings, $dict['value_string']);
-					}
-				}
-				$inputdict[ $dict['key_string'] ] = $dict['value_string'];
-				$inputdict['type'] = $dict['type_string'];
-				// exit( json_encode( $inputdict['type'] ) );
-			}
-			array_push( $customparamclassid_grouped, $input[0]['custom_param_classid'] );
+        $customparam_keyvalues = [];
+        foreach ($customparamdict as $key) {
+            if (!isset($customparam_keyvalues[$key['custom_param_classid']])) {
+                $customparam_keyvalues[$key['custom_param_classid']] = [];
+            }
+            array_push($customparam_keyvalues[$key['custom_param_classid']], $key);
+        }
+        $customparam_i = 0;
+        $all_input_keys = [];
+        $inputs = [];
+        $keystrings = [];
+        $customparamclassid_grouped = [];
+        // exit( json_encode( $featured_content_id ) );
+        foreach ($customparam_keyvalues as $input) {
+            $input_keys = [];
+            $inputdict = [];
+            foreach ($input as $dict) {
+                if ($dict['key_string'] == "name") {
+                    if (isset($inputdict['name'])) {
+                        if ($inputdict['name'] != $dict['value_string']) {
+                            array_push($keystrings, $dict['value_string']);
+                        }
+                    } else {
+                        array_push($keystrings, $dict['value_string']);
+                    }
+                }
+                $inputdict[ $dict['key_string'] ] = $dict['value_string'];
+                $inputdict['type'] = $dict['type_string'];
+                // exit( json_encode( $inputdict['type'] ) );
+            }
+            array_push($customparamclassid_grouped, $input[0]['custom_param_classid']);
 
-			// exit( json_encode( $returningdict['value'] ) );
-			// exit( json_encode( $input[0] ) );
+            // exit( json_encode( $returningdict['value'] ) );
+            // exit( json_encode( $input[0] ) );
 
-			$input_keys["value_string"] = [
-				"labeltext"=>Data::getValue($inputdict, "labeltext"),
-				"placeholder"=>Data::getValue($inputdict, "placeholder"),
-				"field_value"=>Data::getValue($inputdict, "value"),
-				"type"=>Data::getValue($inputdict, "type"),
-			];
+            $input_keys["value_string"] = [
+                "labeltext"=>Data::getValue($inputdict, "labeltext"),
+                "placeholder"=>Data::getValue($inputdict, "placeholder"),
+                "field_value"=>Data::getValue($inputdict, "value"),
+                "type"=>Data::getValue($inputdict, "type"),
+            ];
 
-			$input_keys["user_id"] = ["type"=>"hidden", "field_value"=>$user_id];
-			$input_keys["featured_content_id"] = ["type"=>"hidden", "field_value"=>$featured_content_id];//;
-			$input_keys["custom_param_classid"] =  ["type"=>"hidden", "field_value"=>$input[0]['custom_param_classid']];
-			$input_keys["key_string"] = ["type"=>"hidden", "field_value"=>$inputdict['name']];
+            $input_keys["user_id"] = ["type"=>"hidden", "field_value"=>$user_id];
+            $input_keys["featured_content_id"] = ["type"=>"hidden", "field_value"=>$featured_content_id];//;
+            $input_keys["custom_param_classid"] =  ["type"=>"hidden", "field_value"=>$input[0]['custom_param_classid']];
+            $input_keys["key_string"] = ["type"=>"hidden", "field_value"=>$inputdict['name']];
 
-			array_push( $all_input_keys, $input_keys );
+            array_push($all_input_keys, $input_keys);
 
 
 
-			
-
-			// array_push( $inputs, $returningdict['value'] );
-			$customparam_i++;
-
-		}
-
-		$insertvalues = [];
-		$firstindex = 0;
-		foreach ($keystrings as $ks) {
-			foreach ($input_keys as $k=>$v) {
-				if( $k == "value_string" ) {
-					array_push($insertvalues, "");
-				} else if( $k == "user_id" ) {
-					array_push($insertvalues, strval($user_id));
-				} else if( $k == "featured_content_id" ) {
-					array_push($insertvalues, $featured_content_id);
-				} else if( $k == "custom_param_classid" ) {
-					array_push($insertvalues, $customparamclassid_grouped[$firstindex]);
-				} else if( $k == "key_string" ) {
-					array_push($insertvalues, $ks);
-				}
-			}
-			$firstindex++;
-		}
-		
-// exit( json_encode( $insertvalues ) );
-		// $conditionsdict = [];
-		// foreach ($conditions as $c) {
-		// 	$conditionsdict[$c["key"]] = $c["value"];
-		// }
-
-		$converteddata = [];
-		foreach ($data as $r) {
-			if( $r['Field'] == "id" ) {
-				continue;
-			}
-			// if( isset( $conditionsdict[ $r['Field'] ] ) ) {
-
-				// if( $r['Field'] == "featured_content_id" ) {
-				// 	$converteddata[$r['Field']] = $featured_content_id;
-				// } else if( $r['Field'] == "custom_param_classid" ) {
-				// 	$converteddata[$r['Field']] = $custom_param_classid;
-				// } else if( $r['Field'] == "key_string" ) {
-				// 	$converteddata[$r['Field']] = $inputdict['name'];
-				// } else{
-				// 	$converteddata[$r['Field']] = "";//$conditionsdict[ $r['Field'] ];
-				// }
-
-			// }else{
-				$converteddata[$r['Field']] = "";
-			// }
-		}
-
-		$returningdict = ReusableClasses::toValueAndDBInfo( $converteddata, $conditions, "custom_data" );
 
 
-		// $returningdict['value'] = $inputs;
-		// exit( json_encode( $returningdict ) );
-		// exit( json_encode( $all_input_keys ) );
-		// done new
+            // array_push( $inputs, $returningdict['value'] );
+            $customparam_i++;
+        }
 
-		
+        $insertvalues = [];
+        $firstindex = 0;
+        foreach ($keystrings as $ks) {
+            foreach ($input_keys as $k=>$v) {
+                if ($k == "value_string") {
+                    array_push($insertvalues, "");
+                } elseif ($k == "user_id") {
+                    array_push($insertvalues, strval($user_id));
+                } elseif ($k == "featured_content_id") {
+                    array_push($insertvalues, $featured_content_id);
+                } elseif ($k == "custom_param_classid") {
+                    array_push($insertvalues, $customparamclassid_grouped[$firstindex]);
+                } elseif ($k == "key_string") {
+                    array_push($insertvalues, $ks);
+                }
+            }
+            $firstindex++;
+        }
 
-		Data::addData( $returningdict, $identifier );
-			Data::addOption( true, "ifnone_insert", $identifier );
-			Data::addOption( true, "multiple_inserts", $identifier );
-			Data::addOption( $all_input_keys, "input_keys", $identifier );
-			Data::addOption( $insertvalues, "insert_values", $identifier );
+        // exit( json_encode( $insertvalues ) );
+        // $conditionsdict = [];
+        // foreach ($conditions as $c) {
+        // 	$conditionsdict[$c["key"]] = $c["value"];
+        // }
 
-	}
+        $converteddata = [];
+        foreach ($data as $r) {
+            if ($r['Field'] == "id") {
+                continue;
+            }
+            // if( isset( $conditionsdict[ $r['Field'] ] ) ) {
 
-	public static function makeDynamic( $fetched_result, $featured_content_id, $identifier, $user_id=0 )
-	{
-		// data needs to be from 'DESCRIBE tablename' SQL query
+            // if( $r['Field'] == "featured_content_id" ) {
+            // 	$converteddata[$r['Field']] = $featured_content_id;
+            // } else if( $r['Field'] == "custom_param_classid" ) {
+            // 	$converteddata[$r['Field']] = $custom_param_classid;
+            // } else if( $r['Field'] == "key_string" ) {
+            // 	$converteddata[$r['Field']] = $inputdict['name'];
+            // } else{
+            // 	$converteddata[$r['Field']] = "";//$conditionsdict[ $r['Field'] ];
+            // }
 
-		$returningdict = $fetched_result;
-		// exit( json_encode( $returningdict ) );
+            // }else{
+            $converteddata[$r['Field']] = "";
+            // }
+        }
+
+        $returningdict = RFormat::toValueAndDBInfo($converteddata, $conditions, "custom_data");
 
 
-		//start new
+        // $returningdict['value'] = $inputs;
+        // exit( json_encode( $returningdict ) );
+        // exit( json_encode( $all_input_keys ) );
+        // done new
 
-		$query = '
-		SELECT customdata_params.* 
-		FROM customdata_params 
-			INNER JOIN custom_data 
-				ON customdata_params.custom_param_classid=custom_data.custom_param_classid 
-					AND customdata_params.featured_content_id=custom_data.featured_content_id 
-					AND customdata_params.featured_content_id=? 
-					GROUP BY customdata_params.id 
+
+
+        Data::add($returningdict, $identifier);
+        Options::add(true, "ifnone_insert", $identifier);
+        Options::add(true, "multiple_inserts", $identifier);
+        Options::add($all_input_keys, "input_keys", $identifier);
+        Options::add($insertvalues, "insert_values", $identifier);
+    }
+
+    public static function makeDynamic($fetched_result, $featured_content_id, $identifier, $user_id=0)
+    {
+        // data needs to be from 'DESCRIBE tablename' SQL query
+
+        $returningdict = $fetched_result;
+        // exit( json_encode( $returningdict ) );
+
+
+        //start new
+
+        $query = '
+		SELECT customdata_params.*
+		FROM customdata_params
+			INNER JOIN custom_data
+				ON customdata_params.custom_param_classid=custom_data.custom_param_classid
+					AND customdata_params.featured_content_id=custom_data.featured_content_id
+					AND customdata_params.featured_content_id=?
+					GROUP BY customdata_params.id
 					ORDER BY customdata_params.custom_param_classid ASC';
-		$values = [ $featured_content_id ];
-		$type = 'select';
-		$customparamdict = CustomData::call( "DBClasses", "querySQL", [$query, $values, $type] )[1];
-		// exit( json_encode( $customparamdict ) );
+        $values = [ $featured_content_id ];
+        $type = 'select';
+        $customparamdict = CustomData::call("DBClasses", "querySQL", [$query, $values, $type])[1];
+        // exit( json_encode( $customparamdict ) );
 
-		$customparam_keyvalues = [];
-		foreach ($customparamdict as $key) {
-			if( !isset( $customparam_keyvalues[$key['custom_param_classid']] ) ) {
-				$customparam_keyvalues[$key['custom_param_classid']] = [];
-			}
-			array_push( $customparam_keyvalues[$key['custom_param_classid']], $key );
-		}
+        $customparam_keyvalues = [];
+        foreach ($customparamdict as $key) {
+            if (!isset($customparam_keyvalues[$key['custom_param_classid']])) {
+                $customparam_keyvalues[$key['custom_param_classid']] = [];
+            }
+            array_push($customparam_keyvalues[$key['custom_param_classid']], $key);
+        }
 
-		$customparam_i = 0;
-		$all_input_keys = [];
-		$inputs = [];
-		// exit( json_encode( $customparamdict ) );
-		foreach ($customparam_keyvalues as $input) {
-			$input_keys = [];
-			$inputdict = [];
-			foreach ($input as $dict) {
-				$inputdict[ $dict['key_string'] ] = $dict['value_string'];
-				$inputdict['type'] = $dict['type_string'];
-				// exit( json_encode( $inputdict['type'] ) );
-			}
-			// exit( json_encode( $returningdict['value'] ) );
-			// exit( json_encode( $input[0] ) );
-			$input_keys["value_string"] = [
-				"labeltext"=>Data::getValue($inputdict, "labeltext"),
-				"placeholder"=>Data::getValue($inputdict, "placeholder"),
-				"field_value"=>Data::getValue($inputdict, "value"),
-				"type"=>Data::getValue($inputdict, "type"),
-				"field_index"=>$customparam_i
-			];
+        $customparam_i = 0;
+        $all_input_keys = [];
+        $inputs = [];
+        // exit( json_encode( $customparamdict ) );
+        foreach ($customparam_keyvalues as $input) {
+            $input_keys = [];
+            $inputdict = [];
+            foreach ($input as $dict) {
+                $inputdict[ $dict['key_string'] ] = $dict['value_string'];
+                $inputdict['type'] = $dict['type_string'];
+                // exit( json_encode( $inputdict['type'] ) );
+            }
+            // exit( json_encode( $returningdict['value'] ) );
+            // exit( json_encode( $input[0] ) );
+            $input_keys["value_string"] = [
+                "labeltext"=>Data::getValue($inputdict, "labeltext"),
+                "placeholder"=>Data::getValue($inputdict, "placeholder"),
+                "field_value"=>Data::getValue($inputdict, "value"),
+                "type"=>Data::getValue($inputdict, "type"),
+                "field_index"=>$customparam_i
+            ];
 
-			$input_keys["user_id"] = ["type"=>"hidden", "field_value"=>$user_id];
-			$input_keys["featured_content_id"] = ["type"=>"hidden", "field_value"=>$featured_content_id];//;
-			$input_keys["custom_param_classid"] =  ["type"=>"hidden", "field_value"=>$input[0]['custom_param_classid']];
+            $input_keys["user_id"] = ["type"=>"hidden", "field_value"=>$user_id];
+            $input_keys["featured_content_id"] = ["type"=>"hidden", "field_value"=>$featured_content_id];//;
+            $input_keys["custom_param_classid"] =  ["type"=>"hidden", "field_value"=>$input[0]['custom_param_classid']];
 
-			array_push( $all_input_keys, $input_keys );
+            array_push($all_input_keys, $input_keys);
 
-			// array_push( $inputs, $returningdict['value'] );
-			$customparam_i++;
+            // array_push( $inputs, $returningdict['value'] );
+            $customparam_i++;
+        }
+        // $returningdict['value'] = $inputs;
+        // exit( json_encode( $returningdict ) );
+        // exit( json_encode( $customparam_keyvalues ) );
+        // done new
 
-		}
-		// $returningdict['value'] = $inputs;
-		// exit( json_encode( $returningdict ) );
-		// exit( json_encode( $customparam_keyvalues ) );
-		// done new
-
-		Data::addData( $returningdict, $identifier );
-			// Data::addOption( true, "ifnone_insert", $identifier );
-			Data::addOption( true, "multiple_updates", $identifier );
-			Data::addOption( $all_input_keys, "input_keys", $identifier );
-
-	}
+        Data::add($returningdict, $identifier);
+        // Options::add( true, "ifnone_insert", $identifier );
+        Options::add(true, "multiple_updates", $identifier);
+        Options::add($all_input_keys, "input_keys", $identifier);
+    }
 
 
-	public static function addJSClassToForm( $identifier, $viewdict, $input_onlykeys, $original_data_id ) {
+    public static function addJSClassToForm($identifier, $viewdict, $input_onlykeys, $original_data_id)
+    {
+        ob_start();
 
-		ob_start();
+        if (!isset($viewoptions['ifnone_insert'])) {
+            $ifnone_insert = false;
+        } else {
+            $ifnone_insert = $viewoptions['ifnone_insert'];
+        }
 
-			if( !isset( $viewoptions['ifnone_insert'] ) ){
-				$ifnone_insert = false;
-			}else{
-				$ifnone_insert = $viewoptions['ifnone_insert'];
-			}
+        if (!isset($viewoptions['multiple_inserts'])) {
+            $multiple_inserts = false;
+        } else {
+            $multiple_inserts = $viewoptions['multiple_inserts'];
+        }
 
-			if( !isset( $viewoptions['multiple_inserts'] ) ){
-				$multiple_inserts = false;
-			}else{
-				$multiple_inserts = $viewoptions['multiple_inserts'];
-			}
+        if (!isset($viewoptions['multiple_updates'])) {
+            $multiple_updates = false;
+        } else {
+            $multiple_updates = $viewoptions['multiple_updates'];
+        }
 
-			if( !isset( $viewoptions['multiple_updates'] ) ){
-				$multiple_updates = false;
-			}else{
-				$multiple_updates = $viewoptions['multiple_updates'];
-			}
+        if (!isset($viewoptions['formaction'])) {
+            $formaction = '/edit_view.php';
+        } else {
+            $formaction = $viewoptions['formaction'];
+        }
 
-			if( !isset( $viewoptions['formaction'] ) ){
-				$formaction = '/edit_view.php';
-			}else{
-				$formaction = $viewoptions['formaction'];
-			}
+        if (isset($viewdict['formtitle'])) {
+            unset($viewdict['formtitle']);
+        }
 
-			if( isset( $viewdict['formtitle'] ) ) {
-				unset( $viewdict['formtitle'] );
-			}
+        $steps = 1;
+        $onstep = 1; ?>
 
-			$steps = 1;
-			$onstep = 1;
-		?>
-
-			<?php if( $steps == $onstep ) { ?>
+			<?php if ($steps == $onstep) {
+            ?>
 
 				var viewdict = <?php echo json_encode($viewdict) ?>;
 				var input_keys = <?php echo json_encode($input_onlykeys) ?>;
-				var typearray = <?php echo json_encode( ReusableClasses::getTypeArray( $input_onlykeys ) ) ?>;
-				var dataarray = <?php echo json_encode( Data::getFullArray( $viewdict ) ) ?>;
-				var formatteddata = <?php echo json_encode( Data::retrieveDataWithID( $original_data_id ) ) ?>;
+				var typearray = <?php echo json_encode(Form::getTypeArray($input_onlykeys)) ?>;
+				var dataarray = <?php echo json_encode(Data::getFullArray($viewdict)) ?>;
+				var formatteddata = <?php echo json_encode(Data::get($original_data_id)) ?>;
 				var identifier = "<?php echo $identifier ?>";
 
 				class <?php echo $identifier ?>Classes {
 					populateview( index=null ){
 					<?php $insert_values = [];
-					if( isset($viewoptions['insert_values']) ) {
-						$insert_values = $viewoptions["insert_values"];
-					}
-					?>
+            if (isset($viewoptions['insert_values'])) {
+                $insert_values = $viewoptions["insert_values"];
+            } ?>
 						var multiple_updates = "<?php echo $multiple_updates ?>";
 						var multiple_inserts = "<?php echo $multiple_inserts ?>";
 						var insert_values = <?php echo json_encode($insert_values) ?>;
@@ -357,9 +345,8 @@ class Form {
 						var newinput_keys = [];
 						var newtypearray = [];
 						var newinsertvalues = [];
-						var typearray = <?php echo json_encode( ReusableClasses::getTypeArray( $input_onlykeys, $multiple_updates ) ) ?>;
+						var typearray = <?php echo json_encode(Form::getTypeArray($input_onlykeys, $multiple_updates)) ?>;
 						if( multiple_inserts ) {
-							console.log(JSON.stringify(input_keys))
 							for (var i = 0; i < input_keys.length; i++) {
 								if( i!=0 && input_keys[i]=="value_string" ) {
 									newinput_keys.push(false)
@@ -375,30 +362,86 @@ class Form {
 							insert_values = newinsertvalues
 						}
 
-						var dataarray = <?php echo json_encode( Data::getFullArray( $viewdict ) ) ?>;
-						// console.log( 'INPUT KEYS: ' + JSON.stringify(input_keys) )
-						var formatteddata = <?php echo json_encode( Data::retrieveDataWithID( $original_data_id ) ) ?>;
+						var dataarray = <?php echo json_encode(Data::getFullArray($viewdict)) ?>;
+						var formatteddata = <?php echo json_encode(Data::get($original_data_id)) ?>;
 						var identifier = "<?php echo $identifier ?>";
 						Reusable.setinputvalues( viewdict, input_keys, identifier, typearray, dataarray, formatteddata, index, multiple_updates, insert_values )
 
-						<?php if( $steps > 1 ) { ?>
+						<?php if ($steps > 1) {
+                ?>
 							$('.<?php echo $identifier ?> .main_with_hidden.next').css({'display': 'inline-block'});
 							$('.<?php echo $identifier ?> .main_with_hidden.save').css({'display': 'none'});
-						<?php } else { ?>
+						<?php
+            } else {
+                ?>
 							$('.<?php echo $identifier ?> .main_with_hidden.save').css({'display': 'inline-block'});
 							$('.<?php echo $identifier ?> .main_with_hidden.next').css({'display': 'none'});
-						<?php } ?>
+						<?php
+            } ?>
 					}
 				}
 
-				
 
-			<?php } ?>
+
+			<?php
+        } ?>
 
 		<?php
-		$output = ob_get_contents();
-		ob_end_clean();
-		return $output;
-	}
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
 
+    public static function getTypeArray($input_onlykeys, $multiple_updates=false)
+    {
+        $typearray = [];
+
+        if ($multiple_updates) {
+        }
+        $i=0;
+        foreach ($input_onlykeys as $k) {
+            if ($k == "download_script") {
+                array_push($typearray, 'copybutton_1');
+            } else {
+                if ($multiple_updates) {
+                    $typearray = Input::getInputTypes();
+                    break;
+                } else {
+                    $inputtype = Input::getInputType($k);
+                    array_push($typearray, $inputtype);
+                }
+            }
+            $i = $i+5;
+        }
+
+        return $typearray;
+    }
+
+    public static function addDefaultInputKeys($key, $identifier)
+    {
+        if ($identifier != "") {
+            $viewoptions = Options::get($identifier . "_form");
+            $defaultinputkeys = Data::getValue($viewoptions, "default_input_keys");
+            if ($defaultinputkeys == "") {
+                $defaultinputkeys = [];
+                // exit( json_encode( $identifier."_form" ) );
+            }
+            $found = false;
+            foreach ($defaultinputkeys as $k) {
+                if ($k == $key) {
+                    $found = true;
+                }
+            }
+            if (!$found) {
+                array_push($defaultinputkeys, $key);
+            }
+            if ($identifier == "featured_table") {
+                if ($key != "html_text") {
+
+                    // exit( json_encode( $identifier . "_form" ) );
+                }
+            }
+            Options::add($defaultinputkeys, "default_input_keys", $identifier . "_form");
+        }
+    }
 }

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Reusables;
 
@@ -6,16 +6,7 @@ class PostInternal {
 
 	public static function place( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "PostInternal", $file, $identifier );
-		
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::place( "PostInternal", $file, $identifier );
 	}
 
 	public static function set( $file, $identifier )
@@ -24,14 +15,9 @@ class PostInternal {
 	}
 
 
-	public static function setincontainer( $file, $identifier )
+	public static function setInContainer( $file, $identifier )
 	{
-		Data::addInfo( 'PostInternal', 'viewtype', $identifier );
-		Data::addInfo( $file, 'file', $identifier );
-		Data::addInfo( $identifier, 'identifier', $identifier );
-
-		Views::addEditableParts( $identifier );
-		return PostInternal::make( $file, $identifier );
+		return View::setInContainer( "PostInternal", $file, $identifier );
 	}
 
 	public static function make( $file, $identifier )
@@ -41,9 +27,9 @@ class PostInternal {
 
 	// public static function make( $file, $identifier )
 	// {
-	// 	ReusableClasses::addfile( "postinternal", $file );
+	// 	Page::addAssetFile( "postinternal", $file );
 	// 	$View = View::factory( 'reusables/views/postinternal/' . $file );
-	// 	$data = Data::retrieveDataWithID( $identifier );
+	// 	$data = Data::get( $identifier );
 	// 	$View->set( 'postdict', $data );
 	// 	$View->set( 'identifier', $identifier );
 	// 	return $View->render();
@@ -53,16 +39,7 @@ class PostInternal {
 
 	public static function cplace( $file, $identifier )
 	{
-		$in_html = Page::inhtml();
-		if( $in_html ) {
-			CustomCode::end();
-		}
-
-		Views::addToQueue( "Custom/PostInternal", $file, $identifier );
-
-		if( $in_html ) {
-			CustomCode::start();
-		}
+		View::cplace( "PostInternal", $file, $identifier );
 	}
 
 	public static function cset( $file, $identifier )
@@ -72,5 +49,3 @@ class PostInternal {
 	}
 
 }
-
-

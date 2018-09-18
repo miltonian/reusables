@@ -11,7 +11,7 @@ if( isset($viewdict['value']) ){
 $i=0;
 foreach ($images as $im) {
 	if( isset($viewdict['value']) ){
-		$image = Data::formatCellWithDefaultData( $identifier , $i );
+		$image = RFormat::formatCellWithDefaultData( $identifier , $i );
 	}else{
 		$image = Data::getValue( $images, $i );
 	}
@@ -72,7 +72,7 @@ $optiontype = Data::getValue( $viewoptions, 'type' );
 
 		$('.gallery_preview.clicktoedit').click(function(e){
 			<?php
-				ReusableClasses::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
+				Editing::setUpEditingForSection( $viewdict, $viewoptions, $identifier );
 			?>
 		})
 
