@@ -288,7 +288,7 @@ class Views
         array_push(self::$viewidentifiers, $identifier);
 
         // Render the View object to a string then return it
-        if (Info::isCustomView($identifier)) {
+        if (Info::isCustomView($identifier) && strtolower(Info::viewtype($identifier)) != "custom/nav") {
             $arr_of_values = View::start( Info::fileAbsolutePath($identifier), $identifier );
             foreach($arr_of_values as $key=>$value) {
                 $View->set($key, $value);
