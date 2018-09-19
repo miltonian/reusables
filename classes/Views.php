@@ -239,6 +239,10 @@ class Views
     {
         Views::analyzeViewInputs($identifier);
 
+        // Get the view's data and options
+        $data = Data::get($identifier);
+        $options = Options::get($identifier);
+
         if ($viewtype == "wrapper" && $file != "wrapper_start" && $file != "wrapper_end") {
 
             // Wrappers & Structures are a little different from the other view types, so they have their own function for creating a View object and setting its parameters
@@ -263,9 +267,7 @@ class Views
                 $View = View::factory('reusables/views/' . $viewtype . '/' . $file);
             }
 
-            // Get the view's data and options
-            $data = Data::get($identifier);
-            $options = Options::get($identifier);
+            
 
             // This is custom code and will be removed soon
             $data = Views::makeViewIfCustom($file, $identifier, $viewtype, $tablenames, $children);
@@ -286,7 +288,18 @@ class Views
         array_push(self::$viewidentifiers, $identifier);
 
         // Render the View object to a string then return it
-        return $View->render();
+        if (Info::isCustomView($identifier)) {
+            $arr_of_values = View::start( Info::fileAbsolutePath($identifier), $identifier );
+            foreach($arr_of_values as $key=>$value) {
+                $View->set($key, $value);
+            }
+            echo $View->render();
+            return View::end( $data, $options, $identifier, Info::fileAbsolutePath($identifier), true );
+        } else {
+            return $View->render();
+        }
+
+        // return "";
     }
 
     public static function makeViewIfCustom($file, $identifier, $viewtype, $tablenames = [], $children = [])
@@ -342,7 +355,8 @@ class Views
                 $children = $dict["children"];
 
                 // Creates a View object and sets its parameters
-                echo Views::makeView($file, $identifier, $viewtype, $tablenames, $children = []);
+                echo Views::makeView($file, $identifier, $viewtype, $tablenames, $children);
+                // Views::makeView($file, $identifier, $viewtype, $tablenames, $children = []);
             }
         }
 

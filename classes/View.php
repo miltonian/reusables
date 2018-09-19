@@ -478,19 +478,26 @@ class View
         $output = ob_get_contents();
         ob_end_clean();
 
+        $code = "";
+
         extract(Convert::viewParamsToVars($identifier));
         foreach ($viewvalues as $key => $value) {
 
             $new_output = View::replaceReusableViews($output, $key, $value, $identifier);
 
-            echo $new_output;
+            $code .= $new_output;
         }
 
-        echo "</div>";
+        $code .= "</div>";
 
         if ($editable) {
+            ob_start();
             Editing::clickToEditSection($viewdict, $viewoptions, $identifier, $file);
+            $code .= ob_get_contents();
+            ob_end_clean();
         }
+
+        return $code;
     }
 
     public static function searchForReusableValues($output)

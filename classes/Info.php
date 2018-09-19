@@ -39,4 +39,28 @@ class Info {
         return $info['file'];
     }
 
+    public static function viewtype($identifier)
+    {
+        $info = Info::get($identifier);
+        return $info['viewtype'];
+    }
+
+    public static function fileAbsolutePath($identifier)
+    {
+        return BASE_DIR . "/vendor/miltonian/" . strtolower(Info::get($identifier)['viewtype']) . "/" . Info::file_name($identifier) . ".php";
+    }
+
+    public static function isCustomView($identifier)
+    {
+
+        $file = Info::viewtype($identifier);
+        $file_parts = explode("/", $file);
+        $first_part = $file_parts[0];
+        
+        if(strtolower($first_part) == "custom") {
+            return true;
+        }
+        return false;
+    }
+
 }
