@@ -26,7 +26,7 @@ class RFormat
 
   public static function formatCellWithDefaultData($data_id, $index)
   {
-      $data = self::retrieveDataWithID($data_id);
+      $data = Data::retrieveDataWithID($data_id);
       if (!isset($data['value'][$index])) {
           return null;
       }

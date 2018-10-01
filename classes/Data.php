@@ -93,7 +93,7 @@ class Data
 
     public static function getDefaultDataID($viewdict)
     {
-        if (self::isAssoc($viewdict)) {
+        if (Shortcuts::isAssoc($viewdict)) {
             $dict = $viewdict;
         } else {
             $dict = $viewdict[0];
@@ -440,7 +440,7 @@ class Data
     {
         $viewdict = Data::get($identifier);
         $viewoptions = Options::get($identifier);
-        
+
         if (isset($viewdict['value'])) {
             unset($viewdict['value']['data_id']);
             if (Shortcuts::isAssoc($viewdict['value'])) {
