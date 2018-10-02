@@ -416,7 +416,7 @@ class View
             $dict = Data::get($identifier);
         }
         $viewoptions = Options::get($identifier);
-        
+
         $pre_link = Data::getValue($viewoptions, "pre_slug");
         if ($pre_link == "") {
             $pre_link = Data::getValue($viewoptions, "pre_link");
@@ -430,7 +430,7 @@ class View
         if($dict == null) {
             $dict = Data::get($identifier);
         }
-        
+
         $pre_link = View::getPreLink($identifier, $dict);
         $link = View::getLink($identifier, $dict);
 
@@ -448,7 +448,7 @@ class View
             $dict = Data::get($identifier);
         }
         $viewoptions = Options::get($identifier);
-        
+
         $description = Data::getValue($dict, "html_text", $identifier);
         if ($description == "") {
             $description = Data::getValue($dict, "description", $identifier);
@@ -485,7 +485,14 @@ class View
 
             $new_output = View::replaceReusableViews($output, $key, $value, $identifier);
 
-            $code .= $new_output;
+            $pre_link = "";
+            $post_link = "";
+            if( Data::getValue($value, "linkpath", $identifier) != "#" || Data::getValue($value, "linkpath", $identifier) != "" ) {
+                $pre_link = "<a href=".Data::getValue($value, "linkpath", $identifier)." style=\"text-decoration: none\">";
+                $post_link = "</a>";
+            }
+
+            $code .= $pre_link . $new_output . $post_link;
         }
 
         $code .= "</div>";
@@ -513,9 +520,9 @@ class View
     public static function replaceReusableViews($output, $index, $dict, $identifier)
     {
         $reusable_values = View::searchForReusableValues($output);
-        
+
         foreach ($reusable_values as $reusable_value) {
-            
+
             // Trim and remove brackets to find the value key
             $value_key = str_replace("{{", "", $reusable_value);
             $value_key = str_replace("}}", "", $value_key);
@@ -533,7 +540,7 @@ class View
                 $links = Data::getValue($viewoptions, "links");
 
                 $links_html = "";
-                
+
                 // Generate html for links
                 if( $links != "" ) {
                     $links_html = "<div class=\"imagetext_inside links\">";
@@ -545,19 +552,15 @@ class View
 
                 $output = str_replace($reusable_value, $links_html, $output);
             } else {
-                if( Data::getValue($dict, "linkpath", $identifier) != "#" || Data::getValue($dict, "linkpath", $identifier) != "" ) {
-                    $pre_link = "<a href=".Data::getValue($dict, "linkpath", $identifier)." style=\"text-decoration: none\">";
-                }
+
                 $output = str_replace($reusable_value, Data::getValue( $dict, $value_key, $identifier ), $output);
-                if( Data::getValue($dict, "linkpath", $identifier) != "#" || Data::getValue($dict, "linkpath", $identifier) != "" ) {
-                    $pre_link = "</a>";
-                }
+
             }
         }
 
         return $output;
-        
+
     }
-      
+
 
 }
