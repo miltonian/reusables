@@ -62,7 +62,7 @@ if [ ! -d "custom" ]; then
 		touch config.php
 		touch db_pdo.php
 
-		echo "<?php 
+		echo "<?php
 
 // namespace Reusables\CustomData;
 
@@ -102,7 +102,7 @@ function return_db_config() {
 // --------------------------
 /* END: include/config.php */ ?>" > config.php;
 
-echo "<?php 
+echo "<?php
 
 // namespace Reusables\CustomData;
 
@@ -145,7 +145,7 @@ class DBClasses {
 	public \$PDO; // PHP Data Object
 	private \$cryptKey;
 
-	public function __construct() 
+	public function __construct()
 	{
 		\$this->cryptKey = \"Rxp45dn142etvQk9e17Oo3nx2xJKfkZs\";
 		\$odp = new db_pdo();
@@ -155,7 +155,7 @@ class DBClasses {
 	private function encryptIt( \$password )
 	{
 		\$encoded = base64_encode( mcrypt_encrypt( MCRYPT_RIJNDAEL_256, md5( \$this->cryptKey ), \$password, MCRYPT_MODE_CBC, md5( md5( \$this->cryptKey ) ) ) );
-		return( str_replace( '/', '', \$encoded ) ); 
+		return( str_replace( '/', '', \$encoded ) );
 	}
 
 	public static function example()
@@ -302,7 +302,7 @@ class AltoRouter {
 		\$this->setBasePath(\$basePath);
 		\$this->addMatchTypes(\$matchTypes);
 	}
-	
+
 	/**
 	 * Retrieves all routes.
 	 * Useful if you want to process or display routes.
@@ -394,7 +394,7 @@ class AltoRouter {
 
 		// Replace named parameters
 		\$route = \$this->namedRoutes[\$routeName];
-		
+
 		// prepend base path to route url again
 		\$url = \$this->basePath . \$route;
 
@@ -516,7 +516,7 @@ class AltoRouter {
 				}
 
 				\$optional = \$optional !== '' ? '?' : null;
-				
+
 				//Older versions of PCRE require the 'P' in (?P<named>)
 				\$pattern = '(?:'
 						. (\$pre !== '' ? \$pre : null)
@@ -586,6 +586,10 @@ require 'routing/AltoRouter.php';
 	require 'views/home.php';
 }, \"\");
 
+\$router->map( 'GET', '/index.php', function() {
+	header('Location: /');
+}, \"\");
+
 \$router->map( 'GET', '/[*:trailing]', function() {
 	global \$router, \$match;
 	require 'views/' . \$match['params']['trailing'] . '.php';
@@ -595,7 +599,7 @@ require 'routing/AltoRouter.php';
 
 // call closure or throw 404 status
 if( \$match && is_callable( \$match['target'] ) ) {
-	call_user_func_array( \$match['target'], \$match['params'] ); 
+	call_user_func_array( \$match['target'], \$match['params'] );
 } else {
 	// no route was matched
 	header( \$_SERVER[\"SERVER_PROTOCOL\"] . ' 404 Not Found');
@@ -680,7 +684,7 @@ Reusables\Form::makeInsertOnly( \"posts\", \"newpost_modal\" );
 Reusables\Data::add( \$adminbardict, \"adminbar\" );
 
 	if( \$loggedin ) {
-		
+
 		Reusables\Menu::set( \"horizontal\", \"adminbar\" );
 
 
@@ -824,7 +828,7 @@ cd ../../../../
 
 cd views
 touch home.php
-echo "<?php 
+echo "<?php
 
 require_once( BASE_DIR . '/structure/header.php' );
 
@@ -867,5 +871,5 @@ cd ../../../../../
 
 
 
-		
+
 fi
