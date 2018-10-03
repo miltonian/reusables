@@ -21,7 +21,7 @@ class Media
     {
         if ($dir == "") {
           if( Media::$uploads == Media::$uploads_relative ) {
-            Media::$uploads = Media::$base . Media::$uploads_relative;
+            Media::$uploads = rtrim(Media::$base, '/') . '/' . Media::$uploads_relative;
             return;
           } else {
             return;

@@ -22,6 +22,8 @@ class AWSClass {
     public static $keyname = '';
     public static $region = ''; //'us-east-1'
     public static $s3;
+    public static $AWS_ACCESS_KEY_ID = '';
+    public static $AWS_SECRET_ACCESS_KEY = '';
 
     public static function setBucket( $bucket )
     {
@@ -34,6 +36,18 @@ class AWSClass {
       AWSClass::$keyname = $keyname;
     }
 
+    public static function setAccessKey( $AWS_ACCESS_KEY_ID )
+    {
+      //*** Your Object Key ***
+      AWSClass::$AWS_ACCESS_KEY_ID = $AWS_ACCESS_KEY_ID;
+    }
+
+    public static function setSecretKey( $AWS_SECRET_ACCESS_KEY )
+    {
+      //*** Your Object Key ***
+      AWSClass::$AWS_SECRET_ACCESS_KEY = $AWS_SECRET_ACCESS_KEY;
+    }
+
     public static function setRegion( $region )
     {
       AWSClass::$region = $region;
@@ -42,15 +56,24 @@ class AWSClass {
         return;
       }
 
+      // Instantiate the S3 client with your AWS credentials
+      // $s3Client = S3Client::factory(array(
+      //     'credentials' => array(
+      //         'key'    => AWSClass::$AWS_ACCESS_KEY_ID,
+      //         'secret' => AWSClass::$AWS_SECRET_ACCESS_KEY,
+      //     )
+      // ));
       AWSClass::$s3 = new S3Client([
           'version' => 'latest',
-          'region'  => $region
+          'region'  => $region,
+          'key'    => AWSClass::$AWS_ACCESS_KEY_ID,
+          'secret' => AWSClass::$AWS_SECRET_ACCESS_KEY,
       ]);
     }
 
     public static function is_set()
     {
-      if( AWSClass::$bucket == '' || AWSClass::$keyname == '' || AWSClass::$region == '' ) {
+      if( AWSClass::$bucket == '' || AWSClass::$keyname == '' || AWSClass::$region == '' || AWSClass::$AWS_ACCESS_KEY_ID == '' || AWSClass::$AWS_SECRET_ACCESS_KEY == '' ) {
         return false;
       }
       return true;
@@ -65,18 +88,14 @@ class AWSClass {
         exit("missing s3 keyname");
       } else if ( AWSClass::$region == "" ) {
         exit("missing s3 region");
+      } else if ( AWSClass::$AWS_ACCESS_KEY_ID == "" ) {
+        exit("missing AWS_ACCESS_KEY_ID");
+      } else if ( AWSClass::$AWS_SECRET_ACCESS_KEY == "" ) {
+        exit("missing AWS_SECRET_ACCESS_KEY");
       }
-
-      // Prepare the upload parameters.
-      // $uploader = new MultipartUploader(AWSClass::$s3, $file, [
-      //     'bucket' => AWSClass::$bucket,
-      //     'key'    => AWSClass::$keyname
-      // ]);
 
       // Perform the upload.
       try {
-          // $result = $uploader->upload();
-          // echo "Upload complete: {$result['ObjectURL']}" . PHP_EOL;
           $result = AWSClass::$s3->upload(AWSClass::$bucket, Media::createFileName( $file ), fopen($file['tmp_name'], 'rb'), 'public-read');
 
           return $result['ObjectURL'];
