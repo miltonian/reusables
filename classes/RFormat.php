@@ -10,7 +10,7 @@ class RFormat
       $fetcheddata = [];
       $type = "in_dict";
 
-      if (self::isAssoc(self::$alldata[$dataid]['value'])) {
+      if (Shortcuts::isAssoc(self::$alldata[$dataid]['value'])) {
           $fetcheddata = self::$alldata[$dataid]['value'];
       } else {
           $fetcheddata = self::$alldata[$dataid]['value'][0];
