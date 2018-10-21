@@ -262,12 +262,21 @@ class Views
             if (substr($lowercased_viewtype, 0, strlen("custom")) === "custom") {
                 $arr = explode("/", $viewtype);
                 $viewtype = $arr[1];
-                $View = View::factory(Page::$customdir . $viewtype . '/' . $file);
+                if( file_exists(BASE_DIR . "/vendor/miltonian/" . Page::$customdir . $viewtype . '/' . $file . ".php") ) {
+                  // if custom view exists
+                  $View = View::factory(Page::$customdir . $viewtype . '/' . $file);
+                } else if( file_exists(BASE_DIR . "/vendor/miltonian/" . "vibrant/views/" . $viewtype . '/' . $file . ".php") ) {
+                  // if vibrant view exists
+                  $View = View::factory("vibrant/views/" . $viewtype . '/' . $file);
+                } else {
+                  // this view doesn't exist
+                  exit("this view doesnt exist: " . $viewtype . '/' . $file);
+                }
             } else {
                 $View = View::factory('reusables/views/' . $viewtype . '/' . $file);
             }
 
-            
+
 
             // This is custom code and will be removed soon
             $data = Views::makeViewIfCustom($file, $identifier, $viewtype, $tablenames, $children);
