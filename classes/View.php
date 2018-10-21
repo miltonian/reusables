@@ -553,7 +553,16 @@ class View
                 $output = str_replace($reusable_value, $links_html, $output);
             } else {
 
+              if( $value_key == "description" ) {
+                $description = Data::getValue( $dict, $value_key, $identifier );
+                if( $description == "" ) {
+                  $description = Data::getValue( $dict, "html_text", $identifier );
+                }
+                $output = str_replace($reusable_value, $description, $output);
+              } else {
+
                 $output = str_replace($reusable_value, Data::getValue( $dict, $value_key, $identifier ), $output);
+              }
 
             }
         }
