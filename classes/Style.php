@@ -43,7 +43,7 @@ class Style
             }
         }
     }
-	
+
 	// Default styling for a view
     public static function defaultView($file, $identifier, $viewvalues)
     {
@@ -106,6 +106,15 @@ class Style
             echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " ." . basename($file, ".php") . ".title { color: " . $text_color . " ; } ";
             echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " ." . basename($file, ".php") . ".subtitle { color: " . $text_color . " ; } ";
             echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " .description { color: " . $text_color . "; } ";
+            echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " p { color: " . $text_color . "; } ";
+            echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " h1 { color: " . $text_color . "; } ";
+            echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " h2 { color: " . $text_color . "; } ";
+            echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " h3 { color: " . $text_color . "; } ";
+            echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " h4 { color: " . $text_color . "; } ";
+            echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " h5 { color: " . $text_color . "; } ";
+            echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " h6 { color: " . $text_color . "; } ";
+            echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " label { color: " . $text_color . "; } ";
+            echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " a { color: " . $text_color . "; } ";
             echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " .link { color: " . $text_color . "; } ";
         } else {
             echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " ." . basename($file, ".php") . ".title { color: #333 ; } ";
