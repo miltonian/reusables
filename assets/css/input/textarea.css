@@ -1,9 +1,19 @@
 .textarea { display: inline-block; position: relative; margin: 0; padding: 0; float: left; /*width: 100%;*/ }
 	.textarea .basic_label.main .basic_label.title { padding-top: 20px; }
 	.textarea label { display: inline-block; position: relative; margin: 0; padding: 10px 0; width: calc(100% - 0px); font-weight: 600; font-size: 14px; }
-	.textarea textarea { display: inline-block; position: relative; margin: 0; padding: 10px; width: calc(100% - 20px); font-size: 14px; font-weight: 400; color: #333333; background-color: white; border: 1px solid #e0e0e0; border-radius: 5px; height: 100px; }
+	.textarea textarea { display: inline-block; position: relative; margin: 0; padding: 10px; width: calc(100% - 0px); font-size: 14px; font-weight: 400; color: #333333; background-color: white; border: 1px solid #e0e0e0; border-radius: 5px; height: 100px; }
 
 
-.textarea.size_small { width: calc(33% - 0px); padding-left: 0px; padding-right: 0px; }
+/* .textarea.size_small { width: calc(33% - 0px); padding-left: 0px; padding-right: 0px; }
 .textarea.size_medium { width: calc(50% - 0px); padding-left: 0px; padding-right: 0px; }
-.textarea.size_large { width: calc(100% - 0px); padding-left: 0px; padding-right: 0px; }
+.textarea.size_large { width: calc(100% - 0px); padding-left: 0px; padding-right: 0px; } */
+
+@media (min-width: 0px) {
+	.textarea.size_small, .textarea.size_medium, .textarea.size_large { width: calc(100% - 40px); padding-left: 20px; padding-right: 20px; }
+}
+
+@media (min-width: 768px) {
+	.textarea.size_small { width: calc(33% - 10px); padding-left: 5px; padding-right: 5px; }
+	.textarea.size_medium { width: calc(50% - 10px); padding-left: 5px; padding-right: 5px; }
+	.textarea.size_large { width: calc(100% - 10px); padding-left: 5px; padding-right: 5px; }
+}
