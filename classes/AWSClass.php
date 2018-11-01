@@ -66,8 +66,10 @@ class AWSClass {
       AWSClass::$s3 = new S3Client([
           'version' => 'latest',
           'region'  => $region,
-          'key'    => AWSClass::$AWS_ACCESS_KEY_ID,
-          'secret' => AWSClass::$AWS_SECRET_ACCESS_KEY,
+          'credentials' => array(
+            'key'    => AWSClass::$AWS_ACCESS_KEY_ID,
+            'secret' => AWSClass::$AWS_SECRET_ACCESS_KEY
+          )
       ]);
     }
 
