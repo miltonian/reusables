@@ -28,24 +28,32 @@ class AWSClass {
     public static function setBucket( $bucket )
     {
       AWSClass::$bucket = $bucket;
+
+      AWSClass::setCreds();
     }
 
     public static function setKeyName( $keyname )
     {
       //*** Your Object Key ***
       AWSClass::$keyname = $keyname;
+
+      AWSClass::setCreds();
     }
 
     public static function setAccessKey( $AWS_ACCESS_KEY_ID )
     {
       //*** Your Object Key ***
       AWSClass::$AWS_ACCESS_KEY_ID = $AWS_ACCESS_KEY_ID;
+
+      AWSClass::setCreds();
     }
 
     public static function setSecretKey( $AWS_SECRET_ACCESS_KEY )
     {
       //*** Your Object Key ***
       AWSClass::$AWS_SECRET_ACCESS_KEY = $AWS_SECRET_ACCESS_KEY;
+
+      AWSClass::setCreds();
     }
 
     public static function setRegion( $region )
@@ -56,20 +64,22 @@ class AWSClass {
         return;
       }
 
-      // Instantiate the S3 client with your AWS credentials
-      // $s3Client = S3Client::factory(array(
-      //     'credentials' => array(
-      //         'key'    => AWSClass::$AWS_ACCESS_KEY_ID,
-      //         'secret' => AWSClass::$AWS_SECRET_ACCESS_KEY,
-      //     )
-      // ));
+      AWSClass::setCreds();
+    }
+
+    public static function setCreds() {
+
+      if(AWSClass::is_set() == false) {
+        return;
+      }
+
       AWSClass::$s3 = new S3Client([
           'version' => 'latest',
-          'region'  => $region,
-          'credentials' => array(
+          'region'  => AWSClass::$region,
+          'credentials' => [
             'key'    => AWSClass::$AWS_ACCESS_KEY_ID,
             'secret' => AWSClass::$AWS_SECRET_ACCESS_KEY
-          )
+          ]
       ]);
     }
 
