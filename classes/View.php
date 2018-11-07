@@ -406,6 +406,12 @@ class View
         if ($link == "") {
             $link = Data::getValue($dict, "link", $identifier);
         }
+        if ($link == "") {
+            $link = Data::getValue($dict, "link_path", $identifier);
+        }
+        if ($link == "") {
+            $link = Data::getValue($dict, "linkpath", $identifier);
+        }
 
         return $link;
     }
@@ -563,7 +569,6 @@ class View
 
                 $output = str_replace($reusable_value, Data::getValue( $dict, $value_key, $identifier ), $output);
               }
-
             }
         }
 
