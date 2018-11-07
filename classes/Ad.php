@@ -34,29 +34,29 @@ class Ad {
 		shuffle($ads);
 		foreach ($ads as $a) {
 
-			if( isset( self::$ads_onpage[$a['id']] ) ) {
+			if( isset( self::$ads_onpage[$a['tempads.id']] ) ) {
 				continue;
 			}
 
 			$adsize = "";
-			if( isset( $a['adsize'] ) ) {
-				$adsize = $a['adsize'];
-			}else if( isset( $a['size'] ) ) {
-				$adsize = $a['size'];
+			if( isset( $a['tempads.adsize'] ) ) {
+				$adsize = $a['tempads.adsize'];
+			}else if( isset( $a['tempads.size'] ) ) {
+				$adsize = $a['tempads.size'];
 			}else{
 				exit("needs adsize or size key in ad (/classes/Ad.php)");
 			}
 
 			if( $size_needed == $adsize ) {
 				if( $position != null ) {
-					if( $a['position'] != $position) {
+					if( $a['tempads.position'] != $position) {
 						continue;
 					}
 				}
 				$adsonpage_ids = array_keys(self::$ads_onpage);
 				$matches_partner = false;
 				foreach ($adsonpage_ids as $ad_dict) {
-					if( $ad_dict['core_partner'] == $a['core_partner'] ) {
+					if( $ad_dict['core_partner'] == $a['tempads.core_partner'] ) {
 						$matches_partner = true;
 						break;
 					}
@@ -64,10 +64,10 @@ class Ad {
 				if( $matches_partner ) {
 					continue;
 				}
-				if( isset( $a['link_path'] ) && !isset( $a['link'] ) ) {
-					$a['link'] = $a['link_path'];
+				if( isset( $a['tempads.link_path'] ) && !isset( $a['tempads.link'] ) ) {
+					$a['link'] = $a['tempads.link_path'];
 				}
-				self::$ads_onpage[$a['id']] = $a;
+				self::$ads_onpage[$a['tempads.id']] = $a;
 				return $a;
 
 			}
