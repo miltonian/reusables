@@ -134,4 +134,7 @@ if( $help_modal != "" ) {
 </div>
 
 <script>
+<?php if( Data::getValue($viewoptions, "placeholder") == "none" ) { ?>
+	$('.<?php echo $identifier ?> :input').removeAttr('placeholder');
+<?php } ?>
 </script>
