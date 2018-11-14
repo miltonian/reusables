@@ -87,9 +87,11 @@ class Style
         echo " @media( min-width: 0px) { ";
         echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " ." . basename($file, ".php") . ".inner { width: 100%; }";
         echo " } ";
-        echo " @media( min-width: 768px) { ";
-        echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " ." . basename($file, ".php") . ".inner { width: " . ((1.0 / sizeof($viewvalues)) * 100) . "%; }";
-        echo " } ";
+        if( ReusableClasses::parentDir($file) != "gallery" ) {
+          echo " @media( min-width: 768px) { ";
+          echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " ." . basename($file, ".php") . ".inner { width: " . ((1.0 / sizeof($viewvalues)) * 100) . "%; }";
+          echo " } ";
+        }
 
         echo "@media (min-width: 0px) {";
           echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . ".main {";
