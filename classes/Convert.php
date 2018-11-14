@@ -72,7 +72,7 @@ class Convert
         } else {
             $convertkeys = $options['convert_keys'];
         }
-
+        $post = Convert::toViewTypeArray( $identifier, $post );
         $postkeys = array_keys($post);
 
         foreach ($postkeys as $k) {
@@ -95,6 +95,36 @@ class Convert
         }
 
         return $post;
+    }
+
+    public static function toViewTypeArray( $identifier, $array )
+    {
+        $viewtype = strtolower(basename(Info::viewtype($identifier)));
+
+        switch ($viewtype) {
+          case 'gallery':
+            return Convert::toGalleryArray( $identifier, $array );
+            break;
+
+          default:
+            return $array;
+            break;
+        }
+       return $array;
+    }
+
+    public static function toGalleryArray( $identifier, $array )
+    {
+      $new_array = [];
+      if( is_string($array) ) {
+        $new_array = ["imagepath"=>$array];
+        return $new_array;
+      }
+      foreach ($array as $key => $value) {
+        array_push($new_array, ["imagepath"=>$value]);
+      }
+
+      return $new_array;
     }
 
     public static function convertDataForArray($identifier, $index)
