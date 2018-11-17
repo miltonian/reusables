@@ -57,6 +57,9 @@ class Page
         // This javascript is meant to read before the body tag
         Page::add_pre_javascript();
 
+        // make page responsive styling
+        echo ' <meta name="viewport" content="width=device-width, initial-scale=1.0"> ';
+
         // echo the buffered contents captured earlier
         echo $viewoutput;
 
