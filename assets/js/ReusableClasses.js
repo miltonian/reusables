@@ -194,26 +194,74 @@ var editing_options_on = false
 				var thisdictvalue = Reusable.getInputDictValue(thisdict, index)
 				var key = Reusable.getValidKey(db_info, key)
 
+				var tablenames = dataarray[identifier]['db_info']['tablenames']
+				var first_key = Object.keys(tablenames)[0];
+				var tablename = tablenames[first_key]
+				// alert(JSON.stringify(tablename))
+				//gallery_form_featured_content.imagepath_input_0_file_image_image_container
+				var input_identifier = identifier + '_' + tablename + '.' + 'imagepath_input_'+(index)//+'_file_image_image_container'
+				var js_var = input_identifier.replace('.', '_');
+				var field_name_multiple = "fieldimage_multiple[" + index + "][field_value]";
+				var input_identifier_var = input_identifier.replace('.', '_')
+
+				for (var i = 0; i < 10; i++) {
+					$('#'+input_identifier_var+i+'_imglabel').remove()
+				}
+
 				if(typeof thisdictvalue === 'undefined'){
 					return
 				}
-
-			$('.' + identifier + ' .' + inputclass + ' #imglabel').css({'background-image': 'url("'+thisdictvalue[key]+'")'});
-				$('.' + identifier + ' .' + inputclass + ' .fieldvalue').val("");
-				$('.' + identifier + ' .' + inputclass + ' input.tablename').val(db_info['tablenames'][key]);
-				$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);
-				for (var i = 0; i < db_info['conditions'].length; i++) {
-					var conditions = db_info['conditions'];
-					// alert(JSON.stringify(conditions));
-					if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
-						conditions[i]['value'] = key;
-					}else{
-						// alert(JSON.stringify(thisdictvalue))
-						conditions[i]['value'] = thisdictvalue[conditions[i]['key']];
-					}
-					$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
-					$( '.' + identifier + ' .' + inputclass + ' input.conditionvalue_' + i ).val( conditions[i]['value'] );
+				if( typeof thisdictvalue[key] === 'undefined') {
+					return
 				}
+				if(thisdictvalue[key].indexOf(",") >= 0){
+					var images_array = thisdictvalue[key].split(",");
+					for(var a=0; a<images_array.length;a++){
+						var image_count = a;
+
+						if(a==0){
+							$('.' + identifier + ' .' + inputclass + ' #imglabel').css({'background-image': 'url("'+images_array[a]+'")'});
+							$('.' + identifier + ' .' + inputclass + ' .fieldvalue').val("");
+							$('.' + identifier + ' .' + inputclass + ' input.tablename').val(db_info['tablenames'][key]);
+							$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);
+							for (var i = 0; i < db_info['conditions'].length; i++) {
+								var conditions = db_info['conditions'];
+								// alert(JSON.stringify(conditions));
+								if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
+									conditions[i]['value'] = key;
+								}else{
+									conditions[i]['value'] = thisdictvalue[conditions[i]['key']];
+								}
+								$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
+								$( '.' + identifier + ' .' + inputclass + ' input.conditionvalue_' + i ).val( conditions[i]['value'] );
+							}
+						} else {
+
+							Reusable.changeMedia($('#gallery_form_featured_content\\.imagepath_input_'+(index)+'_input_to_add')[0], input_identifier, field_name_multiple, image_count-1, js_var)
+
+							$('#'+input_identifier_var+(image_count-1)+'_imglabel').css({'background-image': 'url("'+images_array[a]+'")'});
+						}
+					}
+
+				} else {
+					$('.' + identifier + ' .' + inputclass + ' #imglabel').css({'background-image': 'url("'+thisdictvalue[key]+'")'});
+					$('.' + identifier + ' .' + inputclass + ' .fieldvalue').val("");
+					$('.' + identifier + ' .' + inputclass + ' input.tablename').val(db_info['tablenames'][key]);
+					$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);
+					for (var i = 0; i < db_info['conditions'].length; i++) {
+						var conditions = db_info['conditions'];
+						// alert(JSON.stringify(conditions));
+						if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
+							conditions[i]['value'] = key;
+						}else{
+							// alert(JSON.stringify(thisdictvalue))
+							conditions[i]['value'] = thisdictvalue[conditions[i]['key']];
+						}
+						$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
+						$( '.' + identifier + ' .' + inputclass + ' input.conditionvalue_' + i ).val( conditions[i]['value'] );
+					}
+				}
+
 		}
 
 		updateWysi( dataarray, identifier, data_id, key, inputclass, db_key, index, fieldindex )
@@ -653,6 +701,7 @@ var editing_options_on = false
 			var multipleupdate_type_i = 0
 			for (var i = 0; i < input_keys.length; i++) {
 				var key = input_keys[i];
+
 				var db_info = []
 				if( typeof formatteddata['db_info'] === 'undefined' ) {
 					if( typeof formatteddata[0] === 'undefined' ) {
@@ -790,6 +839,48 @@ var editing_options_on = false
 
 		isEditingOptions() {
 			return editing_options_on
+		}
+
+		changeMedia(view, identifier, field_name_multiple, image_count, js_var) {
+
+			var next_image_count = image_count + 1;
+			var identifier_var = identifier.replace('.', '\\.')
+			// create the label for the image preview
+			var new_image = document.createElement("label");
+
+			if( typeof $('#'+identifier+'_file_image_image_container')[0] === 'undefined' ) {
+				// return
+			}
+			document.getElementById(identifier+'_file_image_image_container').appendChild(new_image);
+			new_image.classList.add("file_image");
+			new_image.classList.add("file_image_look");
+			$(new_image).prop({'for': identifier+image_count})
+			new_image.id = js_var+image_count+'_imglabel';
+
+			// create the input for the file
+			var image_input = document.createElement("input");
+			document.getElementById(identifier+'_file_image_image_inputs_container').appendChild(image_input);
+			image_input.classList.add("field_value");
+			image_input.classList.add(js_var+"_file_image_input");
+			$(image_input).prop({'type': 'file', 'name': field_name_multiple+'['+next_image_count+']'})
+			$(image_input).css({'visibility': 'hidden', 'z-index': '-1'})
+
+			$('#'+identifier_var+'_input_to_add')[0].id = identifier+image_count
+
+			image_input.id = identifier+'_input_to_add';
+
+			var for_prop = identifier+next_image_count;
+
+			Reusable.readthisURL(view, $(new_image), null, null);
+
+			$('#'+identifier_var+image_count).change(function(){
+
+				Reusable.readthisURL(this, $('#'+js_var+image_count+'_imglabel'), null, null);
+			})
+
+			$('.'+js_var+'_file_image_input').change(function(){
+				input_has_changed(this)
+			})
 		}
 
 

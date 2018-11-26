@@ -466,7 +466,9 @@ class View
     public static function start($file, $identifier)
     {
         $vars = Views::prepare($file, $identifier);
-
+if( $identifier == "gallery" ) {
+  // exit(json_encode($vars));
+}
         ob_start();
         Views::setContainerClass($file, $identifier);
         $output = ob_get_contents();
@@ -527,6 +529,7 @@ class View
     {
         $reusable_values = View::searchForReusableValues($output);
 
+        $multiple_images = [];
         foreach ($reusable_values as $reusable_value) {
 
             // Trim and remove brackets to find the value key
@@ -535,9 +538,21 @@ class View
             $value_key = trim($value_key, " ");
 
             if ($value_key == "container") {
+              if(Info::viewtype_base($identifier) == "gallery") {
+
+                $multiple_images = View::changeForDynamicMultiple($dict, $identifier, $output, $multiple_images, $reusable_value, $value_key);
+              }
                 $output = str_replace($reusable_value, Info::file_name($identifier) . " inner index_".$index." clicktoedit", $output);
             } else if ($value_key == "index") {
+              if( Info::viewtype_base($identifier) == "gallery" ) {
+
+                $multiple_images = View::changeForDynamicMultiple($dict, $identifier, $output, $multiple_images, $reusable_value, $value_key);
                 $output = str_replace($reusable_value, $index, $output);
+              } else {
+
+                $output = str_replace($reusable_value, $index, $output);
+              }
+
             } else if ($value_key == "links") {
 
                 $viewoptions = Options::get($identifier);
@@ -565,15 +580,73 @@ class View
                   $description = Data::getValue( $dict, "html_text", $identifier );
                 }
                 $output = str_replace($reusable_value, $description, $output);
+              } else if( Info::viewtype_base($identifier) == "gallery" && $value_key == "imagepath" ) {
+                $images = Data::getValue( $dict, "images", $identifier );
+                $multiple_images = View::changeForDynamicMultiple($dict, $identifier, $output, $multiple_images, $reusable_value, $value_key);
+
+                if( !isset($images[$index]['imagepath']) ){
+                  $output = str_replace($reusable_value, $images['images'][Data::getDefaultTableNameWithID($identifier).'.imagepath'], $output);
+                } else {
+                  $output = str_replace($reusable_value, $images[$index]['imagepath'], $output);
+                }
               } else {
 
                 $output = str_replace($reusable_value, Data::getValue( $dict, $value_key, $identifier ), $output);
               }
             }
         }
+        for ($i=0; $i < sizeof($multiple_images); $i++) {
+          if( $i==0 ) {
+            continue;
+          }
+          // $image_output = str_replace($reusable_value, $multiple_images[$i]['imagepath'], $output);
+          $output .= $multiple_images[$i];
+        }
 
         return $output;
 
+    }
+
+    public static function changeForDynamicMultiple($dict, $identifier, $output, $multiple_images, $reusable_value, $value_key) {
+      $replace_with_this_value = "";
+      if( Info::viewtype_base($identifier) != "gallery" ) {
+        return [];
+      }
+      $images = Data::getValue( $dict, "images", $identifier );
+      if( isset($images['images']) ) {
+        if( isset($images['images'][Data::getDefaultTableNameWithID($identifier).'.imagepath']) ) {
+          $imagepath_key = Data::getDefaultTableNameWithID($identifier).'.imagepath';
+        } else if( isset($images['images']['imagepath']) ) {
+          $imagepath_key = 'imagepath';
+        }
+        $images = explode(',', $images['images'][$imagepath_key]);
+      }
+      // Data::getDefaultTableNameWithID($identifier)
+      if( $identifier == "gallery" ) {
+        // exit(json_encode(($images)));
+      }
+      if(sizeof($images) > 0){
+        foreach ($images as $key => $value) {
+          if( $value_key == "container" ) {
+            $replace_with_this_value = Info::file_name($identifier) . " inner index_".$key." clicktoedit";
+          } else if( $value_key == "index" ) {
+            $replace_with_this_value = $key;
+          } else if( $value_key == "imagepath" ) {
+            if( $key == 0 && !isset($images[$key]['imagepath']) ) {
+              $replace_with_this_value = $images[$key];
+            } else {
+              $replace_with_this_value = $images[$key]['imagepath'];
+            }
+          }
+          if(isset($multiple_images[$key])){
+            $multiple_images[$key] = str_replace($reusable_value, $replace_with_this_value, $multiple_images[$key]);
+          } else {
+            array_push($multiple_images, str_replace($reusable_value, $replace_with_this_value, $output) );
+          }
+        }
+      }
+
+      return $multiple_images;
     }
 
 

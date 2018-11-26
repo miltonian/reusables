@@ -117,14 +117,35 @@ class Convert
     {
       $new_array = [];
       if( is_string($array) ) {
-        $new_array = ["imagepath"=>$array];
+        $new_array = ["images"=>["imagepath"=>$array]];
         return $new_array;
       }
       foreach ($array as $key => $value) {
-        array_push($new_array, ["imagepath"=>$value]);
+        if( is_string($key) ){
+          $base_key = explode(".", $key);
+          if( sizeof($base_key) > 1 ) {
+            $base_key = $base_key[1];
+          }
+          if( $key == "imagepath" || $base_key == "imagepath" ) {
+            if( sizeof(explode(",", $array[$key])) > 1 ) {
+              $images = explode(",", $array[$key]);
+              $new_array = [];
+              foreach ($images as $image) {
+                array_push($new_array, ["imagepath"=>$image]);
+              }
+              // exit(json_encode($new_array));
+              return ["images"=>$new_array];
+              break;
+            }
+          }
+          $new_array = ["images"=>$array];
+          // break;
+        } else {
+          array_push($new_array, ["images"=>["imagepath"=>$value]]);
+        }
       }
 
-      return $new_array;
+      return ["images"=>$new_array];
     }
 
     public static function convertDataForArray($identifier, $index)

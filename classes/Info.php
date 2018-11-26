@@ -45,6 +45,11 @@ class Info {
         return $info['viewtype'];
     }
 
+    public static function viewtype_base($identifier)
+    {
+      return basename(strtolower(Info::viewtype($identifier)));
+    }
+
     public static function fileAbsolutePath($identifier)
     {
         return BASE_DIR . "/vendor/miltonian/" . strtolower(Info::get($identifier)['viewtype']) . "/" . Info::file_name($identifier) . ".php";
@@ -56,7 +61,7 @@ class Info {
         $file = Info::viewtype($identifier);
         $file_parts = explode("/", $file);
         $first_part = $file_parts[0];
-        
+
         if(strtolower($first_part) == "custom") {
             return true;
         }

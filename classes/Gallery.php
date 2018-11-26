@@ -24,17 +24,6 @@ class Gallery {
 		return Views::makeView( $file, $identifier, "gallery" );
 	}
 
-	// public static function make( $file, $identifier )
-	// {
-	// 	Page::addAssetFile( "gallery", $file );
-	// 	$View = View::factory( 'reusables/views/gallery/' . $file );
-	// 	$data = Data::get( $identifier );
-	// 	$View->set( 'gallerydict', $data );
-	// 	$View->set( 'identifier', $identifier );
-	// 	return $View->render();
-	// }
-
-
 
 
 	// FOR CUSTOM VIEWS
