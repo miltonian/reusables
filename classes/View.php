@@ -584,10 +584,14 @@ if( $identifier == "gallery" ) {
                 $images = Data::getValue( $dict, "images", $identifier );
                 $multiple_images = View::changeForDynamicMultiple($dict, $identifier, $output, $multiple_images, $reusable_value, $value_key);
 
-                if( !isset($images[$index]['imagepath']) ){
+                if( !isset($images[$index]['imagepath']) && Data::getDefaultTableNameWithID($identifier) != "" ){
                   $output = str_replace($reusable_value, $images['images'][Data::getDefaultTableNameWithID($identifier).'.imagepath'], $output);
                 } else {
-                  $output = str_replace($reusable_value, $images[$index]['imagepath'], $output);
+                  if( isset($images[$index]) ) {
+                    $output = str_replace($reusable_value, $images[$index]['imagepath'], $output);
+                  } else {
+                    $output = str_replace($reusable_value, $images['imagepath'], $output);
+                  }
                 }
               } else {
 
