@@ -84,7 +84,7 @@ class Input {
 	// 	return $View->render();
 	// }
 
-	public static function fill( $dict, $key, $index, $type=null, $placeholder=null, $labeltext=null, $size=null, $parentclass=null, $selectoptions="", $multiple_updates=false, $multipleupdate_i=-1 )
+	public static function fill( $dict, $key, $index, $type=null, $placeholder=null, $labeltext=null, $size=null, $parentclass=null, $selectoptions="", $multiple=null, $multiple_updates=false, $multipleupdate_i=-1 )
 	{
 
 		if( !$type ){
@@ -172,7 +172,8 @@ class Input {
 			"is_currency"=>$iscurrency,
 			"is_hidden"=>$ishidden,
 			"is_button"=>$isbutton,
-			"size"=>$size
+			"size"=>$size,
+			"multiple"=>$multiple
 		];
 		// exit( json_encode( $inputdict ) );
 
@@ -423,6 +424,7 @@ class Input {
 			if( isset( $input_keydicts[ $ik ]['type'] ) ){ $type = $input_keydicts[ $ik ]['type']; }else{ $type = null; }
 			if( isset( $input_keydicts[ $ik ]['options'] ) ){ $selectoptions = $input_keydicts[ $ik ]['options']; }else{ $selectoptions = ""; }
 			if( isset( $input_keydicts[ $ik ]['size'] ) ){ $size = $input_keydicts[ $ik ]['size']; }else{ $size = ""; }
+			if( isset( $input_keydicts[ $ik ]['multiple'] ) ){ $multiple = $input_keydicts[ $ik ]['multiple']; }else{ $multiple = ""; }
 
 			$thekey = $ik;
 			if( is_numeric( $ik ) ){ $thekey = $input_keydicts[$ik]; }
@@ -435,7 +437,7 @@ class Input {
 			if( $steps == $s ){
 				ReusableClasses::setFormInputIndex( $identifier, $i );
 
-				$theinput = Input::fill( $data, $thekey, $i, $type, $placeholder, $labeltext, $size, $identifier, $selectoptions, $multiple_updates, $multipleupdate_i );
+				$theinput = Input::fill( $data, $thekey, $i, $type, $placeholder, $labeltext, $size, $identifier, $selectoptions, $multiple, $multiple_updates, $multipleupdate_i );
 				//asdfasdf
 
 				if( sizeof( $theinput ) == 2 ) {

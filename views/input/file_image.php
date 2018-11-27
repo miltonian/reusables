@@ -40,10 +40,13 @@ if( $labeltext == "" ) {
 }
 
 $is_multiple = Data::getValue( $viewdict, "multiple" );
-if( $labeltext == "" ) {
+if( $is_multiple == "" ) {
 	$is_multiple = Data::getValue( $viewoptions, "multiple" );
 }
-
+if( in_array($is_multiple, ["1", 1, "true", true, "yes"]) ) {
+	$is_multiple = true;
+}
+// exit(json_encode($identifier));
 
 // $field_name = "fieldarray[" . Data::getValue( $viewdict, 'field_index') . "][field_value]";
 $field_name = "fieldimage[" . Data::getValue( $viewdict, 'field_index') . "][field_value]";
@@ -75,7 +78,9 @@ $js_var = str_replace(".", "_", $identifier);
 		echo Header::make( "basic_label", $identifier . "_label" );
 	?>
 	<div id="<?php echo $identifier ?>_file_image_image_container">
-		<label class="<?php echo $identifier ?>_add_button file_image_add_image_button file_image_look" for='<?php echo $identifier ?>_input_to_add' id='<?php echo $identifier ?>_imglabel'><span class="file_image_plus_sign">&#43;</span></label>
+		<?php if($is_multiple) { ?>
+			<label class="<?php echo $identifier ?>_add_button file_image_add_image_button file_image_look" for='<?php echo $identifier ?>_input_to_add' id='<?php echo $identifier ?>_imglabel'><span class="file_image_plus_sign">&#43;</span></label>
+		<?php } ?>
 		<label class="file_image file_image_look" id='imglabel' for='<?php echo $identifier ?>_field_value' style="background-image: url('<?php echo Data::getValue( $viewdict,'background-image') ?>');"></label>
 	</div>
 	<div id="<?php echo $identifier ?>_file_image_image_inputs_container" class="file_image_image_inputs_container">
