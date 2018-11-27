@@ -110,11 +110,12 @@ $js_var = str_replace(".", "_", $identifier);
 	});
 	// $('.<?php echo $js_var ?>_file_image_input').change(function(){
 	$('.<?php echo $js_var ?>_file_image_input').change(function(){
-		input_has_changed(this, '<?php echo $identifier ?>')
+		var field_name_multiple = "fieldimage_multiple[<?php echo Data::getValue( $viewdict, 'field_index') ?>][field_value]";
+		input_has_changed(this, '<?php echo $identifier ?>', field_name_multiple )
 		// Reusable.changeMedia(this, identifier, '<?php echo $field_name_multiple ?>', <?php echo $js_var ?>_image_count, '<?php echo $js_var ?>');
 	})
 
-	function input_has_changed(view, identifier) {
+	function input_has_changed(view, identifier, field_name_multiple) {
 
 		identifier_var = identifier.replace('.', '\\.')
 
@@ -122,7 +123,7 @@ $js_var = str_replace(".", "_", $identifier);
 		if( view.id == identifier+'_field_value' ) {
 			Reusable.readthisURL(view, $('.'+identifier_var+'').find('#imglabel'), null, null);
 		} else if( view.id == identifier+'_input_to_add' ) {
-			Reusable.changeMedia(view, identifier, '<?php echo $field_name_multiple ?>', <?php echo $js_var ?>_image_count, '<?php echo $js_var ?>');
+			Reusable.changeMedia(view, identifier, field_name_multiple, <?php echo $js_var ?>_image_count, '<?php echo $js_var ?>');
 			<?php echo $js_var ?>_image_count++;
 		} else {
 

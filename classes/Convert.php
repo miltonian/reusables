@@ -107,10 +107,27 @@ class Convert
             break;
 
           default:
-            return $array;
+            return Convert::toDefaultArray( $identifier, $array );
             break;
         }
        return $array;
+    }
+
+    public static function toDefaultArray( $identifier, $array )
+    {
+      $imagepath = Data::getValue($array, "imagepath", $identifier);
+      if( sizeof( explode(",", $imagepath)) > 1 ) {
+
+        if(isset($array["imagepath"])) {
+          $imagepath_key = "imagepath";
+        } else {
+          $imagepath_key = Data::getDefaultTableNameWithID($identifier).".imagepath";
+        }
+        $imagepath = explode(",", $imagepath)[0];
+        $array[$imagepath_key] = $imagepath;
+      }
+
+      return $array;
     }
 
     public static function toGalleryArray( $identifier, $array )

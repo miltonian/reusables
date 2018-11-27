@@ -202,7 +202,8 @@ var editing_options_on = false
 				//gallery_form_featured_content.imagepath_input_0_file_image_image_container
 				var input_identifier = identifier + '_' + tablename + '.' + 'imagepath_input_'+(input_index)//+'_file_image_image_container'
 				var js_var = input_identifier.replace('.', '_');
-				var field_name_multiple = "fieldimage_multiple[" + index + "][field_value]";
+				// alert(JSON.stringify(input_index))
+				var field_name_multiple = "fieldimage_multiple[" + input_index + "][field_value]";
 				var input_identifier_var = input_identifier.replace('.', '_')
 
 				for (var i = 0; i < 10; i++) {
@@ -877,7 +878,7 @@ var editing_options_on = false
 			})
 
 			$('.'+js_var+'_file_image_input').change(function(){
-				input_has_changed(this, identifier)
+				input_has_changed(this, identifier, field_name_multiple)
 			})
 		}
 
