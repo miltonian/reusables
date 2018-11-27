@@ -107,20 +107,18 @@ $js_var = str_replace(".", "_", $identifier);
 		var identifier = "<?php echo $identifier ?>";
 		identifier = identifier.replace('.', '\\.')
 		Reusable.readthisURL(this, $('.'+identifier+'').find('#imglabel'), null, null);
-
 	});
 	// $('.<?php echo $js_var ?>_file_image_input').change(function(){
 	$('.<?php echo $js_var ?>_file_image_input').change(function(){
-		input_has_changed(this)
+		input_has_changed(this, '<?php echo $identifier ?>')
 		// Reusable.changeMedia(this, identifier, '<?php echo $field_name_multiple ?>', <?php echo $js_var ?>_image_count, '<?php echo $js_var ?>');
 	})
 
-	function input_has_changed(view) {
-		var identifier = "<?php echo $identifier ?>";
+	function input_has_changed(view, identifier) {
+
 		identifier_var = identifier.replace('.', '\\.')
 
 		// var next_image_count = <?php echo $js_var ?>_image_count + 1;
-// alert(JSON.stringify())
 		if( view.id == identifier+'_field_value' ) {
 			Reusable.readthisURL(view, $('.'+identifier_var+'').find('#imglabel'), null, null);
 		} else if( view.id == identifier+'_input_to_add' ) {
@@ -138,11 +136,12 @@ $js_var = str_replace(".", "_", $identifier);
 
 	});
 
-	$('#'+identifier+'_add_input').change(function(e){
 
-		var identifier = "<?php echo $identifier ?>";
-		Reusable.changeMedia(this, identifier, '<?php echo $field_name_multiple ?>', <?php echo $js_var ?>_image_count, '<?php echo $js_var ?>');
-		<?php echo $js_var ?>_image_count++;
-	});
+	// $('#'+identifier+'_input_to_add').change(function(e){
+	//
+	// 	var identifier = "<?php echo $identifier ?>";
+	// 	Reusable.changeMedia(this, identifier, '<?php echo $field_name_multiple ?>', <?php echo $js_var ?>_image_count, '<?php echo $js_var ?>');
+	// 	<?php echo $js_var ?>_image_count++;
+	// });
 
 </script>

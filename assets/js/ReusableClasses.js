@@ -849,10 +849,6 @@ var editing_options_on = false
 			// create the label for the image preview
 			var new_image = document.createElement("label");
 
-			if( typeof $('#'+identifier+'_file_image_image_container')[0] === 'undefined' ) {
-				// return
-			}
-
 			document.getElementById(identifier+'_file_image_image_container').appendChild(new_image);
 			new_image.classList.add("file_image");
 			new_image.classList.add("file_image_look");
@@ -881,7 +877,7 @@ var editing_options_on = false
 			})
 
 			$('.'+js_var+'_file_image_input').change(function(){
-				input_has_changed(this)
+				input_has_changed(this, identifier)
 			})
 		}
 
