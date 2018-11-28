@@ -102,7 +102,9 @@ $js_var = str_replace(".", "_", $identifier);
 <script>
 	var identifier = "<?php echo $identifier ?>";
 		identifier = identifier.replace('.', '\\.')
-	var <?php echo $js_var ?>_image_count = 0;
+	var js_var = '<?php echo $js_var ?>';
+	window[js_var+'_image_count'] = 0;
+
 	$('#'+identifier+'_field_value').change(function(){
 		var identifier = "<?php echo $identifier ?>";
 		identifier = identifier.replace('.', '\\.')
@@ -117,14 +119,13 @@ $js_var = str_replace(".", "_", $identifier);
 
 	function input_has_changed(view, identifier, field_name_multiple) {
 
-		identifier_var = identifier.replace('.', '\\.')
+		identifier_var = identifier.replace('.', '\\.');
+		var js_var = identifier.replace('.', '_');
 
-		// var next_image_count = <?php echo $js_var ?>_image_count + 1;
 		if( view.id == identifier+'_field_value' ) {
 			Reusable.readthisURL(view, $('.'+identifier_var+'').find('#imglabel'), null, null);
 		} else if( view.id == identifier+'_input_to_add' ) {
-			Reusable.changeMedia(view, identifier, field_name_multiple, <?php echo $js_var ?>_image_count, '<?php echo $js_var ?>');
-			<?php echo $js_var ?>_image_count++;
+			Reusable.changeMedia(view, identifier, field_name_multiple, window[identifier+'_image_count'], js_var);
 		} else {
 
 			var this_image_count = view.id.replace('<?php echo $js_var ?>', '')

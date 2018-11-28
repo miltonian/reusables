@@ -845,7 +845,7 @@ var editing_options_on = false
 
 		changeMedia(view, identifier, field_name_multiple, image_count, js_var) {
 
-			var next_image_count = image_count + 1;
+			var next_image_count = window[js_var+'_image_count'] + 1;
 			var identifier_var = identifier.replace('.', '\\.')
 			// create the label for the image preview
 			var new_image = document.createElement("label");
@@ -853,8 +853,8 @@ var editing_options_on = false
 			document.getElementById(identifier+'_file_image_image_container').appendChild(new_image);
 			new_image.classList.add("file_image");
 			new_image.classList.add("file_image_look");
-			$(new_image).prop({'for': identifier+image_count})
-			new_image.id = js_var+image_count+'_imglabel';
+			$(new_image).prop({'for': identifier+window[js_var+'_image_count']})
+			new_image.id = js_var+window[js_var+'_image_count']+'_imglabel';
 
 			// create the input for the file
 			var image_input = document.createElement("input");
@@ -864,7 +864,7 @@ var editing_options_on = false
 			$(image_input).prop({'type': 'file', 'name': field_name_multiple+'['+next_image_count+']'})
 			$(image_input).css({'visibility': 'hidden', 'z-index': '-1'})
 
-			$('#'+identifier_var+'_input_to_add')[0].id = identifier+image_count
+			$('#'+identifier_var+'_input_to_add')[0].id = identifier+next_image_count
 
 			image_input.id = identifier+'_input_to_add';
 
@@ -872,14 +872,17 @@ var editing_options_on = false
 
 			Reusable.readthisURL(view, $(new_image), null, null);
 
-			$('#'+identifier_var+image_count).change(function(){
+			$('#'+identifier_var+window[js_var+'_image_count']).change(function(){
 
-				Reusable.readthisURL(this, $('#'+js_var+image_count+'_imglabel'), null, null);
+				Reusable.readthisURL(this, $('#'+js_var+window[js_var+'_image_count']+'_imglabel'), null, null);
 			})
 
 			$('.'+js_var+'_file_image_input').change(function(){
 				input_has_changed(this, identifier, field_name_multiple)
 			})
+
+			// increment views image image
+			window[js_var+'_image_count'] = next_image_count;
 		}
 
 
