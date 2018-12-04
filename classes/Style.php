@@ -69,6 +69,7 @@ class Style
         $margin = Data::getValue($viewoptions, "margin");
         $width = Data::getValue($viewoptions, "width");
         $height = Data::getValue($viewoptions, "height");
+        $columns = Data::getValue($viewoptions, "columns");
 
         if ($image_size == "") {
             $image_size = "cover";
@@ -89,14 +90,18 @@ class Style
         echo " } ";
         if( ReusableClasses::parentDir($file) != "gallery" ) {
           echo " @media( min-width: 768px) { ";
-          echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " ." . basename($file, ".php") . ".inner { width: " . ((1.0 / sizeof($viewvalues)) * 100) . "%; }";
+            if( $columns == "" ) {
+              echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " ." . basename($file, ".php") . ".inner { width: " . ((1.0 / sizeof($viewvalues)) * 100) . "%; }";
+            } else {
+              echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " ." . basename($file, ".php") . ".inner { width: " . ((1.0 / intval($columns)) * 100) . "%; }";
+            }
           echo " } ";
         }
 
         echo "@media (min-width: 0px) {";
           echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . ".main {";
           if ($height != "") {
-              echo "min-height: " . $height . ";";
+              echo "min-height: " . $height . " !important;";
           }
           echo " } ";
         echo " } ";
@@ -104,9 +109,20 @@ class Style
         echo "@media (min-width: 768px) {";
           echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . ".main {";
           if ($height != "") {
-              echo "height: " . $height . ";";
+              // echo "height: " . $height . " !important;";
           }
           echo " } ";
+          echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " ." . basename($file, ".php") . ".inner { ";
+            if ($height != "") {
+              echo "height: " . $height . " !important;";
+            } else {
+              if( $columns == "" ) {
+                echo "height: " . strval(100 - ((25*sizeof($viewvalues)) - 25)) . "%;";
+              } else {
+                echo "height: " . strval(100 - ((25*intval($columns)) - 25)) . "%;";
+              }
+            }
+          echo "}";
         echo " } ";
 
         echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " ." . basename($file, ".php") . ".image { display: inline-block; position: relative; margin: 0; padding: 0; float: left; background-size: " . $image_size . "; background-repeat: no-repeat; background-position: center; border-radius: " . $image_corner_radius . " } ";

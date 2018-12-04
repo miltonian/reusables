@@ -204,6 +204,16 @@ class Data
                         $pair = $dict[ $key ];
                     } elseif (isset($dict['value'][ $key ])) {
                         $pair = $dict['value'][ $key ];
+                    } elseif (isset($dict['value'])) {
+                      if( isset($dict['value'][0]) ) {
+                        if( isset($dict['value'][0][$key]) ) {
+                          return $pair = $dict['value'][0][$key];
+                        }else {
+                          return "";
+                        }
+                      }else {
+                        return "";
+                      }
                     } else {
                         return "";
                     }

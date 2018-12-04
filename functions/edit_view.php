@@ -47,31 +47,34 @@ if( isset($fieldimages ) ) {
 			$filedict['size'] = $_FILES['fieldimage']['size'][ $indexes[$i] ]['field_value'];
 			array_push( $filesarray, $filedict );
 
-			$indexes_multiple = array_keys($_FILES['fieldimage_multiple']['name'][$i]['field_value']);
-			if( isset($_FILES['fieldimage_multiple']['name'][$i]) ) {
-				for ($m=0; $m < sizeof($_FILES['fieldimage_multiple']['name'][$i]['field_value']); $m++) {
-					$filedict_multiple = [];
-					if( $_FILES['fieldimage_multiple']['size'][$i]['field_value'][$indexes_multiple[$m]] > 0 ) {
+			if(isset($_FILES['fieldimage_multiple']['name'][$i])) {
+				$indexes_multiple = array_keys($_FILES['fieldimage_multiple']['name'][$i]['field_value']);
+				if( isset($_FILES['fieldimage_multiple']['name'][$i]) ) {
+					for ($m=0; $m < sizeof($_FILES['fieldimage_multiple']['name'][$i]['field_value']); $m++) {
+						$filedict_multiple = [];
+						if( $_FILES['fieldimage_multiple']['size'][$i]['field_value'][$indexes_multiple[$m]] > 0 ) {
 
-						$filedict_multiple['name'] = $_FILES['fieldimage_multiple']['name'][$i]['field_value'][$indexes_multiple[$m]];
-						$filedict_multiple['type'] = $_FILES['fieldimage_multiple']['type'][$i]['field_value'][$indexes_multiple[$m]];
-						$filedict_multiple['tmp_name'] = $_FILES['fieldimage_multiple']['tmp_name'][$i]['field_value'][$indexes_multiple[$m]];
-						$filedict_multiple['error'] = $_FILES['fieldimage_multiple']['error'][$i]['field_value'][$indexes_multiple[$m]];
-						$filedict_multiple['size'] = $_FILES['fieldimage_multiple']['size'][$i]['field_value'][$indexes_multiple[$m]];
+							$filedict_multiple['name'] = $_FILES['fieldimage_multiple']['name'][$i]['field_value'][$indexes_multiple[$m]];
+							$filedict_multiple['type'] = $_FILES['fieldimage_multiple']['type'][$i]['field_value'][$indexes_multiple[$m]];
+							$filedict_multiple['tmp_name'] = $_FILES['fieldimage_multiple']['tmp_name'][$i]['field_value'][$indexes_multiple[$m]];
+							$filedict_multiple['error'] = $_FILES['fieldimage_multiple']['error'][$i]['field_value'][$indexes_multiple[$m]];
+							$filedict_multiple['size'] = $_FILES['fieldimage_multiple']['size'][$i]['field_value'][$indexes_multiple[$m]];
 
 
-						if(!isset($filesarray_multiple[$i])) {
-							$filesarray_multiple[$i] = [];
+							if(!isset($filesarray_multiple[$i])) {
+								$filesarray_multiple[$i] = [];
+							}
+							array_push( $filesarray_multiple[$i], $filedict_multiple );
+						} else {
+							if(!isset($filesarray_multiple[$i])) {
+								$filesarray_multiple[$i] = [];
+							}
+							array_push( $filesarray_multiple[$i], $filedict_multiple );
 						}
-						array_push( $filesarray_multiple[$i], $filedict_multiple );
-					} else {
-						if(!isset($filesarray_multiple[$i])) {
-							$filesarray_multiple[$i] = [];
-						}
-						array_push( $filesarray_multiple[$i], $filedict_multiple );
 					}
 				}
 			}
+
 
 		}else{
 			array_push($filesarray, []);
