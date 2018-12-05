@@ -79,6 +79,7 @@ class Style
         }
 
         echo " <style> ";
+        echo " body a[href='#'] { color: black; } ";
         echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " ." . basename($file, ".php") . ".inner { display: inline-block; position: relative; margin: 0; padding: 0; float: left; background-size: " . $image_size . "; background-repeat: no-repeat; background-position: center; ";
         if ($height != "") {
             // echo "height: ".$height.";";
