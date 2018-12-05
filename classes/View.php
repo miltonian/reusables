@@ -495,7 +495,7 @@ if( $identifier == "gallery" ) {
 
             $pre_link = "";
             $post_link = "";
-            if( Data::getValue($value, "linkpath", $identifier) != "#" || Data::getValue($value, "linkpath", $identifier) != "" ) {
+            if( Data::getValue($value, "linkpath", $identifier) != "#" && Data::getValue($value, "linkpath", $identifier) != "" ) {
                 $pre_link = "<a href=".Data::getValue($value, "linkpath", $identifier)." style=\"text-decoration: none\">";
                 $post_link = "</a>";
             }
