@@ -150,6 +150,9 @@ class CustomCode {
 			$checkForViews_result = CustomCode::checkForViews( $output );
 			$output = CustomCode::replaceViews($checkForViews_result["output"], $reusable_view);
 		}
+
+		$checkForViews_result = CustomCode::checkForViews( $output );
+		CustomCode::replaceViews($checkForViews_result["output"], null);
 	}
 
 	public static function replaceViewOption( $output, $matches, $identifier, $option_name, $option_value, $recursive_output=null )

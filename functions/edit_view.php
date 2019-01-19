@@ -12,22 +12,10 @@
 // 	$baseurlminimal = "/";
 // }
 
-session_start();
-$loggedin = false;
-if( isset($_SESSION['login']) ) {
-		if( $_SESSION['login'][0] == 1 ) {
-			$logindict = $_SESSION['login'][1][0];
-		}
-}
 
-$login = DBClasses::querySQL('select * from admins where email=? and password=?', [$logindict['email'], $logindict['password']], 'select');
-if($login[0] == 1) {
-	$loggedin = true;
-}
-
-if( !$loggedin ) {
-	header('Location: /');
-	exit();
+if( Reusables\Auth::check() == false ) {
+		header('Location: /');
+		exit();
 }
 
 
