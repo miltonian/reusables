@@ -10,6 +10,7 @@ class Options {
 
 	protected static $alloptions = [];
 
+	// Options::get() gets all options for a view
 	public static function get($identifier)
 	{
 		if (is_array($identifier)) {
@@ -22,6 +23,7 @@ class Options {
 		}
 	}
 
+	// Options::add() add a single option to a view
 	public static function add($data, $key, $identifier)
 	{
 			if (!isset(Options::$alloptions[ $identifier ])) {
@@ -36,6 +38,7 @@ class Options {
 			Options::$alloptions[ $identifier ][ $key ] = $data;
 	}
 
+	// Options::addOptions() add all options to a view at once
 	public static function addOptions($data, $identifier)
 	{
 			if (!isset(Options::$alloptions[ $identifier ])) {
@@ -43,14 +46,7 @@ class Options {
 			}
 	}
 
-  public static function makeCellEditing( $identifier, $fullviewdict, $celltype ) {
-
-    $viewdict = Data::get( $identifier );
-    $viewoptions = Options::get( $identifier );
-
-
-  }
-
+	// Options::makeViewEditing() makes a view editable
   public static function makeViewEditing( $viewdict, $viewoptions, $identifier, $alwayseditable=false )
 	{
 
@@ -96,5 +92,12 @@ class Options {
 
 		Editing::getEditingFunctionsJS( $viewoptions, true ) ;
 	}
+
+	// Options::makeViewEditing() makes a cell inside of a table editable
+  public static function makeCellEditing( $identifier, $fullviewdict, $celltype ) {
+
+    $viewdict = Data::get( $identifier );
+    $viewoptions = Options::get( $identifier );
+  }
 
 }

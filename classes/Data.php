@@ -25,6 +25,7 @@ class Data
         Data::add($data, $identifier);
     }
 
+    // add data to view with identifier
 		public static function add($data, $identifier)
 		{
 			if (!is_array($data)) {
@@ -37,7 +38,7 @@ class Data
 			Views::addView($identifier);
 		}
 
-	// Options::add() is deprecated -- Use Options::add() instead
+  	// Options::add() is deprecated -- Use Options::add() instead
     public static function addOption($data, $key, $identifier)
     {
         Options::add($data, $key, $identifier);
@@ -79,7 +80,7 @@ class Data
         return Data::get( $identifier );
     }
 
-	// Options::retrieveOptionsWithID() is deprecated -- Use Options::get() instead
+  	// Options::retrieveOptionsWithID() is deprecated -- Use Options::get() instead
     public static function retrieveOptionsWithID($identifier)
     {
         return Options::get($identifier);

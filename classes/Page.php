@@ -35,10 +35,10 @@ class Page
         // Set analyze views to true
         Views::analyze(true);
 
-        // Loops through each view and combines its data and options to a new View object
+        // Loops through each reusable view and places them in a queue
         Views::setViews();
 
-        // Loops through each buffered view, creates the View object and sets its parameters
+        // Loops through each buffered view, creates the View object and sets its parameters like data and options
         $viewoutput = Views::makeViews();
 
         // include css files
@@ -79,28 +79,28 @@ class Page
         Page::addAdminBarEditButtonActions();
     }
 
+    // Page::addAdminBarEditButtonActions() Add the actions for the edit options and edit data buttons in the admin bar
     public static function addAdminBarEditButtonActions()
     {
-        // Add the actions for the edit options and edit data buttons in the admin bar
         echo "
-			<script>
-				$('.horizontal.main.adminbar.desktopnav.navbar-shadow .horizontal.button.edit_switch.wrapper  a.horizontal.topbar-button').click(function(e){
-					e.preventDefault()
-					Reusable.toggleEditing()
-				})
+    			<script>
+    				$('.horizontal.main.adminbar.desktopnav.navbar-shadow .horizontal.button.edit_switch.wrapper  a.horizontal.topbar-button').click(function(e){
+    					e.preventDefault()
+    					Reusable.toggleEditing()
+    				})
 
-				$('.horizontal.main.adminbar.desktopnav.navbar-shadow .horizontal.button.edit_options_switch.wrapper  a.horizontal.topbar-button').click(function(e){
-					e.preventDefault()
-					Reusable.toggleEditingOptions()
-				})
+    				$('.horizontal.main.adminbar.desktopnav.navbar-shadow .horizontal.button.edit_options_switch.wrapper  a.horizontal.topbar-button').click(function(e){
+    					e.preventDefault()
+    					Reusable.toggleEditingOptions()
+    				})
 
-			</script>
-		";
+    			</script>
+    		";
     }
 
+    // Page::defineJSReusableVar() Define the ReusableClasses class
     public static function defineJSReusableVar()
     {
-        // Define the ReusableClasses class
         echo "
         <script>
             if( typeof Reusable === 'undefined' ) {
@@ -141,29 +141,30 @@ class Page
         return Page::getParentAndPageName($page)['parent_dir'];
     }
 
+    // Page::addReusableJS() add js frameworks
     public static function addReusableJS($addjquery)
     {
         echo "
-			<script src='/vendor/miltonian/reusables/assets/js/ReusableClasses.js'></script>
-			<script src='/vendor/miltonian/reusables/assets/thirdparty/dropzone.js'></script>
-			<script>
+    			<script src='/vendor/miltonian/reusables/assets/js/ReusableClasses.js'></script>
+    			<script src='/vendor/miltonian/reusables/assets/thirdparty/dropzone.js'></script>
+    			<script>
 
-			if ( typeof ReusableClasses === 'function' ){
-				let Reusables = new ReusableClasses();
-				Reusables.addJQuery();
-			}
-			</script>
-		";
+    			if ( typeof ReusableClasses === 'function' ){
+    				let Reusables = new ReusableClasses();
+    				Reusables.addJQuery();
+    			}
+    			</script>
+    		";
 
         if ($addjquery) {
             echo "<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>";
 
             echo '<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-			<link rel="stylesheet" href="/resources/demos/style.css">
-			<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-			<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-			<link rel="stylesheet" href="/vendor/miltonian/reusables/assets/thirdparty/jquery.timepicker.css">
-			<script src="/vendor/miltonian/reusables/assets/thirdparty/jquery.timepicker.min.js"></script>';
+        			<link rel="stylesheet" href="/resources/demos/style.css">
+        			<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        			<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        			<link rel="stylesheet" href="/vendor/miltonian/reusables/assets/thirdparty/jquery.timepicker.css">
+        			<script src="/vendor/miltonian/reusables/assets/thirdparty/jquery.timepicker.min.js"></script>';
         }
     }
 
@@ -235,6 +236,7 @@ class Page
         echo Page::$addedjs;
     }
 
+    // Page::addEditor Add the wysiwig text editor for the forms
     public static function addEditor($addit)
     {
         if ($addit) {

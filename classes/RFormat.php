@@ -136,12 +136,18 @@ class RFormat
         return $returningdict;
     }
 
+    // RFormat::convertViewActions converts the appropriate classes to connect a modal or modals
     public static function convertViewActions($dict)
     {
+      // check if null
         if ($dict == null) {
             return [];
         }
+
+        // get buttons or actions from passed dictionary
         $action_key = RFormat::getViewActionKey($dict);
+
+        // account for empty actions
         $multiple = false;
         if ($action_key == '') {
             $actiondict = $dict;
@@ -150,18 +156,21 @@ class RFormat
             $multiple = true;
         }
 
+        // $multiple is in beta. don't worry about this for now
         if ($multiple) {
             $i=0;
             foreach ($actiondict as $action) {
-                // exit( json_encode( $action ) );
+
                 if (isset($action['modal']) || isset($action['help_modal'])) {
+
                     $actiondict[$i]['type'] = "modal";
                     $actionmodal = Data::getValue($action, 'modal');
                     if (!is_array($actionmodal) && $actionmodal != "") {
+
                         $new_actionmodal = [
-              "parentclass" => $actionmodal . "_wrapper",
-              "modalclass" => $actionmodal
-            ];
+                          "parentclass" => $actionmodal . "_wrapper",
+                          "modalclass" => $actionmodal
+                        ];
                         if (isset($action['help_modal'])) {
                             $actiondict[$i]['help_modal'] = $new_actionmodal;
                         } else {
@@ -169,51 +178,68 @@ class RFormat
                         }
                     }
                 }
+
                 if (isset($action['options_modal'])) {
+
                     $actiondict[$i]['options_type'] = "options_modal";
                     $actionmodal = Data::getValue($action, 'options_modal');
+
                     if (!is_array($actionmodal) && $actionmodal != "") {
+
                         $new_actionmodal = [
-              "parentclass" => $actionmodal . "_wrapper",
-              "modalclass" => $actionmodal
-            ];
+                          "parentclass" => $actionmodal . "_wrapper",
+                          "modalclass" => $actionmodal
+                        ];
                         $actiondict[$i]['options_modal'] = $new_actionmodal;
                     }
                 }
                 $i++;
             }
         } else {
+
             if (isset($actiondict['modal'])) {
+
+                // this connects a standard modal to a view or button
                 $actiondict['type'] = "modal";
                 $actionmodal = Data::getValue($actiondict, 'modal');
                 if (!is_array($actionmodal) && $actionmodal != "") {
+
                     $new_actionmodal = [
-              "parentclass" => $actionmodal . "_wrapper",
-              "modalclass" => $actionmodal
-            ];
+                      "parentclass" => $actionmodal . "_wrapper",
+                      "modalclass" => $actionmodal
+                    ];
 
                     $actiondict['modal'] = $new_actionmodal;
                 }
             } elseif (isset($actiondict['help_modal'])) {
+
+                // help_modal connects a help modal to a label
+                //    - will add a question mark next to a label and when you click on it, a modal will show
                 $actiondict['type'] = "modal";
                 $actionmodal = Data::getValue($actiondict, 'help_modal');
                 if (!is_array($actionmodal) && $actionmodal != "") {
+
                     $new_actionmodal = [
-              "parentclass" => $actionmodal . "_wrapper",
-              "modalclass" => $actionmodal
-            ];
+                      "parentclass" => $actionmodal . "_wrapper",
+                      "modalclass" => $actionmodal
+                    ];
 
                     $actiondict['help_modal'] = $new_actionmodal;
                 }
             }
+
             if (isset($actiondict['options_modal'])) {
+
+                // options_modal connects a view to the options modal
+                // the options modal allows users to edit a view's options without writing any code
                 $actiondict['options_type'] = "options_modal";
                 $actionmodal = Data::getValue($actiondict, 'options_modal');
                 if (!is_array($actionmodal) && $actionmodal != "") {
+
                     $new_actionmodal = [
-              "parentclass" => $actionmodal . "_wrapper",
-              "modalclass" => $actionmodal
-            ];
+                      "parentclass" => $actionmodal . "_wrapper",
+                      "modalclass" => $actionmodal
+                    ];
 
                     $actiondict['options_modal'] = $new_actionmodal;
                 }
@@ -231,6 +257,7 @@ class RFormat
 
     public static function getViewActionKey($dict)
     {
+
         $action_key = '';
         if (isset($dict['buttons'])) {
             $action_key = 'buttons';

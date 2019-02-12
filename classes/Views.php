@@ -260,25 +260,30 @@ class Views
 
             // Create the View object
             if (substr($lowercased_viewtype, 0, strlen("custom")) === "custom") {
+              // this is custom (this can also mean vibrant views)
                 $arr = explode("/", $viewtype);
                 $viewtype = $arr[1];
                 if( file_exists(BASE_DIR . "/vendor/miltonian/" . Page::$customdir . $viewtype . '/' . $file . ".php") ) {
+
                   // if custom view exists
                   $View = View::factory(Page::$customdir . $viewtype . '/' . $file);
                 } else if( file_exists(BASE_DIR . "/vendor/miltonian/" . "vibrant/views/" . $viewtype . '/' . $file . ".php") ) {
+
                   // if vibrant view exists
                   $View = View::factory("vibrant/views/" . $viewtype . '/' . $file);
                 } else {
+
                   // this view doesn't exist
                   exit("this view doesnt exist: " . $viewtype . '/' . $file);
                 }
             } else {
+              // this is a standard reusable views
                 $View = View::factory('reusables/views/' . $viewtype . '/' . $file);
             }
 
 
 
-            // This is custom code and will be removed soon
+            // ** This is custom code and will be removed soon **
             $data = Views::makeViewIfCustom($file, $identifier, $viewtype, $tablenames, $children);
 
             // Converts action keys from $options into a Reusable readable format
@@ -298,6 +303,7 @@ class Views
 
         // Render the View object to a string then return it
         if (Info::isCustomView($identifier) && strtolower(Info::viewtype($identifier)) != "custom/nav") {
+
             $arr_of_values = View::start( Info::fileAbsolutePath($identifier), $identifier );
             foreach($arr_of_values as $key=>$value) {
                 $View->set($key, $value);
@@ -305,6 +311,7 @@ class Views
             echo $View->render();
             return View::end( $data, $options, $identifier, Info::fileAbsolutePath($identifier), true );
         } else {
+            
             return $View->render();
         }
 
@@ -557,18 +564,6 @@ class Views
         Info::add($file, 'file', $identifier);
         Info::add($identifier, 'identifier', $identifier);
 
-        // if( $viewtype == "Section" && ($file == "smartform_inmodal" || $file == "smartform") ) {
-        //     array_push(
-        //         self::$formqueue,
-        //         [
-        //             "viewtype" => $viewtype,
-        //             "file" => $file,
-        //             "identifier" => $identifier,
-        //             "data"=>$data
-        //         ]
-        //     );
-        // } else {
-        // exit( json_encode( [$viewtype, $file, $identifier] ) );
         array_push(
             self::$queue,
             [
@@ -578,7 +573,6 @@ class Views
                 "data" => $data,
             ]
         );
-        // }
     }
 
     // Loops through each view and combines its data and options to a new View object
