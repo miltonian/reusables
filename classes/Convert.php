@@ -73,6 +73,9 @@ class Convert
             $convertkeys = $options['convert_keys'];
         }
         $post = Convert::toViewTypeArray( $identifier, $post );
+        if( !is_array($post) ) {
+          $post = [$post];
+        }
         $postkeys = array_keys($post);
 
         foreach ($postkeys as $k) {
