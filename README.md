@@ -22,6 +22,6 @@ $ sh vendor/miltonian/reusables/prepare_reusables.sh
 
 
 # Get Started
-[Get Started](http://reusables.online/get_started)
+[Get Started](http://reusables.online)
 
 
