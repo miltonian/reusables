@@ -181,11 +181,11 @@ class Style
         }
 
         if ($subtitle_size != "") {
-            echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " ." . basename($file, ".php") . ".subtitle { text-align: " . $subtitle_size . " !important ; } ";
+            echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " ." . basename($file, ".php") . ".subtitle { font-size: " . $subtitle_size . " !important ; } ";
         }
 
         if ($description_size != "") {
-            echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " .description { text-align: " . $description_size . " !important; } ";
+            echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " .description { font-size: " . $description_size . " !important; } ";
         }
 
         if ($title_color != "") {
