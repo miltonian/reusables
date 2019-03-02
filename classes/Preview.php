@@ -8,19 +8,19 @@ class Preview
     public static function isTrue($identifier)
     {
         $viewoptions = Options::get($identifier);
-        
+
         $preview = Data::getValue($viewoptions, "preview", $identifier);
 
         if ($preview == "true" || $preview) {
             return true;
-        } 
-        
+        }
+
         return false;
     }
-    
+
     public static function title($identifier, $dict=null)
     {
-        
+
         if($dict == null){
             $dict = Data::get($identifier);
         }
@@ -42,7 +42,7 @@ class Preview
         if($dict == null){
             $dict = Data::get($identifier);
         }
-        $dict = Data::get($identifier);
+        // $dict = Data::get($identifier);
         $viewoptions = Options::get($identifier);
 
         $description = View::getDescription($identifier, $dict);
