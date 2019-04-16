@@ -1,7 +1,7 @@
 <?php
 
 namespace Reusables;
-	
+
 
 
 
@@ -9,6 +9,8 @@ $size = Data::getValue( $viewdict, "size" );
 $labeltext = Data::getValue( $viewdict, "labeltext" );
 $placeholder = Data::getValue( $viewdict, "placeholder" );
 $field_value = Data::getValue( $viewdict, "field_value" );
+$height = Data::getValue( $viewdict, "height" );
+
 $is_smart = Data::getValue( $viewoptions, "is_smart" );
 if( $is_smart == "" ) {
 	$is_smart = true;
@@ -16,12 +18,24 @@ if( $is_smart == "" ) {
 	$is_smart = false;
 }
 
-if( $size == "" && $labeltext == "" && $placeholder=="" && $field_value == "" ) {
-
+if( $size == "" ) {
 	$size = Data::getValue( $viewoptions, "size" );
+}
+if( $labeltext == "" ) {
 	$labeltext = Data::getValue( $viewoptions, "labeltext" );
+}
+if( $placeholder == "" ) {
 	$placeholder = Data::getValue( $viewoptions, "placeholder" );
+}
+if( $field_value == "" ) {
 	$field_value = Data::getValue( $viewoptions, "field_value" );
+}
+
+if( $height == "" ) {
+	$height = Data::getValue( $viewoptions, "height");
+}
+if( $height == "" ) {
+	$height = '150';
 }
 
 if( $placeholder == "" ) {
@@ -66,10 +80,10 @@ if( $help_modal != "" ) {
 </style>
 
 <div class="viewtype_input <?php echo $identifier ?> wysi <?php echo $sizeclass ?>">
-	<?php 
+	<?php
 		Data::add( ["title" => $labeltext], $identifier . "_label" );
 		Options::add( $help_modal, "help_modal", $identifier . "_label" );
-		echo Header::make( "basic_label", $identifier . "_label" ); 
+		echo Header::make( "basic_label", $identifier . "_label" );
 	?>
 	<!-- <input type="text" class="field_value" placeholder="<?php /*echo $viewdict['placeholder']*/ ?>" value="<?php /*echo $viewdict['field_value']*/ ?>" name="fieldarray[<?php /*echo $viewdict['field_index']*/ ?>][field_value]"> -->
 	<textarea class="field_value" name='<?php echo $field_name ?>' id='<?php echo $field_id ?>' rows='10' cols='80'>
@@ -78,7 +92,8 @@ if( $help_modal != "" ) {
 	</textarea>
 	<script>
 		CKEDITOR.replace( '<?php echo $field_id ?>' );
-		CKEDITOR.config.height = '150' ;
+		CKEDITOR.config.height = '<?php echo $height ?>' ;
+		CKEDITOR.instances['<?php echo $field_id ?>'].setData( <?php echo json_encode($field_value) ?> );
 		$('.cke_editor img').css({'max-width': '100%'})
 	</script>
 
