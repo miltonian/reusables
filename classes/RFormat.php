@@ -43,6 +43,14 @@ class RFormat
       return $cell;
   }
 
+  public static function data($result, $default_table, $conditional_column="id")
+      {
+        $conditions = [
+          ["key"=>$conditional_column]
+        ];
+        return RFormat::toValueAndDBInfo($result, $conditions, $default_table);
+      }
+
     public static function toValueAndDBInfo($result, $conditions, $default_table, $customcolname=null)
     {
         if (sizeof($result) == 0) {
