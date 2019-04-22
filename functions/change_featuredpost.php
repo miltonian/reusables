@@ -1,6 +1,8 @@
 <?php
 
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+	session_start();
+}
 
 $loggedin = false;
 if( isset( $_SESSION['login'][0] ) ) {

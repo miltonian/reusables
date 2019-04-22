@@ -18,7 +18,9 @@ $hashed_password = $user_dict['password'];
 if( password_verify($password, $hashed_password) ) {
 
 	// need to set user session
-	session_start();
+  if (session_status() == PHP_SESSION_NONE) {
+  	session_start();
+  }
 	$_SESSION['login'] = $result;
 
 	if( isset( $_POST['goto'] ) ){

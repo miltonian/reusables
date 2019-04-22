@@ -636,7 +636,9 @@ Reusables\ReusableClasses::endpage( \"\", __FILE__ );" > login.php;
 
 echo "<?php
 
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+	session_start();
+}
 \$_SESSION = [];
 session_destroy();
 
@@ -649,7 +651,9 @@ touch header.php
 
 echo "<?php
 
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+	session_start();
+}
 
 \$loggedin = false;
 if( isset( \$_SESSION['login'][0] ) ) {
