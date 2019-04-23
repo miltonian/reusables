@@ -12,12 +12,10 @@
 // 	$baseurlminimal = "/";
 // }
 
-
 if( Reusables\Auth::check() == false ) {
 		header('Location: /');
 		exit();
 }
-
 
 // require_once('classes/classes.php');
 // require_once('vendor/miltonian/reusables/classes/Shortcuts.php');
@@ -139,9 +137,13 @@ if( isset($fieldimages ) ) {
 				// $result = $MainClasses->querySQL( $query, $values, $type );
 
 				$result = Reusables\CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
+
 				if( $result[0] == 1 ) {
-					if( isset( $result[1][0]['imagepath'] ) ) {
-						$current_imagepath = $result[1][0]['imagepath'];
+					// if( isset( $result[1][0]['imagepath'] ) ) {
+					// 	$current_imagepath = $result[1][0]['imagepath'];
+					// }
+					if( isset( $result[1][0][$fieldimages[$indexes[0]]['col_name']] ) ) {
+						$current_imagepath = $result[1][0][$fieldimages[$indexes[0]]['col_name']];
 					}
 				}
 			}
@@ -179,7 +181,6 @@ if( isset($fieldimages ) ) {
 	}
 
 
-
 	$i=0;
 	foreach ($filesarray as $file) {
 		if( sizeof($filesarray)==0){
@@ -197,24 +198,29 @@ if( isset($fieldimages ) ) {
 				if( sizeof($filesarray_multiple[$indexes[$i]]) > 0 ) {
 					$imagepath_array = [];
 					// $current_imagepath
-					$current_imagepaths = explode(",", $current_imagepath);
-					$current_imagepaths[0] = $imagepath;
-					$imagepaths_index = 1;
-					foreach ($filesarray_multiple[$indexes[$i]] as $file) {
-						if( isset($file['name']) ) {
-							if( isset($images_names[$file['name']]) ) {
-								break;
-							} else {
-								$images_names[$file['name']] = true;
+					$current_imagepaths = [];
+					if( isset($current_imagepath) ) {
+						$current_imagepaths = explode(",", $current_imagepath);
+						$current_imagepaths[0] = $imagepath;
+						$imagepaths_index = 1;
+						foreach ($filesarray_multiple[$indexes[$i]] as $file) {
+							if( isset($file['name']) ) {
+								if( isset($images_names[$file['name']]) ) {
+									break;
+								} else {
+									$images_names[$file['name']] = true;
+								}
 							}
+							if( isset($file['name']) ) {
+								$current_imagepaths[$imagepaths_index] = Reusables\Media::uploadImage( $file );
+							} else if( isset($current_imagepaths[$imagepaths_index]) ) {
+								$current_imagepaths[$imagepaths_index] = $current_imagepaths[$imagepaths_index];
+							}
+							$imagepaths_index++;
 						}
-						if( isset($file['name']) ) {
-							$current_imagepaths[$imagepaths_index] = Reusables\Media::uploadImage( $file );
-						} else if( isset($current_imagepaths[$imagepaths_index]) ) {
-							$current_imagepaths[$imagepaths_index] = $current_imagepaths[$imagepaths_index];
-						}
-						$imagepaths_index++;
 					}
+
+
 					$imagepath = "";
 					$imagepaths_index=0;
 					foreach ($current_imagepaths as $image) {
@@ -232,28 +238,32 @@ if( isset($fieldimages ) ) {
 			if( isset($filesarray_multiple[$indexes[$i]]) ) {
 				if( sizeof($filesarray_multiple[$indexes[$i]]) > 0 ) {
 					$imagepath_array = [];
-					// $current_imagepath
-					$current_imagepaths = explode(",", $current_imagepath);
-					$imagepaths_index = 1;
-					foreach ($filesarray_multiple[$indexes[$i]] as $file) {
-						if( isset($file['name']) ) {
-							if( isset($images_names[$file['name']]) ) {
-								break;
+					$current_imagepaths = [];
+					if( isset($current_imagepath) ) {
+						// $current_imagepath
+						$current_imagepaths = explode(",", $current_imagepath);
+						$imagepaths_index = 1;
+						foreach ($filesarray_multiple[$indexes[$i]] as $file) {
+							if( isset($file['name']) ) {
+								if( isset($images_names[$file['name']]) ) {
+									break;
+								} else {
+									$images_names[$file['name']] = true;
+								}
+							}
+
+							if( isset($file['name']) ) {
+								$current_imagepaths[$imagepaths_index] = Reusables\Media::uploadImage( $file );
 							} else {
-								$images_names[$file['name']] = true;
+								if(isset($current_imagepaths[$imagepaths_index])) {
+									$current_imagepaths[$imagepaths_index] = $current_imagepaths[$imagepaths_index];
+								}
 							}
-						}
 
-						if( isset($file['name']) ) {
-							$current_imagepaths[$imagepaths_index] = Reusables\Media::uploadImage( $file );
-						} else {
-							if(isset($current_imagepaths[$imagepaths_index])) {
-								$current_imagepaths[$imagepaths_index] = $current_imagepaths[$imagepaths_index];
-							}
+							$imagepaths_index++;
 						}
-
-						$imagepaths_index++;
 					}
+
 					$imagepath = "";
 					$imagepaths_index=0;
 					foreach ($current_imagepaths as $image) {
@@ -265,6 +275,7 @@ if( isset($fieldimages ) ) {
 					}
 				}
 			}
+
 			$fieldimages[$indexes[$i]]['field_value'] = $imagepath;
 		}
 		$i++;
@@ -300,7 +311,6 @@ if( isset($fieldimages ) ) {
 			}else{
 				$conditions = $fi['field_conditions'];
 			}
-
 			if( $conditions ) {
 				$whereclause = "";
 				$conditionvalues = [];
