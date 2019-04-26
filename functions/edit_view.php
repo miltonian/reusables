@@ -142,8 +142,13 @@ if( isset($fieldimages ) ) {
 					// if( isset( $result[1][0]['imagepath'] ) ) {
 					// 	$current_imagepath = $result[1][0]['imagepath'];
 					// }
-					if( isset( $result[1][0][$fieldimages[$indexes[0]]['col_name']] ) ) {
-						$current_imagepath = $result[1][0][$fieldimages[$indexes[0]]['col_name']];
+
+					$imagepath_key = $fieldimages[$indexes[0]]['col_name'];
+					if( explode(".", $imagepath_key) > 1 ) {
+						$imagepath_key = explode(".", $imagepath_key)[1];
+					}
+					if( isset( $result[1][0][$imagepath_key] ) ) {
+						$current_imagepath = $result[1][0][$imagepath_key];
 					}
 				}
 			}
