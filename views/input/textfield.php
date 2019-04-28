@@ -19,6 +19,7 @@ if( !isset($viewdict['field_conditions'] ) ){
 
 $is_currency = Data::getValue( $viewdict, "is_currency" );
 $is_hidden = Data::getValue( $viewdict, "is_hidden" );
+$is_password = Data::getValue( $viewdict, "is_password" );
 $size = Data::getValue( $viewdict, "size" );
 $labeltext = Data::getValue( $viewdict, "labeltext" );
 $placeholder = Data::getValue( $viewdict, "placeholder" );
@@ -30,10 +31,11 @@ if( $is_smart == "" ) {
 	$is_smart = false;
 }
 
-if( $is_currency == "" && $is_hidden == "" && $size == "" && $labeltext == "" && $placeholder=="" && $field_value == "" ) {
+if( $is_currency == "" && $is_hidden == "" && $is_password == "" && $size == "" && $labeltext == "" && $placeholder=="" && $field_value == "" ) {
 
 	$is_currency = Data::getValue( $viewoptions, "is_currency" );
 	$is_hidden = Data::getValue( $viewoptions, "is_hidden" );
+	$is_password = Data::getValue( $viewoptions, "is_password" );
 	$size = Data::getValue( $viewoptions, "size" );
 	$labeltext = Data::getValue( $viewoptions, "labeltext" );
 	$placeholder = Data::getValue( $viewoptions, "placeholder" );
@@ -112,7 +114,9 @@ if( $help_modal != "" ) {
 		<input type="text" class="field_value input_withaddon" placeholder="<?php echo $placeholder ?>" value="<?php echo $field_value ?>" name="<?php echo $field_name ?>" <?php echo $attributes ?> >
 	<?php } else if( $is_hidden ){ ?>
 		<input type="hidden" class="field_value" placeholder="<?php echo $placeholder ?>" value="<?php echo $field_value ?>" name="<?php echo $field_name ?>" <?php echo $attributes ?> >
-	<?php } else{ ?>
+	<?php } else if( $is_password ){ ?>
+		<input type="password" class="field_value" placeholder="<?php echo $placeholder ?>" value="<?php echo $field_value ?>" name="<?php echo $field_name ?>" <?php echo $attributes ?>>
+<?php } else{ ?>
 		<input type="text" class="field_value" placeholder="<?php echo $placeholder ?>" value="<?php echo $field_value ?>" name="<?php echo $field_name ?>" <?php echo $attributes ?>>
 	<?php } ?>
 
