@@ -16,7 +16,11 @@ class Style
             if ($parent_dir == "custom") {
                 $currentversion = CustomView::getCurrentVersion();
                 if ($currentversion) {
-                    $parent_dir = PROJECT_ROOT . "/vendor/miltonian/custom/" . $currentversion . "/css/views/";
+                    if( file_exists( PROJECT_ROOT . "/vendor/miltonian/vibrant/" . $currentversion . "/css/views/") ) {
+                      $parent_dir = PROJECT_ROOT . "/vendor/miltonian/vibrant/" . $currentversion . "/css/views/";
+                    } else {
+                      $parent_dir = PROJECT_ROOT . "/vendor/miltonian/custom/" . $currentversion . "/css/views/";
+                    }
                 } else {
                     $parent_dir = PROJECT_ROOT . Page::$customviewscss;
                 }
@@ -35,7 +39,15 @@ class Style
             }
 
             if (strpos($parent_dir, 'css/custom') !== false) {
+              // exit((PROJECT_ROOT . '/vendor/miltonian/vibrant/css/views/'.basename($parent_dir) .'/'. $file.'.css'));
+              if( file_exists(BASE_DIR . '/vendor/miltonian/vibrant/css/views/'.basename($parent_dir) .'/'. $file.'.css') ) {
+                $parent_dir = str_replace('miltonian/reusables/assets/css/custom', 'miltonian/vibrant/css/views', $parent_dir);
+              } else {
                 $parent_dir = str_replace('miltonian/reusables/assets/css/custom', 'miltonian/custom/css/views', $parent_dir);
+              }
+            }
+            if (strpos($parent_dir, 'css/vibrant') !== false) {
+                $parent_dir = str_replace('miltonian/reusables/assets/css/custom', 'miltonian/vibrant/css/views', $parent_dir);
             }
 
             if (file_exists(BASE_DIR . $parent_dir . $file . ".css")) {
@@ -55,6 +67,7 @@ class Style
         $text_color = Data::getValue($viewoptions, "text_color");
         $background_color = Data::getValue($viewoptions, "background_color");
         $image_size = Data::getValue($viewoptions, "image_size");
+        $image_position = Data::getValue($viewoptions, "image_position");
         $image_corner_radius = Data::getValue($viewoptions, "image_corner_radius");
         $text_align = Data::getValue($viewoptions, "text_align");
         $title_size = Data::getValue($viewoptions, "title_size");
@@ -74,13 +87,16 @@ class Style
         if ($image_size == "") {
             $image_size = "cover";
         }
+        if( $image_position == "" ) {
+          $image_position = "center";
+        }
         if ($image_corner_radius == "") {
             $image_corner_radius = 0;
         }
 
         echo " <style> ";
         echo " body a[href='#'] { color: black; } ";
-        echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " ." . basename($file, ".php") . ".inner { display: inline-block; position: relative; margin: 0; padding: 0; float: left; background-size: " . $image_size . "; background-repeat: no-repeat; background-position: center; ";
+        echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " ." . basename($file, ".php") . ".inner { display: inline-block; position: relative; margin: 0; padding: 0; float: left; background-size: " . $image_size . "; background-repeat: no-repeat; background-position: " . $image_position . "; ";
         if ($height != "") {
             // echo "height: ".$height.";";
         }
@@ -126,7 +142,7 @@ class Style
           echo "}";
         echo " } ";
 
-        echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " ." . basename($file, ".php") . ".image { display: inline-block; position: relative; margin: 0; padding: 0; float: left; background-size: " . $image_size . "; background-repeat: no-repeat; background-position: center; border-radius: " . $image_corner_radius . " } ";
+        echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " ." . basename($file, ".php") . ".image { display: inline-block; position: relative; margin: 0; padding: 0; float: left; background-size: " . $image_size . "; background-repeat: no-repeat; background-position: " . $image_position . "; border-radius: " . $image_corner_radius . " } ";
 
         if (Data::getValue($viewoptions, "dark") == "true" || Data::getValue($viewoptions, "dark") == true) {
             $text_color = "#fff";
@@ -181,11 +197,11 @@ class Style
         }
 
         if ($subtitle_size != "") {
-            echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " ." . basename($file, ".php") . ".subtitle { font-size: " . $subtitle_size . " !important ; } ";
+            echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " ." . basename($file, ".php") . ".subtitle { text-align: " . $subtitle_size . " !important ; } ";
         }
 
         if ($description_size != "") {
-            echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " .description { font-size: " . $description_size . " !important; } ";
+            echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " .description { text-align: " . $description_size . " !important; } ";
         }
 
         if ($title_color != "") {
