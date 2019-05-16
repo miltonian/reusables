@@ -3,3 +3,5 @@
 	.modal_background.maincolumn { position: relative; display: inline-block; margin: 0; padding: 0; z-index: 2; text-align: left; height: 100%; }
 
 	.modal_background .wrapper_1.main { max-width: 700px; max-height: 600px; top: 50%; transform: translateY(-50%); width: 600px; border-radius: 5px; box-shadow: 0px 0px 15px rgba(0,0,0,0.6) }
+
+	.modal_background .options_form_wrapper.main.wrapper_1 { max-width: 700px; max-height: 600px; top: 50%; transform: translateY(-50%); width: 200px !important; height: 400px; position: absolute; }

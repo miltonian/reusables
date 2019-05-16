@@ -28,6 +28,10 @@ if( !isset( $viewoptions['multiple_updates'] ) ){
 
 if( !isset( $viewoptions['formaction'] ) ){
 	if( $is_option_form ) {
+		echo "<style> .modal_background  .".$identifier."_wrapper.main.wrapper_1 { max-width: 700px; max-height: 600px; top: 50%; transform: translateY(-50%); width: 200px !important; height: 400px; position: absolute; left: 20px; box-shadow: 0px 0px 10px rgba(0,0,0,0.5); top: 100px !important; transform: none !important; } </style>";
+		echo "<style> .modal_background.".$identifier."_modalbackground.main .modal_background.maincolumn { width: 100%; } </style>";
+		echo "<style> .modal_background.".$identifier."_modalbackground.main .modal_background.overlay { background: transparent; } </style>";
+		// exit(json_encode(".modal_background  ".$identifier."_wrapper.main.wrapper_1"));
 		$formaction = '/edit_page_options.php';
 	} else {
 		$formaction = '/edit_view.php';
@@ -146,6 +150,12 @@ extract( Input::convertInputKeys( $identifier ) );
 			var <?php echo $identifier ?> = new <?php echo $identifier ?>Classes();
 			<?php echo $identifier ?>.populateview();
 		}
+
+			<?php if( $is_option_form ) { ?>
+
+
+
+			<?php } ?>
 
 	<?php } ?>
 

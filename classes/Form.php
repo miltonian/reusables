@@ -289,6 +289,8 @@ class Form
     {
         ob_start();
 
+        $viewoptions = Options::get($identifier);
+
         if (!isset($viewoptions['ifnone_insert'])) {
             $ifnone_insert = false;
         } else {
@@ -336,6 +338,70 @@ class Form
             if (isset($viewoptions['insert_values'])) {
                 $insert_values = $viewoptions["insert_values"];
             } ?>
+
+<?php if( isset($viewoptions['is_option_form']) ) { ?>
+  <?php if( $viewoptions['is_option_form'] == "1" ) { ?>
+
+    $('.<?php echo $identifier ?> input[type="text"]').on('input', function() {
+
+      <?php
+          $connected_identifier = str_replace("_options_form", "", $identifier);
+      ?>
+
+      console.log(JSON.stringify(input_class))
+
+      var input_class = $(this).parent().attr("class");
+      var container_class = ".<?php echo $connected_identifier ?>.viewtype_<?php echo Info::viewtype_base($connected_identifier) ?>.<?php echo Info::file_name($connected_identifier) ?>.main";
+
+      // container spacing
+      if( input_class.includes('padding') ) {
+        $('body').append( '<style> '+container_class+' { padding: '+$(this).val()+' !important; width: calc(100% - '+$(container_class).css("margin-left")+' - '+$(container_class).css("margin-left")+' - '+($(this).val()*2)+'px) !important; } </style>' );
+      } else if( input_class.includes('margin') ) {
+        $('body').append( '<style> '+container_class+' { margin: '+$(this).val()+' !important; width: calc(100% - '+$(container_class).css("padding-left")+' - '+$(container_class).css("padding-left")+' - '+($(this).val()*2)+'px) !important; } </style>' );
+      }
+
+      // text sizes
+      if( input_class.includes('_title') && input_class.includes('size') ) {
+        $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.title { font-size: '+$(this).val()+' !important;  } </style>' );
+      } else if( input_class.includes('subtitle') && input_class.includes('size') ) {
+        $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.subtitle { font-size: '+$(this).val()+' !important;  } </style>' );
+      } else if( input_class.includes('description') && input_class.includes('size') ) {
+        $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.description { font-size: '+$(this).val()+' !important;  } </style>' );
+      }
+
+      // text colors
+      if( input_class.includes('_text') && input_class.includes('color') ) {
+        $('body').append( '<style> '+container_class+' { color: '+$(this).val()+' !important;  } </style>' );
+      } else if( input_class.includes('_title') && input_class.includes('color') ) {
+        $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.title { color: '+$(this).val()+' !important;  } </style>' );
+      } else if( input_class.includes('subtitle') && input_class.includes('color') ) {
+        $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.subtitle { color: '+$(this).val()+' !important;  } </style>' );
+      } else if( input_class.includes('description') && input_class.includes('color') ) {
+        $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.description { color: '+$(this).val()+' !important;  } </style>' );
+      }
+
+      // text alignment
+      if( input_class.includes('_text') && input_class.includes('align') ) {
+        $('body').append( '<style> '+container_class+' { text-align: '+$(this).val()+' !important;  } </style>' );
+      } else if( input_class.includes('_title') && input_class.includes('align') ) {
+        $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.title { text-align: '+$(this).val()+' !important;  } </style>' );
+      } else if( input_class.includes('subtitle') && input_class.includes('align') ) {
+        $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.subtitle { text-align: '+$(this).val()+' !important;  } </style>' );
+      } else if( input_class.includes('description') && input_class.includes('align') ) {
+        $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.description { text-align: '+$(this).val()+' !important;  } </style>' );
+      }
+
+      // text spacing
+      if( input_class.includes('_text') && input_class.includes('offset_x') ) {
+        $('body').append( '<style> '+container_class+' .content_container { margin-left: '+$(this).val()+' !important;  } </style>' );
+      } else if( input_class.includes('_text') && input_class.includes('offset_y') ) {
+        $('body').append( '<style> '+container_class+' .content_container { margin-top: '+$(this).val()+' !important;  } </style>' );
+      }
+    });
+  <?php } ?>
+<?php } ?>
+
+
 						var multiple_updates = "<?php echo $multiple_updates ?>";
 						var multiple_inserts = "<?php echo $multiple_inserts ?>";
 						var insert_values = <?php echo json_encode($insert_values) ?>;
