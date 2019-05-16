@@ -352,6 +352,7 @@ class Form
 
       var input_class = $(this).parent().attr("class");
       var container_class = ".<?php echo $connected_identifier ?>.viewtype_<?php echo Info::viewtype_base($connected_identifier) ?>.<?php echo Info::file_name($connected_identifier) ?>.main";
+      var inner_class = ".<?php echo Info::file_name($connected_identifier) ?>.inner ";
 
       // container spacing
       if( input_class.includes('padding') ) {
@@ -369,9 +370,19 @@ class Form
         $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.description { font-size: '+$(this).val()+' !important;  } </style>' );
       }
 
+      // image sizes
+      if( input_class.includes('_image') && input_class.includes('_size') ) {
+        $('body').append( '<style> '+container_class+' '+inner_class+' { background-size: '+$(this).val()+' !important;  } </style>' );
+      }
+
+      // corder radii
+      if( input_class.includes('_image') && input_class.includes('corner_radius') ) {
+        $('body').append( '<style> '+container_class+' '+inner_class+'.image { border-radius: '+$(this).val()+' !important;  } </style>' );
+      }
+
       // text colors
       if( input_class.includes('_text') && input_class.includes('color') ) {
-        $('body').append( '<style> '+container_class+' { color: '+$(this).val()+' !important;  } </style>' );
+        $('body').append( '<style> '+container_class+' .content_container { color: '+$(this).val()+' !important;  } </style>' );
       } else if( input_class.includes('_title') && input_class.includes('color') ) {
         $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.title { color: '+$(this).val()+' !important;  } </style>' );
       } else if( input_class.includes('subtitle') && input_class.includes('color') ) {
@@ -380,9 +391,14 @@ class Form
         $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.description { color: '+$(this).val()+' !important;  } </style>' );
       }
 
+      // background colors
+      if( input_class.includes('_background') && input_class.includes('color') ) {
+        $('body').append( '<style> '+container_class+' { background-color: '+$(this).val()+' !important;  } </style>' );
+      }
+
       // text alignment
       if( input_class.includes('_text') && input_class.includes('align') ) {
-        $('body').append( '<style> '+container_class+' { text-align: '+$(this).val()+' !important;  } </style>' );
+        $('body').append( '<style> '+container_class+' '+inner_class+' { text-align: '+$(this).val()+' !important;  } </style>' );
       } else if( input_class.includes('_title') && input_class.includes('align') ) {
         $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.title { text-align: '+$(this).val()+' !important;  } </style>' );
       } else if( input_class.includes('subtitle') && input_class.includes('align') ) {
@@ -396,6 +412,26 @@ class Form
         $('body').append( '<style> '+container_class+' .content_container { margin-left: '+$(this).val()+' !important;  } </style>' );
       } else if( input_class.includes('_text') && input_class.includes('offset_y') ) {
         $('body').append( '<style> '+container_class+' .content_container { margin-top: '+$(this).val()+' !important;  } </style>' );
+      }
+
+      // overlays
+      if( input_class.includes('overlay') ) {
+        if( $(this).val() == '1' || $(this).val() == 'true' ) {
+          $('body').append( '<style> '+container_class+' .overlay { display: inline-block !important;  } </style>' );
+        } else if( $(this).val() == '0' || $(this).val() == 'false' ) {
+          $('body').append( '<style> '+container_class+' .overlay { display: none !important;  } </style>' );
+        }
+      }
+
+      // reversing
+      if( input_class.includes('reverse') ) {
+        if( $(this).val() == '1' || $(this).val() == 'true' ) {
+          $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.reversed { display: inline-block !important;  } </style>' );
+          $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.not_reversed { display: none !important;  } </style>' );
+        } else if( $(this).val() == '0' || $(this).val() == 'false' ) {
+          $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.reversed { display: none !important;  } </style>' );
+          $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.not_reversed { display: inline-block !important;  } </style>' );
+        }
       }
     });
   <?php } ?>
