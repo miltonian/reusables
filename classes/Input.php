@@ -84,6 +84,27 @@ class Input {
 	// 	return $View->render();
 	// }
 
+	/**
+	 * @author Alexander Hamilton
+	 * 
+	 * @param array $dict
+	 * @param string $key
+	 * @param int $index
+	 * @param string $type
+	 * @param string $placeholder
+	 * @param string $labeltext
+	 * @param string $size
+	 * @param string $parentclass
+	 * @param string $selectoptions
+	 * @param string $multiple
+	 * @param bool $multiple_updates
+	 * @param int $multipleupdate_i
+	 * 
+	 * @description Generates and fills the input fields with their respective data types.
+	 * - Constructs default inputs if none are assigned.
+	 * 
+	 * @return array $self->make (\Reusables\Views::make())
+	 */
 	public static function fill( $dict, $key, $index, $type=null, $placeholder=null, $labeltext=null, $size=null, $parentclass=null, $selectoptions="", $multiple=null, $multiple_updates=false, $multipleupdate_i=-1 )
 	{
 
@@ -270,7 +291,11 @@ class Input {
 			self::$inputtypes[$key] = $type;
 		}
 	}
-
+	/**
+	 * @author Alexander Hamilton
+	 * @param array $identifier
+	 * @return array Function Call
+	 */
 	public static function convertInputKeys( $identifier )
 	{
 		$data = Data::get( $identifier );
@@ -312,7 +337,7 @@ class Input {
 
 		if( !isset( $options['input_keys'] ) && !isset( $options['default_input_keys'] ) ) {
 			$input_keys = [];
-			return Input::convertInputKeys2( $input_keys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys );
+			return Input::formatInputKeys( $input_keys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys );
 		}else{
 			$input_keys = [];
 			if( isset( $options['input_keys'] ) ) {
@@ -355,7 +380,7 @@ class Input {
 			if( $multiple_inserts || $multiple_updates ) {
 				$returnthisdict = [];
 				foreach ($input_keys as $this_inputkeys) {
-					$dict = Input::convertInputKeys2( $this_inputkeys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys, $multiple_updates );
+					$dict = Input::formatInputKeys( $this_inputkeys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys, $multiple_updates );
 					$inputs = $dict['inputs'];
 					$input_onlykeys = $dict['input_onlykeys'];
 					$i = $dict['input_i'];
@@ -367,7 +392,7 @@ class Input {
 
 				return $returnthisdict;
 			}else{
-				return Input::convertInputKeys2( $input_keys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys );
+				return Input::formatInputKeys( $input_keys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys );
 			}
 
 		}
@@ -392,8 +417,21 @@ class Input {
 
 
 	}
-
-	public static function convertInputKeys2( $input_keys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys, $multiple_updates=false )
+	/**
+	 * @author Alexander Hamilton
+	 * @param array $input_keys
+	 * @param array $data
+	 * @param mixed $s
+	 * @param mixed $i
+	 * @param int $steps
+	 * @param string $identifier
+	 * @param int $onstep
+	 * @param array $inputs
+	 * @param array $input_onlykeys
+	 * @param boolean $multiple_updates
+	 * @return array anonymous
+	 */
+	public static function formatInputKeys( $input_keys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys, $multiple_updates=false )
 	{
 
 // Input::setInputFieldType( $t );
