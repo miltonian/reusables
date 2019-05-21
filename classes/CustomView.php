@@ -35,18 +35,22 @@ class CustomView {
 
 	public static function makeFormVars( $dict, $viewtypedict=null )
 	{
+
+		// get the data identifier
 		if( !isset( $dict['data_id'] ) ){
 			$data_id = Data::getDefaultDataID( $dict );
 		}else{
 			$data_id = $dict['data_id'];
 		}
-		
+
+		// get the default tablename
 		$default_tablename = Data::getDefaultTableNameWithID( $data_id );
 
+		// get the unformatted array for this data identifier
 		if( isset($dict['index'] ) ){
 			$dict = Convert::convertDataForArray( $data_id, $dict['index'] );
 		}
-		
+
 		if( $viewtypedict ){
 			return [ "data_id"=>$data_id, $viewtypedict=>$dict, "default_tablename"=>$default_tablename ];
 		}else{

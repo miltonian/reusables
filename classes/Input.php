@@ -86,7 +86,7 @@ class Input {
 
 	/**
 	 * @author Alexander Hamilton
-	 * 
+	 *
 	 * @param array $dict
 	 * @param string $key
 	 * @param int $index
@@ -99,10 +99,10 @@ class Input {
 	 * @param string $multiple
 	 * @param bool $multiple_updates
 	 * @param int $multipleupdate_i
-	 * 
+	 *
 	 * @description Generates and fills the input fields with their respective data types.
 	 * - Constructs default inputs if none are assigned.
-	 * 
+	 *
 	 * @return array $self->make (\Reusables\Views::make())
 	 */
 	public static function fill( $dict, $key, $index, $type=null, $placeholder=null, $labeltext=null, $size=null, $parentclass=null, $selectoptions="", $multiple=null, $multiple_updates=false, $multipleupdate_i=-1 )
@@ -298,27 +298,34 @@ class Input {
 	 */
 	public static function convertInputKeys( $identifier )
 	{
+		// get data using identifier
 		$data = Data::get( $identifier );
+
+		// get options using identifier
 		$options = Options::get( $identifier );
+
+		// get default tablename using identifier
 		$default_tablename = Data::getDefaultTableNameWithID( $identifier );
 
+		// get multiple inserts and multiple updates flags
 		$multiple_inserts = Data::getValue( $options, "multiple_inserts" );
 		$multiple_updates = Data::getValue( $options, "multiple_updates" );
 
-
+		// get current step on form
 		$onstep = ReusableClasses::getOnStepForm( $identifier );
 		ReusableClasses::setOnStepForm( $identifier, $onstep );
 
+		// get all steps on this form
 		$steps = Data::getValue( $options, 'steps' );
 
+		// default to step 1 if no step is specified
 		if( $steps == "" ) {
 			$steps = 1;
 		}else{
 			unset( $options[ 'steps' ] );
 		}
 
-		// extract( CustomView::makeFormVars( $options, "options" ) );
-
+		// get the last input index in form (each input in the smartform has a different index)
 		$lastinputindex = ReusableClasses::getLastInputIndexForForm( $identifier );
 		if( $lastinputindex == null ) {
 			$nextinputindex = 0;
@@ -326,28 +333,38 @@ class Input {
 			$nextinputindex = $lastinputindex+1;
 		}
 
-		$i=$nextinputindex;
-
+		// separate vars
+		$next_inputindex=$nextinputindex;
 		$s = $onstep;
 
-
+		// initialize some arrays
 		$input_onlykeys = [];
 		$inputs = [];
-
-
 		if( !isset( $options['input_keys'] ) && !isset( $options['default_input_keys'] ) ) {
+			// if no input keys are specified then we will use every column in the table as input keys
+
 			$input_keys = [];
-			return Input::formatInputKeys( $input_keys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys );
+			return Input::formatInputKeys( $input_keys, $data, $s, $next_inputindex, $steps, $identifier, $onstep, $inputs, $input_onlykeys );
 		}else{
+			// if input keys are specified we loop through each input key
+
 			$input_keys = [];
+			// check whether input keys are custom or default - they would usually be custom (input_keys)
 			if( isset( $options['input_keys'] ) ) {
 				$input_keys = $options['input_keys'];
 			} else {
 				$input_keys = $options['default_input_keys'];
 			}
+
+			// loop through each input key
 			foreach ($input_keys as $k=>$v) {
+
+				// check if input key is indexed or key-value pair
 				if( is_numeric($k) ) {
+					// is indexed
+
 					if( is_string($v) ) {
+
 						$v_arr = explode(".", $v);
 						if( sizeof($v_arr ) == 1 ) {
 							if($default_tablename != ""){
@@ -360,6 +377,9 @@ class Input {
 				} else {
 
 					if( is_string($k) ) {
+						// is key value pair
+
+						// combine tablename and key if not already combined (e.g. "key" will turn into "tablename.key")
 						$newk = "";
 						$k_arr = explode(".", $k);
 						if( sizeof($k_arr ) == 1 ) {
@@ -367,54 +387,40 @@ class Input {
 								$newk = $default_tablename . "." . $k;
 							}
 						}
+
+						// replace the old key with the new key
 						if( $newk != "" ) {
 
-							// $input_keys[$newk] = $k;
 							$input_keys[$newk] = $v;
 							unset($input_keys[$k]);
 						}
 					}
 				}
 			}
-			// exit( json_encode( $input_keys ) );
+
+			// if multiple inserts or multiple updates are set it has to do other logic. this probably isn't important for you right now
 			if( $multiple_inserts || $multiple_updates ) {
+
 				$returnthisdict = [];
 				foreach ($input_keys as $this_inputkeys) {
-					$dict = Input::formatInputKeys( $this_inputkeys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys, $multiple_updates );
+
+					$dict = Input::formatInputKeys( $this_inputkeys, $data, $s, $next_inputindex, $steps, $identifier, $onstep, $inputs, $input_onlykeys, $multiple_updates );
 					$inputs = $dict['inputs'];
 					$input_onlykeys = $dict['input_onlykeys'];
-					$i = $dict['input_i'];
-					$i++;
+					$next_inputindex = $dict['input_i'];
+					$next_inputindex++;
 					$returnthisdict = $dict;
-
-					// exit( json_encode( $this_inputkeys ) );
 				}
 
 				return $returnthisdict;
 			}else{
-				return Input::formatInputKeys( $input_keys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys );
+
+				// if this is normal (not multiple inserts/multiple updates)
+				// send data to format input keys
+				return Input::formatInputKeys( $input_keys, $data, $s, $next_inputindex, $steps, $identifier, $onstep, $inputs, $input_onlykeys );
 			}
 
 		}
-
-
-
-
-
-
-		// if( $multiple_inserts != "" ) {
-		// 	if( $multiple_inserts == true ) {
-		// 		$input_i = 0;
-		// 		foreach ($options['input_keys'] as $inputkey) {
-		// 			# code...
-		// 		}
-		// 	}else{
-
-		// 	}
-		// }else{
-
-		// }
-
 
 	}
 	/**
@@ -434,8 +440,10 @@ class Input {
 	public static function formatInputKeys( $input_keys, $data, $s, $i, $steps, $identifier, $onstep, $inputs, $input_onlykeys, $multiple_updates=false )
 	{
 
-// Input::setInputFieldType( $t );
+		// check to see if there are already input keys specified
 		if( sizeof($input_keys) == 0 ){
+			// if there aren't any input keys, get all the keys that have been sent in the data (this is typically column names)
+
 			if( isset( $data['value'] ) ){
 				if ( !Shortcuts::isAssoc( $data['value'] ) ) {
 					$input_keys = array_keys( $data['value'][0] );
@@ -445,50 +453,78 @@ class Input {
 			}else{
 				$input_keys = array_keys( $data );
 			}
+			// initialize array
 			$input_keydicts = [];
 		}else{
+
+			// input_keydicts will now be used to store KEY-VALUE PAIRS about the inputs
 			$input_keydicts = $input_keys;
+
+			// input_keys will now be used to store the input KEYS only
 			$input_keys = array_keys($input_keys);
 		}
 
-
+		// multipleupdate_i is used for multiple inserts/multiple updates
 		$multipleupdate_i = $i;
+
+		// loop through each input key
 		foreach ($input_keys as $ik) {
 
-			$placeholder = null; $labeltext = null; $type = null;
+			// if step exists in input key dicts then assign to var
 			if( isset( $input_keydicts[ $ik ]['step'] ) ){ $steps = $input_keydicts[ $ik ]['step']; }
+
+			// if placeholder exists in input key dicts then assign to var
 			if( isset( $input_keydicts[ $ik ]['placeholder'] ) ){ $placeholder = $input_keydicts[ $ik ]['placeholder']; }else{ $placeholder = null; }
+
+			// if labeltext exists in input key dicts then assign to var
 			if( isset( $input_keydicts[ $ik ]['labeltext'] ) ){ $labeltext = $input_keydicts[ $ik ]['labeltext']; }else{ $labeltext = null; }
+
+			// if type exists in input key dicts then assign to var
 			if( isset( $input_keydicts[ $ik ]['type'] ) ){ $type = $input_keydicts[ $ik ]['type']; }else{ $type = null; }
+
+			// if options exists in input key dicts then assign to var
 			if( isset( $input_keydicts[ $ik ]['options'] ) ){ $selectoptions = $input_keydicts[ $ik ]['options']; }else{ $selectoptions = ""; }
+
+			// if size exists in input key dicts then assign to var
 			if( isset( $input_keydicts[ $ik ]['size'] ) ){ $size = $input_keydicts[ $ik ]['size']; }else{ $size = ""; }
+
+			// if multiple exists in input key dicts then assign to var
 			if( isset( $input_keydicts[ $ik ]['multiple'] ) ){ $multiple = $input_keydicts[ $ik ]['multiple']; }else{ $multiple = ""; }
 
+			// assign the input key to the var $thekey
 			$thekey = $ik;
+
+			// if the input key was an index, find the key within input key dicts and assign the correct key to the var $thekey
 			if( is_numeric( $ik ) ){ $thekey = $input_keydicts[$ik]; }
+
+			// push the correct input key to the input_onlykeys array
 			array_push( $input_onlykeys, $thekey );
 
+			// $s is the current step
+			// if any exist, find the input html and add it to the input_fields array
+			// ** note ** - the keys you see  are relative to the step the input is on. e.g. inputs in the first step are in $input['c1']. inputs in the second step are in $input['c2']
 			$input_fields = [];
 			if( isset($inputs['c' . $s ] ) ){
 				$input_fields = $inputs['c' . $s ];
 			}
+
+			// verify we're on the correct step
 			if( $steps == $s ){
+
+				// apply the incremental index to the input
 				ReusableClasses::setFormInputIndex( $identifier, $i );
 
+				// create the html for the input and assign to var
 				$theinput = Input::fill( $data, $thekey, $i, $type, $placeholder, $labeltext, $size, $identifier, $selectoptions, $multiple, $multiple_updates, $multipleupdate_i );
-				//asdfasdf
 
+				// add input html to array $input_fields
 				if( sizeof( $theinput ) == 2 ) {
-					array_push(
-						$input_fields,
-						$theinput[0]
-					);
+					array_push( $input_fields, $theinput[0] );
 					$theinput = $theinput[1];
 				}
-				array_push(
-					$input_fields,
-					$theinput
-				);
+				array_push( $input_fields, $theinput );
+
+				// add the input fields for this current step to the inputs dictionary and its corresponding key (e.g. first step $input['c1'], second step $input['c2'])
 				$inputs['c' . $s] = $input_fields;
 
 				$i++;
@@ -496,6 +532,7 @@ class Input {
 			$multipleupdate_i++;
 		}
 
+		// return dictionary to extract it in returning file
 		return [
 			"input_keys" => $input_keys,
 			"input_keydicts" => $input_keydicts,

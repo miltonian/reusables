@@ -526,7 +526,6 @@ class Form
             $defaultinputkeys = Data::getValue($viewoptions, "default_input_keys");
             if ($defaultinputkeys == "") {
                 $defaultinputkeys = [];
-                // exit( json_encode( $identifier."_form" ) );
             }
             $found = false;
             foreach ($defaultinputkeys as $k) {
@@ -537,12 +536,7 @@ class Form
             if (!$found) {
                 array_push($defaultinputkeys, $key);
             }
-            if ($identifier == "featured_table") {
-                if ($key != "html_text") {
 
-                    // exit( json_encode( $identifier . "_form" ) );
-                }
-            }
             Options::add($defaultinputkeys, "default_input_keys", $identifier . "_form");
         }
     }
