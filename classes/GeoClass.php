@@ -9,26 +9,41 @@ class GeoClass
 {
    public static $CLIENT;
    public static $API_KEY = '';
+   public static $INTERACTION_GEO_TABLE = '';
+   public static $UNIQUE_GEO_TABLE = '';
    private static $SALT = '';
 
-   public static function bootstrapGeolocation($API_KEY, $SALT)
+   /**
+    * 
+    */
+   public static function bootstrapGeolocation($API_KEY, $SALT, $UNIQUETABLE, $NONUNIQUETABLE)
    {
       try {
          GeoClass::setGeoApiKey($API_KEY);
          GeoClass::setSalt($SALT);
+         GeoClass::setUniqueGeoTable($UNIQUETABLE);
+         GeoClass::setInteractionGeoTable($NONUNIQUETABLE);
       } catch (Exception $e) {
          return [false, $e];
       }
       return true;
    }
 
-   // Add to your autoload or env
    public static function setGeoApiKey($API_KEY)
    {
       GeoClass::$API_KEY = $API_KEY;
    }
 
-   //Add to your autoload or env
+   public static function setUniqueGeoTable($TABLENAME)
+   {
+      GeoClass::$UNIQUE_GEO_TABLE = $TABLENAME;
+   }
+   
+   public static function setInteractionGeoTable($TABLENAME)
+   {
+      GeoClass::$INTERACTION_GEO_TABLE = $TABLENAME;
+   }
+
    public static function setSalt($SALT)
    {
       GeoClass::$SALT = $SALT;
@@ -36,16 +51,27 @@ class GeoClass
 
    /**
     * @author Duncan Pierce <devduncanrocks@gmail.com> <github.com/sigkar>
-    * @params null
+    * @param boolean $test_tablenames
+    * @param boolean $test_salt
     * @description Checks if the API key has been set or is expired
-    * @returns {boolean} (anonymous)
+    * @return array anonymous
     */
-   public static function is_set()
+   public static function is_set($test_tablenames = false, $test_salt = false)
    {
-      if (!isset(GeoClass::$API_KEY) || GeoClass::$API_KEY == "") {
-         return false;
+      if($test_tablenames){
+         if(!isset(GeoClass::$INTERACTION_GEO_TABLE) || !isset(GeoClass::$UNIQUE_GEO_TABLE) || GeoClass::$INTERACTION_GEO_TABLE == "" || GeoClass::$UNIQUE_GEO_TABLE == "" ){
+            return [false, "Table names aren't set"];
+         }
       }
-      return true;
+      if($test_salt){
+         if(!isset(GeoClass::$SALT) || GeoClass::$SALT == ""){
+            return [false, "Salt isn't set"];
+         }
+      }
+      if (!isset(GeoClass::$API_KEY) || GeoClass::$API_KEY == "") {
+         return [false, "Api Key isn't set"];
+      }
+      return [true, "All variables selected are set"];
    }
 
    /**
@@ -209,7 +235,7 @@ class GeoClass
       // Use the IP of the current user
       if ($useIp) {
          $userInfo = GeoClass::getIp();
-         $query = 'INSERT INTO location (ip, accepted_terms) values (?, ?)';
+         $query = 'INSERT INTO ' . GeoClass::$UNIQUE_GEO_TABLE . ' (ip, accepted_terms) values (?, ?)';
       } else if ($useEmail) {
          // Use the email of the user
          try {
@@ -217,7 +243,7 @@ class GeoClass
          } catch (Exception $e) {
             return [false, $e];
          }
-         $query = 'INSERT INTO location (encrypted_user, accepted_terms) values (?, ?)';
+         $query = 'INSERT INTO ' . GeoClass::$UNIQUE_GEO_TABLE . ' (encrypted_user, accepted_terms) values (?, ?)';
       } else {
          // all wrong
          return [false];
@@ -246,7 +272,7 @@ class GeoClass
 
       // If we aren't using email
       if (!$useEmail) {
-         $query = 'SELECT * FROM location WHERE ip=?';
+         $query = 'SELECT * FROM ' . GeoClass::$UNIQUE_GEO_TABLE . ' WHERE ip=?';
          if ($useSentIp) {
             $data = $useSentIp;
          } else {
@@ -254,7 +280,7 @@ class GeoClass
          }
          //if we are using email
       } else if ($useEmail) {
-         $query = 'SELECT * FROM location WHERE encrypted_user=?';
+         $query = 'SELECT * FROM ' . GeoClass::$UNIQUE_GEO_TABLE . ' WHERE encrypted_user=?';
          $data = encryptText($useEmail);
          //Broke
       } else {
@@ -317,7 +343,7 @@ class GeoClass
    {
       // If we require an explicit acceptance in the database before logging
       if ($requireExplicitAcceptance) {
-         $response = GeoClass::checkLocationTerms($usingIp, $usingEmail);
+         $response = GeoClass::checkLocationTerms($ip, $usingEmail);
          if (!$response) {
             return [false, "user rejected storing data"];
          }
@@ -334,14 +360,14 @@ class GeoClass
       // Unique table by IP per session is added to the location table
       // Might also want to consider adding a by-ipv6 Address table.
       if (!isset($_SESSION['IP_DATA'])) {
-         $query = "INSERT INTO location  (ip, encrypted_user, accepted_terms, time_inserted, city, region_code, continent_name, country_name, country_code, postal, longitude, latitude, iplookup, sitelocation) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+         $query = "INSERT INTO " . GeoClass::$UNIQUE_GEO_TABLE . "  (ip, encrypted_user, accepted_terms, time_inserted, city, region_code, continent_name, country_name, country_code, postal, longitude, latitude, iplookup, sitelocation) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
          $unique_interactions = \DBClasses::querySQL($query, [$ip, $email, true, time(), $loc->city, $loc->region_code, $loc->continent_name, $loc->country_name, $loc->country_code, $loc->postal, $loc->longitude, $loc->latitude, true, $sitelocation], 'insert');
          if ($unique_interactions[0] === 0) {
             return [false];
          }
       } else if (!$addToUniqueOnly) {
          // Table that includes all interactions by page - this is for analytics and not queries.
-         $query = "INSERT INTO `vibrant_location_by_page`  (ip, encrypted_user, accepted_terms, time_inserted, city, region_code, continent_name, country_name, country_code, postal, longitude, latitude, iplookup, sitelocation) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+         $query = "INSERT INTO " . GeoClass::$INTERACTION_GEO_TABLE . "  (ip, encrypted_user, accepted_terms, time_inserted, city, region_code, continent_name, country_name, country_code, postal, longitude, latitude, iplookup, sitelocation) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
          $all_interactions = \DBClasses::querySQL($query, [$ip, $email, true, time(), $loc->city, $loc->region_code, $loc->continent_name, $loc->country_name, $loc->country_code, $loc->postal, $loc->longitude, $loc->latitude, true, $sitelocation], 'insert');
          return $all_interactions;
       } else {
