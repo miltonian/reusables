@@ -11,6 +11,17 @@ class GeoClass
    public static $API_KEY = '';
    private static $SALT = '';
 
+   public static function bootstrapGeolocation($API_KEY, $SALT)
+   {
+      try {
+         GeoClass::setGeoApiKey($API_KEY);
+         GeoClass::setSalt($SALT);
+      } catch (Exception $e) {
+         return [false, $e];
+      }
+      return true;
+   }
+
    // Add to your autoload or env
    public static function setGeoApiKey($API_KEY)
    {
@@ -60,9 +71,9 @@ class GeoClass
    public static function basicGeoRequest($unique = false, $email = false)
    {
       // Get IP
-      
+
       $ip = GeoClass::getIp();
-      if (!$ip) { 
+      if (!$ip) {
          return [false, "ip not valid", $ip];
       }
 
