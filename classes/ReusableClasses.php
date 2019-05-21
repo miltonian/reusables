@@ -151,6 +151,7 @@ class ReusableClasses
         return $lastindex;
     }
 
+    // returns the index for an input inside a smartform
     public static function setFormInputIndex($identifier, $index)
     {
         if ($identifier == null || $identifier=="") {

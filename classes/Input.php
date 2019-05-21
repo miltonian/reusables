@@ -100,7 +100,7 @@ class Input {
 	 * @param bool $multiple_updates
 	 * @param int $multipleupdate_i
 	 *
-	 * @description Generates and fills the input fields with their respective data types.
+	 * @description Generates and fills the input fields with their respective data types and returns html for the input.
 	 * - Constructs default inputs if none are assigned.
 	 *
 	 * @return array $self->make (\Reusables\Views::make())
@@ -108,10 +108,12 @@ class Input {
 	public static function fill( $dict, $key, $index, $type=null, $placeholder=null, $labeltext=null, $size=null, $parentclass=null, $selectoptions="", $multiple=null, $multiple_updates=false, $multipleupdate_i=-1 )
 	{
 
+		// get the type of input this is not already defined
 		if( !$type ){
 			$type = Input::getInputType( $key, $multiple_updates, $multipleupdate_i );
 		}
 
+		// determine which type of input is best if need be
 		$iscurrency = false;
 		$isbutton = false;
 		$ishidden = false;
@@ -129,23 +131,33 @@ class Input {
 		}else if( $type == "time" ) {
 			$type = "timepicker";
 		}
+
+		// set the inputs type from the data above
 		Input::setInputType( $key, $type, $multiple_updates, $multipleupdate_i );
 
+		// get the key without the tablename concatenated
 		$raw_key_arr = explode( '.', $key );
 		if( sizeof( $raw_key_arr ) != 2 ) {
-			// return null;
 			$raw_key = $key;
 		} else {
 			$raw_key = $raw_key_arr[1];
 		}
 
+		// exclude the data_id if it is a key, this should not be an input
 		if($raw_key == "data_id"){
 			return null;
 		}
 
+		// if placeholder is not defined then create it from the input key
+		if( !$placeholder ){
+			$placeholder = ucfirst( str_replace("_", " ", $raw_key) );
+		}
 
-		if( !$placeholder ){ $placeholder = ucfirst( str_replace("_", " ", $raw_key) ); }
-		if( !$labeltext ){ $labeltext = ucfirst( str_replace("_", " ", $raw_key) ); }
+		// if labeltext is not defined then create it from the input key
+		if( !$labeltext ){
+			$labeltext = ucfirst( str_replace("_", " ", $raw_key) );
+		}
+
 		if( isset( $dict[$key]['data_id'] ) ){
 			$dataid = $dict[$key]['data_id'];
 			$options = Options::get($dataid);
