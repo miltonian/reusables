@@ -165,6 +165,9 @@ class Shortcuts {
 			if (array() === $arr) {
 					return false;
 			}
+			if( is_numeric(array_keys($arr)[0]) ) {
+				return false;
+			}
 			return array_keys($arr) !== range(0, count($arr) - 1);
 	}
 
