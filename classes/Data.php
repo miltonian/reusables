@@ -25,7 +25,6 @@ class Data
         Data::add($data, $identifier);
     }
 
-    // add data to view with identifier
 		public static function add($data, $identifier)
 		{
 			if (!is_array($data)) {
@@ -38,7 +37,7 @@ class Data
 			Views::addView($identifier);
 		}
 
-  	// Options::add() is deprecated -- Use Options::add() instead
+	// Options::add() is deprecated -- Use Options::add() instead
     public static function addOption($data, $key, $identifier)
     {
         Options::add($data, $key, $identifier);
@@ -80,7 +79,7 @@ class Data
         return Data::get( $identifier );
     }
 
-  	// Options::retrieveOptionsWithID() is deprecated -- Use Options::get() instead
+	// Options::retrieveOptionsWithID() is deprecated -- Use Options::get() instead
     public static function retrieveOptionsWithID($identifier)
     {
         return Options::get($identifier);
@@ -404,45 +403,61 @@ class Data
 
     public static function makeViewEditing($viewdict, $viewoptions, $identifier, $alwayseditable=false)
     {
+        // get the unformatted array for the view
         $fullarray = Data::getFullArray($viewdict);
+
+        // if the unformatted array is inside a value key pair then get it from that instead
         if (isset($viewdict[$identifier]['value'])) {
             $fullviewdict = Data::getFullArray($viewdict)[$identifier]['value'];
         } else {
             $fullviewdict = $viewdict;
         }
 
+        // get the type of editing this is
+        // e.g. modal, dropdown, etc
         $optiontype = Data::getValue($viewoptions, 'type');
 
+        // convert php vars to js vars
         echo "var viewdict = " . json_encode($viewdict) . ";
-	var viewoptions = " . json_encode($viewoptions) . ";
+      	var viewoptions = " . json_encode($viewoptions) . ";
+        var type = " . json_encode($optiontype) . ";
 
-	var thismodalclass = '';
+        // initialize modalclass
+      	var thismodalclass = '';";
 
-	var type = " . json_encode($optiontype) . ";";
-
+        // check if this is a modal type
         if ($optiontype == "modal" && isset($viewoptions['modal']['modalclass'])) {
-            // extract( Input::convertInputKeys( $identifier . "_form" ));
-            // 	echo ' ' . Form::addJSClassToForm( $identifier . "_form", $viewdict, $input_onlykeys, $identifier . "_form" ) . '; ';
-            // 	echo " /*asdf*/ ";
+
+            // initialize modalclass for this view and convert php full array to js full array var
             echo "thismodalclass = new " . $viewoptions['modal']['modalclass'] . "Classes();
-		var dataarray = " . json_encode($fullviewdict) . ";";
+        		var dataarray = " . json_encode($fullviewdict) . ";";
         }
-        echo "
-	var optiontype = " . json_encode($optiontype) . ";";
+
+        // convert php $optiontype to js variable (same as above, just a different variable)
+        echo " var optiontype = " . json_encode($optiontype) . ";";
+
+        // get form identifier (which is just the view identifier + _form)
         $formid = $identifier . "_form";
+
+        // get options for the view's form
         $formviewoptions = Options::get($formid);
+
         echo '
-	var formviewoptions = ' . json_encode($formviewoptions) . ";
-	var identifier = " . json_encode($identifier) . ";
+        // convert php vars to js vars
+      	var formviewoptions = ' . json_encode($formviewoptions) . ";
+      	var identifier = " . json_encode($identifier) . ";
 
-	if( optiontype == 'modal' || optiontype == 'dropdown' ) {
-		e.preventDefault();
-		if( typeof dataarray === 'undefined' ) {
-			dataarray = []
-		}
+        // check to see if type is modal or dropdown
+      	if( optiontype == 'modal' || optiontype == 'dropdown' ) {
+      		e.preventDefault();
 
-		Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions, formviewoptions, identifier );
-	}";
+          // define dataarray var if undefined
+      		if( typeof dataarray === 'undefined' ) {
+      			dataarray = []
+      		}
+
+      		Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions, formviewoptions, identifier );
+      	}";
 
         Editing::getEditingFunctionsJS($viewoptions) ;
     }

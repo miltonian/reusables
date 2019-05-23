@@ -10,19 +10,14 @@ class Editing
 {
     protected static $editable_views = [];
 
-
     public static function set()
     {
         foreach (Editing::$editable_views as $e) {
             if (strtolower($e['viewtype']) == 'cell') {
                 echo " <script> ";
-                // ReusableClasses::makeCellEditing( $e['identifier'], $e['fullviewdict'], $e['celltype'] );
+
                 Editing::makeCellEditing($e['identifier'], $e['fullviewdict'], $e['celltype']);
                 echo " </script> ";
-            } else {
-                // echo " <script> ";
-                // ReusableClasses::makeViewEditing( $e['viewdict'], $e['viewoptions'], $e['identifier'] );
-                // echo " </script> ";
             }
         }
     }
@@ -33,11 +28,11 @@ class Editing
         $viewoptions = Options::get($identifier);
 
         echo 'var viewdict = ' . json_encode($viewdict) . ';
-		var viewoptions = ' . json_encode($viewoptions) . ';';
+    		var viewoptions = ' . json_encode($viewoptions) . ';';
         $formid = substr($identifier, 0, strpos($identifier, "_cell_")) . "_form";
         $formviewoptions = Options::get($formid);
         echo '
-		var formviewoptions = ' . json_encode($formviewoptions) . ';';
+    		var formviewoptions = ' . json_encode($formviewoptions) . ';';
         if ($celltype == "modal") {
             echo 'thismodalclass = new ' . $viewoptions['modal']['modalclass'] . 'Classes();';
             echo 'var dataarray = ' . json_encode($fullviewdict) . ';';
@@ -65,25 +60,27 @@ class Editing
 
         Editing::getEditingFunctionsJS($viewoptions) ;
 
-
-        // echo 'if( typeof dataarray === "undefined" ) {
-        // 	dataarray = []
-        // }
-        // var viewdict = ' . json_encode($viewdict) . ';';
-        // echo 'var viewoptions = ' . json_encode( $viewoptions ) . ';
-        // Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, this, e, viewoptions );';
         echo '}';
     }
 
+    // determine which type of editing you are going to do -- data or options -- then call the correct method
     public static function makeViewEditing($viewdict, $viewoptions, $identifier, $alwayseditable=false)
     {
         echo " let alwayseditable = " . json_encode($alwayseditable) . "; ";
 
+        // check if editing data
         echo " if( Reusable.isEditing() || alwayseditable ) { ";
-        Data::makeViewEditing($viewdict, $viewoptions, $identifier, $alwayseditable);
+
+            // makeViewEditing
+            Data::makeViewEditing($viewdict, $viewoptions, $identifier, $alwayseditable);
         echo " } ";
+
+
+        // check if editing options
         echo " if( Reusable.isEditingOptions() ) { ";
-        Options::makeViewEditing($viewdict, $viewoptions, $identifier, $alwayseditable);
+
+            // if you are editing options,
+            Options::makeViewEditing($viewdict, $viewoptions, $identifier, $alwayseditable);
         echo " } ";
     }
 
@@ -158,17 +155,26 @@ class Editing
     public static function setUpEditingForSection($viewdict, $viewoptions, $identifier, $alwayseditable=false)
     {
 
-            // ReusableClasses::makeViewEditing( $viewdict, $viewoptions, $identifier, $alwayseditable );
         Editing::makeViewEditing($viewdict, $viewoptions, $identifier, $alwayseditable);
     }
 
+    // add click to edit functionality to view
     public static function clickToEditSection($viewdict, $viewoptions, $identifier, $filename, $alwayseditable=false)
     {
+        // get filename
         $filename = basename($filename, ".php");
+
+        // start javascript
         echo "<script> ";
+
+        // add click action to view -- connected to the container that wraps around every reusable view
         echo "$('.".$identifier." ." . $filename . ".clicktoedit').click(function(e){ ";
-        Editing::setUpEditingForSection($viewdict, $viewoptions, $identifier);
+
+          Editing::setUpEditingForSection($viewdict, $viewoptions, $identifier);
+
         echo "}); ";
+
+        // end javascript
         echo "</script>";
     }
 }

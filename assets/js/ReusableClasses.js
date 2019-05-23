@@ -545,77 +545,93 @@ var editing_options_on = false
 
 			// index is the button's index, not the cell's
 
+			// initialize some variables
 			var identifier = ""
 			var type = "";
-			if( typeof type === 'undefined' ) {
-				type = button['type']
-				if(is_options) {
-					type = button['options_type']
-				}
-				if( type == 'modal' ) {
-					identifier = button['modal']['modalclass']
-				}
-				if( type == 'options_modal' ) {
-					identifier = button['options_modal']['modalclass']
-				}
 
-			}
+
+			// if( typeof type === 'undefined' ) {
+			// 	type = button['type']
+			// 	if(is_options) {
+			// 		type = button['options_type']
+			// 	}
+			// 	if( type == 'modal' ) {
+			// 		identifier = button['modal']['modalclass']
+			// 	}
+			// 	if( type == 'options_modal' ) {
+			// 		identifier = button['options_modal']['modalclass']
+			// 	}
+			//
+			// }
+
+			// check if viewoptions exist
 			if( viewoptions ) {
 				if( typeof viewoptions['type'] !== 'undefined' ) {
+
+					// define the editing type
 					type = viewoptions['type']
 					if(is_options) {
 						type = viewoptions['options_type']
 					}
+
+					// if type is 'modal', then get the identifier for the data editing modal
 					if( type == 'modal' ) {
 						identifier = viewoptions['modal']['modalclass']
 					}
+
+					// if type is 'options_modal', then get the identifier for the options editing modal
 					if( type == 'options_modal' ) {
 						identifier = viewoptions['options_modal']['modalclass']
 					}
+
 				}
 			}
 
 			if( type == "link" ){
-				// var pre_slug = button[type]
-				// var slug = dataarray['slug']
-				// var linkpath = ""
-				// if( typeof pre_slug !== 'undefined' ) {
-				// 	linkpath += pre_slug
-				// }
-				// if( typeof slug !== 'undefined' ) {
-				// 	linkpath += slug
-				// }
-				// alert( JSON.stringify( linkpath ) )
-				// window.open( linkpath );
-			}else if( type == "modal" || type == "options_modal" ){
+
+			} else if( type == "modal" || type == "options_modal" ) {
 				e.preventDefault();
 
 				var cellindex = null;
 				if( view ){
-					// theid=view.id
-					// var Reusable = new ReusableClasses();
+					// get view's index
 					var cellindex = Reusable.getIndexFromClass( "index_", view )
-					// alert( JSON.stringify( "testing: "+cellindex ) );
 				}
 				if( editingfunctions[index] != "" ) {
+					// index is the editing button's index
+
+					// if object exists at that index inside the editingfunctions array then pass it to this function
 					editingfunctions[index].populateview( cellindex );
 				}
 
+				// show the modal's dark background
 				$('.' + identifier + '_modalbackground').css({'display': 'inline-block'});
+
+				// check if editing options or data
 				if( viewoptions ) {
 					if( typeof viewoptions['type'] !== 'undefined' ) {
+						// if editing options, show options modal
+
 						$('.' + identifier + '_modalbackground .' + viewoptions[type]['parentclass']).css({'display': 'inline-block'});
 					}else{
+						// if editing data, show options modal
+
 						$('.' + identifier + '_modalbackground .' + button[type]['parentclass']).css({'display': 'inline-block'});
 					}
 				}else{
+					// if editing data, show options modal
+
 					$('.' + identifier + '_modalbackground .' + ' .' + button[type]['parentclass']).css({'display': 'inline-block'});
 				}
 
+				// check if the modal type is different from the normal smartform modal
 				if( typeof viewoptions['modal_type'] !== 'undefined' ) {
+
+					// if modal_type is table then show a table in the modal
 					if( viewoptions['modal_type'] == "table" ) {
+
 						let thelinkobject = $(view).find('a' )
-						// alert(JSON.stringify(dataarray['featured_section']['value'][cellindex]))
+
 						var thisdict = []
 						var thekey = ""
 						$.each(dataarray, function(key, value) {
@@ -628,7 +644,6 @@ var editing_options_on = false
 							thisdict = dataarray['value'][cellindex]
 						}
 
-						// thisdict = dataarray['featured_section']['value'][cellindex]
 						var thetable = Reusable.getTableFromCell( view )
 						var iscell = false
 						if( typeof thetable === 'undefined' ) {
@@ -649,7 +664,7 @@ var editing_options_on = false
 						if( typeof cellname === 'undefined' ) {
 							cellname = 'imagetext_full'
 						}
-						// var theurl = $(view).find('a').attr('href')
+
 						$('.' + formtable + ' .viewtype_cell.' + cellname).click(function(){
 							var theurl = $(this).find('a').attr('href')
 							var goto_link = ""
@@ -666,6 +681,7 @@ var editing_options_on = false
 				}
 			}else if( type == "dropdown" ){
 				e.preventDefault();
+
 			}else if( type == "attached" ){
 				e.preventDefault();
 
@@ -679,7 +695,6 @@ var editing_options_on = false
 
 						$( viewoptions['attached']['classname'] ).val( dataarray[datakey]['value'][index][viewoptions['attached']['key']] )
 						$(view).parent().parent().parent().parent().parent().parent().parent().parent().css({'display': 'none'})
-						// alert(JSON.stringify('.viewtype_structure.'+datakey+'_modalbackground.modal_background.main'))
 					}
 				}
 			}

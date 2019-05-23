@@ -465,34 +465,55 @@ class View
 
     public static function start($file, $identifier)
     {
+        // look at the data connected to this identifier and then convert each key into variables
         $vars = Views::prepare($file, $identifier);
-if( $identifier == "gallery" ) {
-  // exit(json_encode($vars));
-}
+
+        // start buffer
         ob_start();
-        Views::setContainerClass($file, $identifier);
+
+        // Set the class names for the div that contains the rest of the view
+        CustomView::setContainerClass($file, $identifier);
+
+        // capture buffer into a var
         $output = ob_get_contents();
+
+        // end buffer
         ob_end_clean();
 
+        // echo container class
         echo "<div class=\"" . $output . "\">";
 
+        // restart buffer
         ob_start();
+
         return $vars;
     }
 
     public static function end($viewdict, $viewoptions, $identifier, $file, $editable=false)
     {
 
+        // capture buffer
         $output = ob_get_contents();
+
+        // end buffer
         ob_end_clean();
 
+        // initialize var
         $code = "";
 
+        // get view data and options and add them to the necessary variables the views expect
+        // if you go to this function you'll see the different variables it creates in the returning dictionary
         extract(Convert::viewParamsToVars($identifier));
+
+        // loop through each of the view's values and replace reusables shorthand code with the corresponding values
+        // e.g. {{title}} is replaced with "I am a title"
         foreach ($viewvalues as $key => $value) {
 
+            // replace reusables shorthand code with the corresponding value (as explained abovec)
             $new_output = View::replaceReusableViews($output, $key, $value, $identifier);
 
+            // if a link is connected to this identifier then store it in two vars as html
+            // two vars because there needs to be an opening and closing tag
             $pre_link = "";
             $post_link = "";
             if( Data::getValue($value, "linkpath", $identifier) != "#" && Data::getValue($value, "linkpath", $identifier) != "" ) {
@@ -500,15 +521,26 @@ if( $identifier == "gallery" ) {
                 $post_link = "</a>";
             }
 
+            // wrap the view in this link if a link exists
             $code .= $pre_link . $new_output . $post_link;
         }
 
+        // add the closing tag for the container div
         $code .= "</div>";
 
+        // if this view is editable then add the editing functionality
         if ($editable) {
+
+            // start buffer
             ob_start();
+
+
             Editing::clickToEditSection($viewdict, $viewoptions, $identifier, $file);
+
+            // capture buffer and ADD it to the $code variable
             $code .= ob_get_contents();
+
+            // end buffer
             ob_end_clean();
         }
 
