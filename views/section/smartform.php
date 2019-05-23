@@ -149,11 +149,20 @@ extract( Input::convertInputKeys( $identifier ) );
 		var formatteddata = <?php echo json_encode( Data::get( $original_data_id ) ) ?>;
 		var identifier = "<?php echo $identifier ?>";
 
+		// add javascript classes and functions to form inputs so they connect with the correct view when it is selected
 		<?php echo Form::addJSClassToForm( $identifier, $viewdict, $input_onlykeys, $identifier );?>;
 
+		// identifiers are also the vars that contain the view
+		// make sure the identifier var is defined
 		if( typeof <?php echo $identifier ?> == 'undefined'  ) {
+
+			// each view has a class that is named like [identifier]Classes -- with [identifier] being replaced by the actual identifier
 			var <?php echo $identifier ?> = new <?php echo $identifier ?>Classes();
+
+			// each view connects to the populateview() function
+			// if there is multiple views in one row then an index will also be passed in this function indicating which view in the row was selected
 			<?php echo $identifier ?>.populateview();
+
 		}
 
 	<?php } ?>

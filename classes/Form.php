@@ -285,45 +285,57 @@ class Form
     }
 
 
+    // adds javascript to form. connecting actions to each textfield and their corresponding views
     public static function addJSClassToForm($identifier, $viewdict, $input_onlykeys, $original_data_id)
     {
+        // start buffer
         ob_start();
 
+        // get view options
         $viewoptions = Options::get($identifier);
 
+        // convert ifnone_insert option into a boolean
+        // (ifnone_insert option is to insert a value if nothing exists already)
         if (!isset($viewoptions['ifnone_insert'])) {
             $ifnone_insert = false;
         } else {
             $ifnone_insert = $viewoptions['ifnone_insert'];
         }
 
+        // convert multiple_inserts option into a boolean
         if (!isset($viewoptions['multiple_inserts'])) {
             $multiple_inserts = false;
         } else {
             $multiple_inserts = $viewoptions['multiple_inserts'];
         }
 
+        // convert multiple_updates option into a boolean
         if (!isset($viewoptions['multiple_updates'])) {
             $multiple_updates = false;
         } else {
             $multiple_updates = $viewoptions['multiple_updates'];
         }
 
+        // use passed formaction or default
         if (!isset($viewoptions['formaction'])) {
+            // default
             $formaction = '/edit_view.php';
         } else {
+            // custom
             $formaction = $viewoptions['formaction'];
         }
 
+        // remove formtitle if it exists
         if (isset($viewdict['formtitle'])) {
             unset($viewdict['formtitle']);
         }
 
+        // default to step 1
         $steps = 1;
-        $onstep = 1; ?>
+        $onstep = 1;
+      ?>
 
-			<?php if ($steps == $onstep) {
-            ?>
+			<?php if ($steps == $onstep) { ?>
 
 				var viewdict = <?php echo json_encode($viewdict) ?>;
 				var input_keys = <?php echo json_encode($input_onlykeys) ?>;
@@ -333,109 +345,116 @@ class Form
 				var identifier = "<?php echo $identifier ?>";
 
 				class <?php echo $identifier ?>Classes {
+
+          // when a view is clicked on (with editing triggered), this function: populateview() is called
+          // the index will be null if there is only one view
+          // the index will not be null if there is more than one view in the row
 					populateview( index=null ){
-					<?php $insert_values = [];
-            if (isset($viewoptions['insert_values'])) {
-                $insert_values = $viewoptions["insert_values"];
-            } ?>
 
-<?php if( isset($viewoptions['is_option_form']) ) { ?>
-  <?php if( $viewoptions['is_option_form'] == "1" ) { ?>
+					<?php
+              // add insert_values to a variable
+              $insert_values = [];
+              if (isset($viewoptions['insert_values'])) {
+                  $insert_values = $viewoptions["insert_values"];
+              }
+          ?>
 
-    $('.<?php echo $identifier ?> input[type="text"]').on('input', function() {
+          /* if option form, go through a list of options and perform the corresponding javascript */
+          <?php if( isset($viewoptions['is_option_form']) ) { ?>
+            <?php if( $viewoptions['is_option_form'] == "1" ) { ?>
 
-      <?php
-          $connected_identifier = str_replace("_options_form", "", $identifier);
-      ?>
+              $('.<?php echo $identifier ?> input[type="text"]').on('input', function() {
 
-      console.log(JSON.stringify(input_class))
+                <?php
+                    $connected_identifier = str_replace("_options_form", "", $identifier);
+                ?>
 
-      var input_class = $(this).parent().attr("class");
-      var container_class = ".<?php echo $connected_identifier ?>.viewtype_<?php echo Info::viewtype_base($connected_identifier) ?>.<?php echo Info::file_name($connected_identifier) ?>.main";
-      var inner_class = ".<?php echo Info::file_name($connected_identifier) ?>.inner ";
+                var input_class = $(this).parent().attr("class");
+                var container_class = ".<?php echo $connected_identifier ?>.viewtype_<?php echo Info::viewtype_base($connected_identifier) ?>.<?php echo Info::file_name($connected_identifier) ?>.main";
+                var inner_class = ".<?php echo Info::file_name($connected_identifier) ?>.inner ";
 
-      // container spacing
-      if( input_class.includes('padding') ) {
-        $('body').append( '<style> '+container_class+' { padding: '+$(this).val()+' !important; width: calc(100% - '+$(container_class).css("margin-left")+' - '+$(container_class).css("margin-left")+' - '+($(this).val()*2)+'px) !important; } </style>' );
-      } else if( input_class.includes('margin') ) {
-        $('body').append( '<style> '+container_class+' { margin: '+$(this).val()+' !important; width: calc(100% - '+$(container_class).css("padding-left")+' - '+$(container_class).css("padding-left")+' - '+($(this).val()*2)+'px) !important; } </style>' );
-      }
+                // container spacing
+                if( input_class.includes('padding') ) {
+                  $('body').append( '<style> '+container_class+' { padding: '+$(this).val()+' !important; width: calc(100% - '+$(container_class).css("margin-left")+' - '+$(container_class).css("margin-left")+' - '+($(this).val()*2)+'px) !important; } </style>' );
+                } else if( input_class.includes('margin') ) {
+                  $('body').append( '<style> '+container_class+' { margin: '+$(this).val()+' !important; width: calc(100% - '+$(container_class).css("padding-left")+' - '+$(container_class).css("padding-left")+' - '+($(this).val()*2)+'px) !important; } </style>' );
+                }
 
-      // text sizes
-      if( input_class.includes('_title') && input_class.includes('size') ) {
-        $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.title { font-size: '+$(this).val()+' !important;  } </style>' );
-      } else if( input_class.includes('subtitle') && input_class.includes('size') ) {
-        $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.subtitle { font-size: '+$(this).val()+' !important;  } </style>' );
-      } else if( input_class.includes('description') && input_class.includes('size') ) {
-        $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.description { font-size: '+$(this).val()+' !important;  } </style>' );
-      }
+                // text sizes
+                if( input_class.includes('_title') && input_class.includes('size') ) {
+                  $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.title { font-size: '+$(this).val()+' !important;  } </style>' );
+                } else if( input_class.includes('subtitle') && input_class.includes('size') ) {
+                  $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.subtitle { font-size: '+$(this).val()+' !important;  } </style>' );
+                } else if( input_class.includes('description') && input_class.includes('size') ) {
+                  $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.description { font-size: '+$(this).val()+' !important;  } </style>' );
+                }
 
-      // image sizes
-      if( input_class.includes('_image') && input_class.includes('_size') ) {
-        $('body').append( '<style> '+container_class+' '+inner_class+' { background-size: '+$(this).val()+' !important;  } </style>' );
-      }
+                // image sizes
+                if( input_class.includes('_image') && input_class.includes('_size') ) {
+                  $('body').append( '<style> '+container_class+' '+inner_class+' { background-size: '+$(this).val()+' !important;  } </style>' );
+                }
 
-      // corder radii
-      if( input_class.includes('_image') && input_class.includes('corner_radius') ) {
-        $('body').append( '<style> '+container_class+' '+inner_class+'.image { border-radius: '+$(this).val()+' !important;  } </style>' );
-      }
+                // corder radii
+                if( input_class.includes('_image') && input_class.includes('corner_radius') ) {
+                  $('body').append( '<style> '+container_class+' '+inner_class+'.image { border-radius: '+$(this).val()+' !important;  } </style>' );
+                }
 
-      // text colors
-      if( input_class.includes('_text') && input_class.includes('color') ) {
-        $('body').append( '<style> '+container_class+' .content_container { color: '+$(this).val()+' !important;  } </style>' );
-      } else if( input_class.includes('_title') && input_class.includes('color') ) {
-        $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.title { color: '+$(this).val()+' !important;  } </style>' );
-      } else if( input_class.includes('subtitle') && input_class.includes('color') ) {
-        $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.subtitle { color: '+$(this).val()+' !important;  } </style>' );
-      } else if( input_class.includes('description') && input_class.includes('color') ) {
-        $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.description { color: '+$(this).val()+' !important;  } </style>' );
-      }
+                // text colors
+                if( input_class.includes('_text') && input_class.includes('color') ) {
+                  $('body').append( '<style> '+container_class+' .content_container { color: '+$(this).val()+' !important;  } </style>' );
+                } else if( input_class.includes('_title') && input_class.includes('color') ) {
+                  $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.title { color: '+$(this).val()+' !important;  } </style>' );
+                } else if( input_class.includes('subtitle') && input_class.includes('color') ) {
+                  $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.subtitle { color: '+$(this).val()+' !important;  } </style>' );
+                } else if( input_class.includes('description') && input_class.includes('color') ) {
+                  $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.description { color: '+$(this).val()+' !important;  } </style>' );
+                }
 
-      // background colors
-      if( input_class.includes('_background') && input_class.includes('color') ) {
-        $('body').append( '<style> '+container_class+' { background-color: '+$(this).val()+' !important;  } </style>' );
-      }
+                // background colors
+                if( input_class.includes('_background') && input_class.includes('color') ) {
+                  $('body').append( '<style> '+container_class+' { background-color: '+$(this).val()+' !important;  } </style>' );
+                }
 
-      // text alignment
-      if( input_class.includes('_text') && input_class.includes('align') ) {
-        $('body').append( '<style> '+container_class+' '+inner_class+' { text-align: '+$(this).val()+' !important;  } </style>' );
-      } else if( input_class.includes('_title') && input_class.includes('align') ) {
-        $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.title { text-align: '+$(this).val()+' !important;  } </style>' );
-      } else if( input_class.includes('subtitle') && input_class.includes('align') ) {
-        $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.subtitle { text-align: '+$(this).val()+' !important;  } </style>' );
-      } else if( input_class.includes('description') && input_class.includes('align') ) {
-        $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.description { text-align: '+$(this).val()+' !important;  } </style>' );
-      }
+                // text alignment
+                if( input_class.includes('_text') && input_class.includes('align') ) {
+                  $('body').append( '<style> '+container_class+' '+inner_class+' { text-align: '+$(this).val()+' !important;  } </style>' );
+                } else if( input_class.includes('_title') && input_class.includes('align') ) {
+                  $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.title { text-align: '+$(this).val()+' !important;  } </style>' );
+                } else if( input_class.includes('subtitle') && input_class.includes('align') ) {
+                  $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.subtitle { text-align: '+$(this).val()+' !important;  } </style>' );
+                } else if( input_class.includes('description') && input_class.includes('align') ) {
+                  $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.description { text-align: '+$(this).val()+' !important;  } </style>' );
+                }
 
-      // text spacing
-      if( input_class.includes('_text') && input_class.includes('offset_x') ) {
-        $('body').append( '<style> '+container_class+' .content_container { margin-left: '+$(this).val()+' !important;  } </style>' );
-      } else if( input_class.includes('_text') && input_class.includes('offset_y') ) {
-        $('body').append( '<style> '+container_class+' .content_container { margin-top: '+$(this).val()+' !important;  } </style>' );
-      }
+                // text spacing
+                if( input_class.includes('_text') && input_class.includes('offset_x') ) {
+                  $('body').append( '<style> '+container_class+' .content_container { margin-left: '+$(this).val()+' !important;  } </style>' );
+                } else if( input_class.includes('_text') && input_class.includes('offset_y') ) {
+                  $('body').append( '<style> '+container_class+' .content_container { margin-top: '+$(this).val()+' !important;  } </style>' );
+                }
 
-      // overlays
-      if( input_class.includes('overlay') ) {
-        if( $(this).val() == '1' || $(this).val() == 'true' ) {
-          $('body').append( '<style> '+container_class+' .overlay { display: inline-block !important;  } </style>' );
-        } else if( $(this).val() == '0' || $(this).val() == 'false' ) {
-          $('body').append( '<style> '+container_class+' .overlay { display: none !important;  } </style>' );
-        }
-      }
+                // overlays
+                if( input_class.includes('overlay') ) {
+                  if( $(this).val() == '1' || $(this).val() == 'true' ) {
+                    $('body').append( '<style> '+container_class+' .overlay { display: inline-block !important;  } </style>' );
+                  } else if( $(this).val() == '0' || $(this).val() == 'false' ) {
+                    $('body').append( '<style> '+container_class+' .overlay { display: none !important;  } </style>' );
+                  }
+                }
 
-      // reversing
-      if( input_class.includes('reverse') ) {
-        if( $(this).val() == '1' || $(this).val() == 'true' ) {
-          $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.reversed { display: inline-block !important;  } </style>' );
-          $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.not_reversed { display: none !important;  } </style>' );
-        } else if( $(this).val() == '0' || $(this).val() == 'false' ) {
-          $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.reversed { display: none !important;  } </style>' );
-          $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.not_reversed { display: inline-block !important;  } </style>' );
-        }
-      }
-    });
-  <?php } ?>
-<?php } ?>
+                // reversing
+                if( input_class.includes('reverse') ) {
+                  if( $(this).val() == '1' || $(this).val() == 'true' ) {
+                    $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.reversed { display: inline-block !important;  } </style>' );
+                    $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.not_reversed { display: none !important;  } </style>' );
+                  } else if( $(this).val() == '0' || $(this).val() == 'false' ) {
+                    $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.reversed { display: none !important;  } </style>' );
+                    $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.not_reversed { display: inline-block !important;  } </style>' );
+                  }
+                }
+              });
+            <?php } ?>
+          <?php } ?>
 
 
 						var multiple_updates = "<?php echo $multiple_updates ?>";
@@ -444,10 +463,16 @@ class Form
 
 						var viewdict = <?php echo json_encode($viewdict) ?>;
 						var input_keys = <?php echo json_encode($input_onlykeys) ?>;
+
+
 						var newinput_keys = [];
 						var newtypearray = [];
 						var newinsertvalues = [];
+
+            // get an array of the inputs associated types (e.g. textfield, textarea, select, etc.)
 						var typearray = <?php echo json_encode(Form::getTypeArray($input_onlykeys, $multiple_updates)) ?>;
+
+            // if multiple inserts flag is set
 						if( multiple_inserts ) {
 							for (var i = 0; i < input_keys.length; i++) {
 								if( i!=0 && input_keys[i]=="value_string" ) {
@@ -464,33 +489,41 @@ class Form
 							insert_values = newinsertvalues
 						}
 
+            // get unformatted array
 						var dataarray = <?php echo json_encode(Data::getFullArray($viewdict)) ?>;
+
+            // get formatted array
 						var formatteddata = <?php echo json_encode(Data::get($original_data_id)) ?>;
+
+            // get identifier
 						var identifier = "<?php echo $identifier ?>";
+
+            // set the values for the inputs inside the smartform
 						Reusable.setinputvalues( viewdict, input_keys, identifier, typearray, dataarray, formatteddata, index, multiple_updates, insert_values )
 
-						<?php if ($steps > 1) {
-                ?>
+            // check to see how many steps there are in this form. If there's more than one then show a next button
+						<?php if ($steps > 1) { ?>
 							$('.<?php echo $identifier ?> .main_with_hidden.next').css({'display': 'inline-block'});
 							$('.<?php echo $identifier ?> .main_with_hidden.save').css({'display': 'none'});
-						<?php
-            } else {
+						<?php } else {
                 ?>
 							$('.<?php echo $identifier ?> .main_with_hidden.save').css({'display': 'inline-block'});
 							$('.<?php echo $identifier ?> .main_with_hidden.next').css({'display': 'none'});
-						<?php
-            } ?>
+  					<?php } ?>
 					}
 				}
 
-
-
-			<?php
-        } ?>
+		<?php } ?>
 
 		<?php
+
+        // capture the buffer
         $output = ob_get_contents();
+
+        // end buffer
         ob_end_clean();
+
+
         return $output;
     }
 
@@ -498,8 +531,6 @@ class Form
     {
         $typearray = [];
 
-        if ($multiple_updates) {
-        }
         $i=0;
         foreach ($input_onlykeys as $k) {
             if ($k == "download_script") {

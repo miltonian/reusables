@@ -10,26 +10,38 @@ var editing_options_on = false
 		}
 
 		getInputDBInfo(thisdict, index) {
+
 			var db_info = []
+
 			if(index == null || index == ""){
+
 				db_info = thisdict['db_info'];
 			}else if(typeof thisdict['value'] !== 'undefined') {
+
 				db_info = thisdict['db_info'];
 			} else {
+
 				db_info = thisdict[index]['db_info'];
 			}
+
 			return db_info
 		}
 
 		getInputDictValue(thisdict, index) {
+
 			var thisdictvalue = []
+
 			if(index == null || index == ""){
+
 				thisdictvalue = thisdict['value'];
 			}else if(typeof thisdict['value'] !== 'undefined') {
+
 				thisdictvalue = thisdict['value'][index];
 			} else {
+
 				thisdictvalue = thisdict[index]['value'];
 			}
+
 			return thisdictvalue
 		}
 
@@ -44,142 +56,231 @@ var editing_options_on = false
 
 		updateTextField( dataarray, identifier, data_id, key, inputclass, db_key, index=null )
 		{
-			var thisdict = [];
+				// initialize some vars
+				var thisdict = [];
 				var thisdictvalue = [];
+
+				// define dictionary for selected view
 				thisdict = dataarray[data_id];
 
-				if(thisdict == null ){ return; }
+				// if the passed data is empty then you can't do anything so just return it
+				if(thisdict == null ){
+						return;
+				}
+
+				// get the db info from the passed data
 				var db_info = Reusable.getInputDBInfo(thisdict, index)
+
+				// get selected views data value (usually this is found in viewdict['value'] )
 				var thisdictvalue = Reusable.getInputDictValue(thisdict, index)
 
+				// get input key without the tablename connected to it
 				var key = Reusable.getValidKey(db_info, key)
 
+				// if the value for the passed data is undefined then you can't do anything so just return it
 				if(typeof thisdictvalue === 'undefined'){
 					return
 				}
 
-			$('.' + identifier + ' .' + inputclass + ' input.field_value').val( thisdictvalue[key] );
+				// set the value of the main input in the form
+				$('.' + identifier + ' .' + inputclass + ' input.field_value').val( thisdictvalue[key] );
+
+				// assign this input with the tablename
 				$('.' + identifier + ' .' + inputclass + ' input.tablename').val( db_info['tablenames'][key] );
+
+				// assign this input with the column name
 				$('.' + identifier + ' .' + inputclass + ' input.col_name').val( db_key );
+
+				// assign this input with the unique conditions (there could be more than one condition so we loop through them -- usually the condition is simply the id)
 				for (var i = 0; i < db_info['conditions'].length; i++) {
+
+					// get the conditions from the view's db_info dictionary
 					var conditions = db_info['conditions'];
+
+					// get the condition's values
 					if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
+						// this is probably not the case -- this is related to multiple_updates/multiple_inserts
+
 						conditions[i]['value'] = key;
 					}else{
+						// this is how you get the value from the views data
+
 						conditions[i]['value'] = thisdictvalue[conditions[i]['key']];
-						// alert(JSON.stringify(thisdictvalue));
 					}
+
+					// add the key to the conditionkey input
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
+
+					// add the value to conditionvalue input
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionvalue_' + i ).val( conditions[i]['value'] );
-					// .testview_form .testview_form_new_apps_client_information.state_input_0 input.conditionvalue_0
-					// viewtype_input testview_form_new_apps_client_information.state_input_0 textfield size_large
 				}
-				// if( key == "name" ){ alert( JSON.stringify( thisdict['db_info']['tablenames'] ) ); }
 
 		}
 
 		updateDatePicker( dataarray, identifier, data_id, key, inputclass, db_key, index=null )
 		{
-
-			var thisdict = [];
+				// initialize some vars
+				var thisdict = [];
 				var thisdictvalue = [];
+
+				// define dictionary for selected view
 				thisdict = dataarray[data_id];
 
-				if(thisdict == null ){ return; }
+				// if the passed data is empty then you can't do anything so just return it
+				if(thisdict == null ){
+						return;
+				}
+
+				// get the db info from the passed data
 				var db_info = Reusable.getInputDBInfo(thisdict, index)
+
+				// get selected views data value (usually this is found in viewdict['value'] )
 				var thisdictvalue = Reusable.getInputDictValue(thisdict, index)
 
+				// get input key without the tablename connected to it
 				var key = Reusable.getValidKey(db_info, key)
 
+				// if the value for the passed data is undefined then you can't do anything so just return it
 				if(typeof thisdictvalue === 'undefined'){
 					return
 				}
 
-			$('.' + identifier + ' .' + inputclass + ' input.field_value').val( thisdictvalue[key] );
+				// set the value of the main input in the form
+				$('.' + identifier + ' .' + inputclass + ' input.field_value').val( thisdictvalue[key] );
+
+				// assign this input with the tablename
 				$('.' + identifier + ' .' + inputclass + ' input.tablename').val( db_info['tablenames'][key] );
+
+				// assign this input with the column name
 				$('.' + identifier + ' .' + inputclass + ' input.col_name').val( db_key );
+
+				// assign this input with the unique conditions (there could be more than one condition so we loop through them -- usually the condition is simply the id)
 				for (var i = 0; i < db_info['conditions'].length; i++) {
 					var conditions = db_info['conditions'];
 					if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
 						conditions[i]['value'] = key;
 					}else{
 						conditions[i]['value'] = thisdictvalue[conditions[i]['key']];
-						// alert(JSON.stringify(thisdictvalue));
 					}
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionvalue_' + i ).val( conditions[i]['value'] );
 				}
-				// if( key == "name" ){ alert( JSON.stringify( thisdict['db_info']['tablenames'] ) ); }
 
 		}
 
 		updateTimePicker( dataarray, identifier, data_id, key, inputclass, db_key, index=null )
 		{
-
-			var thisdict = [];
+				// initialize some vars
+				var thisdict = [];
 				var thisdictvalue = [];
+
+				// define dictionary for selected view
 				thisdict = dataarray[data_id];
 
-				if(thisdict == null ){ return; }
+				// if the passed data is empty then you can't do anything so just return it
+				if(thisdict == null ){
+						return;
+				}
+
+				// get the db info from the passed data
 				var db_info = Reusable.getInputDBInfo(thisdict, index)
+
+				// get selected views data value (usually this is found in viewdict['value'] )
 				var thisdictvalue = Reusable.getInputDictValue(thisdict, index)
 
+				// get input key without the tablename connected to it
 				var key = Reusable.getValidKey(db_info, key)
 
+				// if the value for the passed data is undefined then you can't do anything so just return it
 				if(typeof thisdictvalue === 'undefined'){
 					return
 				}
 
-			$('.' + identifier + ' .' + inputclass + ' input.field_value').val( thisdictvalue[key] );
+				// set the value of the main input in the form
+				$('.' + identifier + ' .' + inputclass + ' input.field_value').val( thisdictvalue[key] );
+
+				// assign this input with the tablename
 				$('.' + identifier + ' .' + inputclass + ' input.tablename').val( db_info['tablenames'][key] );
+
+				// assign this input with the column name
 				$('.' + identifier + ' .' + inputclass + ' input.col_name').val( db_key );
+
+				// assign this input with the unique conditions (there could be more than one condition so we loop through them -- usually the condition is simply the id)
 				for (var i = 0; i < db_info['conditions'].length; i++) {
 					var conditions = db_info['conditions'];
 					if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
 						conditions[i]['value'] = key;
 					}else{
 						conditions[i]['value'] = thisdictvalue[conditions[i]['key']];
-						// alert(JSON.stringify(thisdictvalue));
 					}
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionvalue_' + i ).val( conditions[i]['value'] );
 				}
-				// if( key == "name" ){ alert( JSON.stringify( thisdict['db_info']['tablenames'] ) ); }
 
 		}
 
 
 		updateTextArea( dataarray, identifier, data_id, key, inputclass, db_key, index=null )
 		{
-			var thisdict = [];
+
+				// initialize some vars
+				var thisdict = [];
 				var thisdictvalue = [];
+
+				// define dictionary for selected view
 				thisdict = dataarray[data_id];
 
-				if(thisdict == null ){ return; }
+				// if the passed data is empty then you can't do anything so just return it
+				if(thisdict == null ){
+					return;
+				}
+
+				// get the db info from the passed data
 				var db_info = Reusable.getInputDBInfo(thisdict, index)
+
+				// get selected views data value (usually this is found in viewdict['value'] )
 				var thisdictvalue = Reusable.getInputDictValue(thisdict, index)
 
+				// get input key without the tablename connected to it
 				var key = Reusable.getValidKey(db_info, key)
 
+				// if the value for the passed data is undefined then you can't do anything so just return it
 				if(typeof thisdictvalue === 'undefined'){
 					return
 				}
 
-			$('.' + identifier + ' .' + inputclass + ' .field_value').val(thisdictvalue[key]);
+				// set the value of the main input in the form
+				$('.' + identifier + ' .' + inputclass + ' .field_value').val(thisdictvalue[key]);
+
+				// assign this input with the tablename
 				$('.' + identifier + ' .' + inputclass + ' input.tablename').val(db_info['tablenames'][key]);
+
+				// assign this input with the column name
 				$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);
+
+				// assign this input with the unique conditions (there could be more than one condition so we loop through them -- usually the condition is simply the id)
 				for (var i = 0; i < db_info['conditions'].length; i++) {
+
+					// get the conditions from the view's db_info dictionary
 					var conditions = db_info['conditions'];
+
+					// get the condition's value
 					if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
+						// this is probably not the case -- this is related to multiple_updates/multiple_inserts
+
 						conditions[i]['value'] = key;
 					}else{
+						// this is how you get the value from the views data
+
 						conditions[i]['value'] = thisdictvalue[conditions[i]['key']];
-						// alert(JSON.stringify(thisdictvalue));
 					}
+
+					// add the key to the conditionkey input
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
+
+					// add the value to conditionvalue input
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionvalue_' + i ).val( conditions[i]['value'] );
 				}
-				// if( key == "name" ){ alert( JSON.stringify( thisdict['db_info']['tablenames'] ) ); }
 
 		}
 
@@ -189,9 +290,18 @@ var editing_options_on = false
 
 				thisdict = dataarray[data_id];
 
-				if(thisdict == null ){ return; }
+				// if the passed data is empty then you can't do anything so just return it
+				if(thisdict == null ){
+						return;
+				}
+
+				// get the db info from the passed data
 				var db_info = Reusable.getInputDBInfo(thisdict, index)
+
+				// get selected views data value (usually this is found in viewdict['value'] )
 				var thisdictvalue = Reusable.getInputDictValue(thisdict, index)
+
+				// get input key without the tablename connected to it
 				var key = Reusable.getValidKey(db_info, key)
 
 				var tablenames = dataarray[identifier]['db_info']['tablenames']
@@ -210,6 +320,7 @@ var editing_options_on = false
 					$('#'+input_identifier_var+i+'_imglabel').remove()
 				}
 
+				// if the value for the passed data is undefined then you can't do anything so just return it
 				if(typeof thisdictvalue === 'undefined'){
 					return
 				}
@@ -226,6 +337,8 @@ var editing_options_on = false
 							$('.' + identifier + ' .' + inputclass + ' .fieldvalue').val("");
 							$('.' + identifier + ' .' + inputclass + ' input.tablename').val(db_info['tablenames'][key]);
 							$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);
+
+							// assign this input with the unique conditions (there could be more than one condition so we loop through them -- usually the condition is simply the id)
 							for (var i = 0; i < db_info['conditions'].length; i++) {
 								var conditions = db_info['conditions'];
 								// alert(JSON.stringify(conditions));
@@ -250,13 +363,15 @@ var editing_options_on = false
 					$('.' + identifier + ' .' + inputclass + ' .fieldvalue').val("");
 					$('.' + identifier + ' .' + inputclass + ' input.tablename').val(db_info['tablenames'][key]);
 					$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);
+
+					// assign this input with the unique conditions (there could be more than one condition so we loop through them -- usually the condition is simply the id)
 					for (var i = 0; i < db_info['conditions'].length; i++) {
 						var conditions = db_info['conditions'];
-						// alert(JSON.stringify(conditions));
+
 						if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
 							conditions[i]['value'] = key;
 						}else{
-							// alert(JSON.stringify(thisdictvalue))
+
 							conditions[i]['value'] = thisdictvalue[conditions[i]['key']];
 						}
 						$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
@@ -268,16 +383,28 @@ var editing_options_on = false
 
 		updateWysi( dataarray, identifier, data_id, key, inputclass, db_key, index, fieldindex )
 		{
+			// initialize some vars
 			var thisdict = [];
 			var thisdictvalue = [];
+
+			// define dictionary for selected view
 			thisdict = dataarray[data_id];
 
-			if(thisdict == null ){ return; }
+			// if the passed data is empty then you can't do anything so just return it
+			if(thisdict == null ){
+					return;
+			}
+
+			// get the db info from the passed data
 			var db_info = Reusable.getInputDBInfo(thisdict, index)
+
+			// get selected views data value (usually this is found in viewdict['value'] )
 			var thisdictvalue = Reusable.getInputDictValue(thisdict, index)
 
+			// get input key without the tablename connected to it
 			var key = Reusable.getValidKey(db_info, key)
 
+			// if the value for the passed data is undefined then you can't do anything so just return it
 			if(typeof thisdictvalue === 'undefined'){
 				return
 			}
@@ -295,6 +422,8 @@ var editing_options_on = false
 
 			$('.' + identifier + ' .' + inputclass + ' input.tablename').val(db_info['tablenames'][db_key]);
 			$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);
+
+			// assign this input with the unique conditions (there could be more than one condition so we loop through them -- usually the condition is simply the id)
 			for (var i = 0; i < db_info['conditions'].length; i++) {
 				var conditions = db_info['conditions'];
 				if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
@@ -309,63 +438,93 @@ var editing_options_on = false
 
 		updateColorPicker( dataarray, identifier, data_id, key, inputclass, db_key, index=null )
 		{
-			var thisdict = [];
+				// initialize some vars
+				var thisdict = [];
 				var thisdictvalue = [];
+
+				// define dictionary for selected view
 				thisdict = dataarray[data_id];
 
-				if(thisdict == null ){ return; }
+				// if the passed data is empty then you can't do anything so just return it
+				if(thisdict == null ){
+						return;
+				}
+
+				// get the db info from the passed data
 				var db_info = Reusable.getInputDBInfo(thisdict, index)
+
+				// get selected views data value (usually this is found in viewdict['value'] )
 				var thisdictvalue = Reusable.getInputDictValue(thisdict, index)
 
-			// $('.' + identifier + ' .' + inputclass + ' input.field_value').val(thisdictvalue[key]);
-	var colorvalue = "#"+thisdictvalue[key];
+				// $('.' + identifier + ' .' + inputclass + ' input.field_value').val(thisdictvalue[key]);
+				var colorvalue = "#"+thisdictvalue[key];
 
-			$('.' + identifier + ' .' + inputclass + ' .field_value').spectrum({
-				color: colorvalue
-			});
+				// find the color in the color 'spectrum'
+				$('.' + identifier + ' .' + inputclass + ' .field_value').spectrum({
+					color: colorvalue
+				});
+
+				// assign this input with the tablename
 				$('.' + identifier + ' .' + inputclass + ' input.tablename').val(db_info['tablenames'][key]);
+
+				// assign this input with the column name
 				$('.' + identifier + ' .' + inputclass + ' input.col_name').val(db_key);
+
+				// assign this input with the unique conditions (there could be more than one condition so we loop through them -- usually the condition is simply the id)
 				for (var i = 0; i < db_info['conditions'].length; i++) {
 					var conditions = db_info['conditions'];
 					if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
 						conditions[i]['value'] = key;
 					}else{
 						conditions[i]['value'] = thisdictvalue[conditions[i]['key']];
-						// alert(JSON.stringify(thisdictvalue));
 					}
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionvalue_' + i ).val( conditions[i]['value'] );
 				}
-				// if( key == "name" ){ alert( JSON.stringify( thisdict['db_info']['tablenames'] ) ); }
 
 		}
 
 
 		updateSelect( dataarray, identifier, data_id, key, inputclass, db_key, index=null )
 		{
-			var thisdict = [];
+				// initialize some vars
+				var thisdict = [];
 				var thisdictvalue = [];
+
+				// define dictionary for selected view
 				thisdict = dataarray[data_id];
 
-				if(thisdict == null ){ return; }
+				// if the passed data is empty then you can't do anything so just return it
+				if(thisdict == null ){
+						return;
+				}
+
+				// get the db info from the passed data
 				var db_info = Reusable.getInputDBInfo(thisdict, index)
+
+				// get selected views data value (usually this is found in viewdict['value'] )
 				var thisdictvalue = Reusable.getInputDictValue(thisdict, index)
 
-			$('.' + identifier + ' .' + inputclass + ' input.field_value').val( thisdictvalue[key] );
+				// set the value of the main input in the form
+				$('.' + identifier + ' .' + inputclass + ' input.field_value').val( thisdictvalue[key] );
+
+				// assign this input with the tablename
 				$('.' + identifier + ' .' + inputclass + ' input.tablename').val( db_info['tablenames'][key] );
+
+				// assign this input with the column name
 				$('.' + identifier + ' .' + inputclass + ' input.col_name').val( db_key );
+
+				// assign this input with the unique conditions (there could be more than one condition so we loop through them -- usually the condition is simply the id)
 				for (var i = 0; i < db_info['conditions'].length; i++) {
 					var conditions = db_info['conditions'];
 					if(conditions[i]['key'] == "maininfo_key" || conditions[i]['key'] == "custom_key"){
 						conditions[i]['value'] = key;
 					}else{
 						conditions[i]['value'] = thisdictvalue[conditions[i]['key']];
-						// alert(JSON.stringify(thisdictvalue));
 					}
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionkey_' + i ).val( conditions[i]['key'] );
 					$( '.' + identifier + ' .' + inputclass + ' input.conditionvalue_' + i ).val( conditions[i]['value'] );
 				}
-				// if( key == "name" ){ alert( JSON.stringify( thisdict['db_info']['tablenames'] ) ); }
 
 		}
 
@@ -376,7 +535,7 @@ var editing_options_on = false
 				var thisdictvalue = [];
 				thisdict = dataarray[data_id];
 				if(index == null || index == ""){ thisdictvalue = thisdict['value']; }else { thisdictvalue = thisdict['value'][index]; }
-	// alert(JSON.stringify('.' + identifier + ' .' + inputclass + ' .field_value'))
+
 				$('.' + identifier + ' .copybutton_1.field_value').text(thisdictvalue[key]);
 
 		}
@@ -697,13 +856,20 @@ var editing_options_on = false
 			return defaultTableName
 		}
 
+		// setinputvalues() loops through input keys and separates its data into understandable variables
+		// calls function fillinputvalues() -- which fills in the inputs with their corresponding values needed for updating or inserting data in the database
 		setinputvalues( sectiondict, input_keys, identifier, typearray, dataarray, formatteddata, index, multiple_updates=false ) {
 
 			var multipleupdate_type_count = 0
 			var multipleupdate_type_i = 0
+
+			// loop through the input keys and collect data about the db and view for each one
 			for (var i = 0; i < input_keys.length; i++) {
+
+				// get the input key
 				var key = input_keys[i];
 
+				// get the views db info
 				var db_info = []
 				if( typeof formatteddata['db_info'] === 'undefined' ) {
 					if( typeof formatteddata[0] === 'undefined' ) {
@@ -713,8 +879,11 @@ var editing_options_on = false
 				} else {
 					db_info = formatteddata['db_info']
 				}
+
+				// get default tablename
 				let defaultTableName = Reusable.getDefaultTableName(db_info)
 
+				// get the inputs column name
 				var colname = ""
 				if( typeof db_info['colnames'][key] === 'undefined' ) {
 					colname = db_info['colnames'][defaultTableName+key];
@@ -722,8 +891,13 @@ var editing_options_on = false
 					colname = db_info['colnames'][key];
 				}
 
+				// define input type for this input
 				var type = typearray[i];
+
+				// fill in the inputs with their corresponding values needed for updating or inserting data in the database
 				Reusable.fillinputvalues( type, dataarray, identifier, key, colname, index, i, multiple_updates, typearray )
+
+				// if this is multiple updates then stop it (chances are it's not)
 				if(multiple_updates){
 					break
 				}
@@ -732,11 +906,16 @@ var editing_options_on = false
 
 		}
 
+		// fills in input values in the smartform
 		fillinputvalues( type, dataarray, identifier, key, colname, index, fieldindex, multiple_updates=false, typearray=false ) {
 
+			// define inputclass -- this has to be pretty specific for each input
 			var inputclass = identifier + "_" + key + "_input_" + fieldindex
 			inputclass = inputclass.replace('.', '\\.')
+
 			if( multiple_updates ) {
+				// if multiple updates flag is set (it's probably not)
+
 				var thisdata = dataarray[identifier]['value'];
 				if( $.isArray(thisdata ) ) {
 
@@ -770,6 +949,8 @@ var editing_options_on = false
 					fieldindex = fieldindex+5;
 				}
 			}else{
+				// depending on the input type, call the function that updates the individual input values
+
 				if( type == "textarea" ){
 					Reusable.updateTextArea( dataarray, identifier, identifier, key, inputclass, colname, index );
 				} else if( type == "wysi" ) {
