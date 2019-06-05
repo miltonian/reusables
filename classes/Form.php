@@ -350,6 +350,9 @@ class Form
           // the index will be null if there is only one view
           // the index will not be null if there is more than one view in the row
 					populateview( index=null ){
+// var data = Data.get('<?php echo $identifier ?>');
+// var fullarray = Data.getFullArray(data);
+// console.log( 'fullarray: '+JSON.stringify( data ) );
 
 					<?php
               // add insert_values to a variable
@@ -452,6 +455,11 @@ class Form
                     $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.not_reversed { display: inline-block !important;  } </style>' );
                   }
                 }
+
+                // height
+                if( input_class.includes('height') ) {
+                  $('body').append( '<style> '+container_class+' '+inner_class+' { height: '+$(this).val()+' !important;  } </style>' );
+                }
               });
             <?php } ?>
           <?php } ?>
@@ -511,6 +519,24 @@ class Form
 							$('.<?php echo $identifier ?> .main_with_hidden.next').css({'display': 'none'});
   					<?php } ?>
 					}
+
+          addAnotherViewColumn( index=null ) {
+
+            // get identifier
+
+            <?php
+                // $connected_identifier = str_replace("_options_form", "", $identifier);
+                $connected_identifier = str_replace("_form", "", $identifier);
+            ?>
+						var connected_identifier = "<?php echo $connected_identifier ?>";
+
+            // if( index != null && index.toString() != '0' ) {
+            //   Reusable.addAnotherViewColumn($('.'+connected_identifier+' .inner.index_'+index)[0], connected_identifier);
+            // } else {
+              Reusable.addAnotherViewColumn($('.'+connected_identifier)[0], connected_identifier);
+            // }
+
+          }
 				}
 
 		<?php } ?>

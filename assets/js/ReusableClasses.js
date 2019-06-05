@@ -602,6 +602,9 @@ var editing_options_on = false
 
 					// if object exists at that index inside the editingfunctions array then pass it to this function
 					editingfunctions[index].populateview( cellindex );
+
+
+					// editingfunctions[index].( cellindex );
 				}
 
 				// show the modal's dark background
@@ -703,19 +706,39 @@ var editing_options_on = false
 		getIndexFromClass( prefix, view )
 		{
 			let classesstring = $(view).attr( 'class' )
-			// alert(JSON.stringify(view))
+
 			var classes = classesstring.split(" ")
 			for (var i = 0; i < classes.length ; i++) {
-				// alert(JSON.stringify(classes[i]))
+
 				if( classes[i].startsWith(prefix) ){
 					var foundclass = classes[i].split("_")
 					var theindex = foundclass[((foundclass.length)-1)]
-					// alert( "index is: " + theindex )
 					break
 				}
 			}
-			return theindex
 
+			return theindex
+		}
+
+		getLastIndexInView( identifier )
+		{
+
+			var view = $("."+identifier).find(".inner").last();
+			var prefix = "index_";
+
+			let classesstring = $(view).attr( 'class' )
+
+			var classes = classesstring.split(" ")
+			for (var i = 0; i < classes.length ; i++) {
+
+				if( classes[i].startsWith(prefix) ){
+					var foundclass = classes[i].split("_")
+					var theindex = foundclass[((foundclass.length)-1)]
+					break
+				}
+			}
+
+			return theindex
 		}
 
 		getTableFromCell( cell )
@@ -1083,7 +1106,57 @@ var editing_options_on = false
 
 
 
+
+
+
+
+		addAnotherViewColumn(view, identifier) {
+
+			identifier = identifier.replace("_options", "")
+
+			var index = 0;
+
+			if( $(view).find(".inner")[0].className.includes('index') == false ) {
+				$('.'+identifier).addClass('index_0');
+			} else {
+				// index = Reusable.getIndexFromClass( "index_", $(view).find(".inner")[0] )
+				index = Reusable.getLastIndexInView( identifier )
+			}
+
+			if( index != "0" ) {
+				var newview = $('.'+identifier).find('.inner'+'.index_'+index).clone()
+			} else {
+				var newview = $('.'+identifier).find('.inner').clone()
+			}
+			// newview.insertAfter( $('.'+identifier+'.index_'+index) );
+			newview.insertAfter( $('.'+identifier).find('.inner'+'.index_'+index) );
+
+			var nextindex = parseInt(index)+1;
+
+			$(newview).removeClass('index_'+index).addClass('index_'+nextindex);
+			$(newview).find('.clicktoedit').removeClass('index_'+index).addClass('index_'+nextindex);
+
+			var newwidth = 100/(parseInt(index)+2);
+			Reusable.changeViewWidth(identifier, newview, newwidth);
+
+			var viewdict = Data.get(identifier);
+			var viewoptions = Options.get(identifier);
+			Editing.clickToEditSection(viewdict, viewoptions, identifier);
+			var connected_identifier = identifier.replace("_form", "");
+			// $(view).find("."+identifier+"_add_view_button").remove()
+// 			$(newview).find("."+identifier+"_add_view_button").off().click(function(){
+
+// 					Editing.addViewButtonAction(newview, identifier);
+// 			});
+		}
+
+		changeViewWidth(identifier, view, newwidth)
+		{
+			newwidth = "calc( "+newwidth.toString() + "% - "+$(view).css("padding-left")+" - "+$(view).css("padding-right")+" - "+$(view).css("margin-left")+" - "+$(view).css("margin-right")+" ) !important";
+			$('body').append( '<style> .'+identifier+' .inner { width: '+newwidth+'; } </style>' );
+		}
 	}
+
 	var Reusable = new ReusableClasses();
 }
 

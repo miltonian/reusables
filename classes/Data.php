@@ -430,6 +430,11 @@ class Data
 
             // initialize modalclass for this view and convert php full array to js full array var
             echo "thismodalclass = new " . $viewoptions['modal']['modalclass'] . "Classes();
+            if( typeof modalclasses === 'undefined' ) {
+              modalclasses = {};
+            }
+            modalclasses['".$identifier."'] = thismodalclass;
+
         		var dataarray = " . json_encode($fullviewdict) . ";";
         }
 

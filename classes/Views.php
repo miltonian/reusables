@@ -77,7 +77,7 @@ class Views
                 Options::add("modal", "type", $identifier);
                 Options::add($identifier . "_form", "modal", $identifier);
 
-                Options::add("options_modal", "type", $identifier);
+                // Options::add("options_modal", "type", $identifier);
                 Options::add($identifier . "_options_form", "options_modal", $identifier);
                 Options::add("1", "is_option_form", $identifier . "_options_form");
 
@@ -174,7 +174,7 @@ class Views
                     $editable_options = [
                         "identifier" /*, "view"*/, "number_of_columns", "data_type", "text_color", "padding", "margin", "background_color", "image_size", "image_corner_radius",
                         "text_align", "title_size", "subtitle_size", "description_size", "title_color",
-                        "subtitle_color", "description_color", "text_offset_x", "text_offset_y", "overlay", "reverse",
+                        "subtitle_color", "description_color", "text_offset_x", "text_offset_y", "overlay", "reverse", "height",
                     ];
                     $input_keys = [];
                     foreach ($editable_options as $editable_option) {
@@ -237,6 +237,7 @@ class Views
     // Views::makeView() creates a View object and sets its parameters
     public static function makeView($file, $identifier, $viewtype, $tablenames = [], $children = [])
     {
+
         Views::analyzeViewInputs($identifier);
 
         // Get the view's data and options
@@ -277,7 +278,6 @@ class Views
             }
 
 
-
             // This is custom code and will be removed soon
             $data = Views::makeViewIfCustom($file, $identifier, $viewtype, $tablenames, $children);
 
@@ -291,6 +291,8 @@ class Views
                 $View->set('tablenames', $tablenames);
             }
             $View->set('identifier', $identifier);
+
+
         }
 
         // Queue the view's identifier
@@ -309,6 +311,7 @@ class Views
         } else {
             return $View->render();
         }
+
 
         // return "";
     }
@@ -364,6 +367,7 @@ class Views
                 $identifier = $dict["identifier"];
                 $tablenames = $dict["tablenames"];
                 $children = $dict["children"];
+
 
                 // Creates a View object and sets its parameters
                 echo Views::makeView($file, $identifier, $viewtype, $tablenames, $children);

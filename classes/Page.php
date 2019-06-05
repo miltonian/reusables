@@ -31,14 +31,13 @@ class Page
         if (sizeof(ob_get_status('Reusables\Page::reusables')) > 0) {
             CustomCode::end();
         }
-
         // Set analyze views to true
         Views::analyze(true);
 
-        // Loops through each reusable view and places them in a queue
+        // Loops through each view and combines its data and options to a new View object
         Views::setViews();
 
-        // Loops through each buffered view, creates the View object and sets its parameters like data and options
+        // Loops through each buffered view, creates the View object and sets its parameters
         $viewoutput = Views::makeViews();
 
         // include css files
@@ -49,6 +48,26 @@ class Page
 
         // Include the default Reusable javascript files
         Page::addReusableJS($addjquery);
+
+        $viewidentifiers = Views::getViewIdentifiers();
+        foreach ($viewidentifiers as $identifier) {
+
+            $data = Data::get($identifier);
+            $options = Options::get($identifier);
+            $info = Info::get($identifier);
+            echo "
+                <script>
+                  var data = ".json_encode($data).";
+                  var options = ".json_encode($options).";
+                  var info = ".json_encode($info).";
+                  Data.add(data, ".json_encode($identifier).");
+                  Options.addOptions(options, ".json_encode($identifier).");
+                  Info.addInfoDict(info, ".json_encode($identifier).");
+                  var info = Info.get(".json_encode($identifier).");
+
+                </script>
+            ";
+        }
 
         // Add the wysiwig text editor for the forms
         Page::addEditor($addeditor);
@@ -79,32 +98,47 @@ class Page
         Page::addAdminBarEditButtonActions();
     }
 
-    // Page::addAdminBarEditButtonActions() Add the actions for the edit options and edit data buttons in the admin bar
     public static function addAdminBarEditButtonActions()
     {
+        // Add the actions for the edit options and edit data buttons in the admin bar
         echo "
-    			<script>
-    				$('.horizontal.main.adminbar.desktopnav.navbar-shadow .horizontal.button.edit_switch.wrapper  a.horizontal.topbar-button').click(function(e){
-    					e.preventDefault()
-    					Reusable.toggleEditing()
-    				})
+			<script>
+				$('.horizontal.main.adminbar.desktopnav.navbar-shadow .horizontal.button.edit_switch.wrapper  a.horizontal.topbar-button').click(function(e){
+					e.preventDefault()
+					Reusable.toggleEditing()
+				})
 
-    				$('.horizontal.main.adminbar.desktopnav.navbar-shadow .horizontal.button.edit_options_switch.wrapper  a.horizontal.topbar-button').click(function(e){
-    					e.preventDefault()
-    					Reusable.toggleEditingOptions()
-    				})
+				$('.horizontal.main.adminbar.desktopnav.navbar-shadow .horizontal.button.edit_options_switch.wrapper  a.horizontal.topbar-button').click(function(e){
+					e.preventDefault()
+					Reusable.toggleEditingOptions()
+				})
 
-    			</script>
-    		";
+			</script>
+		";
     }
 
-    // Page::defineJSReusableVar() Define the ReusableClasses class
     public static function defineJSReusableVar()
     {
+        // Define the ReusableClasses class
         echo "
         <script>
             if( typeof Reusable === 'undefined' ) {
                 var Reusable = new ReusableClasses();
+            }
+            if( typeof Editing === 'undefined' ) {
+                var Editing = new EditingClasses();
+            }
+            if( typeof Data === 'undefined' ) {
+                var Data = new DataClasses();
+            }
+            if( typeof Options === 'undefined' ) {
+                var Options = new OptionsClasses();
+            }
+            if( typeof Views === 'undefined' ) {
+                var Views = new ViewsClasses();
+            }
+            if( typeof RFormat === 'undefined' ) {
+                var RFormat = new RFormatClasses();
             }
         </script>
         ";
@@ -141,31 +175,44 @@ class Page
         return Page::getParentAndPageName($page)['parent_dir'];
     }
 
-    // Page::addReusableJS() add js frameworks
     public static function addReusableJS($addjquery)
     {
         echo "
-    			<script src='/vendor/miltonian/reusables/assets/js/ReusableClasses.js'></script>
-    			<script src='/vendor/miltonian/reusables/assets/thirdparty/dropzone.js'></script>
-    			<script>
+			<script src='/vendor/miltonian/reusables/assets/js/ReusableClasses.js'></script>
 
-    			if ( typeof ReusableClasses === 'function' ){
-    				let Reusables = new ReusableClasses();
-    				Reusables.addJQuery();
-    			}
-    			</script>
-    		";
+      <!-- include js classes -->
+      <script src='/vendor/miltonian/reusables/assets/js/classes/Editing.js'></script>
+      <script src='/vendor/miltonian/reusables/assets/js/classes/Data.js'></script>
+      <script src='/vendor/miltonian/reusables/assets/js/classes/RFormat.js'></script>
+      <script src='/vendor/miltonian/reusables/assets/js/classes/Options.js'></script>
+      <script src='/vendor/miltonian/reusables/assets/js/classes/Views.js'></script>
+      <script src='/vendor/miltonian/reusables/assets/js/classes/Info.js'></script>
+
+            <script src='/vendor/miltonian/reusables/assets/thirdparty/dropzone.js'></script>
+            <script src='/vendor/miltonian/reusables/assets/thirdparty/analytics.js'></script>
+			<script>
+
+			if ( typeof ReusableClasses === 'function' ){
+				let Reusables = new ReusableClasses();
+        let Editing = new EditingClasses();
+        let Data = new DataClasses();
+        let Options = new OptionsClasses();
+        let Views = new ViewsClasses();
+        let RFormat = new RFormatClasses();
+				Reusables.addJQuery();
+			}
+			</script>
+		";
 
         if ($addjquery) {
             echo "<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>";
 
             echo '<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        			<link rel="stylesheet" href="/resources/demos/style.css">
-        			<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        			<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        			<link rel="stylesheet" href="/vendor/miltonian/reusables/assets/thirdparty/jquery.timepicker.css">
-                    <script src="/vendor/miltonian/reusables/assets/thirdparty/jquery.timepicker.min.js"></script>
-                    <script src="/vendor/miltonian/reusables/assets/thirdparty/analytics.js"></script>';
+			<link rel="stylesheet" href="/resources/demos/style.css">
+			<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+			<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+			<link rel="stylesheet" href="/vendor/miltonian/reusables/assets/thirdparty/jquery.timepicker.css">
+			<script src="/vendor/miltonian/reusables/assets/thirdparty/jquery.timepicker.min.js"></script>';
         }
     }
 
@@ -237,7 +284,6 @@ class Page
         echo Page::$addedjs;
     }
 
-    // Page::addEditor Add the wysiwig text editor for the forms
     public static function addEditor($addit)
     {
         if ($addit) {

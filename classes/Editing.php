@@ -71,7 +71,7 @@ class Editing
         // check if editing data
         echo " if( Reusable.isEditing() || alwayseditable ) { ";
 
-            // makeViewEditing
+            // makeViewEditingaddAnotherViewColumn
             Data::makeViewEditing($viewdict, $viewoptions, $identifier, $alwayseditable);
         echo " } ";
 
@@ -116,7 +116,7 @@ class Editing
                 if ($ca_type == "modal") {
                     if (isset($ca_type[ 'modal' ])) {
                         echo "var thismodalclass = new " . $ca['modal']['modalclass'] . "Classes();
-						editingfunctions.push( thismodalclass );";
+            						editingfunctions.push( thismodalclass );";
                     } else {
                         echo 'editingfunctions.push( "nothing" );';
                     }
@@ -166,6 +166,42 @@ class Editing
 
         // start javascript
         echo "<script> ";
+        echo "var thismodalclass = '';";
+        echo "var thisoptionsmodalclass = '';";
+        // check if this is a modal type
+        $optiontype = Data::getValue($viewoptions, 'type');
+        if ($optiontype == "modal" && isset($viewoptions['modal']['modalclass'])) {
+
+            // initialize modalclass for this view and convert php full array to js full array var
+            echo "thismodalclass = new " . $viewoptions['modal']['modalclass'] . "Classes();
+            if( typeof modalclasses === 'undefined' ) {
+              modalclasses = {};
+            }
+            modalclasses['".$identifier."'] = thismodalclass;";
+
+        }
+
+        if ( Data::getValue($viewoptions, 'options_type') == "options_modal" && isset($viewoptions['options_modal']['modalclass'])) {
+
+            // initialize modalclass for this view and convert php full array to js full array var
+            echo "thisoptionsmodalclass = new " . $viewoptions['options_modal']['modalclass'] . "Classes();
+            if( typeof optionmodalclasses === 'undefined' ) {
+              optionmodalclasses = {};
+            }
+            optionmodalclasses['".$identifier."'] = thisoptionsmodalclass;";
+
+        }
+
+        echo '
+            var connected_identifier = identifier.replace("_form", "");
+            $(".'.$identifier.'_add_view_button").click(function(){
+
+                var viewindex = Reusable.getLastIndexInView("'.$identifier.'");
+                console.log("viewindex: "+viewindex)
+                var view = $(".'.$identifier.' .index_"+viewindex+".' . $filename . '.clicktoedit");
+                Editing.addViewButtonAction(view, "'.$identifier.'")
+            });
+        ';
 
         // add click action to view -- connected to the container that wraps around every reusable view
         echo "$('.".$identifier." ." . $filename . ".clicktoedit').click(function(e){ ";
