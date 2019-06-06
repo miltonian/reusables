@@ -50,6 +50,31 @@ if ( typeof InfoClasses !== 'function' )
       }
     }
 
+    viewtype(identifier)
+    {
+        var info = Info.get(identifier);
+        return info['viewtype'];
+    }
+
+    viewtype_base(identifier)
+    {
+      console.log("viewtype: "+JSON.stringify(Info.viewtype(identifier)))
+      return Info.basename((Info.viewtype(identifier)).toLowerCase());
+    }
+
+    file_name(identifier)
+    {
+
+        info = Info.get(identifier);
+
+        return info['file'];
+    }
+
+    basename(path)
+    {
+      return path.replace(/.*\//, '');
+    }
+
 
 
 

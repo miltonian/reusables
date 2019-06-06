@@ -131,6 +131,9 @@ class Page
             if( typeof Data === 'undefined' ) {
                 var Data = new DataClasses();
             }
+            if( typeof Info === 'undefined' ) {
+                var Info = new InfoClasses();
+            }
             if( typeof Options === 'undefined' ) {
                 var Options = new OptionsClasses();
             }
@@ -196,6 +199,7 @@ class Page
 				let Reusables = new ReusableClasses();
         let Editing = new EditingClasses();
         let Data = new DataClasses();
+        let Info = new InfoClasses();
         let Options = new OptionsClasses();
         let Views = new ViewsClasses();
         let RFormat = new RFormatClasses();

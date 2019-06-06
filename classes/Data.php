@@ -470,6 +470,7 @@ class Data
     public static function getUnformatted($identifier )
     {
         $viewdict = Data::get($identifier);
+        // exit(json_encode($viewdict));
         $viewoptions = Options::get($identifier);
 
         if (isset($viewdict['value'])) {

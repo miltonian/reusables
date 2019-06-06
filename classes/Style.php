@@ -110,6 +110,9 @@ class Style
             if( $columns == "" ) {
               echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " ." . basename($file, ".php") . ".inner { width: " . ((1.0 / sizeof($viewvalues)) * 100) . "%; }";
             } else {
+              if( intval($columns) == 0 ) {
+                $columns = "1";
+              }
               echo " ." . $identifier . ".viewtype_" . ReusableClasses::parentDir($file) . "." . basename($file, ".php") . " ." . basename($file, ".php") . ".inner { width: " . ((1.0 / intval($columns)) * 100) . "%; }";
             }
           echo " } ";

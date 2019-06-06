@@ -373,8 +373,15 @@ class Form
                 ?>
 
                 var input_class = $(this).parent().attr("class");
-                var container_class = ".<?php echo $connected_identifier ?>.viewtype_<?php echo Info::viewtype_base($connected_identifier) ?>.<?php echo Info::file_name($connected_identifier) ?>.main";
-                var inner_class = ".<?php echo Info::file_name($connected_identifier) ?>.inner ";
+                var connected_identifier = "<?php echo $connected_identifier ?>";
+
+                  var viewtype_base = Info.viewtype_base(connected_identifier);
+                  console.log("viewtype_base: "+JSON.stringify(viewtype_base));
+                  var file_name = Info.file_name(connected_identifier);
+
+
+                var container_class = "."+connected_identifier+".viewtype_"+viewtype_base+"."+file_name+".main";
+                var inner_class = "."+file_name+".inner ";
 
                 // container spacing
                 if( input_class.includes('padding') ) {
@@ -385,11 +392,11 @@ class Form
 
                 // text sizes
                 if( input_class.includes('_title') && input_class.includes('size') ) {
-                  $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.title { font-size: '+$(this).val()+' !important;  } </style>' );
+                  $('body').append( '<style> '+container_class+' .'+file_name+'.title { font-size: '+$(this).val()+' !important;  } </style>' );
                 } else if( input_class.includes('subtitle') && input_class.includes('size') ) {
-                  $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.subtitle { font-size: '+$(this).val()+' !important;  } </style>' );
+                  $('body').append( '<style> '+container_class+' .'+file_name+'.subtitle { font-size: '+$(this).val()+' !important;  } </style>' );
                 } else if( input_class.includes('description') && input_class.includes('size') ) {
-                  $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.description { font-size: '+$(this).val()+' !important;  } </style>' );
+                  $('body').append( '<style> '+container_class+' .'+file_name+'.description { font-size: '+$(this).val()+' !important;  } </style>' );
                 }
 
                 // image sizes
@@ -406,11 +413,11 @@ class Form
                 if( input_class.includes('_text') && input_class.includes('color') ) {
                   $('body').append( '<style> '+container_class+' .content_container { color: '+$(this).val()+' !important;  } </style>' );
                 } else if( input_class.includes('_title') && input_class.includes('color') ) {
-                  $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.title { color: '+$(this).val()+' !important;  } </style>' );
+                  $('body').append( '<style> '+container_class+' .'+file_name+'.title { color: '+$(this).val()+' !important;  } </style>' );
                 } else if( input_class.includes('subtitle') && input_class.includes('color') ) {
-                  $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.subtitle { color: '+$(this).val()+' !important;  } </style>' );
+                  $('body').append( '<style> '+container_class+' .'+file_name+'.subtitle { color: '+$(this).val()+' !important;  } </style>' );
                 } else if( input_class.includes('description') && input_class.includes('color') ) {
-                  $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.description { color: '+$(this).val()+' !important;  } </style>' );
+                  $('body').append( '<style> '+container_class+' .'+file_name+'.description { color: '+$(this).val()+' !important;  } </style>' );
                 }
 
                 // background colors
@@ -422,11 +429,11 @@ class Form
                 if( input_class.includes('_text') && input_class.includes('align') ) {
                   $('body').append( '<style> '+container_class+' '+inner_class+' { text-align: '+$(this).val()+' !important;  } </style>' );
                 } else if( input_class.includes('_title') && input_class.includes('align') ) {
-                  $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.title { text-align: '+$(this).val()+' !important;  } </style>' );
+                  $('body').append( '<style> '+container_class+' .'+file_name+'.title { text-align: '+$(this).val()+' !important;  } </style>' );
                 } else if( input_class.includes('subtitle') && input_class.includes('align') ) {
-                  $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.subtitle { text-align: '+$(this).val()+' !important;  } </style>' );
+                  $('body').append( '<style> '+container_class+' .'+file_name+'.subtitle { text-align: '+$(this).val()+' !important;  } </style>' );
                 } else if( input_class.includes('description') && input_class.includes('align') ) {
-                  $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.description { text-align: '+$(this).val()+' !important;  } </style>' );
+                  $('body').append( '<style> '+container_class+' .'+file_name+'.description { text-align: '+$(this).val()+' !important;  } </style>' );
                 }
 
                 // text spacing
@@ -448,11 +455,11 @@ class Form
                 // reversing
                 if( input_class.includes('reverse') ) {
                   if( $(this).val() == '1' || $(this).val() == 'true' ) {
-                    $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.reversed { display: inline-block !important;  } </style>' );
-                    $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.not_reversed { display: none !important;  } </style>' );
+                    $('body').append( '<style> '+container_class+' .'+file_name+'.reversed { display: inline-block !important;  } </style>' );
+                    $('body').append( '<style> '+container_class+' .'+file_name+'.not_reversed { display: none !important;  } </style>' );
                   } else if( $(this).val() == '0' || $(this).val() == 'false' ) {
-                    $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.reversed { display: none !important;  } </style>' );
-                    $('body').append( '<style> '+container_class+' .<?php echo Info::file_name($connected_identifier) ?>.not_reversed { display: inline-block !important;  } </style>' );
+                    $('body').append( '<style> '+container_class+' .'+file_name+'.reversed { display: none !important;  } </style>' );
+                    $('body').append( '<style> '+container_class+' .'+file_name+'.not_reversed { display: inline-block !important;  } </style>' );
                   }
                 }
 
@@ -460,6 +467,53 @@ class Form
                 if( input_class.includes('height') ) {
                   $('body').append( '<style> '+container_class+' '+inner_class+' { height: '+$(this).val()+' !important;  } </style>' );
                 }
+
+              });
+
+              $('.<?php echo $identifier ?> select').change(function () {
+
+                <?php
+                    $connected_identifier = str_replace("_options_form", "", $identifier);
+                ?>
+
+                var input_class = $(this).parent().attr("class");
+                var container_class = ".<?php echo $connected_identifier ?>.viewtype_<?php echo Info::viewtype_base($connected_identifier) ?>.<?php echo Info::file_name($connected_identifier) ?>.main";
+                var inner_class = ".<?php echo Info::file_name($connected_identifier) ?>.inner ";
+
+                  if( input_class.includes('view') ) {
+                    console.log("getting code for: "+JSON.stringify($(this).val()))
+                    var view_path = $(this).val();
+                    var viewdata = <?php echo json_encode(Data::get($connected_identifier)) ?>;
+                    var viewoptions = <?php echo json_encode(Options::get($connected_identifier)) ?>;
+                    var viewinfo = <?php echo json_encode(Info::get($connected_identifier)) ?>;
+                    var unformatteddata = <?php echo json_encode(Data::getUnformatted($connected_identifier)) ?>;
+                    $.post("/vendor/miltonion/reusables/functions/get_view_code.php?view_path="+view_path+"&identifier=<?php echo $connected_identifier ?>&data="+viewdata+"&options="+viewoptions+"&unformatteddata="+unformatteddata,
+                    {
+                      view_path: view_path,
+                      identifier: "<?php echo $connected_identifier ?>",
+                      data: viewdata,
+                      options: viewoptions,
+                      unformatteddata: unformatteddata
+                    },
+                    function(data, status){
+
+                      var view_paths = view_path.split("/");
+                      <!-- console.log("view_paths: "+JSON.stringify(view_paths)) -->
+                      var viewtype = "";
+                      var file = "";
+                      if( view_paths[0] == "custom" ) {
+                          viewtype = view_paths[0] + "/" + view_paths[1];
+                          file = view_paths[2];
+                      } else {
+                        viewtype = view_paths[0];
+                        file = view_paths[1];
+                      }
+
+                      Info.add(viewtype, "viewtype", "<?php echo $connected_identifier ?>")
+                      Info.add(file, "file", "<?php echo $connected_identifier ?>")
+                      $('.<?php echo $connected_identifier ?>').replaceWith((((data))))
+                    });
+                  }
               });
             <?php } ?>
           <?php } ?>

@@ -194,7 +194,7 @@ class Convert
 
         // Get the links
         $links = Data::getValue($viewoptions, "links");
-
+// exit(json_encode($unformatted_arr));
         $viewvalues = [];
         foreach ($unformatted_arr as $key => $value) {
 

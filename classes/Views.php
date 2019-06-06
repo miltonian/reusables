@@ -172,7 +172,7 @@ class Views
                     $text_offset_x = Data::getValue($viewoptions, "text_offset_x");
                     $text_offset_y = Data::getValue($viewoptions, "text_offset_y");
                     $editable_options = [
-                        "identifier" /*, "view"*/, "number_of_columns", "data_type", "text_color", "padding", "margin", "background_color", "image_size", "image_corner_radius",
+                        "identifier" /*, "view"*/, "view", "number_of_columns", "data_type", "text_color", "padding", "margin", "background_color", "image_size", "image_corner_radius",
                         "text_align", "title_size", "subtitle_size", "description_size", "title_color",
                         "subtitle_color", "description_color", "text_offset_x", "text_offset_y", "overlay", "reverse", "height",
                     ];
@@ -182,7 +182,12 @@ class Views
                             $input_keys[$editable_option] = ["type" => "hidden", "field_value" => $identifier];
                         } elseif ($editable_option == "view") {
                             // exit(json_encode(Data::getValue( $viewoptions, $editable_option )));
-                            $input_keys[$editable_option] = ["type" => "select", "field_value" => Data::getValue($viewoptions, $editable_option), "options" => [["title" => "custom/section/imagetext_full", "value" => "custom/section/imagetext_full"], ["title" => "custom/section/imagetext_inline", "value" => "custom/section/imagetext_inline"], ["title" => "custom/section/imagetext_inside", "value" => "custom/section/imagetext_inside"]]];
+                            $input_keys[$editable_option] = ["type" => "select", "field_value" => Data::getValue($viewoptions, $editable_option), "options" => [
+                                ["title" => "custom/section/imagetext_full", "value" => "custom/section/imagetext_full"],
+                                ["title" => "custom/section/imagetext_inline", "value" => "custom/section/imagetext_inline"],
+                                ["title" => "custom/section/imagetext_inside", "value" => "custom/section/imagetext_inside"]
+                              ]
+                            ];
                         } else {
                             $input_keys[$editable_option] = ["type" => "textfield", "field_value" => Data::getValue($viewoptions, $editable_option), "field_name" => $editable_option];
                         }
@@ -302,7 +307,7 @@ class Views
         if (Info::isCustomView($identifier) && strtolower(Info::viewtype($identifier)) != "custom/nav") {
 
             $arr_of_values = View::start( Info::fileAbsolutePath($identifier), $identifier );
-
+// exit(json_encode($arr_of_values));
             foreach($arr_of_values as $key=>$value) {
                 $View->set($key, $value);
             }
@@ -764,7 +769,7 @@ class Views
     {
         // get data for view and assign to $vars variable
         $vars = Convert::viewParamsToVars($identifier);
-
+// exit(json_encode($vars));
         // get styling for view
         Style::defaultView($file, $identifier, $vars['viewvalues']);
 

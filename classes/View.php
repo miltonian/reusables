@@ -507,6 +507,7 @@ class View
 
         // loop through each of the view's values and replace reusables shorthand code with the corresponding values
         // e.g. {{title}} is replaced with "I am a title"
+        // exit("HEYY".json_encode($viewvalues));
         foreach ($viewvalues as $key => $value) {
 
             // replace reusables shorthand code with the corresponding value (as explained abovec)
@@ -524,7 +525,7 @@ class View
             // wrap the view in this link if a link exists
             $code .= $pre_link . $new_output . $post_link;
             if( Auth::check() ) {
-              $code .= "<button class='".$identifier."_add_view_button' style='height: 50px; width: 50px; border: 0; border-radius: 50%; text-align: center; border: 1px solid rgba(0,0,0,0.3); box-shadow: 0px 0px 4px rgba(0,0,0,0.4); cursor: pointer; background-color: green; color: white; font-weight: 800; padding-bottom: 5px; font-size: 20px; position: absolute; top: 50%; right: 0; transform: translateY(-50%); z-index: 1'>+</button>";
+              $code .= "<button class='".$identifier."_add_view_button' style='height: 50px; width: 50px; border: 0; border-radius: 50%; text-align: center; border: 1px solid rgba(0,0,0,0.3); box-shadow: 0px 0px 4px rgba(0,0,0,0.4); cursor: pointer; background-color: green; color: white; font-weight: 800; padding-bottom: 5px; font-size: 20px; position: absolute; top: 50%; right: 0; transform: translateY(-50%);'>+</button>";
             }
         }
 
@@ -571,7 +572,6 @@ class View
             $value_key = str_replace("{{", "", $reusable_value);
             $value_key = str_replace("}}", "", $value_key);
             $value_key = trim($value_key, " ");
-
             if ($value_key == "container") {
               if(Info::viewtype_base($identifier) == "gallery") {
 
