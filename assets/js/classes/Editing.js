@@ -19,6 +19,10 @@ if ( typeof EditingClasses !== 'function' )
       // add click action to view -- connected to the container that wraps around every reusable view
       $('.'+identifier+' .clicktoedit').click(function(e){
 
+        console.log("clicktoedit identifier: "+JSON.stringify(identifier))
+        var viewdict = Data.get(identifier);
+        var viewoptions = Options.get(identifier);
+        console.log("viewoptions: "+JSON.stringify(viewoptions))
         if( Reusable.isEditing() || alwayseditable ) {
             Data.makeViewEditing(viewdict, viewoptions, identifier, e, this, alwayseditable);
         }
@@ -30,6 +34,23 @@ if ( typeof EditingClasses !== 'function' )
             Options.makeViewEditing(viewdict, viewoptions, identifier, e, this, alwayseditable);
         }
 
+      });
+      var connected_identifier = identifier.replace("_form", "");
+
+      $("."+connected_identifier+"_add_view_button").off().click(function(){
+          var viewindex = Reusable.getLastIndexInView(connected_identifier);
+          var view = $("."+connected_identifier+" .index_"+viewindex+".clicktoedit");
+
+          Editing.addViewButtonAction(view, connected_identifier)
+      });
+
+      $("."+connected_identifier+"_add_newview_button").off().click(function(){
+
+          var milliseconds = (new Date).getTime();
+          var new_identifier = "newview_"+milliseconds;
+          var view = $("."+connected_identifier+"");
+
+          Editing.addNewViewButtonAction(view, connected_identifier, new_identifier)
       });
 
       // console.log("filename from JS: "+JSON.stringify(Editing.baseName(filename)))
@@ -47,8 +68,21 @@ if ( typeof EditingClasses !== 'function' )
           cellindex = Reusable.getLastIndexInView(identifier);
         }
       }
-      console.log("cellindex: "+JSON.stringify(cellindex));
-      modalclasses[identifier].addAnotherViewColumn( cellindex );
+
+      if(typeof modalclasses[identifier].addAnotherViewColumn == 'function') {
+          modalclasses[identifier].addAnotherViewColumn( cellindex );
+      } else {
+          Form.addAnotherViewColumnGlobalFunc( identifier, cellindex );
+      }
+    }
+
+    addNewViewButtonAction(view, identifier, new_identifier)
+    {
+      if(typeof modalclasses[identifier].addNewView == 'function') {
+          modalclasses[identifier].addNewView(view, identifier, new_identifier)
+      } else {
+          Form.addNewViewGlobalFunc( view, identifier, new_identifier );
+      }
     }
 
     getEditingFunctionsJS(dict, is_options=false)

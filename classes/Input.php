@@ -530,7 +530,7 @@ class Input {
 				$theinput = Input::fill( $data, $thekey, $i, $type, $placeholder, $labeltext, $size, $identifier, $selectoptions, $multiple, $multiple_updates, $multipleupdate_i );
 
 				// add input html to array $input_fields
-				
+
 				//sizeof only runs if is_array
 				if(is_array($theinput)){
 					if( sizeof( $theinput ) == 2 ) {
@@ -547,6 +547,8 @@ class Input {
 			}
 			$multipleupdate_i++;
 		}
+
+		Info::add($input_onlykeys, "input_onlykeys", $identifier);
 
 		// return dictionary to extract it in returning file
 		return [

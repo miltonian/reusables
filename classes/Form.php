@@ -371,9 +371,9 @@ class Form
                 <?php
                     $connected_identifier = str_replace("_options_form", "", $identifier);
                 ?>
-
                 var input_class = $(this).parent().attr("class");
                 var connected_identifier = "<?php echo $connected_identifier ?>";
+                console.log("connected identifier: "+JSON.stringify(connected_identifier))
 
                   var viewtype_base = Info.viewtype_base(connected_identifier);
                   console.log("viewtype_base: "+JSON.stringify(viewtype_base));
@@ -590,6 +590,16 @@ class Form
               Reusable.addAnotherViewColumn($('.'+connected_identifier)[0], connected_identifier);
             // }
 
+          }
+
+          addNewView(view, identifier, new_identifier) {
+
+            // get identifier
+            <?php
+                $connected_identifier = str_replace("_form", "", $identifier);
+            ?>
+						var connected_identifier = "<?php echo $connected_identifier ?>";
+            Reusable.addNewView($('.'+connected_identifier)[0], connected_identifier, new_identifier);
           }
 				}
 

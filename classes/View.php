@@ -526,6 +526,7 @@ class View
             $code .= $pre_link . $new_output . $post_link;
             if( Auth::check() ) {
               $code .= "<button class='".$identifier."_add_view_button' style='height: 50px; width: 50px; border: 0; border-radius: 50%; text-align: center; border: 1px solid rgba(0,0,0,0.3); box-shadow: 0px 0px 4px rgba(0,0,0,0.4); cursor: pointer; background-color: green; color: white; font-weight: 800; padding-bottom: 5px; font-size: 20px; position: absolute; top: 50%; right: 0; transform: translateY(-50%);'>+</button>";
+              $code .= "<button class='".$identifier."_add_newview_button' style='height: 50px; width: 50px; border: 0; border-radius: 50%; text-align: center; border: 1px solid rgba(0,0,0,0.3); box-shadow: 0px 0px 4px rgba(0,0,0,0.4); cursor: pointer; background-color: green; color: white; font-weight: 800; padding-bottom: 5px; font-size: 20px; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: -55px;'>+</button>";
             }
         }
 

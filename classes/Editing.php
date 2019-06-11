@@ -197,9 +197,16 @@ class Editing
             $(".'.$identifier.'_add_view_button").click(function(){
 
                 var viewindex = Reusable.getLastIndexInView("'.$identifier.'");
-                console.log("viewindex: "+viewindex)
                 var view = $(".'.$identifier.' .index_"+viewindex+".' . $filename . '.clicktoedit");
                 Editing.addViewButtonAction(view, "'.$identifier.'")
+            });
+
+            $(".'.$identifier.'_add_newview_button").click(function(){
+
+                var new_identifier = "newview_'.time().'";
+                var view = $(".'.$identifier.'");
+
+                Editing.addNewViewButtonAction(view, "'.$identifier.'", new_identifier)
             });
         ';
 

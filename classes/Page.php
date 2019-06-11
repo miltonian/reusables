@@ -57,6 +57,7 @@ class Page
             $info = Info::get($identifier);
             echo "
                 <script>
+
                   var data = ".json_encode($data).";
                   var options = ".json_encode($options).";
                   var info = ".json_encode($info).";
@@ -64,7 +65,6 @@ class Page
                   Options.addOptions(options, ".json_encode($identifier).");
                   Info.addInfoDict(info, ".json_encode($identifier).");
                   var info = Info.get(".json_encode($identifier).");
-
                 </script>
             ";
         }
@@ -143,6 +143,12 @@ class Page
             if( typeof RFormat === 'undefined' ) {
                 var RFormat = new RFormatClasses();
             }
+            if( typeof Form === 'undefined' ) {
+                var Form = new FormClasses();
+            }
+            if( typeof Input === 'undefined' ) {
+                var Input = new InputClasses();
+            }
         </script>
         ";
     }
@@ -185,11 +191,13 @@ class Page
 
       <!-- include js classes -->
       <script src='/vendor/miltonian/reusables/assets/js/classes/Editing.js'></script>
+      <script src='/vendor/miltonian/reusables/assets/js/classes/Form.js'></script>
       <script src='/vendor/miltonian/reusables/assets/js/classes/Data.js'></script>
       <script src='/vendor/miltonian/reusables/assets/js/classes/RFormat.js'></script>
       <script src='/vendor/miltonian/reusables/assets/js/classes/Options.js'></script>
       <script src='/vendor/miltonian/reusables/assets/js/classes/Views.js'></script>
       <script src='/vendor/miltonian/reusables/assets/js/classes/Info.js'></script>
+      <script src='/vendor/miltonian/reusables/assets/js/classes/Input.js'></script>
 
             <script src='/vendor/miltonian/reusables/assets/thirdparty/dropzone.js'></script>
             <script src='/vendor/miltonian/reusables/assets/thirdparty/analytics.js'></script>
@@ -198,11 +206,13 @@ class Page
 			if ( typeof ReusableClasses === 'function' ){
 				let Reusables = new ReusableClasses();
         let Editing = new EditingClasses();
+        let Form = new FormClasses();
         let Data = new DataClasses();
         let Info = new InfoClasses();
         let Options = new OptionsClasses();
         let Views = new ViewsClasses();
         let RFormat = new RFormatClasses();
+        let Input = new InputClasses();
 				Reusables.addJQuery();
 			}
 			</script>

@@ -52,6 +52,12 @@ class Info {
         return $info['viewtype'];
     }
 
+    public static function input_onlykeys($identifier)
+    {
+      $info = Info::get($identifier);
+      return $info['input_onlykeys'];
+    }
+
     public static function viewtype_base($identifier)
     {
       return basename(strtolower(Info::viewtype($identifier)));

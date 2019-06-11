@@ -58,8 +58,18 @@ if ( typeof InfoClasses !== 'function' )
 
     viewtype_base(identifier)
     {
-      console.log("viewtype: "+JSON.stringify(Info.viewtype(identifier)))
       return Info.basename((Info.viewtype(identifier)).toLowerCase());
+    }
+
+    input_onlykeys(identifier)
+    {
+      var info = Info.get(identifier);
+      if( info != null ) {
+        if( typeof info['input_onlykeys'] !== 'undefined' ) {
+          return info['input_onlykeys'];
+        }
+      }
+      return []
     }
 
     file_name(identifier)

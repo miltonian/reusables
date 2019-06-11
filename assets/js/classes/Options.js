@@ -87,10 +87,10 @@ if ( typeof OptionsClasses !== 'function' )
           viewoptions['options_modal']['parentclass'] = modal + "_wrapper"
         }
       }
-      console.log("MODAL: "+JSON.stringify(optionmodalclasses))
+
       var optiontype = Data.getValue( viewoptions, 'options_type' );
       var type = optiontype;
-      console.log("optiontype: "+JSON.stringify(optiontype))
+
       if (type == "options_modal" && typeof viewoptions['options_modal']['modalclass'] !== 'undefined' ) {
           // initialize modalclass for this view and convert php full array to js full array var
           // thismodalclass = new " . $viewoptions['modal']['modalclass'] . "Classes();
@@ -108,7 +108,7 @@ if ( typeof OptionsClasses !== 'function' )
         if( typeof dataarray === 'undefined' ) {
           dataarray = []
         }
-console.log("thismodalclasss: "+JSON.stringify(thismodalclass))
+
         Reusable.addAction( viewdict, [thismodalclass], 0, dataarray, view, e, viewoptions, formviewoptions, identifier, true );
       }
 

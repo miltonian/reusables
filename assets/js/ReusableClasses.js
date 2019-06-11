@@ -586,6 +586,7 @@ var editing_options_on = false
 
 				}
 			}
+			console.log("ADD ACTION: "+JSON.stringify(identifier))
 
 			if( type == "link" ){
 
@@ -601,7 +602,15 @@ var editing_options_on = false
 					// index is the editing button's index
 
 					// if object exists at that index inside the editingfunctions array then pass it to this function
-					editingfunctions[index].populateview( cellindex );
+					console.log("INSTANCE OF editingfunctionsclass: "+JSON.stringify(typeof editingfunctions[index]))
+					console.log("INSTANCE OF function : "+JSON.stringify(typeof editingfunctions[index].populateviewGlobalFunc))
+					console.log("INSTANCE OF function : "+JSON.stringify(typeof editingfunctions[index].populateview))
+					if(typeof editingfunctions[index].populateview == 'function') {
+						editingfunctions[index].populateview( cellindex );
+					} else /*if (typeof editingfunctions[index].populateviewGlobalFunc == 'function')*/ {
+						// editingfunctions[index].populateviewGlobalFunc( identifier, cellindex );
+						Form.populateviewGlobalFunc( identifier, cellindex );
+					}
 
 
 					// editingfunctions[index].( cellindex );
@@ -1150,6 +1159,92 @@ var editing_options_on = false
 // 			});
 		}
 
+		addNewView(view, identifier, new_identifier) {
+
+			identifier = identifier.replace("_options", "")
+
+			var newview = $('.'+identifier).clone()
+
+			var oldview_modal_id = identifier + "_form";
+			var oldview_optionsmodal_id = identifier + "_options_form";
+			var oldview_form_identifier = identifier + "_form_modalbackground";
+			var oldview_optionsform_identifier = identifier + "_options_form_modalbackground";
+
+			var newview_modal_id = new_identifier + "_form";
+			var newview_optionsmodal_id = new_identifier + "_options_form";
+			var newview_form_identifier = new_identifier + "_form_modalbackground";
+			var newview_optionsform_identifier = new_identifier + "_options_form_modalbackground";
+
+			var newview_form = $('.'+oldview_form_identifier).clone()
+			var newview_optionsform = $('.'+oldview_optionsform_identifier).clone()
+
+
+
+
+			var newview_form_html = $(newview_form).html();
+			newview_form_html = Data.replaceAll(newview_form_html, identifier, new_identifier)
+
+			$(newview_form).html(newview_form_html);
+
+			var newview_optionsform_html = $(newview_optionsform).html();
+			newview_optionsform_html = Data.replaceAll(newview_optionsform_html, identifier, new_identifier)
+
+			$(newview_optionsform).html(newview_optionsform_html);
+
+			var newview_html = $(newview).html();
+			newview_html = Data.replaceAll(newview_html, identifier, new_identifier)
+
+			$(newview).html(newview_html);
+
+			newview_form.insertAfter( $('.'+identifier) );
+			newview_optionsform.insertAfter( newview_form );
+			newview.insertAfter( newview_optionsform );
+
+			$(newview_form).removeClass(oldview_form_identifier).addClass(newview_form_identifier);
+			$(newview_optionsform).removeClass(oldview_optionsform_identifier).addClass(newview_optionsform_identifier);
+			$(newview).removeClass(identifier).addClass(new_identifier);
+
+			var viewdict = Data.get(identifier);
+			var viewoptions = Options.get(identifier);
+			var dataform_viewdict = Data.get(oldview_modal_id);
+			var optionsform_viewdict = Data.get(oldview_optionsmodal_id);
+			var dataform_viewoptions = Options.get(oldview_modal_id);
+			var optionsform_viewoptions = Options.get(oldview_optionsmodal_id);
+
+			viewoptions["modal"] = newview_modal_id;
+			viewoptions["options_modal"] = newview_optionsmodal_id;
+
+			Data.add(viewdict, new_identifier)
+			Options.addOptions(viewoptions, new_identifier)
+			Data.add(dataform_viewdict, newview_modal_id)
+			Data.add(optionsform_viewdict, newview_optionsmodal_id)
+			Options.addOptions(dataform_viewoptions, newview_modal_id)
+			Options.addOptions(optionsform_viewoptions, newview_optionsmodal_id)
+
+
+
+			// (new_identifier, viewdict, input_onlykeys, new_identifier)
+
+			modalclasses[new_identifier] = Form;
+
+			// var modal = viewoptions['modal'];
+			// viewoptions['modal'] = {}
+			// viewoptions['modal']['modalclass'] = "featured_section_form"
+			// viewoptions['modal']['parentclass'] = modal + "_wrapper"
+			// var modal = viewoptions['options_modal'];
+			// viewoptions['options_modal'] = {}
+			// viewoptions['options_type'] = "options_modal"
+			// viewoptions['options_modal']['modalclass'] = modal
+			// viewoptions['options_modal']['parentclass'] = modal + "_wrapper"
+
+			// optionmodalclasses[new_identifier] = optionmodalclasses[identifier];
+			optionmodalclasses[new_identifier] = Form; // optionmodalclasses[identifier];
+			allinfo[new_identifier] = allinfo[identifier];
+
+			Editing.clickToEditSection(viewdict, viewoptions, new_identifier);
+
+		}
+
 		changeViewWidth(identifier, view, newwidth)
 		{
 			newwidth = "calc( "+newwidth.toString() + "% - "+$(view).css("padding-left")+" - "+$(view).css("padding-right")+" - "+$(view).css("margin-left")+" - "+$(view).css("margin-right")+" ) !important";
@@ -1158,6 +1253,8 @@ var editing_options_on = false
 	}
 
 	var Reusable = new ReusableClasses();
+
+
 }
 
 
