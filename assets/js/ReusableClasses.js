@@ -549,8 +549,10 @@ var editing_options_on = false
 			// var identifier = ""
 			// console.log("addaction identifier: "+identifier);
 			// console.log("addaction viewoptions: "+(viewoptions));
-			var viewdict = Data.get(identifier);
-			var viewoptions = Options.get(identifier);
+			if( identifier == "" ) {
+				var viewdict = Data.get(identifier);
+				var viewoptions = Options.get(identifier);
+			}
 			var type = "";
 
 
@@ -591,6 +593,7 @@ var editing_options_on = false
 				}
 			}
 			console.log("ADD ACTION: "+JSON.stringify(identifier))
+			console.log("ADD ACTION TYPE: "+JSON.stringify(viewoptions))
 
 			if( type == "link" ){
 
@@ -602,6 +605,7 @@ var editing_options_on = false
 					// get view's index
 					var cellindex = Reusable.getIndexFromClass( "index_", view )
 				}
+				console.log("ASDF: "+JSON.stringify(editingfunctions[index]))
 				if( editingfunctions[index] != "" ) {
 					// index is the editing button's index
 
