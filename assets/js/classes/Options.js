@@ -1,7 +1,7 @@
 if ( typeof OptionsClasses !== 'function' )
 {
 
-  var alloptions = [];
+  var alloptions = {};
 
   class OptionsClasses {
 

@@ -19,10 +19,10 @@ if ( typeof EditingClasses !== 'function' )
       // add click action to view -- connected to the container that wraps around every reusable view
       $('.'+identifier+' .clicktoedit').click(function(e){
 
-        console.log("clicktoedit identifier: "+JSON.stringify(identifier))
         var viewdict = Data.get(identifier);
         var viewoptions = Options.get(identifier);
-        console.log("viewoptions: "+JSON.stringify(viewoptions))
+        console.log("clicktoedit identifier: "+JSON.stringify(identifier))
+
         if( Reusable.isEditing() || alwayseditable ) {
             Data.makeViewEditing(viewdict, viewoptions, identifier, e, this, alwayseditable);
         }
@@ -33,6 +33,7 @@ if ( typeof EditingClasses !== 'function' )
             // if you are editing options,
             Options.makeViewEditing(viewdict, viewoptions, identifier, e, this, alwayseditable);
         }
+
 
       });
       var connected_identifier = identifier.replace("_form", "");

@@ -330,6 +330,17 @@ if ( typeof DataClasses !== 'function' )
           return str.replace(new RegExp(Data.escapeRegExp(find), 'g'), replace);
       }
 
+      iterationCopy(src) {
+
+        let target = {};
+        for (let prop in src) {
+          if (src.hasOwnProperty(prop)) {
+            target[prop] = src[prop];
+          }
+        }
+        return target;
+      }
+
 
     }
 

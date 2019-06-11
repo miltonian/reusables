@@ -546,7 +546,11 @@ var editing_options_on = false
 			// index is the button's index, not the cell's
 
 			// initialize some variables
-			var identifier = ""
+			// var identifier = ""
+			// console.log("addaction identifier: "+identifier);
+			// console.log("addaction viewoptions: "+(viewoptions));
+			var viewdict = Data.get(identifier);
+			var viewoptions = Options.get(identifier);
 			var type = "";
 
 
@@ -1206,20 +1210,23 @@ var editing_options_on = false
 
 			var viewdict = Data.get(identifier);
 			var viewoptions = Options.get(identifier);
+
 			var dataform_viewdict = Data.get(oldview_modal_id);
 			var optionsform_viewdict = Data.get(oldview_optionsmodal_id);
 			var dataform_viewoptions = Options.get(oldview_modal_id);
 			var optionsform_viewoptions = Options.get(oldview_optionsmodal_id);
 
-			viewoptions["modal"] = newview_modal_id;
-			viewoptions["options_modal"] = newview_optionsmodal_id;
+			var viewdict_new = Data.iterationCopy(viewdict);
+			var viewoptions_new = Data.iterationCopy(viewoptions);
 
-			Data.add(viewdict, new_identifier)
-			Options.addOptions(viewoptions, new_identifier)
-			Data.add(dataform_viewdict, newview_modal_id)
-			Data.add(optionsform_viewdict, newview_optionsmodal_id)
-			Options.addOptions(dataform_viewoptions, newview_modal_id)
-			Options.addOptions(optionsform_viewoptions, newview_optionsmodal_id)
+			Data.add(viewdict_new, new_identifier);
+			Options.addOptions(viewoptions_new, new_identifier);
+			Options.add(newview_modal_id, "modal", new_identifier);
+			Options.add(newview_optionsmodal_id, "options_modal", new_identifier);
+			Data.add(dataform_viewdict, newview_modal_id);
+			Data.add(optionsform_viewdict, newview_optionsmodal_id);
+			Options.addOptions(dataform_viewoptions, newview_modal_id);
+			Options.addOptions(optionsform_viewoptions, newview_optionsmodal_id);
 
 
 
@@ -1241,7 +1248,8 @@ var editing_options_on = false
 			optionmodalclasses[new_identifier] = Form; // optionmodalclasses[identifier];
 			allinfo[new_identifier] = allinfo[identifier];
 
-			Editing.clickToEditSection(viewdict, viewoptions, new_identifier);
+
+			Editing.clickToEditSection(viewdict, viewoptions_new, new_identifier);
 
 		}
 
