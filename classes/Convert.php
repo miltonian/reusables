@@ -246,4 +246,241 @@ class Convert
             "links" => $links,
         ];
     }
+
+
+
+    public static function reusableFiles($files, $indexes)
+    {
+
+      $filesarray = [];
+      $filesarray_multiple = [];
+      for ($i=0; $i < sizeof($files['fieldimage']['name']); $i++) {
+  			if( $files['fieldimage']['size'][ $indexes[$i] ]['field_value'] > 0 ){
+
+  				// convert files from reusable format to normal file format
+  				$filedict = Convert::reusableFile($files, $indexes[$i]);
+  				array_push( $filesarray, $filedict );
+
+  				// this is for dynamic forms. not too important to understand right now
+  				$filesarray_multiple = Convert::reusableFileMultiple( $files, $i, $filesarray_multiple );
+
+  			}else{
+  				array_push($filesarray, []);
+  				$filesarray_multiple[$i] = [];
+  			}
+  		}
+
+      return [
+        "filesarray" => $filesarray,
+        "filesarray_multiple" => $filesarray_multiple
+      ];
+    }
+
+
+    // convert files from reusable format to normal file format
+    public static function reusableFile( $files, $index )
+    {
+
+      $filedict = [];
+			$filedict['name'] = $files['fieldimage']['name'][ $index ]['field_value'];
+			$filedict['type'] = $files['fieldimage']['type'][ $index ]['field_value'];
+			$filedict['tmp_name'] = $files['fieldimage']['tmp_name'][ $index ]['field_value'];
+			$filedict['error'] = $files['fieldimage']['error'][ $index ]['field_value'];
+			$filedict['size'] = $files['fieldimage']['size'][ $index ]['field_value'];
+
+      return $filedict;
+			// array_push( $filesarray, $filedict );
+    }
+
+
+    public static function reusableFileMultiple( $files, $index, $filesarray_multiple )
+    {
+
+      if(isset($files['fieldimage_multiple']['name'][$index])) {
+        $indexes_multiple = array_keys($files['fieldimage_multiple']['name'][$index]['field_value']);
+        if( isset($files['fieldimage_multiple']['name'][$index]) ) {
+          for ($m=0; $m < sizeof($files['fieldimage_multiple']['name'][$index]['field_value']); $m++) {
+            $filedict_multiple = [];
+            if( $files['fieldimage_multiple']['size'][$index]['field_value'][$indexes_multiple[$m]] > 0 ) {
+
+              $filedict_multiple['name'] = $files['fieldimage_multiple']['name'][$index]['field_value'][$indexes_multiple[$m]];
+              $filedict_multiple['type'] = $files['fieldimage_multiple']['type'][$index]['field_value'][$indexes_multiple[$m]];
+              $filedict_multiple['tmp_name'] = $files['fieldimage_multiple']['tmp_name'][$index]['field_value'][$indexes_multiple[$m]];
+              $filedict_multiple['error'] = $files['fieldimage_multiple']['error'][$index]['field_value'][$indexes_multiple[$m]];
+              $filedict_multiple['size'] = $files['fieldimage_multiple']['size'][$index]['field_value'][$indexes_multiple[$m]];
+
+
+              if(!isset($filesarray_multiple[$index])) {
+                $filesarray_multiple[$index] = [];
+              }
+              array_push( $filesarray_multiple[$index], $filedict_multiple );
+            } else {
+              if(!isset($filesarray_multiple[$index])) {
+                $filesarray_multiple[$index] = [];
+              }
+              array_push( $filesarray_multiple[$index], $filedict_multiple );
+            }
+          }
+        }
+      }
+
+      return $filesarray_multiple;
+    }
+
+    public static function queryConditions($conditions, $is_fieldimage=false)
+    {
+      $whereclause = "";
+      $conditionvalues = [];
+
+      if( $is_fieldimage ) {
+
+        for ($a=0; $a < sizeof($conditions); $a++) {
+          $conditionkey = $conditions[$a]['key'];
+          $conditionkey_arr = explode(".", $conditionkey);
+          if( sizeof($conditionkey_arr) != 2 ) {
+            $conditionkey = $tablename.".".$conditionkey;
+          }
+          if( $a > 0 ){
+            $whereclause .= " AND " . $conditionkey . "=? ";
+          }else{
+            $whereclause .= "WHERE " . $conditionkey . "=? ";
+          }
+          array_push( $conditionvalues, $conditions[$a]['value'] );
+        }
+      } else {
+
+        $conditionkey = $conditions[0]['key'];
+        $conditionkey_arr = explode(".", $conditionkey);
+        if( sizeof($conditionkey_arr) != 2 ) {
+          $conditionkey = $conditionkey;
+        } else {
+          $conditionkey = $conditionkey_arr[1];
+        }
+
+        if($conditionkey=="id" && $conditions[0]['value']=="" && $lastinsertid==true && $lastinsertid!=0 ){ $conditions[0]['value'] = $lastinsertid; }
+          for ($i=0; $i < sizeof($conditions); $i++) {
+            $conditionkey = $conditions[$i]['key'];
+            $conditionkey_arr = explode(".", $conditionkey);
+            if( sizeof($conditionkey_arr) != 2 ) {
+              $conditionkey = $tablename.".".$conditionkey;
+            }
+            if( $i > 0 ){
+              $whereclause .= " AND " . $conditionkey . "=? ";
+            }else{
+              $whereclause .= "WHERE " . $conditionkey . "=? ";
+            }
+            array_push( $conditionvalues, $conditions[$i]['value'] );
+          }
+        }
+
+
+      return [
+        "where_clause" => $whereclause,
+        "condition_values" => $conditionvalues
+      ];
+    }
+
+    public static function getFilesFromFileMultiples($filesarray_multiple, $files, $indexes)
+    {
+      $indexes_multiple = array_keys($files['fieldimage_multiple']['name'][$indexes[0]]['field_value']);
+  		if( isset($files['fieldimage_multiple']['name'][$indexes[0]]) ) {
+  			for ($m=0; $m < sizeof($files['fieldimage_multiple']['name'][$indexes[0]]['field_value']); $m++) {
+  				$filedict_multiple = [];
+  				if( $files['fieldimage_multiple']['size'][$indexes[0]]['field_value'][$indexes_multiple[$m]] > 0 ) {
+
+  					$filedict_multiple['name'] = $files['fieldimage_multiple']['name'][$indexes[0]]['field_value'][$indexes_multiple[$m]];
+  					$filedict_multiple['type'] = $files['fieldimage_multiple']['type'][$indexes[0]]['field_value'][$indexes_multiple[$m]];
+  					$filedict_multiple['tmp_name'] = $files['fieldimage_multiple']['tmp_name'][$indexes[0]]['field_value'][$indexes_multiple[$m]];
+  					$filedict_multiple['error'] = $files['fieldimage_multiple']['error'][$indexes[0]]['field_value'][$indexes_multiple[$m]];
+  					$filedict_multiple['size'] = $files['fieldimage_multiple']['size'][$indexes[0]]['field_value'][$indexes_multiple[$m]];
+
+
+  					if(!isset($filesarray_multiple[$indexes[0]])) {
+  						$filesarray_multiple[$indexes[0]] = [];
+  					}
+  					array_push( $filesarray_multiple[$indexes[0]], $filedict_multiple );
+  				} else {
+  					if(!isset($filesarray_multiple[$indexes[0]])) {
+  						$filesarray_multiple[$indexes[0]] = [];
+  					}
+  					array_push( $filesarray_multiple[$indexes[0]], $filedict_multiple );
+  				}
+  			}
+  		}
+      return $filesarray_multiple;
+    }
+
+    public static function imagepathKeyAndImagepathFromConditions($conditions, $tablename, $fieldimages, $indexes, $index)
+    {
+
+      $imagepath_key = "";
+      $current_imagepath = "";
+
+      if( $conditions ) {
+
+				// make the where clause from the passed conditions
+				$whereclause = Convert::queryConditions($conditions, true)['where_clause'];
+
+				// make the where query VALUES from the passed conditions
+				$conditionvalues = Convert::queryConditions($conditions, true)['condition_values'];
+
+				// run query to check if image exists in database
+				$query = "SELECT * FROM " . $tablename . " " . $whereclause;
+				$values = $conditionvalues;
+				$type = "select";
+				$result = CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
+
+				if( $result[0] == 1 ) {
+					// if image exists in db then get the column name that goes with it
+					$imagepath_key = $fieldimages[$indexes[$index]]['col_name'];
+					if( explode(".", $imagepath_key) > 1 ) {
+						$imagepath_key = explode(".", $imagepath_key)[1];
+					}
+
+					// also get the current imagepath that is saved in the database
+					if( isset( $result[1][0][$imagepath_key] ) ) {
+						$current_imagepath = $result[1][0][$imagepath_key];
+					}
+				}
+			}
+
+      return [
+        "imagepath_key" => $imagepath_key,
+        "current_imagepath" => $current_imagepath
+      ];
+
+    }
+
+    public static function colname($dict)
+    {
+
+      $colname = $dict['col_name'];
+			$colname_arr = explode('.', $colname);
+			if( isset($colname_arr) ) {
+				if( sizeof( $colname_arr ) == 2 ) {
+					$colname = $colname_arr[1];
+				}
+			}
+      return $colname;
+    }
+
+    public static function conditions($dict)
+    {
+      if( !isset($dict['field_conditions']) ) {
+				$conditions = false;
+			}else{
+				$conditions = $dict['field_conditions'];
+			}
+      return $conditions;
+    }
+
+    public static function fieldValue($dict)
+    {
+      if( !isset($dict['field_value'] ) ){
+  			$fieldvalue = false;
+  		}else{
+  			$fieldvalue = $dict['field_value'];
+  		}
+      return $fieldvalue;
+    }
 }

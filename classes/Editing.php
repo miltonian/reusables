@@ -220,4 +220,321 @@ class Editing
         // end javascript
         echo "</script>";
     }
+
+    public static function insertFormValueInDB( $indexes, $fieldarray, $fieldimages, $tablename, $starting_i=0, $sizeofarraystoinsert=(-1) )
+    {
+    	$query = "INSERT INTO " . $tablename . " ( ";// . $colname . " = ? " . $whereclause;
+    	$questionmarks = "";
+    	$insertconditionvalues = [];
+
+    	if( $sizeofarraystoinsert == -1 ) {
+    		$sizeofarraystoinsert = sizeof($indexes);
+    	}
+    	for ($i=$starting_i; $i < $starting_i+$sizeofarraystoinsert; $i++) {
+    		if( $i < sizeof( $indexes ) ) {
+    			$arrayorimages = $fieldarray;
+
+
+    			if( !isset( $arrayorimages[ $indexes[$i] ]['col_name'] ) ) {
+    				if( !isset( $arrayorimages[ $indexes[$i] ]['col_name'] ) ) {
+    					continue;
+    				} else{
+    					if( $fieldimages[ $indexes[$i] ]['tablename'] == $tablename ) {
+    						$arrayorimages = $fieldimages;
+    					} else {
+    						continue;
+    					}
+    				}
+    			} else{
+    				if( $fieldarray[ $indexes[$i] ]['tablename'] != $tablename ) {
+    					continue;
+    				}
+    			}
+    			$colname = $arrayorimages[ $indexes[$i] ]['col_name'];
+    			$colname_arr = explode('.', $colname);
+    			if( isset($colname_arr) ) {
+    				if( sizeof( $colname_arr ) == 2 ) {
+    					$colname = $colname_arr[1];
+    				}
+    			}
+
+
+
+
+    			if( $colname == 'id' ){
+    				continue;
+    			}
+    			if( sizeof($insertconditionvalues) > 0 ){
+    				$query .= ", " . $colname;
+
+    				$questionmarks .= ", ?";
+    			}else{
+
+
+    				$query .= $colname;
+    				$questionmarks .= "?";
+    			}
+    			array_push( $insertconditionvalues, $arrayorimages[ $indexes[$i] ]['field_value'] );
+    		}
+    	}
+
+    	$query .= " ) VALUES ( " . $questionmarks . ")";
+    	$values = $insertconditionvalues;
+    	$type = "insert";
+    	// $result = $MainClasses->querySQL( $query, $values, $type );
+
+
+    	$result = CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
+
+    	return $result;
+    }
+
+    public static function insertFileInDB( $indexes, $fieldarray, $fieldimages, $tablename, $starting_i=0, $sizeofarraystoinsert=(-1), $multiple_inserts=false )
+    {
+    	$query = "INSERT INTO " . $tablename . " ( ";// . $colname . " = ? " . $whereclause;
+    	$questionmarks = "";
+    	$insertconditionvalues = [];
+
+    	if( $sizeofarraystoinsert == -1 ) {
+    		$sizeofarraystoinsert = sizeof($indexes);
+    	}
+
+    	for ($i=$starting_i; $i < $starting_i+$sizeofarraystoinsert; $i++) {
+    		if( $i < sizeof( $indexes ) ) {
+    			$colname = $fieldimages[ $indexes[$i] ]['col_name'];
+    				$colname_arr = explode('.', $colname);
+    				if( isset($colname_arr) ) {
+    					if( sizeof( $colname_arr ) == 2 ) {
+    						$colname = $colname_arr[1];
+    					}
+    				}
+    			if( $colname == 'id' ){
+    				continue;
+    			}
+    			if( $fieldimages[ $indexes[$i] ]['field_value'] == false ){
+    				continue;
+    			}
+    			if( sizeof($insertconditionvalues) > 0 ){
+    				$query .= ", " . $colname;
+    				$questionmarks .= ", ?";
+    			}else{
+    				$query .= $colname;
+    				$questionmarks .= "?";
+    			}
+
+    			if( $multiple_inserts ) {
+    				$dict = [
+    					["field_value" => $fieldimages[ $indexes[$i] ]['field_value'],
+    										"field_type"=> "text",
+    										"tablename"=> "custom_data",
+    										"col_name"=> "value_string"]
+    				];
+    				array_splice($fieldarray, array_keys($fieldimages)[$i], 0, $dict);
+    			}else{
+    				array_push( $insertconditionvalues, $fieldimages[ $indexes[$i] ]['field_value'] );
+    			}
+    		}else{
+    			break;
+    		}
+    	}
+
+    	if( $multiple_inserts ) {
+    		return $fieldarray;
+    	}
+
+    	$query .= " ) VALUES ( " . $questionmarks . ")";
+    	$values = $insertconditionvalues;
+    	$type = "insert";
+
+    	// $result = $MainClasses->querySQL( $query, $values, $type );
+
+
+
+    	$result = CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
+    	$lastinsertid = $result[1];
+    	if( $multiple_inserts ) {
+
+    	}else{
+    		for ( $i=0; $i < sizeof($fieldarray); $i++ ) {
+    			$fieldarray[$i]['field_conditions'] = [ ["key"=>"id", "value"=>$lastinsertid ] ];
+    		}
+    	}
+    	return $fieldarray;
+
+    }
+
+    public static function updateDBValueIfExists($field)
+    {
+        $did_find_and_update=false;
+
+        // get value from form value
+    		$fieldvalue = Convert::fieldValue($field);
+    		if($fieldvalue) {
+
+    				// get tablename from image
+    				$tablename = $field['tablename'];
+
+    				// get column name from image
+    				$colname = Convert::colname($field);
+
+    				// get conditions from image
+    				$conditions = Convert::conditions($field);
+
+    				if( !isset( $tablenames_array[$tablename] ) ) {
+    					$tablenames_array[$tablename] = true;
+    				}
+
+            if( $conditions ) {
+
+        			// make the where clause from the passed conditions
+        			$whereclause = Convert::queryConditions($conditions)['where_clause'];
+
+        			// make the where query VALUES from the passed conditions
+        			$conditionvalues = Convert::queryConditions($conditions)['condition_values'];
+
+        			$query = "SELECT * FROM " . $tablename . " " . $whereclause;
+        			$values = $conditionvalues;
+        			$type = "select";
+        			$result = CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
+
+        			if( $result[0] == 0 ) {
+
+        			} else if ( isset($conditions) ) {
+
+        				$did_find_and_update=true;
+        				if($colname=='id'){
+        					continue;
+        				}
+
+        				$query = "UPDATE " . $tablename . " SET " . $colname . " = ? " . $whereclause;
+        				$values = array_merge( [ $fieldvalue ], $conditionvalues );
+        				$type = "update";
+        				$result = CustomData::call( "DBClasses", "querySQL", [ $query, $values, $type ] );
+
+        			}
+        		}
+
+        }
+
+        return $did_find_and_update;
+
+    }
+
+    public static function insertDBValues( $fieldarray, $indexes, $fieldimages, $tablename, $multiple_inserts, $filesarray, $tablenames_array )
+    {
+
+      $sizeofarraystoinsert = 0;
+      $keys_found = [];
+
+      if( isset( $multiple_inserts ) && sizeof($filesarray[0])>0 ) {
+        if( $multiple_inserts == "1" ) {
+
+          $arraytoinsert_i=0;
+          foreach ($fieldarray as $key) {
+
+            if( !isset($keys_found[$key['col_name']]) ) {
+              $keys_found[$key['col_name']] = true;
+            }else{
+              $sizeofarraystoinsert = $arraytoinsert_i;
+              break;
+            }
+            $arraytoinsert_i++;
+          }
+        }
+      }
+
+      if( isset( $multiple_inserts ) ){
+        if( $multiple_inserts == "1" ) {
+
+          for ($i=0; $i < (sizeof($indexes)); $i++) {
+
+            if( $sizeofarraystoinsert == 0 ) {
+              $fieldarray = Editing::insertFileInDB( $indexes, $fieldarray, $fieldimages, $tablename, $i, 1, true );
+            }else{
+              $fieldarray = Editing::insertFileInDB( $indexes, $fieldarray, $fieldimages, $tablename, $i, $sizeofarraystoinsert, true );
+            }
+
+            if( ($i+$sizeofarraystoinsert-1) > $i ) {
+              $i=($i+$sizeofarraystoinsert-1);
+            }
+          }
+        }else{
+          foreach ($tablenames_array as $table=>$bool) {
+            $fieldarray = Editing::insertFileInDB( $indexes, $fieldarray, $fieldimages, $table );
+          }
+        }
+      }else{
+
+        foreach ($tablenames_array as $table=>$bool) {
+          $fieldarray = Editing::insertFileInDB( $indexes, $fieldarray, $fieldimages, $table );
+        }
+      }
+
+      return $fieldarray;
+
+    }
+
+    public static function insertDBImageValues( $fieldarray, $indexes, $fieldimages, $tablename, $multiple_inserts )
+    {
+
+      $sizeofarraystoinsert = 0;
+      $keys_found = [];
+
+      if( isset( $multiple_inserts ) ){
+        if( $multiple_inserts == "1" ) {
+
+          $arraytoinsert_i=0;
+          foreach ($fieldarray as $key) {
+
+            if( !isset($keys_found[$key['col_name']]) ) {
+              $keys_found[$key['col_name']] = true;
+            }else{
+              $sizeofarraystoinsert = $arraytoinsert_i;
+              break;
+            }
+            $arraytoinsert_i++;
+          }
+        }
+      }
+
+      if( isset( $multiple_inserts ) ){
+        if( $multiple_inserts == "1" ) {
+
+          for ($i=0; $i < (sizeof($indexes)); $i++) {
+
+            if( !isset($fieldimages) ){
+              $fieldimages = null;
+            }else if( sizeof($fieldimages) == 0 ) {
+              $fieldimages = null;
+            }
+
+            $lastinsertid = Editing::insertFormValueInDB( $indexes, $fieldarray, $fieldimages, $tablename, $i, $sizeofarraystoinsert );
+
+            $i=($i+$sizeofarraystoinsert-1);
+          }
+        } else {
+          if( !isset( $fieldimages ) ) {
+            $fieldimages = [];
+          }
+
+          foreach ($tablenames_array as $table=>$bool) {
+            $lastinsertid = Editing::insertFormValueInDB( $indexes, $fieldarray, $fieldimages, $table );
+          }
+        }
+      } else {
+
+        if( !isset( $fieldimages ) ) {
+          $fieldimages = [];
+        }
+
+        foreach ($tablenames_array as $table=>$bool) {
+
+          $lastinsertid = Editing::insertFormValueInDB( $indexes, $fieldarray, $fieldimages, $table );
+        }
+
+      }
+      return $lastinsertid;
+
+    }
+
 }

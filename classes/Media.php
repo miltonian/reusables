@@ -74,7 +74,6 @@ class Media
                 $newname = time()."_".$file["name"];
                 $newname = str_replace(" ", "_", $newname);
                 if ($file["error"] > 0) {
-                    //echo "Return Code: " . $_FILES["mediapath"]["error"] . "<br />";
                 } else {
                     if (file_exists(Media::$uploads . $newname)) {
                         $uploadOk = 0;
@@ -138,5 +137,92 @@ class Media
         imagedestroy($imageTmp);
 
         return 1;
+    }
+
+
+
+
+    public static function uploadFilesMultiple($filesarray_multiple, $indexes, $index, $imagepath)
+    {
+
+      if( isset($filesarray_multiple[$indexes[$index]]) ) {
+				if( sizeof($filesarray_multiple[$indexes[$index]]) > 0 ) {
+
+					$imagepath_array = [];
+					// $current_imagepath
+					$current_imagepaths = [];
+					if( isset($current_imagepath) ) {
+						$current_imagepaths = explode(",", $current_imagepath);
+						$current_imagepaths[0] = $imagepath;
+						$imagepaths_index = 1;
+						foreach ($filesarray_multiple[$indexes[$index]] as $file) {
+							if( isset($file['name']) ) {
+								if( isset($images_names[$file['name']]) ) {
+									break;
+								} else {
+									$images_names[$file['name']] = true;
+								}
+							}
+							if( isset($file['name']) ) {
+								$current_imagepaths[$imagepaths_index] = Media::uploadImage( $file );
+							} else if( isset($current_imagepaths[$imagepaths_index]) ) {
+								$current_imagepaths[$imagepaths_index] = $current_imagepaths[$imagepaths_index];
+							}
+							$imagepaths_index++;
+						}
+					}
+
+
+					// $imagepath = "";
+					$imagepaths_index=0;
+					foreach ($current_imagepaths as $image) {
+
+						if( $imagepaths_index > 0 ) {
+							$imagepath .= ",";
+						}
+						$imagepath .= $image;
+						$imagepaths_index++;
+					}
+				}
+			}
+      return [
+        "imagepath" => $imagepath,
+        "current_imagepaths" => $current_imagepaths
+      ];
+    }
+
+
+
+    public static function uploadFieldImage( $files, $file, $indexes, $index, $fieldimages, $filesarray_multiple )
+    {
+
+  		$images_names = [];
+  		if( $files['fieldimage']['name'][$indexes[$index]]['field_value'] != "" ) {
+
+  			// upload this file and get the path
+  			$imagepath = Media::uploadImage( $file );
+  			// skip this
+  			$uploadfilemultiple_result = Media::uploadFilesMultiple($filesarray_multiple, $indexes, $index, $imagepath);
+  			$imagepath = $uploadfilemultiple_result['imagepath'];
+
+  			$current_imagepaths = $uploadfilemultiple_result['current_imagepaths'];
+
+  			// add file path to fieldimages array
+  			$fieldimages[$indexes[$index]]['field_value'] = $imagepath;
+  		} else {
+
+  			// there is no file to upload
+  			$imagepath = "";
+
+  			// skip this
+  			$uploadfilemultiple_result = Media::uploadFilesMultiple($filesarray_multiple, $indexes, $index, $imagepath);
+  			$imagepath = $uploadfilemultiple_result['imagepath'];
+  			$current_imagepaths = $uploadfilemultiple_result['current_imagepaths'];
+
+  			// add file path to fieldimages array
+  			$fieldimages[$indexes[$index]]['field_value'] = $imagepath;
+  		}
+
+      return $fieldimages;
     }
 }
