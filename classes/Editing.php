@@ -402,9 +402,9 @@ class Editing
         			} else if ( isset($conditions) ) {
 
         				$did_find_and_update=true;
-        				if($colname=='id'){
-        					continue;
-        				}
+        				// if($colname=='id'){
+        				// 	continue;
+        				// }
 
         				$query = "UPDATE " . $tablename . " SET " . $colname . " = ? " . $whereclause;
         				$values = array_merge( [ $fieldvalue ], $conditionvalues );
