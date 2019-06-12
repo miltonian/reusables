@@ -248,7 +248,7 @@ class Convert
     }
 
 
-
+    // loop through files and convert files from reusable format to normal file format
     public static function reusableFiles($files, $indexes)
     {
 
@@ -261,7 +261,7 @@ class Convert
   				$filedict = Convert::reusableFile($files, $indexes[$i]);
   				array_push( $filesarray, $filedict );
 
-  				// this is for dynamic forms. not too important to understand right now
+  				// skip
   				$filesarray_multiple = Convert::reusableFileMultiple( $files, $i, $filesarray_multiple );
 
   			}else{
@@ -289,7 +289,6 @@ class Convert
 			$filedict['size'] = $files['fieldimage']['size'][ $index ]['field_value'];
 
       return $filedict;
-			// array_push( $filesarray, $filedict );
     }
 
 
@@ -410,6 +409,7 @@ class Convert
       return $filesarray_multiple;
     }
 
+    // get instance in db if image exists
     public static function imagepathKeyAndImagepathFromConditions($conditions, $tablename, $fieldimages, $indexes, $index)
     {
 

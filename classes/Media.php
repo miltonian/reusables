@@ -144,13 +144,12 @@ class Media
 
     public static function uploadFilesMultiple($filesarray_multiple, $indexes, $index, $imagepath)
     {
-
+$imagepath_array = [];
+$current_imagepaths = [];
       if( isset($filesarray_multiple[$indexes[$index]]) ) {
 				if( sizeof($filesarray_multiple[$indexes[$index]]) > 0 ) {
 
-					$imagepath_array = [];
 					// $current_imagepath
-					$current_imagepaths = [];
 					if( isset($current_imagepath) ) {
 						$current_imagepaths = explode(",", $current_imagepath);
 						$current_imagepaths[0] = $imagepath;
@@ -191,8 +190,31 @@ class Media
       ];
     }
 
+    // loop through files then upload file and get path
+    public static function uploadFieldImages( $files, $filesarray, $indexes, $fieldimages )
+    {
 
+      $i=0;
+    	foreach ($filesarray as $file) {
 
+    		if( sizeof($filesarray)==0){
+    			$i++;
+    			if( $i > sizeof($filesarray) ) {
+    				break;
+    			}
+    			continue;
+    		}
+
+    		// upload file and get path
+    		$fieldimages = Media::uploadFieldImage( $_FILES, $file, $indexes, $i, $fieldimages, [] );
+
+    		$i++;
+    	}
+
+      return $fieldimages;
+    }
+
+    // upload file and get path
     public static function uploadFieldImage( $files, $file, $indexes, $index, $fieldimages, $filesarray_multiple )
     {
 
@@ -201,6 +223,7 @@ class Media
 
   			// upload this file and get the path
   			$imagepath = Media::uploadImage( $file );
+
   			// skip this
   			$uploadfilemultiple_result = Media::uploadFilesMultiple($filesarray_multiple, $indexes, $index, $imagepath);
   			$imagepath = $uploadfilemultiple_result['imagepath'];

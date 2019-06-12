@@ -363,6 +363,50 @@ class Editing
 
     }
 
+    public static function updateOrInsertDBValues( $fieldarray, $indexes, $fieldimages, $filesarray, $ifnone_insert, $is_file=false )
+    {
+
+      $did_find_and_update = false;
+      $tablenames_array = [];
+      $lastinsertid = false;
+
+      if( $is_file ) {
+
+        for( $i=0; $i<sizeof($indexes);$i++ ){
+
+      		$fi = $fieldimages[$indexes[$i]];
+      		$did_find_and_update = Editing::updateDBValueIfExists($fi);
+      	}
+      } else {
+
+        foreach ($fieldarray as $fi) {
+
+      		$did_find_and_update = Editing::updateDBValueIfExists($fi);
+      	}
+      }
+
+
+    	if( !$did_find_and_update && (sizeof($filesarray) > 0 || !$is_file) ){
+
+    		if( isset( $ifnone_insert ) && sizeof($filesarray[0])>0  ){
+    			if( $ifnone_insert == "1" ){
+
+            if( $is_file ) {
+              $fieldarray = Editing::insertDBImageValues( $fieldarray, $indexes, $fieldimages, "0", $filesarray, $tablenames_array );
+            } else {
+              $lastinsertid = Editing::insertDBValues( $fieldarray, $indexes, $fieldimages, "0" );
+            }
+    			}
+    		}
+    	}
+
+      if( $is_file ) {
+        return $fieldarray;
+      } else {
+        return $lastinsertid;
+      }
+    }
+
     public static function updateDBValueIfExists($field)
     {
         $did_find_and_update=false;
@@ -403,7 +447,7 @@ class Editing
 
         				$did_find_and_update=true;
         				// if($colname=='id'){
-        				// 	continue;
+        				// 	//continue;
         				// }
 
         				$query = "UPDATE " . $tablename . " SET " . $colname . " = ? " . $whereclause;
@@ -420,7 +464,7 @@ class Editing
 
     }
 
-    public static function insertDBValues( $fieldarray, $indexes, $fieldimages, $tablename, $multiple_inserts, $filesarray, $tablenames_array )
+    public static function insertDBImageValues( $fieldarray, $indexes, $fieldimages, $multiple_inserts, $filesarray, $tablenames_array )
     {
 
       $sizeofarraystoinsert = 0;
@@ -446,18 +490,18 @@ class Editing
       if( isset( $multiple_inserts ) ){
         if( $multiple_inserts == "1" ) {
 
-          for ($i=0; $i < (sizeof($indexes)); $i++) {
-
-            if( $sizeofarraystoinsert == 0 ) {
-              $fieldarray = Editing::insertFileInDB( $indexes, $fieldarray, $fieldimages, $tablename, $i, 1, true );
-            }else{
-              $fieldarray = Editing::insertFileInDB( $indexes, $fieldarray, $fieldimages, $tablename, $i, $sizeofarraystoinsert, true );
-            }
-
-            if( ($i+$sizeofarraystoinsert-1) > $i ) {
-              $i=($i+$sizeofarraystoinsert-1);
-            }
-          }
+          // for ($i=0; $i < (sizeof($indexes)); $i++) {
+          //
+          //   if( $sizeofarraystoinsert == 0 ) {
+          //     $fieldarray = Editing::insertFileInDB( $indexes, $fieldarray, $fieldimages, $tablename, $i, 1, true );
+          //   }else{
+          //     $fieldarray = Editing::insertFileInDB( $indexes, $fieldarray, $fieldimages, $tablename, $i, $sizeofarraystoinsert, true );
+          //   }
+          //
+          //   if( ($i+$sizeofarraystoinsert-1) > $i ) {
+          //     $i=($i+$sizeofarraystoinsert-1);
+          //   }
+          // }
         }else{
           foreach ($tablenames_array as $table=>$bool) {
             $fieldarray = Editing::insertFileInDB( $indexes, $fieldarray, $fieldimages, $table );
@@ -474,7 +518,7 @@ class Editing
 
     }
 
-    public static function insertDBImageValues( $fieldarray, $indexes, $fieldimages, $tablename, $multiple_inserts )
+    public static function insertDBValues( $fieldarray, $indexes, $fieldimages, $tablename, $multiple_inserts )
     {
 
       $sizeofarraystoinsert = 0;
@@ -500,18 +544,18 @@ class Editing
       if( isset( $multiple_inserts ) ){
         if( $multiple_inserts == "1" ) {
 
-          for ($i=0; $i < (sizeof($indexes)); $i++) {
-
-            if( !isset($fieldimages) ){
-              $fieldimages = null;
-            }else if( sizeof($fieldimages) == 0 ) {
-              $fieldimages = null;
-            }
-
-            $lastinsertid = Editing::insertFormValueInDB( $indexes, $fieldarray, $fieldimages, $tablename, $i, $sizeofarraystoinsert );
-
-            $i=($i+$sizeofarraystoinsert-1);
-          }
+          // for ($i=0; $i < (sizeof($indexes)); $i++) {
+          //
+          //   if( !isset($fieldimages) ){
+          //     $fieldimages = null;
+          //   }else if( sizeof($fieldimages) == 0 ) {
+          //     $fieldimages = null;
+          //   }
+          //
+          //   $lastinsertid = Editing::insertFormValueInDB( $indexes, $fieldarray, $fieldimages, $tablename, $i, $sizeofarraystoinsert );
+          //
+          //   $i=($i+$sizeofarraystoinsert-1);
+          // }
         } else {
           if( !isset( $fieldimages ) ) {
             $fieldimages = [];
@@ -528,7 +572,6 @@ class Editing
         }
 
         foreach ($tablenames_array as $table=>$bool) {
-
           $lastinsertid = Editing::insertFormValueInDB( $indexes, $fieldarray, $fieldimages, $table );
         }
 
