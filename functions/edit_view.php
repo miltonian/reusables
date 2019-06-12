@@ -45,39 +45,10 @@ if(!$contains_parameters){
 
 
 
-if( isset($fieldimages ) ) {
-		// images have been passed and need to be updated/inserted
-
-		$indexes = array_keys( $_FILES['fieldimage']['name']);
-
-		// loop through files and convert files from reusable format to normal file format
-		$reusable_files_result = Reusables\Convert::reusableFiles($_FILES, $indexes);
-
-		// put normal files in var
-		$filesarray = $reusable_files_result['filesarray'];
-
-		//	// skip
-		// 	$filesarray_multiple = $reusable_files_result['filesarray_multiple'];
-		// 	// skip
-		// 	$filesarray_multiple = Reusables\Convert::getFilesFromFileMultiples($filesarray_multiple, $_FILES, $indexes);
-
-		// loop through the files collected earlier in this file
-		$fieldimages = Reusables\Media::uploadFieldImages( $_FILES, $filesarray, $indexes, $fieldimages );
-
-		$fieldarray = Reusables\Editing::updateOrInsertDBValues( $fieldarray, $indexes, $fieldimages, $filesarray, $_POST['ifnone_insert'], true );
-
-}
-
-
-
-
-
-
-if ( sizeof($fieldarray) > 0 ) {
-// normal form values have been passed and need to be updated/inserted
-
-	$lastinsertid = Reusables\Editing::updateOrInsertDBValues( $fieldarray, $indexes, $fieldimages, $filesarray, $_POST['ifnone_insert'] );
-}
+$saveform_result = Reusables\Editing::saveSmartFormValues($fieldimages, $fieldarray, $_FILES, $_POST['ifnone_insert']);
+$fieldarray = $saveform_result["fieldarray"];
+$fieldimages = $saveform_result["fieldimages"];
+$lastinsertid = $saveform_result["lastinsertid"];
 
 
 if( isset( $_POST['added_file'] ) ) {

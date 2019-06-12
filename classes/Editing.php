@@ -518,7 +518,7 @@ class Editing
 
     }
 
-    public static function insertDBValues( $fieldarray, $indexes, $fieldimages, $tablename, $multiple_inserts )
+    public static function insertDBValues( $fieldarray, $indexes, $fieldimages, $multiple_inserts )
     {
 
       $sizeofarraystoinsert = 0;
@@ -579,5 +579,53 @@ class Editing
       return $lastinsertid;
 
     }
+
+    public static function saveSmartFormValues($fieldimages, $fieldarray, $_FILES, $ifnone_insert)
+    {
+
+      $lastinsertid = false;
+
+      if( isset($fieldimages ) ) {
+      		// images have been passed and need to be updated/inserted
+
+      		$indexes = array_keys( $_FILES['fieldimage']['name']);
+
+      		// loop through files and convert files from reusable format to normal file format
+      		$reusable_files_result = Convert::reusableFiles($_FILES, $indexes);
+
+      		// put normal files in var
+      		$filesarray = $reusable_files_result['filesarray'];
+
+      		//	// skip
+      		// 	$filesarray_multiple = $reusable_files_result['filesarray_multiple'];
+      		// 	// skip
+      		// 	$filesarray_multiple = Reusables\Convert::getFilesFromFileMultiples($filesarray_multiple, $_FILES, $indexes);
+
+      		// loop through the files collected earlier in this file
+      		$fieldimages = Media::uploadFieldImages( $_FILES, $filesarray, $indexes, $fieldimages );
+
+      		$fieldarray = Editing::updateOrInsertDBValues( $fieldarray, $indexes, $fieldimages, $filesarray, $ifnone_insert, true );
+
+      }
+
+
+
+
+
+
+      if ( sizeof($fieldarray) > 0 ) {
+      // normal form values have been passed and need to be updated/inserted
+
+      	$lastinsertid = Editing::updateOrInsertDBValues( $fieldarray, $indexes, $fieldimages, $filesarray, $ifnone_insert );
+      }
+
+      return [
+        "fieldimages" => $fieldimages,
+        "fieldarray" => $fieldarray,
+        "lastinsertid" => $lastinsertid
+      ];
+    }
+
+
 
 }
