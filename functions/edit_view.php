@@ -39,6 +39,12 @@ if(!$contains_parameters){
 }
 
 
+
+
+
+
+
+
 if( isset($fieldimages ) ) {
 		// images have been passed and need to be updated/inserted
 
@@ -64,8 +70,8 @@ if( isset($fieldimages ) ) {
 
 
 
-$tablenames_array = null;
-$tablenames_array = [];
+
+
 
 if ( sizeof($fieldarray) > 0 ) {
 // normal form values have been passed and need to be updated/inserted
