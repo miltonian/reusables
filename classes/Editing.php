@@ -580,7 +580,7 @@ class Editing
 
     }
 
-    public static function saveSmartFormValues($fieldimages, $fieldarray, $_FILES, $ifnone_insert)
+    public static function saveSmartFormValues($fieldimages, $fieldarray, $files, $ifnone_insert)
     {
 
       $lastinsertid = false;
@@ -588,10 +588,10 @@ class Editing
       if( isset($fieldimages ) ) {
       		// images have been passed and need to be updated/inserted
 
-      		$indexes = array_keys( $_FILES['fieldimage']['name']);
+      		$indexes = array_keys( $files['fieldimage']['name']);
 
       		// loop through files and convert files from reusable format to normal file format
-      		$reusable_files_result = Convert::reusableFiles($_FILES, $indexes);
+      		$reusable_files_result = Convert::reusableFiles($files, $indexes);
 
       		// put normal files in var
       		$filesarray = $reusable_files_result['filesarray'];
@@ -602,7 +602,7 @@ class Editing
       		// 	$filesarray_multiple = Reusables\Convert::getFilesFromFileMultiples($filesarray_multiple, $_FILES, $indexes);
 
       		// loop through the files collected earlier in this file
-      		$fieldimages = Media::uploadFieldImages( $_FILES, $filesarray, $indexes, $fieldimages );
+      		$fieldimages = Media::uploadFieldImages( $files, $filesarray, $indexes, $fieldimages );
 
       		$fieldarray = Editing::updateOrInsertDBValues( $fieldarray, $indexes, $fieldimages, $filesarray, $ifnone_insert, true );
 
