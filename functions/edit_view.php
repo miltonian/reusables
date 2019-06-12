@@ -10,45 +10,54 @@ $contains_parameters = false;
 
 if( isset($_POST['forms']) ) {
 
+	$forms = $_POST['forms'];
+	$form_files = $_FILES;
+} else {
+
+	$forms = [$_POST];
+	$form_files = [$_FILES];
 }
 
-// check if there are normal form values to update/insert
-$fieldarray = [];
-if(isset($_POST[ 'fieldarray' ])){
-		$fieldarray = $_POST[ 'fieldarray' ];
-		$contains_parameters=true;
+$i = 0;
+foreach ($forms as $form) {
+
+	// check if there are normal form values to update/insert
+	$fieldarray = [];
+	if(isset($form[ 'fieldarray' ])){
+			$fieldarray = $form[ 'fieldarray' ];
+			$contains_parameters=true;
+	}
+
+	// check if there are images to update/insert
+	if(isset($form[ 'fieldimage' ])){
+			$fieldimages = $form[ 'fieldimage' ];
+			$contains_parameters=true;
+	}
+
+	if(isset($form[ 'fieldimage_multiple' ])){
+			$fieldimage_multiple = $form[ 'fieldimage_multiple' ];
+	}
+
+	if( !isset( $form['ifnone_insert'] ) ) {
+		$form['ifnone_insert'] = "0";
+	}
+
+	if(!$contains_parameters){
+		// if no parameters were passed then there's no reason to be here
+		// exit("missing parameters");
+		$i++;
+		continue;
+	}
+
+	$saveform_result = Reusables\Editing::saveSmartFormValues($fieldimages, $fieldarray, $form_files[$i], $form['ifnone_insert']);
+	$fieldarray = $saveform_result["fieldarray"];
+	$fieldimages = $saveform_result["fieldimages"];
+	$lastinsertid = $saveform_result["lastinsertid"];
+
+	$i++;
 }
 
-// check if there are images to update/insert
-if(isset($_POST[ 'fieldimage' ])){
-		$fieldimages = $_POST[ 'fieldimage' ];
-		$contains_parameters=true;
-}
 
-if(isset($_POST[ 'fieldimage_multiple' ])){
-		$fieldimage_multiple = $_POST[ 'fieldimage_multiple' ];
-}
-
-if( !isset( $_POST['ifnone_insert'] ) ) {
-	$_POST['ifnone_insert'] = "0";
-}
-
-if(!$contains_parameters){
-	// if no parameters were passed then there's no reason to be here
-	exit("missing parameters");
-}
-
-
-
-
-
-
-
-
-$saveform_result = Reusables\Editing::saveSmartFormValues($fieldimages, $fieldarray, $_FILES, $_POST['ifnone_insert']);
-$fieldarray = $saveform_result["fieldarray"];
-$fieldimages = $saveform_result["fieldimages"];
-$lastinsertid = $saveform_result["lastinsertid"];
 
 
 if( isset( $_POST['added_file'] ) ) {
